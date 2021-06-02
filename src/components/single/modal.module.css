@@ -1,0 +1,117 @@
+.modalBackground {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.modal {
+  position: absolute;
+  background-color: white;
+  width: 500px;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 101;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.title {
+  color: rgb(236, 78, 78);
+  text-align: center;
+  border-bottom: 1px solid rgba(236, 78, 78, 0.5);
+}
+
+.form {
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  padding: 10px 30px;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.input {
+  margin-bottom: 20px;
+  border: 1px solid rgb(146, 146, 146);
+  outline: none;
+  padding: 10px 15px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.input:focus {
+  border: 1px solid rgb(94, 96, 236);
+  box-shadow: 0px 0px 3px rgb(86, 158, 192, 1);
+}
+
+.submitBtn,
+.submitBtnOnLoad {
+  border: none;
+  padding: 10px 15px;
+  width: 100%;
+  background-color: rgb(236, 78, 78);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.submitBtn:hover {
+  background-color: rgb(199, 59, 59);
+}
+
+.submitBtnOnLoad {
+  background-color: grey;
+}
+
+.label {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 0px auto 20px auto;
+  line-height: 30px;
+  color: rgb(108, 37, 156);
+  font-weight: bold;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.label:hover {
+  color: rgb(71, 121, 214);
+  transform: scale(1.2);
+}
+
+.upload {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+/* Image Open Modal */
+
+.ImageContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 101;
+}
+
+.Image {
+  max-width: 650px;
+  max-height: 400px;
+}
+
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+}

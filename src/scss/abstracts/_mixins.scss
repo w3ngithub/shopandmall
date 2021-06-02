@@ -1,0 +1,64 @@
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin absCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexRow {
+  display: flex;
+  flex-direction: row;
+}
+@mixin flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (min-width: 0) and (max-width: 599px) {
+      @content;
+    } //600px
+  } @else if $breakpoint == sm-tab {
+    @media only screen and (min-width: 600px) {
+      @content;
+    } //600px
+  } @else if $breakpoint == tab {
+    @media only screen and (min-width: 900px) {
+      @content;
+    } //900px56
+  } @else if $breakpoint == desktop {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    } //1200px
+  } @else if $breakpoint == med-desktop {
+    @media only screen and (min-width: 1440px) {
+      @content;
+    } //1440px
+  } @else if $breakpoint == big-desktop {
+    @media only screen and (min-width: 1800px) {
+      @content;
+    } //1800
+  } @else {
+    @warn "Breakpoint mixin supports: phone, sm-tab, tab, desktop,med-desktop,big-desktop";
+  }
+}
+
+// $breakpoints: (
+//   'phone':  ( min-width:  767px ),
+//   'medium': ( min-width:  992px ),
+//   'large':  ( min-width: 1200px )
+// ) !default;

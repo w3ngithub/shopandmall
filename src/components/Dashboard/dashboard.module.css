@@ -1,0 +1,175 @@
+.nav {
+  /* background-color: #eee; */
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 65px;
+  align-items: center;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+  /* position: relative; */
+  z-index: 1001;
+}
+
+.userName {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(255, 0, 106);
+  font-weight: bold;
+  color: white;
+  font-size: 25px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.navButton {
+  display: flex;
+  margin-right: 30px;
+  justify-content: space-between;
+  width: 240px;
+}
+
+/* Pages */
+
+.main {
+  width: 85%;
+  margin: auto;
+}
+
+.addBtn {
+  border: none;
+  padding: 10px 15px;
+  width: 300px;
+  background-color: rgb(236, 78, 78);
+  color: white;
+  margin: 40px 0 20px 0;
+}
+
+.addBtn:hover {
+  background-color: rgb(199, 59, 59);
+}
+
+.mallContainer {
+  margin: 20px 0 80px 0;
+}
+
+.heading {
+  color: rgb(236, 78, 78);
+  font-weight: 600;
+  font-size: 1.8em;
+  border-bottom: 2px solid rgba(236, 78, 78, 0.3);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  row-gap: 20px;
+  margin: 20px 0;
+}
+
+.wrapper {
+  max-width: 350px;
+  max-height: 280px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.3);
+  /* filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.3)); */
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.imageContainer {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image {
+  width: 350px;
+  height: 200px;
+  transition: all 0.15s ease-in;
+}
+
+.wrapper:hover .image {
+  transform: scale(1.2);
+  transform-origin: 50% 50%;
+}
+
+.wrapper:hover {
+  background-color: rgb(255, 236, 236);
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
+
+.view {
+  color: rgb(236, 78, 78);
+  position: absolute;
+  font-size: 18px;
+  right: 100px;
+  margin: 10px;
+}
+
+.view:hover {
+  color: rgb(173, 71, 71);
+}
+
+.link {
+  margin-bottom: 40px;
+}
+
+.closeIcon {
+  display: none;
+  position: absolute;
+  font-size: 30px;
+  right: 10px;
+  z-index: 100;
+  color: rgba(207, 46, 24, 0.7);
+}
+
+.wrapper:hover .closeIcon {
+  display: block;
+}
+
+.closeIcon:hover {
+  color: rgba(207, 46, 24, 1);
+  /* color: rgb(241, 109, 91); */
+}
+
+.abcd {
+  width: 100px;
+}
+
+.bcd {
+  width: 100px;
+}
+
+.search {
+  position: relative;
+  margin: 30px 0 60px 0;
+  padding: 10px;
+  width: 100%;
+}
+
+.searchBar {
+  position: absolute;
+  width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  outline: none;
+  background-color: rgba(234, 251, 255, 0.4);
+  border: 1px solid grey;
+  border-radius: 5px;
+  color: rgb(236, 78, 78);
+}
+
+.searchBar:focus {
+  border: 1px solid rgb(236, 78, 78);
+  box-shadow: 0 0 2px rgb(236, 78, 78);
+}

@@ -1,0 +1,32 @@
+//Colors
+:root {
+  --color-white: #fff;
+}
+
+$color-primary: #b62a2f;
+$color-link: #1378d0;
+$color-dark-link: #05447a;
+
+//Fonts
+$default-fontSize: 17px;
+$default-fontSize-sm: 14px;
+//$font-stack:-apple-system,BlinkMacSystemFont, Roboto,Helvetica,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+$font-stack: "Sans-Pro";
+$pms-font-stack: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$grey-background: #f5f5f5;
+$grey-border: #ddd;
+$table-header-background:#f9fafb;
+$table-header-color:#6b7280;
+$table-body-color:#374151;
+
+$success: #7fd81e;
+$error: #ff5100;
+
+//$btn-primary-color: #0074e9;
+$btn-primary-color: $color-primary;
+//$btn-primary-color: #0ea800;
+$btn-primary-dark-color: #005bc0;
+$btn-primary-light-color: #9bd3ff;
+$btn-danger-color: #f10001;
+$btn-danger-dark-color: #b20000;

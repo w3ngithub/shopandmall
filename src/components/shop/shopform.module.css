@@ -1,0 +1,138 @@
+.innerDiv {
+  display: flex;
+  flex-direction: column;
+  /* position: relative; */
+  /* justify-content: space-around; */
+}
+
+.input {
+  margin-bottom: 10px;
+  border: 1px solid rgb(146, 146, 146);
+  outline: none;
+  padding: 10px 15px;
+  width: 300px;
+  border-radius: 5px;
+}
+
+.input:focus {
+  border: 1px solid rgb(94, 96, 236);
+  box-shadow: 0px 0px 3px rgb(86, 158, 192, 1);
+}
+
+.textarea {
+  margin-bottom: 10px;
+  border: 1px solid rgb(146, 146, 146);
+  outline: none;
+  padding: 10px 15px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.textarea:focus {
+  border: 1px solid rgb(94, 96, 236);
+  box-shadow: 0px 0px 3px rgb(86, 158, 192, 1);
+}
+
+.label > .upload {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+.label {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  height: 25px;
+  margin-top: 5px;
+  line-height: 30px;
+  font-weight: bold;
+  font-size: 34px;
+  color: rgb(37, 156, 73);
+  cursor: pointer;
+  margin-left: -25px;
+  margin-bottom: 40px;
+}
+
+.label:hover {
+  color: #efb6b2;
+}
+
+.text {
+  font-size: 10px;
+  margin-top: -10px;
+}
+
+.selectedImages {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 10px;
+  /* max-width: 300px; */
+  margin-top: 20px;
+}
+
+.image {
+  display: flex;
+  /* justify-content: space-between; */
+  background-color: rgba(156, 156, 156, 0.8);
+  border-radius: 60px;
+  margin-bottom: 10px;
+  padding: 10px;
+  max-width: 320px;
+  overflow: hidden;
+}
+
+.para {
+  position: relative;
+  text-align: left;
+  color: red;
+  font-size: 10px;
+  font-weight: bold;
+
+}
+
+.button {
+  background: none;
+  border: none;
+}
+
+.button:hover {
+  color: white;
+}
+
+.shopContainer {
+  background-color: rgba(236, 78, 78, 0.1);
+  max-width: 700px;
+  padding: 20px;
+  margin: 10px 0;
+  border-radius: 15px;
+  position: relative;
+}
+
+.imgButton {
+  font-size: 15px;
+  margin: 15px 0 30px 25px;
+  border: none;
+  padding: 5px 15px;
+  width: 100%;
+  background-color: rgb(236, 78, 78);
+  color: white;
+}
+
+.imgButton:hover {
+  background-color: rgb(199, 59, 59);
+}
+
+.close {
+  position: absolute;
+  right: 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: rgb(250, 21, 21);
+}

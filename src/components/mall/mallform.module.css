@@ -1,0 +1,171 @@
+.mainContainer {
+  max-width: 100%;
+  min-height: 89vh;
+  height: auto;
+  margin-top: -10px;
+  background-color: #eee;
+}
+
+.formContainer {
+  width: 100vw;
+  height: inherit;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  border-radius: 10px;
+  background-color: white;
+  margin-top: 40px;
+  display: flex;
+  padding: 30px;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.innerDiv {
+  display: flex;
+  justify-content: space-around;
+}
+
+.input {
+  margin-bottom: 10px;
+  border: 1px solid rgb(146, 146, 146);
+  outline: none;
+  padding: 10px 15px;
+  width: 300px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.input:focus {
+  border: 1px solid rgb(94, 96, 236);
+  box-shadow: 0px 0px 3px rgb(86, 158, 192, 1);
+}
+
+.label > .upload {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100px;
+  height: 0px;
+  /* margin-top: 5px; */
+  line-height: 30px;
+  font-weight: bold;
+  font-size: 34px;
+  color: rgb(37, 156, 73);
+  cursor: pointer;
+  margin-left: -25px;
+}
+
+.label:hover {
+  color: #efb6b2;
+}
+
+.text {
+  font-size: 10px;
+  margin-top: -10px;
+}
+
+.name {
+  margin-top: 20px;
+  color: rgb(236, 78, 78);
+  text-align: left;
+  border-bottom: 1px solid rgba(236, 78, 78, 0.5);
+}
+
+.line {
+  height: 1px;
+  width: inherit;
+  background-color: rgba(0, 0, 0, 0.4);
+  margin: 15px 0;
+}
+
+.addShop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  margin: 20px 0 30px 0;
+  background-color: rgb(53, 103, 179);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  width: 130px;
+  padding: 6px 15px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.addShop:hover {
+  background-color: rgb(34, 76, 139);
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+.submitBtn,
+.submitBtnOnLoad {
+  border: none;
+  padding: 10px 15px;
+  width: 100%;
+  background-color: rgb(236, 78, 78);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.submitBtnOnLoad {
+  background-color: grey;
+}
+
+.submitBtn:hover {
+  background-color: rgb(199, 59, 59);
+}
+
+.loaderPosition {
+  position: absolute;
+  height: 100%;
+  /* background-color: rgb(102, 56, 56); */
+  width: 100%;
+  z-index: 100;
+  /* top: 50%; */
+  left: 0;
+}
+
+/* Pagination */
+.paginationContainer {
+  width: inherit;
+  display: flex;
+  justify-content: center;
+}
+
+.numbers {
+  display: flex;
+}
+
+.numbers li {
+  list-style-type: none;
+  margin-left: 20px;
+  border-left: 1px solid rgb(236, 78, 78);
+  border-right: 1px solid rgb(236, 78, 78);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.numbers li:hover {
+  color: rgb(236, 78, 78);
+}
+
+
