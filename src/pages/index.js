@@ -1,0 +1,9 @@
+export { default as Login } from "./login";
+export { default as AllMalls } from "./allMalls";
+export { default as HomePage } from "./homepage";
+export { default as AllShops } from "./allShops";
+export { default as SingleMall } from "./singleMall";
+export { default as SingleShop } from "./singleShop";
+export { default as MallForm } from "./mallForm";
+export { default as EditMall } from "./editForm";
+export { default as PageNotFound } from "./PageNotFound";

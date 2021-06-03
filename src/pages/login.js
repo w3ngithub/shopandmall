@@ -1,5 +1,5 @@
-import classes from "./login.module.css";
-import { fireStore } from "../../firebase/config";
+import classes from "../styles/login.module.css";
+import { fireStore } from "../firebase/config";
 import React, { useState, useEffect } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 

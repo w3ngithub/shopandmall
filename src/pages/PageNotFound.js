@@ -7,7 +7,7 @@ const PageNotFound = () => {
       <h1>404</h1>
       <h3>PAGE NOT FOUND</h3>
       <p>
-        Go To Homepage<Link to="/">-&gt;</Link>
+        Go To Homepage<Link to="/"></Link>
       </p>
     </div>
   );

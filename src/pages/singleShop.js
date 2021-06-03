@@ -1,10 +1,10 @@
-import cls from "./singleMall.module.css";
+import cls from "../styles/singleMall.module.css";
 import { useParams } from "react-router-dom";
-import { fireStore } from "../../firebase/config";
+import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
-import classes from "../Dashboard/dashboard.module.css";
+import classes from "../styles/allMalls.module.css";
 
-import modalclasses from "./modal.module.css";
+import modalclasses from "../components/single/modal.module.css";
 
 const SingleShop = () => {
   const [mall, setMall] = useState();
