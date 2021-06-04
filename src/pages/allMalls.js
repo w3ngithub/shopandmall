@@ -1,8 +1,8 @@
-import Mall from "./Mall";
-import Pagination from "./Pagination";
+import Mall from "../components/mall/Mall";
 import React, { useState } from "react";
-import useFirestore from "../../hooks/useFirestore";
-import classes from "../Dashboard/dashboard.module.css";
+import Pagination from "../components/mall/Pagination";
+import useFirestore from "../hooks/useFirestore";
+import classes from "../styles/allMalls.module.css";
 import { useHistory, useLocation } from "react-router-dom";
 
 const AllMalls = () => {
@@ -12,7 +12,7 @@ const AllMalls = () => {
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [mallsPerPage, setMallsPerPage] = useState(3);
+  const [mallsPerPage] = useState(3);
 
   const indexOfLastMall = currentPage * mallsPerPage;
   const indexOfFirstMall = indexOfLastMall - mallsPerPage;
@@ -58,7 +58,6 @@ const AllMalls = () => {
           <h4 className={classes.heading}>Malls</h4>
         </div>
         {docs?.length !== 0 ? (
-          // <Mall {...{ docs }} />
           <>
             <Mall docs={currentMalls} />
             <Pagination

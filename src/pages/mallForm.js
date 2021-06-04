@@ -1,9 +1,9 @@
-import { MyContext } from "../../App";
+import { MyContext } from "../App";
 import { useHistory } from "react-router-dom";
-import CommonForm from "./CommonForm";
-import reducer from "../../reducers/reducer";
-import { storage, fireStore } from "../../firebase/config";
-import shopImageReducer from "../../reducers/shopImageReducer";
+import CommonForm from "../components/mall/CommonForm";
+import reducer from "../reducers/reducer";
+import { storage, fireStore } from "../firebase/config";
+import shopImageReducer from "../reducers/shopImageReducer";
 import React, { useState, useReducer, useContext } from "react";
 
 const MallForm = () => {

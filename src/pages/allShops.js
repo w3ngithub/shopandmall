@@ -1,7 +1,7 @@
-import Shop from "./Shop";
+import Shop from "../components/shop/Shop";
 import React, { useState } from "react";
-import useFirestore from "../../hooks/useFirestore";
-import classes from "../Dashboard/dashboard.module.css";
+import useFirestore from "../hooks/useFirestore";
+import classes from "../styles/allShops.module.css";
 
 const AllShops = () => {
   let { docs } = useFirestore("Shopping Mall");

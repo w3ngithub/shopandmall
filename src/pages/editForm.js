@@ -1,9 +1,9 @@
-import CommonForm from "./CommonForm";
-import editReducer from "../../reducers/editReducer";
+import CommonForm from "../components/mall/CommonForm";
+import editReducer from "../reducers/editReducer";
 import { useHistory, useLocation } from "react-router-dom";
-import { storage, fireStore } from "../../firebase/config";
+import { storage, fireStore } from "../firebase/config";
 import React, { useState, useReducer } from "react";
-import addedShopImagesReducer from "../../reducers/addedShopImagesReducer";
+import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
 
 const MallForm = () => {
   //Removed Images
@@ -28,7 +28,6 @@ const MallForm = () => {
 
   //Loading
   const [isLoading, setIsLoading] = useState(false);
-
 
   const submitHandler = async (e) => {
     setIsLoading(true);
