@@ -1,6 +1,8 @@
 import classes from "./modal.module.css";
 import React, { useState, useEffect } from "react";
 import { fireStore, storage } from "../../firebase/config";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Modal = ({ setShowModal, docId, mall }) => {
   const [images, setImages] = useState([]);
@@ -121,7 +123,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
               onChange={shopImageHandler}
             />
             <span>
-              <i className="far fa-plus-circle"></i>
+              <FontAwesomeIcon icon={faPlusCircle} />
             </span>
           </label>
 
