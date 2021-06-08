@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import classes from "./shopform.module.css";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IoIosClose } from "react-icons/io";
 
 const CommonShopForm = ({
   edit,
@@ -62,7 +61,7 @@ const CommonShopForm = ({
         }
         className={classes.close}
       >
-        <FontAwesomeIcon icon={faTimes} />
+        <IoIosClose />
       </div>
       <div className={classes.innerDiv}>
         <input
@@ -103,7 +102,7 @@ const CommonShopForm = ({
                     type="button"
                     onClick={() => removeImage(img, index2)}
                   >
-                    <FontAwesomeIcon icon={faTimes} />
+                    <IoIosClose />
                   </button>
                   {img.ImageName}
                 </p>
@@ -125,7 +124,7 @@ const CommonShopForm = ({
                               })
                             }
                           >
-                            <FontAwesomeIcon icon={faTimes} />
+                            <IoIosClose />
                           </button>
                           {img.name}
                         </p>
@@ -148,7 +147,7 @@ const CommonShopForm = ({
                         })
                       }
                     >
-                      <FontAwesomeIcon icon={faTimes} />
+                      <IoIosClose />
                     </button>
                     {img?.name}
                   </p>

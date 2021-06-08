@@ -3,8 +3,7 @@ import classes from "../Dashboard/dashboard.module.css";
 import NoImage from "../../image/No_Image_Available.jpg";
 import { useHistory, useLocation } from "react-router-dom";
 import { fireStore, storage } from "../../firebase/config";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const Mall = ({ docs }) => {
   console.log("malls", docs);
@@ -62,7 +61,7 @@ const Mall = ({ docs }) => {
                           .catch((err) => "Images Not Deleted");
                       }}
                     >
-                      <FontAwesomeIcon icon={faTimesCircle} />
+                      <IoMdCloseCircle />
                     </div>
                   )}
                   <div>
@@ -129,7 +128,7 @@ const Mall = ({ docs }) => {
                         .catch((err) => "Images Not Deleted");
                     }}
                   >
-                    <FontAwesomeIcon icon={faTimesCircle} />
+                    <IoMdCloseCircle />
                   </div>
                 )}
 

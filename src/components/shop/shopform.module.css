@@ -91,7 +91,6 @@
   color: red;
   font-size: 10px;
   font-weight: bold;
-
 }
 
 .button {
@@ -129,7 +128,7 @@
 .close {
   position: absolute;
   right: 30px;
-  font-size: 20px;
+  font-size: 30px;
   cursor: pointer;
 }
 
