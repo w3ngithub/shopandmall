@@ -1,5 +1,6 @@
 @import "scss/abstracts/_variables.scss";
 @import "scss/abstracts/_mixins.scss";
+$table-row-height: 45px;
 
 .table {
   display: grid;
@@ -12,7 +13,7 @@
     grid-auto-flow: column dense;
     grid-template-columns: 50px repeat(2, 1fr);
     padding: 10px;
-    min-height: 40px;
+    height: $table-row-height;
     align-items: center;
   }
   &__header {
@@ -49,17 +50,32 @@
   .table-inner-row {
     background-color: #e5e7eb;
     padding: 20px;
-    opacity: 0;
-    transition: 0.2s all ease-in-out;
+    &.fade-in {
+      animation-timing-function: linear;
+
+      animation-duration: 1s;
+      -webkit-animation-duration: 1s;
+
+      animation-name: fade-in;
+      -webkit-animation-name: fade-in;
+    }
+    &.fade-out {
+      animation-timing-function: linear;
+
+      animation-duration: 0.1s;
+      -webkit-animation-duration: 0.1s;
+
+      animation-name: fade-out;
+      -webkit-animation-name: fade-out;
+      animation-fill-mode: forwards;
+    }
   }
   .table {
     border-radius: 3px;
   }
   .is-row-expanded {
     background-color: $table-header-background;
-    .table-inner-row {
-      opacity: 1;
-    }
+
     .btn-arrow {
       -webkit-transform: rotate(90deg);
       -moz-transform: rotate(90deg);
@@ -69,10 +85,10 @@
     }
   }
   .row-content {
-    height: 40px;
+    height: $table-row-height;
     transition: 0.3s all ease-in-out;
     &.is-row-expanded {
-      height: Calc(100% - 80px);
+      height: Calc(100% - 90px);
     }
   }
   .toggle-icon {

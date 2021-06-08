@@ -73,7 +73,16 @@ function Table({
                 {hasAction && <Actions />}
               </div>
               {row.rowContent && (
-                <div className="table-inner-row"> {row.rowContent}</div>
+                <div
+                  className={classNames({
+                    "table-inner-row": true,
+                    "fade-in": row.isExpanded,
+                    "fade-out": !row.isExpanded,
+                  })}
+                >
+                  {" "}
+                  {row.rowContent}
+                </div>
               )}
             </div>
           );
@@ -131,7 +140,7 @@ Table.propTypes = {
   /**
    * Optional props to show add nested table feature
    */
-   isNestedTable: PropTypes.bool,
+  isNestedTable: PropTypes.bool,
 };
 
 Table.defaultProps = {
