@@ -5,6 +5,7 @@
 .modalBackground {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
@@ -16,6 +17,7 @@
   background-color: #f9fafb;
   width: 493px;
   height: auto;
+  top: 20%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 101;
@@ -115,6 +117,28 @@
   height: 0;
   width: 0;
   opacity: 0;
+}
+
+.form__span {
+  display: flex;
+  align-items: center;
+  color: #2e6fba;
+  cursor: pointer;
+}
+
+.form__span > span {
+  margin-left: 5px;
+}
+
+.form__subcategory {
+  display: flex;
+  align-items: center;
+}
+
+.form__subcategory > span {
+  color: #c83535;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 /* Image Open Modal */

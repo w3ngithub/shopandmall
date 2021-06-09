@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./table.scss";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
@@ -15,6 +15,8 @@ function Table({
   hasAction,
   tableInnerContent,
   isNestedTable,
+  openEditModal,
+  openConfirmationModal,
   ...props
 }) {
   let gridTemplateColumns =
@@ -31,6 +33,10 @@ function Table({
     });
     setData(newData);
   };
+
+  useEffect(() => {
+    setData(rowData);
+  }, [rowData]);
   return (
     <div className="table" style={{ width: width + "%" }}>
       <div
@@ -56,13 +62,15 @@ function Table({
               key={row.id}
             >
               <div className="table__body-row" style={{ gridTemplateColumns }}>
-                {isNestedTable && (
+                {isNestedTable && row.rowContent ? (
                   <div
                     onClick={() => toggleRowExpand(row.id)}
                     className="toggle-icon"
                   >
                     <IoIosArrowForward className="btn-arrow" />
                   </div>
+                ) : (
+                  <span></span>
                 )}
 
                 <span>{i + 1}</span>
@@ -70,7 +78,12 @@ function Table({
                   <span key={`${row.id}${i}`}>{row[field.field]}</span>
                 ))}
 
-                {hasAction && <Actions />}
+                {hasAction && (
+                  <Actions
+                    handleEdit={() => openEditModal(row)}
+                    handleDelete={() => openConfirmationModal(row)}
+                  />
+                )}
               </div>
               {row.rowContent && (
                 <div
@@ -80,7 +93,6 @@ function Table({
                     "fade-out": !row.isExpanded,
                   })}
                 >
-                  {" "}
                   {row.rowContent}
                 </div>
               )}
@@ -92,13 +104,13 @@ function Table({
   );
 }
 
-const Actions = () => (
+const Actions = ({ handleEdit, handleDelete }) => (
   <div className="table-action flex justify-end">
-    <div className="table-action__grp flex">
+    <div className="table-action__grp flex" onClick={handleEdit}>
       <BiEdit />
       <span className="table-action-label">Edit</span>
     </div>
-    <div className="table-action__grp flex">
+    <div className="table-action__grp flex" onClick={handleDelete}>
       <RiDeleteBinLine />
       <span className="table-action-label">Delete</span>
     </div>
