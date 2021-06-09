@@ -1,10 +1,11 @@
-import Modal from "./Modal";
+import Modal from "../components/single/Modal";
 import { useHistory } from "react-router-dom";
-import classes from "./singleMall.module.css";
-import { fireStore } from "../../firebase/config";
+import classes from "../styles/singleMall.module.css";
+import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
-import cls from "../Dashboard/dashboard.module.css";
+import cls from "../styles/allMalls.module.css";
 import { useParams, useLocation } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 
 const SingleMall = () => {
   const [mall, setMall] = useState([]);
@@ -64,7 +65,7 @@ const SingleMall = () => {
                     });
                   }}
                 >
-                  <i className="fas fa-edit "></i>
+                  <FaEdit className={classes.editIcon} />
                   <span className={classes.text}>Edit</span>
                 </button>
               </div>

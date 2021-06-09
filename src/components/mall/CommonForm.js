@@ -3,6 +3,7 @@ import EditShop from "../shop/EditShop";
 import ShopForm from "../shop/ShopForm";
 import classes from "./mallform.module.css";
 import React, { useEffect, useState } from "react";
+import { IoIosAddCircleOutline, IoIosImage } from "react-icons/io";
 
 const CommonForm = ({
   edit,
@@ -95,7 +96,7 @@ const CommonForm = ({
                 onChange={imageHandler}
               />
               <span>
-                <i className="fas fa-image"></i>
+                <IoIosImage className={classes.imageIcon} />
               </span>
               <span className={classes.text}>(Add Image)</span>
             </label>
@@ -152,7 +153,7 @@ const CommonForm = ({
           {edit === false && (
             <div onClick={newShopForm} className={classes.addShop}>
               <span className={classes.icon}>
-                <i className="far fa-plus-circle"></i>
+                <IoIosAddCircleOutline />
               </span>
               Add Shop
             </div>

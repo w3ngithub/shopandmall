@@ -1,6 +1,7 @@
 import classes from "./modal.module.css";
 import React, { useState, useEffect } from "react";
 import { fireStore, storage } from "../../firebase/config";
+import { IoIosAddCircle } from "react-icons/io";
 
 const Modal = ({ setShowModal, docId, mall }) => {
   const [images, setImages] = useState([]);
@@ -121,7 +122,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
               onChange={shopImageHandler}
             />
             <span>
-              <i className="far fa-plus-circle"></i>
+              <IoIosAddCircle className={classes.addIcon} />
             </span>
           </label>
 

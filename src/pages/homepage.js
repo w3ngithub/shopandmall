@@ -1,8 +1,8 @@
-import Shop from "../shop/Shop";
-import Mall from "../mall/Mall";
+import Shop from "../components/shop/Shop";
+import Mall from "../components/mall/Mall";
 import React, { useState } from "react";
-import classes from "./dashboard.module.css";
-import useFirestore from "../../hooks/useFirestore";
+import classes from "../styles/dashboard.module.css";
+import useFirestore from "../hooks/useFirestore";
 import { useHistory, Link, useLocation } from "react-router-dom";
 
 const Dashboard = () => {
