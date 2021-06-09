@@ -123,7 +123,13 @@ const Modal = ({ setShowModal, docId, mall }) => {
               type="file"
               onChange={shopImageHandler}
             />
+<<<<<<< HEAD
             <IoIosAddCircle className={classes.addIcon} />
+=======
+            <span>
+              <IoIosAddCircle className={classes.addIcon} />
+            </span>
+>>>>>>> 88fe8c59d27599dc5e7bc34edeb33d91e3e78464
           </label>
 
           <div className={classes.selectedImages}>
