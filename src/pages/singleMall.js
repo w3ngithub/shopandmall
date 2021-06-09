@@ -5,6 +5,7 @@ import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
 import cls from "../styles/allMalls.module.css";
 import { useParams, useLocation } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 
 const SingleMall = () => {
   const [mall, setMall] = useState([]);
@@ -64,7 +65,7 @@ const SingleMall = () => {
                     });
                   }}
                 >
-                  <i className="fas fa-edit "></i>
+                  <FaEdit className={classes.editIcon} />
                   <span className={classes.text}>Edit</span>
                 </button>
               </div>
