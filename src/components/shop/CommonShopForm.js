@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import classes from "./shopform.module.css";
+import { IoIosClose } from "react-icons/io";
 
 const CommonShopForm = ({
   edit,
@@ -60,7 +61,7 @@ const CommonShopForm = ({
         }
         className={classes.close}
       >
-        <i className="fas fa-times"></i>
+        <IoIosClose />
       </div>
       <div className={classes.innerDiv}>
         <input
@@ -101,7 +102,7 @@ const CommonShopForm = ({
                     type="button"
                     onClick={() => removeImage(img, index2)}
                   >
-                    <i className="fas fa-times"></i>
+                    <IoIosClose />
                   </button>
                   {img.ImageName}
                 </p>
@@ -123,7 +124,7 @@ const CommonShopForm = ({
                               })
                             }
                           >
-                            <i className="fas fa-times"></i>
+                            <IoIosClose />
                           </button>
                           {img.name}
                         </p>
@@ -146,7 +147,7 @@ const CommonShopForm = ({
                         })
                       }
                     >
-                      <i className="fas fa-times"></i>
+                      <IoIosClose />
                     </button>
                     {img?.name}
                   </p>

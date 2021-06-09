@@ -3,6 +3,7 @@ import classes from "../Dashboard/dashboard.module.css";
 import NoImage from "../../image/No_Image_Available.jpg";
 import { useHistory, useLocation } from "react-router-dom";
 import { fireStore, storage } from "../../firebase/config";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const Mall = ({ docs }) => {
   console.log("malls", docs);
@@ -60,7 +61,7 @@ const Mall = ({ docs }) => {
                           .catch((err) => "Images Not Deleted");
                       }}
                     >
-                      <i className="fad fa-times-circle"></i>{" "}
+                      <IoMdCloseCircle />
                     </div>
                   )}
                   <div>
@@ -127,7 +128,7 @@ const Mall = ({ docs }) => {
                         .catch((err) => "Images Not Deleted");
                     }}
                   >
-                    <i className="fad fa-times-circle"></i>{" "}
+                    <IoMdCloseCircle />
                   </div>
                 )}
 
