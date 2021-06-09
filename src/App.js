@@ -17,6 +17,7 @@ import {
   EditMall,
   PageNotFound,
 } from "./pages";
+import AddShopCategory from "./pages/addShopCategory";
 
 const MyContext = createContext();
 
@@ -52,6 +53,11 @@ function App() {
           <Route exact path="/mall/:id/shops/:type" component={SingleShop} />
 
           {/* ------------------Admin------------------ */}
+          <Route
+            exact
+            path="/admin/addshopcategories"
+            component={AddShopCategory}
+          />
           <Route
             exact
             path="/login"
