@@ -15,6 +15,7 @@ $table-row-height: 45px;
     padding: 10px;
     height: $table-row-height;
     align-items: center;
+    z-index: 100;
   }
   &__header {
     background-color: $table-header-background;
@@ -50,6 +51,8 @@ $table-row-height: 45px;
   .table-inner-row {
     background-color: #e5e7eb;
     padding: 20px;
+    z-index: 1;
+
     &.fade-in {
       animation-timing-function: linear;
 
@@ -75,7 +78,6 @@ $table-row-height: 45px;
   }
   .is-row-expanded {
     background-color: $table-header-background;
-
     .btn-arrow {
       -webkit-transform: rotate(90deg);
       -moz-transform: rotate(90deg);
