@@ -1,0 +1,79 @@
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 20px;
+    margin: 20px 0;
+}
+
+.wrapper {
+    max-width: 353px;
+    max-height: 291px;
+    overflow: hidden;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    background: #ffffff;
+    border: 1px solid rgba(213, 213, 213, 0.68);
+}
+
+.imageContainer {
+    position: relative;
+    height: 226px;
+    overflow: hidden;
+    background: rgba(30, 30, 30, 0.27);
+}
+
+.closeIcon {
+    display: none;
+    position: absolute;
+    font-size: 30px;
+    top: 5px;
+    right: 5px;
+    z-index: 100;
+    color: rgba(207, 46, 24, 0.7);
+}
+
+.wrapper:hover .closeIcon {
+    display: block;
+}
+
+.closeIcon:hover {
+    color: rgba(207, 46, 24, 1);
+    /* color: rgb(241, 109, 91); */
+}
+
+.image {
+    width: 353px;
+    height: 226px;
+    transition: all 0.15s ease-in;
+}
+
+.wrapper:hover .image {
+    transform: scale(1.1);
+    transform-origin: 50% 50%;
+}
+
+.wrapper:hover {
+    background-color: rgb(255, 236, 236);
+}
+
+.mallDetail {
+    color: #153074;
+    padding: 8px 10px;
+    line-height: 20px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 700;
+    height: 25px;
+    width: 500px;
+}
+
+.midLine {
+    margin: 0 5px;
+}
+
+.mallTime {
+    font-size: 15px;
+}
