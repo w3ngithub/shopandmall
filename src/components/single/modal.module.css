@@ -130,6 +130,13 @@
   cursor: pointer;
 }
 
+.error {
+  color: red;
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
 /* Image Open Modal */
 
 .ImageContainer {

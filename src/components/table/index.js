@@ -15,8 +15,8 @@ function Table({
   hasAction,
   tableInnerContent,
   isNestedTable,
-  openEditModal,
-  openConfirmationModal,
+  handleEditClick,
+  handleDeleteClick,
   ...props
 }) {
   let gridTemplateColumns =
@@ -81,8 +81,8 @@ function Table({
 
                 {hasAction && (
                   <Actions
-                    handleEdit={() => openEditModal(row)}
-                    handleDelete={() => openConfirmationModal(row)}
+                    handleEdit={() => handleEditClick(row)}
+                    handleDelete={() => handleDeleteClick(row)}
                   />
                 )}
               </div>
