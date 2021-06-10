@@ -37,6 +37,7 @@ function Table({
   useEffect(() => {
     setData(rowData);
   }, [rowData]);
+
   return (
     <div className="table" style={{ width: width + "%" }}>
       <div
@@ -62,7 +63,7 @@ function Table({
               key={row.id}
             >
               <div className="table__body-row" style={{ gridTemplateColumns }}>
-                {isNestedTable && row.rowContent ? (
+                {row?.subCategories?.length > 0 ? (
                   <div
                     onClick={() => toggleRowExpand(row.id)}
                     className="toggle-icon"
