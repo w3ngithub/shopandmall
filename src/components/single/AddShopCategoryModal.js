@@ -3,6 +3,8 @@ import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import Button from "../Button/Button";
 
 const ShopCategoryModal = ({
+  categoryError,
+  subCategoryError,
   category,
   setCategory,
   subCategories,
@@ -31,33 +33,42 @@ const ShopCategoryModal = ({
               setCategory({ ...category, category: e.target.value })
             }
           />
+          {categoryError.invalid && (
+            <p className={classes.error}>*{categoryError.message}</p>
+          )}
           {subCategories.length > 0 &&
             subCategories.map(({ id, subCategory }) => (
-              <div className={classes.form__subcategory} key={id}>
-                <input
-                  type="text"
-                  className={classes.input}
-                  placeholder="Sub-Category Name"
-                  value={subCategory}
-                  onChange={(e) =>
-                    setSubCategories([
-                      ...subCategories.map((category) =>
-                        category.id === id
-                          ? { ...category, subCategory: e.target.value }
-                          : category
-                      ),
-                    ])
-                  }
-                />
-                <span
-                  onClick={() =>
-                    setSubCategories(
-                      subCategories.filter((category) => category.id !== id)
-                    )
-                  }
-                >
-                  <AiOutlineClose />
-                </span>
+              <div key={id}>
+                <div className={classes.form__subcategory}>
+                  <input
+                    type="text"
+                    className={classes.input}
+                    placeholder="Sub-Category Name"
+                    value={subCategory}
+                    onChange={(e) =>
+                      setSubCategories([
+                        ...subCategories.map((category) =>
+                          category.id === id
+                            ? { ...category, subCategory: e.target.value }
+                            : category
+                        ),
+                      ])
+                    }
+                  />
+
+                  <span
+                    onClick={() =>
+                      setSubCategories(
+                        subCategories.filter((category) => category.id !== id)
+                      )
+                    }
+                  >
+                    <AiOutlineClose />
+                  </span>
+                </div>
+                {subCategoryError.id === id && (
+                  <p className={classes.error}>*{subCategoryError.message}</p>
+                )}
               </div>
             ))}
           <p
@@ -69,7 +80,7 @@ const ShopCategoryModal = ({
               ])
             }
           >
-            Add Sub Category{" "}
+            Add Sub Category
             <span>
               <AiOutlinePlus />
             </span>
