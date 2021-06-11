@@ -38,8 +38,8 @@ const ShopCategoryModal = ({
           )}
           {subCategories.length > 0 &&
             subCategories.map(({ id, subCategory }) => (
-              <div>
-                <div className={classes.form__subcategory} key={id}>
+              <div key={id}>
+                <div className={classes.form__subcategory}>
                   <input
                     type="text"
                     className={classes.input}
