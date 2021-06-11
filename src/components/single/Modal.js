@@ -85,7 +85,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
   };
 
   return (
-    <div>
+    <div className={classes.modalContainer}>
       <div
         className={classes.modalBackground}
         onClick={() => {
@@ -94,6 +94,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
       ></div>
       <div className={classes.modal}>
         <h3 className={classes.title}>Add New Shop</h3>
+        <div className={classes.line}></div>
 
         <form onSubmit={onSubmitHandler} className={classes.form}>
           <input
@@ -110,20 +111,19 @@ const Modal = ({ setShowModal, docId, mall }) => {
             placeholder="Description"
             name="shopDescription"
             onChange={onChangeHandler}
-            className={classes.input}
+            className={classes.textarea}
           />
 
           {errors && <p>{errors}</p>}
           <label className={classes.label}>
+            Add Images
             <input
               className={classes.upload}
               multiple
               type="file"
               onChange={shopImageHandler}
             />
-            <span>
-              <IoIosAddCircle className={classes.addIcon} />
-            </span>
+            <IoIosAddCircle className={classes.addIcon} />
           </label>
 
           <div className={classes.selectedImages}>
@@ -135,11 +135,12 @@ const Modal = ({ setShowModal, docId, mall }) => {
               ))}
           </div>
 
-          <input
+          <button
             className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}
             type="submit"
-            value={isLoading ? "Loading..." : "Save"}
-          />
+          >
+            {isLoading ? "Loading..." : "Save"}
+          </button>
         </form>
       </div>
     </div>

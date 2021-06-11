@@ -1,0 +1,11 @@
+:root {
+  --button: #153074;
+}
+
+button {
+  background-color: var(--button);
+}
+
+button:hover {
+  background-color: #2a4a9c;
+}
