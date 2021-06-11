@@ -16,7 +16,7 @@ export const editShopCategory = (category, subCategories) =>
     .collection("Shop Categories")
     .doc(category.id)
     .update({
-      ...category,
+      category: category.category,
       rowContent: {
         rowData: subCategories.length > 0 ? subCategories : [],
       },

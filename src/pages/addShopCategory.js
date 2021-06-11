@@ -41,16 +41,17 @@ const AddShopCategory = () => {
     if (isCategoryEmpty) {
       setCategoryError({
         invalid: true,
-        message: "Please Fill The Category Name",
+        message: "please fill the category name",
       });
     } else if (isSubCategoryEmpty) {
       setSubCategoryError({
         id: emptySubCategory.id,
         invalid: true,
-        message: "Either Fill The Sub-Category Name Or Remove The Field",
+        message: "either fill the sub-category name or remove the field",
       });
     } else {
       setShowAddModal(false);
+      console.log(category, subCategories);
       addShopCategory(category, subCategories);
     }
   };
@@ -78,6 +79,7 @@ const AddShopCategory = () => {
   }, [showAddModal, showEditModal]);
 
   useEffect(() => {
+    console.log(docs);
     const transformedData = [
       ...docs.map((data) => ({
         ...data,
