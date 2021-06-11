@@ -3,8 +3,8 @@ import { fireStore } from "./config";
 export const addShopCategory = (category, subCategories) =>
   fireStore.collection("Shop Categories").add({
     category: category.category,
-    rowContent: subCategories.length > 0 && {
-      rowData: subCategories,
+    rowContent: {
+      rowData: subCategories.length > 0 ? subCategories : [],
     },
   });
 
@@ -16,8 +16,8 @@ export const editShopCategory = (category, subCategories) =>
     .collection("Shop Categories")
     .doc(category.id)
     .update({
-      ...category,
-      rowContent: subCategories.length > 0 && {
-        rowData: subCategories,
+      category: category.category,
+      rowContent: {
+        rowData: subCategories.length > 0 ? subCategories : [],
       },
     });

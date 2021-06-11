@@ -16,21 +16,49 @@ const AddShopCategory = () => {
   const [category, setCategory] = useState({ category: "" });
   const [subCategories, setSubCategories] = useState([]);
   const [allCategories, setAllCategories] = useState([]);
+  const [categoryError, setCategoryError] = useState({
+    invalid: false,
+    message: "",
+  });
+  const [subCategoryError, setSubCategoryError] = useState({
+    invalid: false,
+    message: "",
+  });
   const { docs } = useFirestore("Shop Categories");
 
   const handleAddShopCategorySubmit = (e) => {
     e.preventDefault();
 
-    setShowAddModal(false);
+    setCategoryError({});
+    setSubCategoryError({});
 
-    addShopCategory(category, subCategories);
+    const isCategoryEmpty = category?.category === "";
+    const emptySubCategory = subCategories?.find(
+      (category) => category?.subCategory === ""
+    );
+    const isSubCategoryEmpty = emptySubCategory?.subCategory === "";
+
+    if (isCategoryEmpty) {
+      setCategoryError({
+        invalid: true,
+        message: "please fill the category name",
+      });
+    } else if (isSubCategoryEmpty) {
+      setSubCategoryError({
+        id: emptySubCategory.id,
+        invalid: true,
+        message: "either fill the sub-category name or remove the field",
+      });
+    } else {
+      setShowAddModal(false);
+      console.log(category, subCategories);
+      addShopCategory(category, subCategories);
+    }
   };
 
   const handleEditShopCategorySubmit = (e) => {
     e.preventDefault();
-
     setShowEditModal(false);
-
     editShopCategory(category, subCategories);
   };
 
@@ -45,10 +73,13 @@ const AddShopCategory = () => {
     if (!showAddModal && !showEditModal) {
       setCategory({ category: "" });
       setSubCategories([]);
+      setCategoryError({});
+      setSubCategoryError({});
     }
   }, [showAddModal, showEditModal]);
 
   useEffect(() => {
+    console.log(docs);
     const transformedData = [
       ...docs.map((data) => ({
         ...data,
@@ -88,15 +119,17 @@ const AddShopCategory = () => {
         width={50}
         hasAction={true}
         isNestedTable={true}
-        openEditModal={(data) => {
+        handleEditClick={(data) => {
           setShowEditModal(true);
           setCategory(data);
           setSubCategories(data?.subCategories || []);
         }}
-        openConfirmationModal={handleDelete}
+        handleDeleteClick={handleDelete}
       />
       {(showAddModal || showEditModal) && (
         <ShopCategoryModal
+          categoryError={categoryError}
+          subCategoryError={subCategoryError}
           subCategories={subCategories}
           setSubCategories={setSubCategories}
           category={category}
