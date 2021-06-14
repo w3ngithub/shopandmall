@@ -15,7 +15,7 @@ const Nav = (props) => {
       <div className={classes.userName}>{username.charAt(0).toUpperCase()}</div>
       <div className={classes.navButton}>
         <div
-          className="cursor-pointer link flex"
+          className="cursor-pointer link-color flex"
           onClick={() => props.history.push("/admin/addshopcategories")}
         >
           <span> Add shop category</span>
