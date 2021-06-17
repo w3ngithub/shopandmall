@@ -4,147 +4,153 @@ import { fireStore, storage } from "../../firebase/config";
 import { IoIosAddCircle } from "react-icons/io";
 
 const Modal = ({ setShowModal, docId, mall }) => {
-  const [images, setImages] = useState([]);
-  const [errors, setErrors] = useState([]);
+    const [images, setImages] = useState([]);
+    const [errors, setErrors] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => setIsLoading(false), []);
+    useEffect(() => setIsLoading(false), []);
 
-  const [shop, setShop] = useState({
-    shopName: "",
-    shopDescription: "",
-    shopImages: [{ id: "", imageName: "", url: "" }],
-  });
-
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setShop({
-      ...shop,
-      [name]: value,
+    const [shop, setShop] = useState({
+        shopName: "",
+        shopDescription: "",
+        shopImages: [{ id: "", imageName: "", url: "" }],
     });
-  };
 
-  const types = ["image/jpeg", "image/png"];
+    const onChangeHandler = (e) => {
+        const { name, value } = e.target;
+        setShop({
+            ...shop,
+            [name]: value,
+        });
+    };
 
-  const shopImageHandler = (e) => {
-    for (let i = 0; i < e.target.files.length; i++) {
-      let selectedShopImages = e.target.files[i];
+    const types = ["image/jpeg", "image/png"];
 
-      if (selectedShopImages && types.includes(selectedShopImages.type)) {
-        setImages((prevState) => [...prevState, selectedShopImages]);
-      } else {
-        setErrors("Please select an image file  (jpeg or png)");
-      }
-    }
-  };
+    const shopImageHandler = (e) => {
+        for (let i = 0; i < e.target.files.length; i++) {
+            let selectedShopImages = e.target.files[i];
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+            if (selectedShopImages && types.includes(selectedShopImages.type)) {
+                setImages((prevState) => [...prevState, selectedShopImages]);
+            } else {
+                setErrors("Please select an image file  (jpeg or png)");
+            }
+        }
+    };
 
-    try {
-      await Promise.all(
-        images.map((image) => storage.ref(image.name).put(image))
-      );
+    const onSubmitHandler = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
 
-      const shopImageUrl = await Promise.all(
-        images.map((image) => storage.ref(image.name).getDownloadURL())
-      );
+        try {
+            await Promise.all(
+                images.map((image) => storage.ref(image.name).put(image))
+            );
 
-      let result = {
-        id: Math.random(),
-        shopName: shop.shopName,
-        shopDescription: shop.shopDescription,
-        shopImages: shopImageUrl.map((items, index) => ({
-          id: Math.random() + images[index].name,
-          ImageName: images[index].name,
-          url: items,
-        })),
-      };
+            const shopImageUrl = await Promise.all(
+                images.map((image) => storage.ref(image.name).getDownloadURL())
+            );
 
-      //FireStore
-      mall.shops
-        ? fireStore
-            .collection("Shopping Mall")
-            .doc(docId)
-            .set({
-              ...mall,
-              shops: [...mall.shops, result],
-            })
-        : fireStore
-            .collection("Shopping Mall")
-            .doc(docId)
-            .set({
-              ...mall,
-              result,
-            });
-    } catch {}
+            let result = {
+                id: Math.random(),
+                shopName: shop.shopName,
+                shopDescription: shop.shopDescription,
+                shopImages: shopImageUrl.map((items, index) => ({
+                    id: Math.random() + images[index].name,
+                    ImageName: images[index].name,
+                    url: items,
+                })),
+            };
 
-    setShowModal(false);
-  };
+            //FireStore
+            mall.shops
+                ? fireStore
+                      .collection("Shopping Mall")
+                      .doc(docId)
+                      .set({
+                          ...mall,
+                          shops: [...mall.shops, result],
+                      })
+                : fireStore
+                      .collection("Shopping Mall")
+                      .doc(docId)
+                      .set({
+                          ...mall,
+                          result,
+                      });
+        } catch {}
 
-  return (
-    <div className={classes.modalContainer}>
-      <div
-        className={classes.modalBackground}
-        onClick={() => {
-          setShowModal(false);
-        }}
-      ></div>
-      <div className={classes.modal}>
-        <h3 className={classes.title}>Add New Shop</h3>
-        <div className={classes.line}></div>
+        setShowModal(false);
+    };
 
-        <form onSubmit={onSubmitHandler} className={classes.form}>
-          <input
-            type="text"
-            placeholder="Name of Shop"
-            name="shopName"
-            onChange={onChangeHandler}
-            className={classes.input}
-          />
-          <textarea
-            rows="4"
-            cols="50"
-            type="text"
-            placeholder="Description"
-            name="shopDescription"
-            onChange={onChangeHandler}
-            className={classes.textarea}
-          />
+    return (
+        <div className={classes.modalContainer}>
+            <div
+                className={classes.modalBackground}
+                onClick={() => {
+                    setShowModal(false);
+                }}
+            ></div>
+            <div className={classes.modal}>
+                <div className={classes.header}>
+                    <h3 className={classes.title}>Add New Shop</h3>
+                </div>
+                <div className={classes.line}></div>
 
-          {errors && <p>{errors}</p>}
-          <label className={classes.label}>
-            Add Images
-            <input
-              className={classes.upload}
-              multiple
-              type="file"
-              onChange={shopImageHandler}
-            />
-            <IoIosAddCircle className={classes.addIcon} />
-          </label>
+                <form onSubmit={onSubmitHandler} className={classes.form}>
+                    <input
+                        type="text"
+                        placeholder="Name of Shop"
+                        name="shopName"
+                        onChange={onChangeHandler}
+                        className={classes.input}
+                    />
+                    <textarea
+                        rows="4"
+                        cols="50"
+                        type="text"
+                        placeholder="Description"
+                        name="shopDescription"
+                        onChange={onChangeHandler}
+                        className={classes.textarea}
+                    />
 
-          <div className={classes.selectedImages}>
-            {images &&
-              images.map((image, ind) => (
-                <p key={ind} className={classes.image}>
-                  {image.name}
-                </p>
-              ))}
-          </div>
+                    {errors && <p>{errors}</p>}
+                    <label className={classes.label}>
+                        Add Images
+                        <input
+                            className={classes.upload}
+                            multiple
+                            type="file"
+                            onChange={shopImageHandler}
+                        />
+                        <IoIosAddCircle className={classes.addIcon} />
+                    </label>
 
-          <button
-            className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}
-            type="submit"
-          >
-            {isLoading ? "Loading..." : "Save"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+                    <div className={classes.selectedImages}>
+                        {images &&
+                            images.map((image, ind) => (
+                                <p key={ind} className={classes.image}>
+                                    {image.name}
+                                </p>
+                            ))}
+                    </div>
+
+                    <button
+                        className={
+                            isLoading
+                                ? classes.submitBtnOnLoad
+                                : classes.submitBtn
+                        }
+                        type="submit"
+                    >
+                        {isLoading ? "Loading..." : "Save"}
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
 };
 
 export default Modal;
