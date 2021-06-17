@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./table.scss";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -35,7 +35,11 @@ function Table({
   };
 
   useEffect(() => {
-    setData(rowData);
+    let newData = [...rowData].map((x) => {
+      x.isExpanded = data.find((d) => d.id === x.id)?.isExpanded ?? false;
+      return x;
+    });
+    setData(newData);
   }, [rowData]);
 
   return (

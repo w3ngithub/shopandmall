@@ -87,10 +87,11 @@ $table-row-height: 45px;
     }
   }
   .row-content {
-    height: $table-row-height;
-    transition: 0.3s all ease-in-out;
+    max-height: $table-row-height;
+    transition: 0.3s all ease-out;
     &.is-row-expanded {
-      height: Calc(100% - 90px);
+      max-height: Calc(100% - 90px);
+      transition: 0.3s all ease-in;
     }
   }
   .toggle-icon {
