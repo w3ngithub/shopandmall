@@ -1,9 +1,7 @@
-import Nav from "./components/Nav";
 import NavBar from "./components/NavBar";
 import ProtectedRoute from "./ProtectedRoute";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import React, { useState, useEffect, useReducer, createContext } from "react";
-import { ShopForm } from "./components";
 import allDataReducer from "./reducers/allDataReducer";
 import "./index.css";
 
@@ -23,7 +21,6 @@ import AddShopCategory from "./pages/addShopCategory";
 const MyContext = createContext();
 
 function App() {
-  const location = useLocation();
   const allData = [];
 
   //State
@@ -102,3 +99,5 @@ function App() {
 
 export { MyContext };
 export default App;
+
+// eslint-disable-next-line
