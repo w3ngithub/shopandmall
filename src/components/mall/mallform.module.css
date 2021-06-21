@@ -21,7 +21,6 @@
   display: flex;
   padding: 30px;
   flex-direction: column;
-  text-align: center;
   margin-bottom: 40px;
 }
 
@@ -77,6 +76,7 @@
 .text {
   font-size: 10px;
   margin-top: -10px;
+  margin-left: 20px;
 }
 
 .name {
@@ -170,4 +170,23 @@
 
 .numbers li:hover {
   color: rgb(236, 78, 78);
+}
+
+.timings__buttondiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  margin: 20px 0;
+}
+
+.timings__manualdiv {
+  display: flex;
+  align-items: center;
+}
+
+.timings__button {
+  background: #c4c4c4;
+  border: none;
+  padding: 5px 10px;
 }

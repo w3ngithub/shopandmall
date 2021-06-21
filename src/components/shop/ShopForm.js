@@ -9,7 +9,6 @@ const ShopForm = ({
   shopImageState,
   shopImageDispatch,
 }) => {
-  console.log("sh", edit);
   const closeShopForm = () => {
     dispatch({
       type: "REMOVE_SHOP_FORM",
