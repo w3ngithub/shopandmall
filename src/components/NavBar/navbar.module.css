@@ -1,0 +1,575 @@
+.navbar {
+  width: 100%;
+  height: 75px;
+  background-color: #f9f9f9;
+  position: fixed;
+  z-index: 1000;
+}
+
+.container {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 79px;
+  height: 73px;
+}
+
+.logo p {
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 16px;
+  color: #5b5b5b;
+}
+
+.menuItems {
+  display: flex;
+  align-items: center;
+}
+
+.menuList ul li {
+  display: inline;
+  margin-right: 40px;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+li a,
+.icon {
+  color: #5b5b5b;
+}
+
+li a:hover,
+.icon:hover {
+  color: black;
+}
+
+.menuList ul li a {
+  padding-right: 5px;
+}
+
+.menuList ul li .icon {
+  display: inline;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  user-select: none;
+  transition: 0.5s;
+  color: rgb(37, 37, 114);
+}
+
+.menuList ul li:nth-of-type(2):hover .icon {
+  transform: rotate(90deg) translateX(-8px);
+}
+
+.shopsDropdown {
+  visibility: hidden;
+  position: absolute;
+  top: 90px;
+  background-color: #f9f9f9;
+  padding: 25px 50px;
+  left: 40%;
+  cursor: auto;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  transition: all 0.5s ease-in;
+}
+
+.menuList ul li:nth-of-type(2):hover .shopsDropdown {
+  visibility: visible;
+  max-height: 500px;
+  opacity: 1;
+}
+
+.dropDownWrapper {
+  display: flex;
+}
+
+.col {
+  text-align: left;
+  margin-right: 100px;
+}
+
+.col:last-child {
+  margin-right: 40px;
+}
+
+.col h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  display: inline-block;
+}
+
+.col .headerIcon {
+  display: none;
+}
+
+.col ul li {
+  display: block;
+  text-align: left;
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.col ul li::after {
+  content: "";
+  width: 0;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.3);
+  display: block;
+  margin: auto;
+  transition: 0.4s;
+}
+
+.col ul li:hover::after {
+  content: "";
+  width: 100%;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userImage {
+  position: relative;
+  background-color: black;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  font-size: 25px;
+  text-align: center;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user .icon {
+  padding-left: 5px;
+  font-size: 17px;
+  color: rgb(37, 37, 114);
+  transition: 0.5s;
+}
+
+.user:hover .icon {
+  transform: rotate(90deg) translateY(-2px);
+}
+
+.userDropDown {
+  visibility: hidden;
+  position: absolute;
+  top: 90px;
+  background-color: #f9f9f9;
+  right: 1%;
+  cursor: auto;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  transition: all 0.3s ease-in;
+  border-radius: 10px;
+}
+
+.userDropDown ul li .list {
+  display: flex;
+  padding: 20px 25px;
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userDropDown ul li::after {
+  background-color: rgba(133, 133, 133, 0.2);
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, 0);
+  width: 85%;
+}
+
+.userDropDown ul li:last-child::after {
+  content: "";
+  width: 0;
+}
+
+.userDropDown ul li:hover {
+  background-color: #e8e8e8;
+}
+
+.user:hover .userDropDown {
+  visibility: visible;
+  opacity: 1;
+  max-height: 500px;
+}
+
+.userDropDown ul li .icons {
+  font-size: 23px;
+  margin-right: 8px;
+}
+
+.button,
+.signInBtn {
+  color: #2e6fba;
+  background-color: white;
+  outline: none;
+  border: 3px solid #2e6fba;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: #5fa2f0;
+  border: 3px solid #5fa2f0;
+  background-color: white;
+}
+
+.signInBtn {
+  display: none;
+}
+
+.mobileUser {
+  display: none;
+}
+
+.burger {
+  display: none;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 55px;
+  }
+
+  .container {
+    width: 88%;
+  }
+
+  .logo img {
+    width: 46px;
+    height: 53px;
+  }
+
+  .logo p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 9px;
+  }
+
+  .menuList ul li {
+    font-size: 15px;
+    margin-right: 38px;
+  }
+
+  .menuList ul li:last-child,
+  .menuList ul li:nth-child(4) {
+    display: none;
+  }
+
+  .shopsDropdown {
+    visibility: hidden;
+    position: absolute;
+    top: 65px;
+    background-color: #f9f9f9;
+    padding: 20px 35px;
+    left: 30%;
+    cursor: auto;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0;
+    transition: all 0.5s ease-in;
+  }
+
+  .col {
+    text-align: left;
+    margin-right: 50px;
+  }
+
+  .col:last-child {
+    margin-right: 30px;
+  }
+
+  .col h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .col ul li {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+    font-weight: normal;
+    margin-bottom: 18px;
+  }
+
+  .col ul li::after {
+    content: "";
+    width: 0;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.3);
+    display: block;
+    margin: auto;
+    transition: 0.4s;
+  }
+
+  .col ul li:hover::after {
+    content: "";
+    width: 100%;
+  }
+
+  .userImage {
+    position: relative;
+    background-color: black;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user .icon {
+    padding-left: 5px;
+    font-size: 15px;
+    color: rgb(37, 37, 114);
+    transition: 0.5s;
+  }
+
+  .userDropDown {
+    top: 65px;
+    border-radius: 8px;
+  }
+
+  .userDropDown ul li .list {
+    padding: 18px 24px;
+  }
+
+  .userDropDown ul li::after {
+    height: 1px;
+  }
+
+  .userDropDown ul li .icons {
+    font-size: 21px;
+    margin-right: 8px;
+  }
+
+  .userDropDown ul li {
+    font-size: 15px;
+  }
+
+  .button {
+    border: 2px solid #2e6fba;
+    font-size: 15px;
+    padding: 8px 12px;
+  }
+
+  .button:hover {
+    border: 2px solid #5fa2f0;
+    background-color: white;
+  }
+}
+
+@media (max-width: 414px) {
+  .navbar {
+    position: fixed;
+  }
+
+  .logo img {
+    width: 51px;
+    height: 53px;
+  }
+
+  .logo p {
+    display: none;
+  }
+
+  .check,
+  .showSidebar {
+    position: fixed;
+    top: 55px;
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #f9f9f9;
+    right: -500px;
+    transition: 0.5s;
+  }
+
+  .showSidebar {
+    right: 0px;
+  }
+
+  .menuList ul li {
+    display: block;
+    position: relative;
+    margin: 20px 0px 0px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .menuList ul li .icon {
+    position: relative;
+    margin-bottom: -12px;
+    user-select: none;
+    transition: 0.5s;
+    color: rgb(37, 37, 114);
+  }
+
+  .shopsDropdown {
+    display: none;
+    position: relative;
+    top: 0px;
+    background-color: #f9f9f9;
+    width: 100vw;
+    padding: 8px 50px;
+    left: -7%;
+    cursor: auto;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in;
+  }
+
+  .menuList ul li:nth-of-type(2):hover .shopsDropdown {
+    display: block;
+    max-height: auto;
+    opacity: 1;
+  }
+
+  .dropDownWrapper {
+    display: block;
+  }
+
+  .col .headerIcon {
+    display: inline;
+    margin-left: 5px;
+    position: relative;
+  }
+
+  .col {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+
+  .col:last-child {
+    margin-right: 0px;
+  }
+
+  .col h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .col:hover .headerIcon {
+    transform: rotate(90deg) translateX(0px);
+  }
+
+  .col ul {
+    width: 100vw;
+    margin-left: -49px;
+    background-color: #eeeeee;
+    display: none;
+  }
+
+  .col:hover ul {
+    display: block;
+  }
+
+  .col ul li {
+    display: block;
+    text-align: left;
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 80px;
+    padding: 10px 0px;
+  }
+
+  .col ul li::after {
+    content: "";
+    display: none;
+  }
+
+  .dropDownWrapper:last-child {
+    padding: 0px 0px;
+    margin-bottom: -10px;
+  }
+
+  .user {
+    display: none;
+  }
+
+  .mobileUser {
+    display: block;
+    background-color: #ecf3f2;
+    margin-top: 15px;
+    padding: 15px 25px;
+    font-weight: 700;
+  }
+
+  .controller ul li .list {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .controller ul li .list .icons {
+    margin-right: 8px;
+    font-size: 17px;
+  }
+
+  .burger {
+    display: block;
+    font-size: 24px;
+    position: absolute;
+    right: 20px;
+  }
+
+  .button {
+    display: none;
+  }
+
+  .signInBtn {
+    position: absolute;
+    display: block;
+    border: 2px solid #2e6fba;
+    font-size: 14px;
+    padding: 8px 12px;
+    right: 60px;
+  }
+}
