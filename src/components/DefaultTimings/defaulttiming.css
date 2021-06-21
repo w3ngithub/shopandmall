@@ -1,0 +1,31 @@
+.timings {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 43%;
+}
+
+.timings__buttondiv {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 80%;
+  margin: 20px 0;
+}
+
+.dayinputfield {
+  text-align: left;
+  margin-right: 40px;
+}
+
+.timeinput {
+  text-align: left;
+}
+
+.remove {
+  color: rgb(233, 25, 25);
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 20px 0;
+}

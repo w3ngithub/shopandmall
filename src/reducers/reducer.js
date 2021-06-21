@@ -22,7 +22,10 @@ const reducer = (state, action) => {
           {
             id: action.payload.ind,
             shopName: "",
+            shopLevel: "",
+            phoneNumber: "",
             shopDescription: "",
+            timings: [{ id: 1, label: "Everyday" }, { id: 2 }],
             shopUrl: [],
           },
         ],
@@ -37,11 +40,13 @@ const reducer = (state, action) => {
     case "ADD_SHOP_INFO":
       return {
         ...state,
-        shops: state.shops.map((shop, i) =>
-          i === action.payload.index
-            ? { ...shop, [action.payload.name]: action.payload.value }
-            : shop
-        ),
+        shops: [
+          ...state.shops.map((shop, i) =>
+            i === action.payload.index
+              ? { ...shop, [action.payload.name]: action.payload.value }
+              : shop
+          ),
+        ],
       };
 
     case "ADD_SHOP_IMAGES":
@@ -67,6 +72,121 @@ const reducer = (state, action) => {
     case "RESET_FORM":
       return {
         state: action.payload.initialValues,
+      };
+
+    case "ADD_TIMINGS":
+      console.log(action.payload);
+      return {
+        ...state,
+        timings: [
+          {
+            ...state?.timings[0],
+            label: "Everyday",
+            [action.payload.name]: action.payload.value,
+          },
+        ],
+      };
+
+    case "ADD_TIMINGS_MANUALLY":
+      return {
+        ...state,
+        timings: [
+          ...state.timings.map((data) =>
+            data.id === action.payload.rowId
+              ? { ...data, [action.payload.name]: action.payload.value }
+              : data
+          ),
+        ],
+      };
+
+    case "ADD_TIMINGS_FIELDS":
+      return {
+        ...state,
+        timings: [...state.timings, { id: Date.now() }],
+      };
+
+    case "REMOVE_TIMINGS_FIELDS":
+      return {
+        ...state,
+        timings: [
+          ...state.timings.filter((time) => time.id !== action.payload.rowId),
+        ],
+      };
+
+    case "ADD_SHOPTIMINGS_FIELDS":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, i) =>
+            i === action.payload.index
+              ? { ...shop, timings: [...shop.timings, { id: Date.now() }] }
+              : shop
+          ),
+        ],
+      };
+
+    case "REMOVE_SHOPTIMINGS_FIELDS":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, i) =>
+            i === action.payload.shopIndex
+              ? {
+                  ...shop,
+                  timings: [
+                    ...shop.timings.filter(
+                      (time) => time.id !== action.payload.rowId
+                    ),
+                  ],
+                }
+              : shop
+          ),
+        ],
+      };
+
+    case "ADD_SHOP_TIMINGS":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, index) =>
+            index === action.payload.index
+              ? {
+                  ...shop,
+                  timings: [
+                    {
+                      ...shop.timings[0],
+                      label: "Everyday",
+                      [action.payload.name]: action.payload.value,
+                    },
+                  ],
+                }
+              : shop
+          ),
+        ],
+      };
+
+    case "ADD_SHOP_TIMINGS_MANUALLY":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, index) =>
+            index === action.payload.shopIndex
+              ? {
+                  ...shop,
+                  timings: [
+                    ...shop.timings.map((data) =>
+                      data.id === action.payload.rowId
+                        ? {
+                            ...data,
+                            [action.payload.name]: action.payload.value,
+                          }
+                        : data
+                    ),
+                  ],
+                }
+              : shop
+          ),
+        ],
       };
 
     default:

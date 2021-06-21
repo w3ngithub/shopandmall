@@ -16,8 +16,11 @@ const MallForm = () => {
   const initialValues = {
     mallName: "",
     mallAddress: "",
+    levels: "",
+    phoneNumber: "",
     mallUrl: {},
     shops: [],
+    timings: [{ id: 1, label: "Everyday" }, { id: 2 }],
   };
 
   const shopImageValues = [{ id: 0, images: [] }];
@@ -36,13 +39,13 @@ const MallForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = async (e) => {
-    setIsLoading(true);
+    // setIsLoading(true);
     e.preventDefault();
     try {
       const storageRef = storage.ref();
       let mallImageUrl = null;
 
-      //Mall Image
+      // Mall Image
       if (mallImage !== null) {
         const imageRef = storageRef.child(mallImage.name);
         await imageRef.put(mallImage);
@@ -75,6 +78,9 @@ const MallForm = () => {
         mallId: Math.random() * 9999,
         mallName: state?.mallName,
         mallAddress: state?.mallAddress,
+        levels: state?.levels,
+        phoneNumber: state?.phoneNumber,
+        timings: state?.timings,
         mallImage: {
           id: Math.random() + mallImage?.name,
           imageName: mallImage?.name,
@@ -86,6 +92,11 @@ const MallForm = () => {
         id: i,
         shopName: s?.shopName,
         shopDescription: s?.shopDescription,
+        shopLevel: s?.shopLevel,
+        phoneNumber: s?.phoneNumber,
+        timings: s?.timings,
+        category: s?.category,
+        subCategory: s?.subCategory,
         shopImages: shopImageUrl[i]?.map((items, index) => ({
           id: Math.random() + shopImageState[i]?.images[index]?.name,
           ImageName: shopImageState[i]?.images[index]?.name,
