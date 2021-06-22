@@ -6,6 +6,11 @@ import classes from "../styles/allMalls.module.css";
 
 import modalclasses from "../components/single/modal.module.css";
 
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
+
+import { FaRegWindowClose } from "react-icons/fa";
+
 const SingleShop = () => {
   const [mall, setMall] = useState();
   const { id, type } = useParams();
@@ -14,12 +19,30 @@ const SingleShop = () => {
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
 
+  const [galleryImage, setGalleryImage] = useState([]);
+  const [ind, setInd] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       await fireStore
         .collection("Shopping Mall")
         .doc(docId)
-        .onSnapshot((doc) => setMall(doc.data()));
+        .onSnapshot((doc) => {
+          setMall(doc.data());
+          doc.data().shops.map(
+            (shop) =>
+              type === shop.shopName &&
+              shop.shopImages.map((s) =>
+                setGalleryImage((prevState) => [
+                  ...prevState,
+                  {
+                    original: s.url,
+                    thumbnail: s.url,
+                  },
+                ])
+              )
+          );
+        });
     };
 
     fetchData();
@@ -27,7 +50,9 @@ const SingleShop = () => {
 
   return (
     <div>
-      {modal && <Modal {...{ setModal, image, setImage }} />}
+      {modal && <Modal {...{ setModal, image, setImage, galleryImage, ind }} />}
+      {/* {modal && <ImageGallery items={galleryImage} />} */}
+
       {mall?.shops?.map(
         (shop, ind) =>
           type === shop.shopName && (
@@ -42,21 +67,23 @@ const SingleShop = () => {
 
               <div className={classes.container}>
                 {shop.shopImages &&
-                  shop.shopImages.map((s, i) => (
-                    <div key={i} className={classes.wrapper}>
-                      <div className={classes.imageContainer}>
-                        <img
-                          onClick={() => {
-                            setModal(true);
-                            setImage(s.url);
-                          }}
-                          className={classes.image}
-                          src={s.url}
-                          alt="shopImage"
-                        />
+                  shop.shopImages.map((s, i) => {
+                    return (
+                      <div key={i} className={classes.wrapper}>
+                        <div className={classes.imageContainer}>
+                          <img
+                            onClick={() => {
+                              setModal(true);
+                              setInd(i);
+                            }}
+                            className={classes.image}
+                            src={s.url}
+                            alt="shopImage"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
               </div>
             </div>
           )
@@ -65,7 +92,7 @@ const SingleShop = () => {
   );
 };
 
-const Modal = ({ setModal, image, setImage }) => {
+const Modal = ({ setModal, setImage, galleryImage, ind }) => {
   return (
     <div className={modalclasses.modalBackground}>
       <div
@@ -75,8 +102,15 @@ const Modal = ({ setModal, image, setImage }) => {
           setImage(null);
         }}
       ></div>
+      <div className={modalclasses.closeBtn} onClick={() => setModal(false)}>
+        <FaRegWindowClose />
+      </div>
       <div className={modalclasses.ImageContainer}>
-        <img className={modalclasses.Image} src={image} alt="" />
+        <ImageGallery
+          items={galleryImage}
+          startIndex={ind}
+          showPlayButton={false}
+        />
       </div>
     </div>
   );
