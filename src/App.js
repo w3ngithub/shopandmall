@@ -15,6 +15,8 @@ import {
   MallForm,
   EditMall,
   PageNotFound,
+  AboutUs,
+  ContactUs,
 } from "./pages";
 import AddShopCategory from "./pages/addShopCategory";
 
@@ -50,6 +52,10 @@ function App() {
           <Route exact path="/malls/:id" component={SingleMall} />
           <Route exact path="/:id/shops/:type" component={SingleShop} />
           <Route exact path="/mall/:id/shops/:type" component={SingleShop} />
+
+          {/*------------------ Both ------------------ */}
+          <Route exact path="/about-us" component={AboutUs} />
+          <Route exact path="/contact-us" component={ContactUs} />
 
           {/* ------------------Admin------------------ */}
           <Route
