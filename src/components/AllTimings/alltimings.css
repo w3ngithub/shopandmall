@@ -1,0 +1,20 @@
+.timingsform {
+  padding: 10px 0;
+}
+
+.input__radio {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+  margin: 10px 0;
+}
+
+.input__radio label {
+  margin-left: 5px;
+}
+
+.button__showmore {
+  text-align: left;
+  color: #2e6fba;
+  cursor: pointer;
+}

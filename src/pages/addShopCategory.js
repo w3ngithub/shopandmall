@@ -51,7 +51,7 @@ const AddShopCategory = () => {
       });
     } else {
       setShowAddModal(false);
-      console.log(category, subCategories);
+
       addShopCategory(category, subCategories);
     }
   };
@@ -79,7 +79,6 @@ const AddShopCategory = () => {
   }, [showAddModal, showEditModal]);
 
   useEffect(() => {
-    console.log(docs);
     const transformedData = [
       ...docs.map((data) => ({
         ...data,

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import classes from "./shopform.module.css";
 import { IoIosClose } from "react-icons/io";
+import AllTimings from "../AllTimings/AllTimings";
+import useFirestore from "../../hooks/useFirestore";
 
 const CommonShopForm = ({
   edit,
@@ -10,7 +12,6 @@ const CommonShopForm = ({
   shopImageState,
   shopImageDispatch,
   closeShopForm,
-
   dataShop,
   editDispatch,
   index2,
@@ -19,9 +20,11 @@ const CommonShopForm = ({
   removeImage,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
-
+  const { docs } = useFirestore("Shop Categories");
+  const [subCategoryLists, setSubCategoryLists] = useState([]);
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
+
     edit
       ? editDispatch({
           type: "EDIT_SHOP_INFO",
@@ -49,6 +52,29 @@ const CommonShopForm = ({
     }
   };
 
+  const onManualTimeChange = (rowId, name, value) =>
+    dispatch({
+      type: "ADD_SHOP_TIMINGS_MANUALLY",
+      payload: { shopIndex: index, rowId, name, value },
+    });
+
+  const onDefaultTimeChange = (name, value) =>
+    dispatch({
+      type: "ADD_SHOP_TIMINGS",
+      payload: { index, name, value },
+    });
+
+  const addMoreTimingsFields = () =>
+    s.timings.length === 8
+      ? alert("No More Days Left")
+      : dispatch({ type: "ADD_SHOPTIMINGS_FIELDS", payload: { index } });
+
+  const onRemoveTimingsField = (rowId) =>
+    dispatch({
+      type: "REMOVE_SHOPTIMINGS_FIELDS",
+      payload: { shopIndex: index, rowId },
+    });
+
   return (
     <div className={classes.shopContainer}>
       <div
@@ -72,6 +98,22 @@ const CommonShopForm = ({
           onChange={onChangeHandler}
           className={classes.input}
         />
+        <input
+          type="number"
+          placeholder="Level"
+          name="shopLevel"
+          value={edit ? dataShop?.levels : s?.shopLevel}
+          onChange={onChangeHandler}
+          className={classes.input}
+        />
+        <input
+          type="number"
+          placeholder="Phone Number"
+          name="phoneNumber"
+          value={edit ? dataShop?.phoneNumber : s?.phoneNumber}
+          onChange={onChangeHandler}
+          className={classes.input}
+        />
         <textarea
           type="text"
           placeholder="Description"
@@ -80,6 +122,40 @@ const CommonShopForm = ({
           onChange={onChangeHandler}
           className={classes.textarea}
         />
+        <select
+          name="category"
+          onChange={(e) => {
+            onChangeHandler(e);
+            setSubCategoryLists([
+              ...docs.find((category) => category.category === e.target.value)
+                .rowContent.rowData,
+            ]);
+          }}
+        >
+          <option hidden>Categories</option>
+          {docs.map(({ id, category }) => (
+            <option key={id} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        <select name="subCategory" onChange={onChangeHandler}>
+          <option hidden>SubCategories</option>
+          {subCategoryLists.map(({ id, subCategory }) => (
+            <option key={id} value={subCategory}>
+              {subCategory}
+            </option>
+          ))}
+        </select>
+        <AllTimings
+          state={s}
+          onManualTimeChange={onManualTimeChange}
+          onDefaultTimeChange={onDefaultTimeChange}
+          addMoreTimingsFields={addMoreTimingsFields}
+          onRemoveTimingsField={onRemoveTimingsField}
+          isShop={true}
+        />
+
         {shopImageError && <p>{shopImageError}</p>}
         <label className={classes.label}>
           <input multiple type="file" onChange={shopImageHandler} />

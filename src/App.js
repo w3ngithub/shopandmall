@@ -15,8 +15,11 @@ import {
   MallForm,
   EditMall,
   PageNotFound,
+<<<<<<< HEAD
   AboutUs,
   ContactUs,
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 } from "./pages";
 import AddShopCategory from "./pages/addShopCategory";
 
@@ -53,6 +56,7 @@ function App() {
           <Route exact path="/:id/shops/:type" component={SingleShop} />
           <Route exact path="/mall/:id/shops/:type" component={SingleShop} />
 
+<<<<<<< HEAD
           {/*------------------ Both ------------------ */}
           <Route exact path="/about-us" component={AboutUs} />
           <Route exact path="/contact-us" component={ContactUs} />
@@ -94,6 +98,45 @@ function App() {
             component={SingleShop}
           />
 
+=======
+          {/* ------------------Admin------------------ */}
+          <Route
+            exact
+            path="/admin/addshopcategories"
+            component={AddShopCategory}
+          />
+          <Route
+            exact
+            path="/login"
+            render={() => <Login isAuth={isAuth} setIsAuth={setIsAuth} />}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard"
+            component={HomePage}
+            page="/login"
+            exact
+          />
+          <ProtectedRoute
+            path="/admin/newMall"
+            component={MallForm}
+            page="/"
+            exact
+          />
+          <ProtectedRoute exact path="/admin/shops" component={AllShops} />
+          <ProtectedRoute exact path="/admin/malls" component={AllMalls} />
+          <ProtectedRoute exact path="/admin/editMall" component={EditMall} />
+          <ProtectedRoute
+            exact
+            path="/admin/malls/:id"
+            component={SingleMall}
+          />
+          <ProtectedRoute
+            exact
+            path="/admin/:id/shops/:type"
+            component={SingleShop}
+          />
+
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
           {/* ----------No Url------------------ */}
           <Route exact path="/pageNotFound" component={PageNotFound} />
           <Redirect to="/pageNotFound" />

@@ -4,6 +4,7 @@ import ShopForm from "../shop/ShopForm";
 import classes from "./mallform.module.css";
 import React, { useEffect, useState } from "react";
 import { IoIosAddCircleOutline, IoIosImage } from "react-icons/io";
+import AllTimings from "../AllTimings/AllTimings";
 
 const CommonForm = ({
   edit,
@@ -23,22 +24,14 @@ const CommonForm = ({
   isLoading,
   setIsLoading,
 }) => {
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
   //States
 
   const [mallImageError, setMallImageError] = useState(null);
 
-  //Loading
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
-
   //Change Handler
   const changeHandler = (e) => {
     const { name, value } = e.target;
+
     edit
       ? editDispatch({
           type: "EDIT_MALL_INFO",
@@ -62,6 +55,31 @@ const CommonForm = ({
       setMallImage(null);
     }
   };
+
+  const onManualTimeChange = (rowId, name, value) =>
+    dispatch({
+      type: "ADD_TIMINGS_MANUALLY",
+      payload: { rowId, name, value },
+    });
+
+  const onDefaultTimeChange = (name, value) =>
+    dispatch({
+      type: "ADD_TIMINGS",
+      payload: { name, value },
+    });
+
+  const addMoreTimingsFields = () =>
+    state.timings.length === 8
+      ? alert("No More Days Left")
+      : dispatch({ type: "ADD_TIMINGS_FIELDS" });
+
+  const onRemoveTimingsField = (rowId) =>
+    dispatch({ type: "REMOVE_TIMINGS_FIELDS", payload: { rowId } });
+
+  //Loading
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <div className={classes.mainContainer}>
@@ -89,6 +107,14 @@ const CommonForm = ({
               value={edit ? editData?.mallAddress : state?.mallAddress}
               className={classes.input}
             />
+            <input
+              type="number"
+              placeholder="Level"
+              name="levels"
+              value={edit ? editData?.levels : state?.levels}
+              onChange={changeHandler}
+              className={classes.input}
+            />
             <label className={classes.label}>
               <input
                 className={classes.upload}
@@ -105,6 +131,21 @@ const CommonForm = ({
           <div>
             {mallImage ? mallImage?.name : editData?.mallImage?.imageName}
           </div>
+          <input
+            type="number"
+            placeholder="Phone Number"
+            name="phoneNumber"
+            value={edit ? editData?.phoneNumber : state?.phoneNumber}
+            onChange={changeHandler}
+            className={classes.input}
+          />
+          <AllTimings
+            state={state}
+            onManualTimeChange={onManualTimeChange}
+            onDefaultTimeChange={onDefaultTimeChange}
+            addMoreTimingsFields={addMoreTimingsFields}
+            onRemoveTimingsField={onRemoveTimingsField}
+          />
 
           {/*------- Shop ---------*/}
 

@@ -2,7 +2,11 @@
   width: 100%;
   height: 75px;
   background-color: #f9f9f9;
+<<<<<<< HEAD
   position: sticky;
+=======
+  position: fixed;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   z-index: 1000;
 }
 
@@ -43,7 +47,10 @@
   font-weight: bold;
   text-align: center;
   cursor: pointer;
+<<<<<<< HEAD
   position: relative;
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 }
 
 li a,
@@ -70,6 +77,7 @@ li a:hover,
   color: rgb(37, 37, 114);
 }
 
+<<<<<<< HEAD
 .shopsDropdown {
   visibility: hidden;
   position: absolute;
@@ -80,11 +88,28 @@ li a:hover,
   transform: translateX(-50%);
   cursor: auto;
   max-height: 0;
+=======
+.menuList ul li:nth-of-type(2):hover .icon {
+  transform: rotate(90deg) translateX(-8px);
+}
+
+.shopsDropdown {
+  visibility: hidden;
+  position: absolute;
+  top: 90px;
+  background-color: #f9f9f9;
+  padding: 25px 50px;
+  left: 40%;
+  cursor: auto;
+  max-height: 0;
+  overflow: hidden;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   opacity: 0;
   max-height: 0;
   transition: all 0.5s ease-in;
 }
 
+<<<<<<< HEAD
 .shopsDropdown::after {
   content: "";
   position: absolute;
@@ -98,6 +123,8 @@ li a:hover,
   transform: translateX(-50%);
 }
 
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 .menuList ul li:nth-of-type(2):hover .shopsDropdown {
   visibility: visible;
   max-height: 500px;
@@ -166,6 +193,7 @@ li a:hover,
   font-size: 25px;
   text-align: center;
   border-radius: 50%;
+<<<<<<< HEAD
   display: flex;
   justify-content: center;
   align-items: center;
@@ -175,6 +203,12 @@ li a:hover,
 .userImage img {
   width: 40px;
   position: absolute;
+=======
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 }
 
 .user .icon {
@@ -184,6 +218,13 @@ li a:hover,
   transition: 0.5s;
 }
 
+<<<<<<< HEAD
+=======
+.user:hover .icon {
+  transform: rotate(90deg) translateY(-2px);
+}
+
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 .userDropDown {
   visibility: hidden;
   position: absolute;
@@ -191,12 +232,17 @@ li a:hover,
   background-color: #f9f9f9;
   right: 1%;
   cursor: auto;
+<<<<<<< HEAD
+=======
+  overflow: hidden;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   opacity: 0;
   max-height: 0;
   transition: all 0.3s ease-in;
   border-radius: 10px;
 }
 
+<<<<<<< HEAD
 .userDropDown::before {
   content: "";
   position: absolute;
@@ -209,6 +255,8 @@ li a:hover,
   left: 65%;
 }
 
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 .userDropDown ul li .list {
   display: flex;
   padding: 20px 25px;
@@ -217,6 +265,7 @@ li a:hover,
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 .userDropDown ul li:last-child {
   background-color: #e8e8e8;
   transition: 0.2s;
@@ -227,6 +276,8 @@ li a:hover,
   color: rgb(236, 78, 78);
 }
 
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 .userDropDown ul li::after {
   background-color: rgba(133, 133, 133, 0.2);
   content: "";
@@ -245,7 +296,10 @@ li a:hover,
 
 .userDropDown ul li:hover {
   background-color: #e8e8e8;
+<<<<<<< HEAD
   border-radius: 10px;
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 }
 
 .user:hover .userDropDown {
@@ -255,7 +309,11 @@ li a:hover,
 }
 
 .userDropDown ul li .icons {
+<<<<<<< HEAD
   font-size: 24px;
+=======
+  font-size: 23px;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   margin-right: 8px;
 }
 
@@ -264,10 +322,17 @@ li a:hover,
   color: #2e6fba;
   background-color: white;
   outline: none;
+<<<<<<< HEAD
   border: 1.5px solid #2e6fba;
   border-radius: 30px;
   text-align: center;
   font-size: 16px;
+=======
+  border: 3px solid #2e6fba;
+  border-radius: 30px;
+  text-align: center;
+  font-size: 17px;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   font-weight: 600;
   padding: 10px 15px;
   cursor: pointer;
@@ -275,7 +340,11 @@ li a:hover,
 
 .button:hover {
   color: #5fa2f0;
+<<<<<<< HEAD
   border: 1.5px solid #5fa2f0;
+=======
+  border: 3px solid #5fa2f0;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   background-color: white;
 }
 
@@ -292,6 +361,10 @@ li a:hover,
 }
 
 /* Responsive */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 @media (max-width: 768px) {
   .navbar {
     height: 55px;
@@ -312,15 +385,19 @@ li a:hover,
     margin-left: 9px;
   }
 
+<<<<<<< HEAD
   .menuList {
     margin-left: 100px;
   }
 
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   .menuList ul li {
     font-size: 15px;
     margin-right: 38px;
   }
 
+<<<<<<< HEAD
   .toHide a {
     display: none;
   }
@@ -333,6 +410,26 @@ li a:hover,
     visibility: visible;
     max-height: auto;
     opacity: 1;
+=======
+  .menuList ul li:last-child,
+  .menuList ul li:nth-child(4) {
+    display: none;
+  }
+
+  .shopsDropdown {
+    visibility: hidden;
+    position: absolute;
+    top: 65px;
+    background-color: #f9f9f9;
+    padding: 20px 35px;
+    left: 30%;
+    cursor: auto;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0;
+    transition: all 0.5s ease-in;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   }
 
   .col {
@@ -396,7 +493,11 @@ li a:hover,
   }
 
   .userDropDown {
+<<<<<<< HEAD
     top: 75px;
+=======
+    top: 65px;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
     border-radius: 8px;
   }
 
@@ -431,7 +532,11 @@ li a:hover,
 
 @media (max-width: 414px) {
   .navbar {
+<<<<<<< HEAD
     position: sticky;
+=======
+    position: fixed;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   }
 
   .logo img {
@@ -459,6 +564,7 @@ li a:hover,
     right: 0px;
   }
 
+<<<<<<< HEAD
   .menuList {
     margin-left: 0px;
   }
@@ -467,6 +573,12 @@ li a:hover,
     display: block;
     position: relative;
     margin: 20px 0px 30px 25px;
+=======
+  .menuList ul li {
+    display: block;
+    position: relative;
+    margin: 20px 0px 0px 25px;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
     font-size: 16px;
     font-weight: bold;
     text-align: left;
@@ -484,17 +596,28 @@ li a:hover,
   .shopsDropdown {
     display: none;
     position: relative;
+<<<<<<< HEAD
     top: 22px;
     background-color: #f9f9f9;
     width: 100vw;
     padding: 8px 50px;
     left: 0;
+=======
+    top: 0px;
+    background-color: #f9f9f9;
+    width: 100vw;
+    padding: 8px 50px;
+    left: -7%;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
     cursor: auto;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
+<<<<<<< HEAD
     transform: translateX(0%);
 
+=======
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
     transition: all 0.5s ease-in;
   }
 
@@ -508,6 +631,7 @@ li a:hover,
     display: block;
   }
 
+<<<<<<< HEAD
   .col {
     text-align: left;
     display: flex;
@@ -526,6 +650,33 @@ li a:hover,
     margin-left: 5px;
     position: relative;
     transform: translateY(18%);
+=======
+  .col .headerIcon {
+    display: inline;
+    margin-left: 5px;
+    position: relative;
+  }
+
+  .col {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+
+  .col:last-child {
+    margin-right: 0px;
+  }
+
+  .col h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .col:hover .headerIcon {
+    transform: rotate(90deg) translateX(0px);
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   }
 
   .col ul {
@@ -537,6 +688,7 @@ li a:hover,
 
   .col:hover ul {
     display: block;
+<<<<<<< HEAD
     margin-bottom: 20px;
     height: auto;
   }
@@ -548,6 +700,19 @@ li a:hover,
     font-weight: normal;
 
     margin-left: 80px;
+=======
+  }
+
+  .col ul li {
+    display: block;
+    text-align: left;
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 80px;
+    padding: 10px 0px;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   }
 
   .col ul li::after {
@@ -555,6 +720,14 @@ li a:hover,
     display: none;
   }
 
+<<<<<<< HEAD
+=======
+  .dropDownWrapper:last-child {
+    padding: 0px 0px;
+    margin-bottom: -10px;
+  }
+
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   .user {
     display: none;
   }
@@ -569,12 +742,20 @@ li a:hover,
 
   .controller ul li .list {
     display: flex;
+<<<<<<< HEAD
     padding: 20px 0px;
+=======
+    margin-bottom: 20px;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   }
 
   .controller ul li .list .icons {
     margin-right: 8px;
+<<<<<<< HEAD
     font-size: 21px;
+=======
+    font-size: 17px;
+>>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   }
 
   .burger {
