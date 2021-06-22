@@ -84,6 +84,9 @@ const AllTimings = ({
           Show More Timing +
         </p>
       )}
+      {state.mallTimeError && (
+        <p className="error">* Please fill the day and time field</p>
+      )}
     </div>
   );
 };

@@ -8,6 +8,8 @@ const ShopForm = ({
   index,
   shopImageState,
   shopImageDispatch,
+  register,
+  errors,
 }) => {
   const closeShopForm = () => {
     dispatch({
@@ -28,6 +30,8 @@ const ShopForm = ({
         shopImageState,
         shopImageDispatch,
         closeShopForm,
+        register,
+        errors,
       }}
     />
   );

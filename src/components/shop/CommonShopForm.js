@@ -18,10 +18,13 @@ const CommonShopForm = ({
   addedShopImagesDispatch,
   addedShopImages,
   removeImage,
+  register,
+  errors,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
   const [subCategoryLists, setSubCategoryLists] = useState([]);
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
 
@@ -90,30 +93,51 @@ const CommonShopForm = ({
         <IoIosClose />
       </div>
       <div className={classes.innerDiv}>
-        <input
-          type="text"
-          placeholder="Name of Shop"
-          name="shopName"
-          value={edit ? dataShop?.shopName : s.shopName}
-          onChange={onChangeHandler}
-          className={classes.input}
-        />
-        <input
-          type="number"
-          placeholder="Level"
-          name="shopLevel"
-          value={edit ? dataShop?.levels : s?.shopLevel}
-          onChange={onChangeHandler}
-          className={classes.input}
-        />
-        <input
-          type="number"
-          placeholder="Phone Number"
-          name="phoneNumber"
-          value={edit ? dataShop?.phoneNumber : s?.phoneNumber}
-          onChange={onChangeHandler}
-          className={classes.input}
-        />
+        <div>
+          <input
+            type="text"
+            {...register("shopName", { required: true })}
+            placeholder="Name of Shop"
+            name="shopName"
+            value={edit ? dataShop?.shopName : s.shopName}
+            onChange={onChangeHandler}
+            className={classes.input}
+          />
+          {errors.shopName && (
+            <p className={classes.error}>* Name is required</p>
+          )}
+        </div>
+        <div>
+          <input
+            type="number"
+            {...register("shopLevel", { required: true })}
+            placeholder="Level"
+            name="shopLevel"
+            value={edit ? dataShop?.levels : s?.shopLevel}
+            onChange={onChangeHandler}
+            className={classes.input}
+          />
+          {errors.shopLevel && (
+            <p className={classes.error}>* level is required</p>
+          )}
+        </div>
+        <div>
+          <input
+            type="number"
+            {...register("shopPhoneNumber", {
+              required: true,
+            })}
+            placeholder="Phone Number"
+            name="shopPhoneNumber"
+            value={edit ? dataShop?.phoneNumber : s?.shopPhoneNumber}
+            onChange={onChangeHandler}
+            className={classes.input}
+          />
+          {errors.shopPhoneNumber && (
+            <p className={classes.error}>* Number is required</p>
+          )}
+        </div>
+
         <textarea
           type="text"
           placeholder="Description"
