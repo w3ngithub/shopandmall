@@ -59,7 +59,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  margin: 10px 30px;
+  margin: 25px 30px;
   text-align: center;
   /* margin-bottom: 25px; */
 }
@@ -111,6 +111,7 @@
 }
 
 .label {
+  /* width: 124px; */
   height: 30px;
   margin: -10px 0 10px 0;
   color: #2e6fba;
@@ -153,13 +154,6 @@
   position: relative;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 25px 30px;
-}
-
 /* Image Open Modal */
 
 .ImageContainer {
@@ -169,11 +163,7 @@
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 101;
-}
-
-.Image {
-  max-width: 650px;
-  max-height: 400px;
+  width: 100%;
 }
 
 .backdrop {
@@ -184,6 +174,21 @@
 
 .inputWrapper {
   position: relative;
+}
+
+.closeBtn {
+  z-index: 1000;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.closeBtn:hover {
+  transform: scale(1.1);
+  color: rgb(255, 108, 108);
 }
 
 .categoryError,
