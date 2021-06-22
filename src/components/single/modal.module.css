@@ -59,11 +59,7 @@
 .form {
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
   margin: 25px 30px;
-=======
-  margin: 10px 30px;
->>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   text-align: center;
   /* margin-bottom: 25px; */
 }
@@ -115,10 +111,7 @@
 }
 
 .label {
-<<<<<<< HEAD
   /* width: 124px; */
-=======
->>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
   height: 30px;
   margin: -10px 0 10px 0;
   color: #2e6fba;
@@ -159,16 +152,6 @@
   display: flex;
   align-items: center;
   position: relative;
-<<<<<<< HEAD
-=======
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 25px 30px;
->>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 }
 
 /* Image Open Modal */
@@ -180,15 +163,7 @@
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 101;
-<<<<<<< HEAD
   width: 100%;
-=======
-}
-
-.Image {
-  max-width: 650px;
-  max-height: 400px;
->>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 }
 
 .backdrop {
@@ -199,7 +174,6 @@
 
 .inputWrapper {
   position: relative;
-<<<<<<< HEAD
 }
 
 .closeBtn {
@@ -215,8 +189,6 @@
 .closeBtn:hover {
   transform: scale(1.1);
   color: rgb(255, 108, 108);
-=======
->>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 }
 
 .categoryError,

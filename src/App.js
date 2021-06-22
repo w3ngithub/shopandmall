@@ -15,11 +15,8 @@ import {
   MallForm,
   EditMall,
   PageNotFound,
-<<<<<<< HEAD
   AboutUs,
   ContactUs,
-=======
->>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
 } from "./pages";
 import AddShopCategory from "./pages/addShopCategory";
 
@@ -56,7 +53,6 @@ function App() {
           <Route exact path="/:id/shops/:type" component={SingleShop} />
           <Route exact path="/mall/:id/shops/:type" component={SingleShop} />
 
-<<<<<<< HEAD
           {/*------------------ Both ------------------ */}
           <Route exact path="/about-us" component={AboutUs} />
           <Route exact path="/contact-us" component={ContactUs} />
@@ -98,7 +94,6 @@ function App() {
             component={SingleShop}
           />
 
-=======
           {/* ------------------Admin------------------ */}
           <Route
             exact
@@ -136,7 +131,6 @@ function App() {
             component={SingleShop}
           />
 
->>>>>>> 8a63380de773756ff0fd1852768ddab7ab0e6e80
           {/* ----------No Url------------------ */}
           <Route exact path="/pageNotFound" component={PageNotFound} />
           <Redirect to="/pageNotFound" />
