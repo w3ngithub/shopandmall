@@ -1,9 +1,11 @@
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./ProtectedRoute";
 import { Switch, Route, Redirect } from "react-router-dom";
 import React, { useState, useEffect, useReducer, createContext } from "react";
 import allDataReducer from "./reducers/allDataReducer";
 import "./index.css";
+import { useLocation } from "react-router-dom";
 
 import {
   HomePage,
@@ -24,6 +26,7 @@ const MyContext = createContext();
 
 function App() {
   const allData = [];
+  const location = useLocation();
 
   //State
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
@@ -39,10 +42,10 @@ function App() {
   }, []);
 
   return (
-    <div className="dsds">
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <MyContext.Provider value={{ allDataState, allDataDispatch }}>
         {/* {location.pathname.split("/")[1] === "admin" && <NavBar />} */}
-        <NavBar />
+        {location.pathname !== "/login" && <NavBar />}
 
         <Switch>
           {/* ------------------User------------------ */}
@@ -135,6 +138,7 @@ function App() {
           <Route exact path="/pageNotFound" component={PageNotFound} />
           <Redirect to="/pageNotFound" />
         </Switch>
+        {location.pathname !== "/login" && <Footer />}
       </MyContext.Provider>
     </div>
   );
