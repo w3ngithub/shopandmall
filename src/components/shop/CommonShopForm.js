@@ -20,6 +20,7 @@ const CommonShopForm = ({
   removeImage,
   register,
   errors,
+  mallTime,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
@@ -77,6 +78,18 @@ const CommonShopForm = ({
       type: "REMOVE_SHOPTIMINGS_FIELDS",
       payload: { shopIndex: index, rowId },
     });
+
+  let listOfMallTimes = [mallTime[0]];
+  s.timings.forEach((time, index) => {
+    if (index > 0) {
+      let isDayPresentInMallTime = mallTime.findIndex(
+        (t) => t.label === time.label
+      );
+      if (isDayPresentInMallTime > 0) {
+        listOfMallTimes[index] = mallTime[isDayPresentInMallTime];
+      }
+    }
+  });
 
   return (
     <div className={classes.shopContainer}>
@@ -173,11 +186,13 @@ const CommonShopForm = ({
         </select>
         <AllTimings
           state={s}
+          index={index}
           onManualTimeChange={onManualTimeChange}
           onDefaultTimeChange={onDefaultTimeChange}
           addMoreTimingsFields={addMoreTimingsFields}
           onRemoveTimingsField={onRemoveTimingsField}
           isShop={true}
+          mallTime={listOfMallTimes}
         />
 
         {shopImageError && <p>{shopImageError}</p>}

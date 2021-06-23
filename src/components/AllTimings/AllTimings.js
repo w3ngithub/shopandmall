@@ -5,11 +5,13 @@ import "./alltimings.css";
 
 const AllTimings = ({
   state,
+  index,
   onManualTimeChange,
   onDefaultTimeChange,
   isShop,
   addMoreTimingsFields,
   onRemoveTimingsField,
+  mallTime,
 }) => {
   const [showManualTimings, setShowManualTimings] = useState(false);
   const [days, setDays] = useState([
@@ -31,7 +33,7 @@ const AllTimings = ({
             type="radio"
             id="every day"
             value="every day"
-            name={isShop ? "shopTimings" : "mallTimings"}
+            name={isShop ? `shopTimings${index}` : "mallTimings"}
             onChange={() => setShowManualTimings(false)}
             defaultChecked
           />
@@ -42,7 +44,7 @@ const AllTimings = ({
             type="radio"
             id="manual"
             value="manual timing"
-            name={isShop ? "shopTimings" : "mallTimings"}
+            name={isShop ? `shopTimings${index}` : "mallTimings"}
             onChange={() => setShowManualTimings(true)}
           />
           <label htmlFor="manual ">Manual Timing</label>
@@ -50,7 +52,7 @@ const AllTimings = ({
       </div>
       {showManualTimings ? (
         <>
-          {state.timings.map((time) => (
+          {state.timings.map((time, index) => (
             <ManualTimings
               key={time.id}
               time={time}
@@ -67,6 +69,13 @@ const AllTimings = ({
               }}
               isShop={isShop}
               onRemoveTimingsField={() => onRemoveTimingsField(time.id)}
+              mallTime={
+                mallTime?.length > 1
+                  ? mallTime[index]
+                  : typeof mallTime !== "undefined"
+                  ? mallTime[0]
+                  : null
+              }
             />
           ))}
         </>
@@ -77,6 +86,8 @@ const AllTimings = ({
           setCloseTime={(value) => onDefaultTimeChange("closeTime", value)}
           isShop={isShop}
           showRemove={showManualTimings}
+          minTime={typeof mallTime !== "undefined" && mallTime[0].openTime}
+          maxTime={typeof mallTime !== "undefined" && mallTime[0].closeTime}
         />
       )}
       {showManualTimings && (

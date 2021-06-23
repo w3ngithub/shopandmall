@@ -218,6 +218,7 @@ const CommonForm = ({
                       shopImageDispatch,
                       register,
                       errors,
+                      mallTime: state.timings,
                     }}
                   />
                   <div className={classes.line}></div>
