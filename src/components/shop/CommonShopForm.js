@@ -21,6 +21,7 @@ const CommonShopForm = ({
   register,
   errors,
   mallTime,
+  mallLevels,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
@@ -90,7 +91,7 @@ const CommonShopForm = ({
       }
     }
   });
-
+  console.log(errors);
   return (
     <div className={classes.shopContainer}>
       <div
@@ -123,14 +124,22 @@ const CommonShopForm = ({
         <div>
           <input
             type="number"
-            {...register("shopLevel", { required: true })}
+            {...register("shopLevel", {
+              required: true,
+              validate: (value) => value < mallLevels,
+            })}
             placeholder="Level"
             name="shopLevel"
             value={edit ? dataShop?.levels : s?.shopLevel}
             onChange={onChangeHandler}
             className={classes.input}
           />
-          {errors.shopLevel && (
+          {errors.shopLevel.type === "validate" && (
+            <p className={classes.error}>
+              * level should be according to mall level
+            </p>
+          )}
+          {errors.shopLevel.type === "required" && (
             <p className={classes.error}>* level is required</p>
           )}
         </div>

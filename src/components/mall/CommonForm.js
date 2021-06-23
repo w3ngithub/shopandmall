@@ -219,6 +219,7 @@ const CommonForm = ({
                       register,
                       errors,
                       mallTime: state.timings,
+                      mallLevel: state.levels,
                     }}
                   />
                   <div className={classes.line}></div>

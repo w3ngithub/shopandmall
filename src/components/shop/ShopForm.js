@@ -11,6 +11,7 @@ const ShopForm = ({
   register,
   errors,
   mallTime,
+  mallLevels,
 }) => {
   const closeShopForm = () => {
     dispatch({
@@ -34,6 +35,7 @@ const ShopForm = ({
         register,
         errors,
         mallTime,
+        mallLevels,
       }}
     />
   );
