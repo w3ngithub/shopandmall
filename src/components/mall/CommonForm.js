@@ -23,6 +23,7 @@ const CommonForm = ({
   setMallImage,
   isLoading,
   setIsLoading,
+  loadingPercentage,
 }) => {
   //States
 
@@ -84,11 +85,6 @@ const CommonForm = ({
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>
-        {isLoading === true && (
-          <div className={classes.loaderPosition}>
-            <Loader />
-          </div>
-        )}
         <form className={classes.form} action="" onSubmit={submitHandler}>
           <div className={classes.innerDiv}>
             <input
@@ -201,6 +197,8 @@ const CommonForm = ({
           )}
 
           {/* --------------------- */}
+
+          {isLoading && <Loader loadingPercentage={loadingPercentage} />}
 
           <input
             className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}
