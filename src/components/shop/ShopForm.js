@@ -8,6 +8,11 @@ const ShopForm = ({
   index,
   shopImageState,
   shopImageDispatch,
+  register,
+  errors,
+  control,
+  mallTime,
+  mallLevel,
 }) => {
   const closeShopForm = () => {
     dispatch({
@@ -28,6 +33,9 @@ const ShopForm = ({
         shopImageState,
         shopImageDispatch,
         closeShopForm,
+        control,
+        mallTime,
+        mallLevel,
       }}
     />
   );

@@ -9,6 +9,7 @@ const ManualTimings = ({
   days,
   setDays,
   isShop,
+  mallTime,
   onRemoveTimingsField,
 }) => {
   let filterDays = [];
@@ -39,6 +40,8 @@ const ManualTimings = ({
         setCloseTime={setCloseTime}
         isShop={isShop}
         onRemoveTimingsField={onRemoveTimingsField}
+        minTime={mallTime?.openTime}
+        maxTime={mallTime?.closeTime}
       />
     </div>
   );

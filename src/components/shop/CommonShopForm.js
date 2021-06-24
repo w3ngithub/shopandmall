@@ -3,6 +3,7 @@ import classes from "./shopform.module.css";
 import { IoIosClose } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
 import useFirestore from "../../hooks/useFirestore";
+import { Controller } from "react-hook-form";
 
 const CommonShopForm = ({
   edit,
@@ -18,10 +19,14 @@ const CommonShopForm = ({
   addedShopImagesDispatch,
   addedShopImages,
   removeImage,
+  control,
+  mallTime,
+  mallLevel,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
   const [subCategoryLists, setSubCategoryLists] = useState([]);
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
 
@@ -75,6 +80,18 @@ const CommonShopForm = ({
       payload: { shopIndex: index, rowId },
     });
 
+  let listOfMallTimes = [mallTime[0]];
+  s.timings.forEach((time, index) => {
+    if (index > 0) {
+      let isDayPresentInMallTime = mallTime.findIndex(
+        (t) => t.label === time.label
+      );
+      if (isDayPresentInMallTime > 0) {
+        listOfMallTimes[index] = mallTime[isDayPresentInMallTime];
+      }
+    }
+  });
+
   return (
     <div className={classes.shopContainer}>
       <div
@@ -90,30 +107,95 @@ const CommonShopForm = ({
         <IoIosClose />
       </div>
       <div className={classes.innerDiv}>
-        <input
-          type="text"
-          placeholder="Name of Shop"
-          name="shopName"
-          value={edit ? dataShop?.shopName : s.shopName}
-          onChange={onChangeHandler}
-          className={classes.input}
-        />
-        <input
-          type="number"
-          placeholder="Level"
-          name="shopLevel"
-          value={edit ? dataShop?.levels : s?.shopLevel}
-          onChange={onChangeHandler}
-          className={classes.input}
-        />
-        <input
-          type="number"
-          placeholder="Phone Number"
-          name="phoneNumber"
-          value={edit ? dataShop?.phoneNumber : s?.phoneNumber}
-          onChange={onChangeHandler}
-          className={classes.input}
-        />
+        <div>
+          <Controller
+            control={control}
+            name={`shops[${index}].name`}
+            render={({
+              field: { onChange },
+              fieldState: { error, invalid },
+            }) => (
+              <>
+                <input
+                  type="text"
+                  placeholder="Name of Shop"
+                  name="shopName"
+                  value={edit ? dataShop?.shopName : s.shopName}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                    onChange(e);
+                  }}
+                  className={classes.input}
+                />
+                {error && <p className={classes.error}>{error.message}</p>}
+              </>
+            )}
+            rules={{ required: { value: true, message: "* Name is Required" } }}
+          />
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name={`shops[${index}].shopLevel`}
+            render={({
+              field: { onChange },
+              fieldState: { error, invalid },
+            }) => (
+              <>
+                <input
+                  type="number"
+                  placeholder="level"
+                  name="shopLevel"
+                  value={edit ? dataShop?.shopLevel : s.shopLevel}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                    onChange(e);
+                  }}
+                  className={classes.input}
+                />
+                {error && <p className={classes.error}>{error.message}</p>}
+                {error?.type === "validate" && (
+                  <p className={classes.error}>
+                    * level must match the mall levels
+                  </p>
+                )}
+              </>
+            )}
+            rules={{
+              required: { value: true, message: "* Level is Required" },
+              validate: (value) => value < mallLevel,
+            }}
+          />
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name={`shops[${index}].number`}
+            render={({
+              field: { onChange },
+              fieldState: { error, invalid },
+            }) => (
+              <>
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  name="shopPhoneNumber"
+                  value={edit ? dataShop?.phoneNumber : s?.shopPhoneNumber}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                    onChange(e);
+                  }}
+                  className={classes.input}
+                />
+                {error && <p className={classes.error}>{error.message}</p>}
+              </>
+            )}
+            rules={{
+              required: { value: true, message: "* Number is Required" },
+            }}
+          />
+        </div>
+
         <textarea
           type="text"
           placeholder="Description"
@@ -149,11 +231,13 @@ const CommonShopForm = ({
         </select>
         <AllTimings
           state={s}
+          index={index}
           onManualTimeChange={onManualTimeChange}
           onDefaultTimeChange={onDefaultTimeChange}
           addMoreTimingsFields={addMoreTimingsFields}
           onRemoveTimingsField={onRemoveTimingsField}
           isShop={true}
+          mallTime={listOfMallTimes}
         />
 
         {shopImageError && <p>{shopImageError}</p>}
