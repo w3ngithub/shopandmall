@@ -71,7 +71,7 @@ const MallForm = () => {
         );
         if (shopTimeError) {
           isShopTimeError = true;
-          alert("please fill the time of shop no." + index + 1);
+          alert(`please fill the time of shop no.${index + 1}`);
           return;
         }
 

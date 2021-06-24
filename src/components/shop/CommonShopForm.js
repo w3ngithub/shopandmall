@@ -3,6 +3,7 @@ import classes from "./shopform.module.css";
 import { IoIosClose } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
 import useFirestore from "../../hooks/useFirestore";
+import { Controller } from "react-hook-form";
 
 const CommonShopForm = ({
   edit,
@@ -18,10 +19,9 @@ const CommonShopForm = ({
   addedShopImagesDispatch,
   addedShopImages,
   removeImage,
-  register,
-  errors,
+  control,
   mallTime,
-  mallLevels,
+  mallLevel,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
@@ -91,7 +91,7 @@ const CommonShopForm = ({
       }
     }
   });
-  console.log(errors);
+
   return (
     <div className={classes.shopContainer}>
       <div
@@ -108,56 +108,92 @@ const CommonShopForm = ({
       </div>
       <div className={classes.innerDiv}>
         <div>
-          <input
-            type="text"
-            {...register("shopName", { required: true })}
-            placeholder="Name of Shop"
-            name="shopName"
-            value={edit ? dataShop?.shopName : s.shopName}
-            onChange={onChangeHandler}
-            className={classes.input}
+          <Controller
+            control={control}
+            name={`shops[${index}].name`}
+            render={({
+              field: { onChange },
+              fieldState: { error, invalid },
+            }) => (
+              <>
+                <input
+                  type="text"
+                  placeholder="Name of Shop"
+                  name="shopName"
+                  value={edit ? dataShop?.shopName : s.shopName}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                    onChange(e);
+                  }}
+                  className={classes.input}
+                />
+                {error && <p className={classes.error}>{error.message}</p>}
+              </>
+            )}
+            rules={{ required: { value: true, message: "* Name is Required" } }}
           />
-          {errors.shopName && (
-            <p className={classes.error}>* Name is required</p>
-          )}
         </div>
         <div>
-          <input
-            type="number"
-            {...register("shopLevel", {
-              required: true,
-              validate: (value) => value < mallLevels,
-            })}
-            placeholder="Level"
-            name="shopLevel"
-            value={edit ? dataShop?.levels : s?.shopLevel}
-            onChange={onChangeHandler}
-            className={classes.input}
+          <Controller
+            control={control}
+            name={`shops[${index}].shopLevel`}
+            render={({
+              field: { onChange },
+              fieldState: { error, invalid },
+            }) => (
+              <>
+                <input
+                  type="number"
+                  placeholder="level"
+                  name="shopLevel"
+                  value={edit ? dataShop?.shopLevel : s.shopLevel}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                    onChange(e);
+                  }}
+                  className={classes.input}
+                />
+                {error && <p className={classes.error}>{error.message}</p>}
+                {error?.type === "validate" && (
+                  <p className={classes.error}>
+                    * level must match the mall levels
+                  </p>
+                )}
+              </>
+            )}
+            rules={{
+              required: { value: true, message: "* Level is Required" },
+              validate: (value) => value < mallLevel,
+            }}
           />
-          {errors.shopLevel.type === "validate" && (
-            <p className={classes.error}>
-              * level should be according to mall level
-            </p>
-          )}
-          {errors.shopLevel.type === "required" && (
-            <p className={classes.error}>* level is required</p>
-          )}
         </div>
         <div>
-          <input
-            type="number"
-            {...register("shopPhoneNumber", {
-              required: true,
-            })}
-            placeholder="Phone Number"
-            name="shopPhoneNumber"
-            value={edit ? dataShop?.phoneNumber : s?.shopPhoneNumber}
-            onChange={onChangeHandler}
-            className={classes.input}
+          <Controller
+            control={control}
+            name={`shops[${index}].number`}
+            render={({
+              field: { onChange },
+              fieldState: { error, invalid },
+            }) => (
+              <>
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  name="shopPhoneNumber"
+                  value={edit ? dataShop?.phoneNumber : s?.shopPhoneNumber}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                    onChange(e);
+                  }}
+                  className={classes.input}
+                />
+                {error && <p className={classes.error}>{error.message}</p>}
+              </>
+            )}
+            rules={{
+              required: { value: true, message: "* Number is Required" },
+            }}
           />
-          {errors.shopPhoneNumber && (
-            <p className={classes.error}>* Number is required</p>
-          )}
         </div>
 
         <textarea

@@ -29,6 +29,7 @@ const CommonForm = ({
 
   const [mallImageError, setMallImageError] = useState(null);
   const {
+    control,
     register,
     formState: { errors },
     handleSubmit,
@@ -86,7 +87,7 @@ const CommonForm = ({
   useEffect(() => {
     setIsLoading(false);
   }, []);
-
+  console.log(errors);
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>
@@ -158,15 +159,21 @@ const CommonForm = ({
           <div>
             <input
               type="number"
-              {...register("phoneNumber", { required: true })}
+              {...register("phoneNumber", {
+                required: true,
+                validate: (value) => value.length === 10,
+              })}
               placeholder="Phone Number"
               name="phoneNumber"
               value={edit ? editData?.phoneNumber : state?.phoneNumber}
               onChange={changeHandler}
               className={classes.input}
             />
-            {errors.phoneNumber && (
+            {errors?.phoneNumber?.type === "required" && (
               <p className={classes.error}>* Number is required</p>
+            )}
+            {errors?.phoneNumber?.type === "validate" && (
+              <p className={classes.error}>* Number must be 10 digits</p>
             )}
           </div>
 
@@ -216,8 +223,7 @@ const CommonForm = ({
                       index,
                       shopImageState,
                       shopImageDispatch,
-                      register,
-                      errors,
+                      control,
                       mallTime: state.timings,
                       mallLevel: state.levels,
                     }}
