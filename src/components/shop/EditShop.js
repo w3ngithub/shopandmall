@@ -5,10 +5,14 @@ const ShopForm = ({
   edit,
   dataShop,
   editDispatch,
-  index2,
+  index,
   setImagesToRemove,
   addedShopImagesDispatch,
   addedShopImages,
+  control,
+  getValues,
+  mallTime,
+  mallLevel,
 }) => {
   const closeShopForm = (dataShop) => {
     editDispatch({
@@ -42,12 +46,16 @@ const ShopForm = ({
         edit,
         dataShop,
         editDispatch,
-        index2,
+        index,
         setImagesToRemove,
         addedShopImagesDispatch,
         addedShopImages,
         removeImage,
         closeShopForm,
+        control,
+        getValues,
+        mallTime,
+        mallLevel,
       }}
     />
   );

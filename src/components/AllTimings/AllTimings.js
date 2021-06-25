@@ -52,11 +52,11 @@ const AllTimings = ({
       </div>
       {showManualTimings ? (
         <>
-          {state.timings.map((time, index) => (
+          {state?.timings?.map((time, index) => (
             <ManualTimings
-              key={time.id}
+              key={time?.id}
               time={time}
-              timings={state.timings}
+              timings={state?.timings}
               setOpenTime={(value) =>
                 onManualTimeChange(time.id, "openTime", value)
               }
@@ -81,7 +81,7 @@ const AllTimings = ({
         </>
       ) : (
         <DefaultTimings
-          timing={state.timings[0]}
+          timing={state?.timings[0]}
           setOpenTime={(value) => onDefaultTimeChange("openTime", value)}
           setCloseTime={(value) => onDefaultTimeChange("closeTime", value)}
           isShop={isShop}
@@ -95,9 +95,9 @@ const AllTimings = ({
           Show More Timing +
         </p>
       )}
-      {state.mallTimeError && (
+      {/* {state.mallTimeError && (
         <p className="error">* Please fill the day and time field</p>
-      )}
+      )} */}
     </div>
   );
 };

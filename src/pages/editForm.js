@@ -31,7 +31,7 @@ const MallForm = () => {
 
   const submitHandler = async (e) => {
     setIsLoading(true);
-    e.preventDefault();
+    console.log(editData);
     try {
       const storageRef = storage.ref();
       let mallImageUrl = null;
@@ -86,6 +86,9 @@ const MallForm = () => {
       let mall = {
         mallName: editData?.mallName,
         mallAddress: editData?.mallAddress,
+        levels: editData?.levels,
+        phoneNumber: editData?.phoneNumber,
+        timings: editData?.timings,
         mallImage: setMallImage,
       };
 
@@ -96,6 +99,11 @@ const MallForm = () => {
                 id: i,
                 shopName: s.shopName,
                 shopDescription: s.shopDescription,
+                shopLevel: s?.shopLevel,
+                shopPhoneNumber: s?.shopPhoneNumber,
+                timings: s?.timings,
+                category: s?.category,
+                subCategory: s?.subCategory,
                 shopImages: [
                   ...s.shopImages,
                   ...shopImageUrl[i].map((items, index) => ({
@@ -109,12 +117,22 @@ const MallForm = () => {
                 id: i,
                 shopName: s.shopName,
                 shopDescription: s.shopDescription,
+                shopLevel: s?.shopLevel,
+                shopPhoneNumber: s?.shopPhoneNumber,
+                timings: s?.timings,
+                category: s?.category,
+                subCategory: s?.subCategory,
                 shopImages: [...s.shopImages],
               }
           : {
               id: i,
               shopName: s.shopName,
               shopDescription: s.shopDescription,
+              shopLevel: s?.shopLevel,
+              shopPhoneNumber: s?.shopPhoneNumber,
+              timings: s?.timings,
+              category: s?.category,
+              subCategory: s?.subCategory,
               shopImages: [
                 ...shopImageUrl[i].map((items, index) => ({
                   id: Math.random() + addedShopImages[i].images[index].name,

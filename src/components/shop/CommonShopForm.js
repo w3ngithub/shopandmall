@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./shopform.module.css";
 import { IoIosClose } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
@@ -20,6 +20,7 @@ const CommonShopForm = ({
   addedShopImages,
   removeImage,
   control,
+  getValues,
   mallTime,
   mallLevel,
 }) => {
@@ -33,7 +34,7 @@ const CommonShopForm = ({
     edit
       ? editDispatch({
           type: "EDIT_SHOP_INFO",
-          payload: { name: name, value: value, index: index2 },
+          payload: { name: name, value: value, index: index },
         })
       : dispatch({
           type: "ADD_SHOP_INFO",
@@ -81,7 +82,8 @@ const CommonShopForm = ({
     });
 
   let listOfMallTimes = [mallTime[0]];
-  s.timings.forEach((time, index) => {
+
+  s?.timings?.forEach((time, index) => {
     if (index > 0) {
       let isDayPresentInMallTime = mallTime.findIndex(
         (t) => t.label === time.label
@@ -91,7 +93,6 @@ const CommonShopForm = ({
       }
     }
   });
-
   return (
     <div className={classes.shopContainer}>
       <div
@@ -110,7 +111,8 @@ const CommonShopForm = ({
         <div>
           <Controller
             control={control}
-            name={`shops[${index}].name`}
+            name={`shops[${index}].shopName`}
+            defaultValue={edit && getValues(`shops[${index}].shopName`)}
             render={({
               field: { onChange },
               fieldState: { error, invalid },
@@ -137,6 +139,7 @@ const CommonShopForm = ({
           <Controller
             control={control}
             name={`shops[${index}].shopLevel`}
+            defaultValue={edit && getValues(`shops[${index}].shopLevel`)}
             render={({
               field: { onChange },
               fieldState: { error, invalid },
@@ -170,7 +173,8 @@ const CommonShopForm = ({
         <div>
           <Controller
             control={control}
-            name={`shops[${index}].number`}
+            name={`shops[${index}].shopPhoneNumber`}
+            defaultValue={edit && getValues(`shops[${index}].shopPhoneNumber`)}
             render={({
               field: { onChange },
               fieldState: { error, invalid },
@@ -180,7 +184,7 @@ const CommonShopForm = ({
                   type="text"
                   placeholder="Phone Number"
                   name="shopPhoneNumber"
-                  value={edit ? dataShop?.phoneNumber : s?.shopPhoneNumber}
+                  value={edit ? dataShop?.shopPhoneNumber : s?.shopPhoneNumber}
                   onChange={(e) => {
                     onChangeHandler(e);
                     onChange(e);
@@ -230,7 +234,7 @@ const CommonShopForm = ({
           ))}
         </select>
         <AllTimings
-          state={s}
+          state={edit ? dataShop : s}
           index={index}
           onManualTimeChange={onManualTimeChange}
           onDefaultTimeChange={onDefaultTimeChange}
@@ -238,6 +242,7 @@ const CommonShopForm = ({
           onRemoveTimingsField={onRemoveTimingsField}
           isShop={true}
           mallTime={listOfMallTimes}
+          edit={edit}
         />
 
         {shopImageError && <p>{shopImageError}</p>}
