@@ -101,8 +101,7 @@ const CommonForm = ({
       });
     }
   }, []);
-  console.log(errors);
-  console.log(getValues("shops"));
+
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>

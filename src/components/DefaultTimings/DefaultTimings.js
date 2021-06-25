@@ -8,6 +8,8 @@ const DefaultTimings = ({
   isShop,
   onRemoveTimingsField,
   showRemove = true,
+  minTime,
+  maxTime,
 }) => {
   return (
     <div className="timings" style={isShop && { width: "60%" }}>
@@ -24,6 +26,7 @@ const DefaultTimings = ({
             minuteHandWidth={4}
             minuteHandLength={60}
             hourHandLength={40}
+            minTime={minTime}
           />
         </div>
         <div className="timeinput">
@@ -38,6 +41,7 @@ const DefaultTimings = ({
             minuteHandWidth={4}
             minuteHandLength={60}
             hourHandLength={40}
+            maxTime={maxTime}
           />
         </div>
       </div>
