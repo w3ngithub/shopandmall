@@ -24,6 +24,7 @@ const CommonForm = ({
   setMallImage,
   isLoading,
   setIsLoading,
+  loadingPercentage,
 }) => {
   //States
 
@@ -242,6 +243,8 @@ const CommonForm = ({
           )}
 
           {/* --------------------- */}
+
+          {isLoading && <Loader loadingPercentage={loadingPercentage} />}
 
           <input
             className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}

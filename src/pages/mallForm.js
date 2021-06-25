@@ -33,6 +33,7 @@ const MallForm = () => {
   //States
   const [state, dispatch] = useReducer(reducer, initialValues);
   const [mallImage, setMallImage] = useState(null);
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
 
   //Shop States
   const [shopImageState, shopImageDispatch] = useReducer(
@@ -89,16 +90,21 @@ const MallForm = () => {
         !isShopImageError
       ) {
         setIsLoading(true);
+        setIsLoading(true);
         const storageRef = storage.ref();
         let mallImageUrl = null;
+        setLoadingPercentage(10);
         // Mall Image
         if (mallImage !== null) {
           const imageRef = storageRef.child(mallImage.name);
+          setLoadingPercentage(25);
           await imageRef.put(mallImage);
+          setLoadingPercentage(45);
           mallImageUrl = await imageRef.getDownloadURL();
         } else {
           mallImageUrl = null;
         }
+        setLoadingPercentage(60);
         await Promise.all(
           shopImageState?.map((item) =>
             Promise.all(
@@ -117,7 +123,7 @@ const MallForm = () => {
             )
           )
         );
-        console.log(state);
+
         let mall = {
           mallId: Math.random() * 9999,
           mallName: state?.mallName,
@@ -146,6 +152,7 @@ const MallForm = () => {
             url: items,
           })),
         }));
+        setLoadingPercentage(80);
         //FireStore
         fireStore
           .collection("Shopping Mall")
@@ -162,10 +169,12 @@ const MallForm = () => {
           type: "ADD_DATA",
           payload: { mall, shops },
         });
+        setLoadingPercentage(100);
         history.goBack();
       }
     } catch (err) {
-      console.log("Error", err);
+      alert("some error ocurred");
+      setIsLoading(false);
     }
   };
 
@@ -188,6 +197,7 @@ const MallForm = () => {
         setMallImage,
         isLoading,
         setIsLoading,
+        loadingPercentage,
       }}
     />
   );

@@ -1,15 +1,11 @@
 import "./loader.css";
 import React from "react";
 
-const Loader = () => {
+const Loader = ({ loadingPercentage }) => {
   return (
-    <div className="spinnerContianer">
-      <div className="spinner">
-        <div className="spinner-text">Loading</div>
-        <div className="spinner-sector spinner-sector-red"></div>
-        <div className="spinner-sector spinner-sector-blue"></div>
-        <div className="spinner-sector spinner-sector-green"></div>
-      </div>
+    <div className="loader">
+      <span style={{ width: `${loadingPercentage}%` }}></span>
+      <p>{loadingPercentage}%</p>
     </div>
   );
 };
