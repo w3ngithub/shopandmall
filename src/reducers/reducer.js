@@ -23,7 +23,7 @@ const reducer = (state, action) => {
             id: action.payload.ind,
             shopName: "",
             shopLevel: "",
-            phoneNumber: "",
+            shopPhoneNumber: "",
             shopDescription: "",
             timings: [{ id: 1, label: "Everyday" }, { id: 2 }],
             shopUrl: [],
@@ -75,7 +75,6 @@ const reducer = (state, action) => {
       };
 
     case "ADD_TIMINGS":
-      console.log(action.payload);
       return {
         ...state,
         timings: [
@@ -187,6 +186,12 @@ const reducer = (state, action) => {
               : shop
           ),
         ],
+      };
+
+    case "SET_MALLTIME_ERROR":
+      return {
+        ...state,
+        mallTimeError: action.payload.isMallTimeError,
       };
 
     default:

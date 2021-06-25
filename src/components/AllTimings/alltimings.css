@@ -17,4 +17,10 @@
   text-align: left;
   color: #2e6fba;
   cursor: pointer;
+  margin: 10px 0;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
 }

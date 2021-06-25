@@ -5,6 +5,7 @@ import classes from "./mallform.module.css";
 import React, { useEffect, useState } from "react";
 import { IoIosAddCircleOutline, IoIosImage } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
+import { useForm } from "react-hook-form";
 
 const CommonForm = ({
   edit,
@@ -28,6 +29,12 @@ const CommonForm = ({
   //States
 
   const [mallImageError, setMallImageError] = useState(null);
+  const {
+    control,
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   //Change Handler
   const changeHandler = (e) => {
@@ -81,36 +88,59 @@ const CommonForm = ({
   useEffect(() => {
     setIsLoading(false);
   }, []);
-
+  console.log(errors);
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>
-        <form className={classes.form} action="" onSubmit={submitHandler}>
+        <form
+          className={classes.form}
+          action=""
+          onSubmit={handleSubmit(submitHandler)}
+        >
           <div className={classes.innerDiv}>
-            <input
-              type="text"
-              placeholder="Name of Mall"
-              name="mallName"
-              value={edit ? editData?.mallName : state?.mallName}
-              onChange={changeHandler}
-              className={classes.input}
-            />
-            <input
-              type="text"
-              placeholder="Address"
-              name="mallAddress"
-              onChange={changeHandler}
-              value={edit ? editData?.mallAddress : state?.mallAddress}
-              className={classes.input}
-            />
-            <input
-              type="number"
-              placeholder="Level"
-              name="levels"
-              value={edit ? editData?.levels : state?.levels}
-              onChange={changeHandler}
-              className={classes.input}
-            />
+            <div>
+              <input
+                type="text"
+                {...register("mallName", { required: true })}
+                placeholder="Name of Mall"
+                name="mallName"
+                value={edit ? editData?.mallName : state?.mallName}
+                onChange={changeHandler}
+                className={classes.input}
+              />
+              {errors.mallName && (
+                <p className={classes.error}>* Name is required</p>
+              )}
+            </div>
+            <div>
+              <input
+                type="text"
+                {...register("mallAddress", { required: true })}
+                placeholder="Address"
+                name="mallAddress"
+                onChange={changeHandler}
+                value={edit ? editData?.mallAddress : state?.mallAddress}
+                className={classes.input}
+              />
+              {errors.mallAddress && (
+                <p className={classes.error}>* Address is required</p>
+              )}
+            </div>
+            <div>
+              <input
+                type="number"
+                {...register("levels", { required: true })}
+                placeholder="Level"
+                name="levels"
+                value={edit ? editData?.levels : state?.levels}
+                onChange={changeHandler}
+                className={classes.input}
+              />
+              {errors.levels && (
+                <p className={classes.error}>* Levels is required</p>
+              )}
+            </div>
+
             <label className={classes.label}>
               <input
                 className={classes.upload}
@@ -127,14 +157,27 @@ const CommonForm = ({
           <div>
             {mallImage ? mallImage?.name : editData?.mallImage?.imageName}
           </div>
-          <input
-            type="number"
-            placeholder="Phone Number"
-            name="phoneNumber"
-            value={edit ? editData?.phoneNumber : state?.phoneNumber}
-            onChange={changeHandler}
-            className={classes.input}
-          />
+          <div>
+            <input
+              type="number"
+              {...register("phoneNumber", {
+                required: true,
+                validate: (value) => value.length === 10,
+              })}
+              placeholder="Phone Number"
+              name="phoneNumber"
+              value={edit ? editData?.phoneNumber : state?.phoneNumber}
+              onChange={changeHandler}
+              className={classes.input}
+            />
+            {errors?.phoneNumber?.type === "required" && (
+              <p className={classes.error}>* Number is required</p>
+            )}
+            {errors?.phoneNumber?.type === "validate" && (
+              <p className={classes.error}>* Number must be 10 digits</p>
+            )}
+          </div>
+
           <AllTimings
             state={state}
             onManualTimeChange={onManualTimeChange}
@@ -181,6 +224,9 @@ const CommonForm = ({
                       index,
                       shopImageState,
                       shopImageDispatch,
+                      control,
+                      mallTime: state.timings,
+                      mallLevel: state.levels,
                     }}
                   />
                   <div className={classes.line}></div>
