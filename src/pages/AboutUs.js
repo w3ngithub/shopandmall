@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const AboutUs = () => {
-    return (
-        <div>
-            About Us Page
-        </div>
-    )
-}
+  return <div style={{ marginTop: "65px" }}>About Us Page</div>;
+};
 
-export default AboutUs
+export default AboutUs;

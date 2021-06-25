@@ -1,0 +1,142 @@
+.mobileNav {
+  display: none;
+}
+
+.wrapper {
+  display: none;
+}
+
+.mobileUser {
+  display: none;
+}
+.signInBtn {
+  display: none;
+}
+
+@media (max-width: 414px) {
+  .mobileNav {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 100%;
+    height: 55px;
+    background-color: #f9f9f9;
+    z-index: 1000;
+  }
+
+  .logo img {
+    width: 51px;
+    /* height: 53px; */
+  }
+
+  .signInBtn {
+    position: absolute;
+    display: block;
+    font-size: 14px;
+    padding: 5px 12px;
+    right: 60px;
+    background-color: white;
+    outline: none;
+    border: 1px solid #2e6fba;
+    color: #2e6fba;
+    border-radius: 30px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .burger {
+    display: block;
+    font-size: 24px;
+    position: absolute;
+    right: 20px;
+  }
+
+  .hideContainer,
+  .mobileContainer {
+    position: fixed;
+    top: 55px;
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: #f9f9f9;
+    right: -500px;
+    transition: 0.5s;
+    z-index: 1;
+  }
+
+  .mobileContainer {
+    right: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    margin-left: 20px;
+    display: block;
+    padding-top: 10px;
+  }
+
+  .wrapper ul ul ul {
+    color: #5b5b5b;
+    background-color: #eeeeee;
+    margin-left: -20px;
+    padding: 10px 0;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    width: 100vw;
+  }
+
+  .wrapper ul ul ul li:last-child {
+    margin-bottom: 5px;
+  }
+
+  .wrapper ul ul li {
+    color: #4e857c;
+  }
+
+  .wrapper ul li {
+    display: block;
+    margin: 22px 0px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .wrapper ul li:first-child {
+    margin-top: 0px;
+  }
+
+  .mobileUser {
+    display: block;
+    background-color: #ecf3f2;
+    padding: 15px 20px;
+    font-weight: 700;
+    position: relative;
+  }
+
+  .controller ul li .list {
+    display: flex;
+    padding: 20px 0px;
+    font-size: 14px;
+  }
+
+  .controller ul li .list .icons {
+    margin-right: 8px;
+    font-size: 16px;
+  }
+
+  .sideWise {
+    display: flex;
+    /* background-color: #ecf3f2;
+    padding: 10px; */
+  }
+
+  .icon {
+    display: inline;
+    margin-left: 5px;
+    position: relative;
+    transform: translateY(18%);
+  }
+}

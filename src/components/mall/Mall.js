@@ -3,7 +3,7 @@ import classes from "./mall.module.css";
 import MallCardComponent from "../mallCardComponent/MallCardComponent";
 
 const Mall = ({ docs }) => {
-    console.log("malls", docs);
+    // console.log("malls", docs);
 
     return (
         <div className={classes.container}>
