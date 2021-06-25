@@ -21,7 +21,7 @@ const Dashboard = () => {
       doc.mallName.toLowerCase().includes(search.toLowerCase())
     );
   }
-  console.log(docs);
+  // console.log(docs);
   return (
     <div>
       <main className={classes.main}>

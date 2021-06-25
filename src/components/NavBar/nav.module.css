@@ -1,8 +1,8 @@
 .navbar {
   width: 100%;
-  height: 75px;
+  height: 68px;
   background-color: #f9f9f9;
-  position: sticky;
+  position: fixed;
   z-index: 1000;
 }
 
@@ -14,18 +14,17 @@
   align-items: center;
 }
 
-.logo {
+.logo a {
   display: flex;
   align-items: center;
 }
 
 .logo img {
-  width: 79px;
-  height: 73px;
+  width: 65px;
 }
 
 .logo p {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
   margin-left: 16px;
   color: #5b5b5b;
@@ -39,7 +38,7 @@
 .menuList ul li {
   display: inline;
   margin-right: 40px;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
@@ -67,7 +66,6 @@ li a:hover,
   transform: translateY(-50%);
   user-select: none;
   transition: 0.5s;
-  color: rgb(37, 37, 114);
 }
 
 .shopsDropdown {
@@ -118,7 +116,7 @@ li a:hover,
 }
 
 .col h3 {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 700;
   margin-bottom: 40px;
   display: inline-block;
@@ -131,7 +129,7 @@ li a:hover,
 .col ul li {
   display: block;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
   margin-bottom: 20px;
 }
@@ -161,9 +159,8 @@ li a:hover,
   position: relative;
   background-color: black;
   font-weight: bold;
-  width: 40px;
-  height: 40px;
-  font-size: 25px;
+  width: 38px;
+  height: 38px;
   text-align: center;
   border-radius: 50%;
   display: flex;
@@ -179,8 +176,7 @@ li a:hover,
 
 .user .icon {
   padding-left: 5px;
-  font-size: 17px;
-  color: rgb(37, 37, 114);
+  font-size: 14px;
   transition: 0.5s;
 }
 
@@ -215,37 +211,25 @@ li a:hover,
   position: relative;
   align-items: center;
   cursor: pointer;
+  font-size: 14px;
+}
+.userDropDown ul li:first-child:hover {
+  color: red;
 }
 
 .userDropDown ul li:last-child {
   background-color: #e8e8e8;
   transition: 0.2s;
-  border-radius: 10px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .userDropDown ul li:last-child:hover {
   color: rgb(236, 78, 78);
 }
 
-.userDropDown ul li::after {
-  background-color: rgba(133, 133, 133, 0.2);
-  content: "";
-  display: block;
-  height: 2px;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, 0);
-  width: 85%;
-}
-
 .userDropDown ul li:last-child::after {
   content: "";
   width: 0;
-}
-
-.userDropDown ul li:hover {
-  background-color: #e8e8e8;
-  border-radius: 10px;
 }
 
 .user:hover .userDropDown {
@@ -255,7 +239,7 @@ li a:hover,
 }
 
 .userDropDown ul li .icons {
-  font-size: 24px;
+  font-size: 20px;
   margin-right: 8px;
 }
 
@@ -267,9 +251,9 @@ li a:hover,
   border: 1.5px solid #2e6fba;
   border-radius: 30px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  padding: 10px 15px;
+  padding: 7px 15px;
   cursor: pointer;
 }
 
@@ -291,6 +275,10 @@ li a:hover,
   display: none;
 }
 
+.show {
+  display: none;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
@@ -301,13 +289,17 @@ li a:hover,
     width: 88%;
   }
 
+  .logo {
+    width: 190px;
+  }
+
   .logo img {
     width: 46px;
     height: 53px;
   }
 
   .logo p {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     margin-left: 9px;
   }
@@ -317,7 +309,7 @@ li a:hover,
   }
 
   .menuList ul li {
-    font-size: 15px;
+    font-size: 14px;
     margin-right: 38px;
   }
 
@@ -345,7 +337,7 @@ li a:hover,
   }
 
   .col h3 {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     margin-bottom: 30px;
   }
@@ -353,7 +345,7 @@ li a:hover,
   .col ul li {
     display: block;
     text-align: left;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: normal;
     margin-bottom: 18px;
   }
@@ -379,7 +371,6 @@ li a:hover,
     font-weight: bold;
     width: 30px;
     height: 30px;
-    font-size: 18px;
     text-align: center;
     border-radius: 50%;
     color: white;
@@ -391,7 +382,6 @@ li a:hover,
   .user .icon {
     padding-left: 5px;
     font-size: 15px;
-    color: rgb(37, 37, 114);
     transition: 0.5s;
   }
 
@@ -414,12 +404,12 @@ li a:hover,
   }
 
   .userDropDown ul li {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .button {
     border: 2px solid #2e6fba;
-    font-size: 15px;
+    font-size: 14px;
     padding: 8px 12px;
   }
 
@@ -431,169 +421,6 @@ li a:hover,
 
 @media (max-width: 414px) {
   .navbar {
-    position: sticky;
-  }
-
-  .logo img {
-    width: 51px;
-    height: 53px;
-  }
-
-  .logo p {
     display: none;
-  }
-
-  .check,
-  .showSidebar {
-    position: fixed;
-    top: 55px;
-    display: block;
-    height: 100%;
-    width: 100%;
-    background-color: #f9f9f9;
-    right: -500px;
-    transition: 0.5s;
-  }
-
-  .showSidebar {
-    right: 0px;
-  }
-
-  .menuList {
-    margin-left: 0px;
-  }
-
-  .menuList ul li {
-    display: block;
-    position: relative;
-    margin: 20px 0px 30px 25px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: left;
-    cursor: pointer;
-  }
-
-  .menuList ul li .icon {
-    position: relative;
-    margin-bottom: -12px;
-    user-select: none;
-    transition: 0.5s;
-    color: rgb(37, 37, 114);
-  }
-
-  .shopsDropdown {
-    display: none;
-    position: relative;
-    top: 22px;
-    background-color: #f9f9f9;
-    width: 100vw;
-    padding: 8px 50px;
-    left: 0;
-    cursor: auto;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateX(0%);
-
-    transition: all 0.5s ease-in;
-  }
-
-  .menuList ul li:nth-of-type(2):hover .shopsDropdown {
-    display: block;
-    max-height: auto;
-    opacity: 1;
-  }
-
-  .dropDownWrapper {
-    display: block;
-  }
-
-  .col {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .col h3 {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 22px;
-    display: inline-block;
-  }
-
-  .col .headerIcon {
-    display: inline;
-    margin-left: 5px;
-    position: relative;
-    transform: translateY(18%);
-  }
-
-  .col ul {
-    width: 100vw;
-    margin-left: -49px;
-    background-color: #eeeeee;
-    display: none;
-  }
-
-  .col:hover ul {
-    display: block;
-    margin-bottom: 20px;
-    height: auto;
-  }
-
-  .col ul li {
-    position: relative;
-    text-align: left;
-    font-size: 16px;
-    font-weight: normal;
-
-    margin-left: 80px;
-  }
-
-  .col ul li::after {
-    content: "";
-    display: none;
-  }
-
-  .user {
-    display: none;
-  }
-
-  .mobileUser {
-    display: block;
-    background-color: #ecf3f2;
-    margin-top: 15px;
-    padding: 15px 25px;
-    font-weight: 700;
-  }
-
-  .controller ul li .list {
-    display: flex;
-    padding: 20px 0px;
-  }
-
-  .controller ul li .list .icons {
-    margin-right: 8px;
-    font-size: 21px;
-  }
-
-  .burger {
-    display: block;
-    font-size: 24px;
-    position: absolute;
-    right: 20px;
-  }
-
-  .button {
-    display: none;
-  }
-
-  .signInBtn {
-    position: absolute;
-    display: block;
-    border: 2px solid #2e6fba;
-    font-size: 14px;
-    padding: 8px 12px;
-    right: 60px;
   }
 }
