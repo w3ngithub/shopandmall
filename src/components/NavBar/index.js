@@ -21,8 +21,6 @@ const Try = () => {
     setArr(mainData);
   }, [docs]);
 
-  console.log("array", arr);
-
   return (
     <div>
       <Nav check={check} />

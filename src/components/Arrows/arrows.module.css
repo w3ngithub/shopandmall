@@ -1,0 +1,35 @@
+.arrow {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 35px;
+  height: 35px;
+  background: #fff;
+  color: #3c475b;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px 0 rgba(30, 41, 61, 0.1),
+    0 1px 2px 0 rgba(30, 41, 61, 0.2);
+  opacity: 0.9;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  visibility: visible;
+  opacity: 1;
+  transition: all ease 0.5s;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.arrow:hover {
+  background: rgb(91, 79, 145);
+  color: white;
+}
+
+.next {
+  right: -10px;
+}
+
+.left {
+  left: -8px;
+}

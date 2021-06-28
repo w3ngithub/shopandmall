@@ -28,9 +28,6 @@ const Drawer = ({ check, data }) => {
     });
   }, [data]);
 
-  // console.log("checkkkk", openDD.id);
-  console.log("asgar", check);
-
   const childNodeId = (id) => {
     setOpenDD({
       ...openDD,
@@ -98,7 +95,6 @@ const Drawer = ({ check, data }) => {
                       {d.category}
                       <FaAngleDown className={classes.icon} />
                     </li>
-                    {console.log("aaa", openDD[d.id])}
                     {openDD[d.id] && (
                       <ul>
                         {d.data.map((sub) => (
