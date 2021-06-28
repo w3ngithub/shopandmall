@@ -48,10 +48,17 @@ const CommonShopForm = ({
       let selectedShopImages = e.target.files[i];
 
       if (selectedShopImages && types.includes(selectedShopImages.type)) {
-        addedShopImagesDispatch({
-          type: "ADD",
-          payload: { index, selectedShopImages },
-        });
+        if (edit) {
+          addedShopImagesDispatch({
+            type: "ADD",
+            payload: { index, selectedShopImages },
+          });
+        } else {
+          shopImageDispatch({
+            type: "ADD",
+            payload: { index, selectedShopImages },
+          });
+        }
       } else {
         setShopImageError("Please select an image file  (jpeg or png)");
       }

@@ -68,7 +68,7 @@ const MallForm = () => {
       state.shops.forEach((shop, index) => {
         const { shopTimeError, shopImageError } = checkShopValidation(
           shop,
-          shopImageState[index]
+          shopImageState[index].images
         );
         if (shopTimeError) {
           isShopTimeError = true;
