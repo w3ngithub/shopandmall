@@ -8,6 +8,7 @@ const ManualTimings = ({
   setCloseTime,
   days,
   setDays,
+  isModal,
   isShop,
   mallTime,
   onRemoveTimingsField,
@@ -39,6 +40,7 @@ const ManualTimings = ({
         setOpenTime={setOpenTime}
         setCloseTime={setCloseTime}
         isShop={isShop}
+        isModal={isModal}
         onRemoveTimingsField={onRemoveTimingsField}
         minTime={mallTime?.openTime}
         maxTime={mallTime?.closeTime}

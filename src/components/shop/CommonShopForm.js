@@ -41,7 +41,7 @@ const CommonShopForm = ({
           payload: { name: name, value: value, index: index },
         });
   };
-  console.log(addedShopImages);
+
   const types = ["image/jpeg", "image/png"];
   const shopImageHandler = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {

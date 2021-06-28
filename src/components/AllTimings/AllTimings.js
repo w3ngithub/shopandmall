@@ -12,8 +12,12 @@ const AllTimings = ({
   addMoreTimingsFields,
   onRemoveTimingsField,
   mallTime,
+  edit,
+  isModal = false,
 }) => {
-  const [showManualTimings, setShowManualTimings] = useState(false);
+  const [showManualTimings, setShowManualTimings] = useState(
+    edit && state?.timings?.length > 1
+  );
   const [days, setDays] = useState([
     { label: "", id: 8 },
     { label: "Sunday", id: 7 },
@@ -27,7 +31,10 @@ const AllTimings = ({
 
   return (
     <div className="timingsform">
-      <div className="input__radio" style={isShop && { width: "35%" }}>
+      <div
+        className="input__radio"
+        style={(isModal && { width: "50%" }) || (isShop && { width: "35%" })}
+      >
         <div>
           <input
             type="radio"
@@ -68,6 +75,7 @@ const AllTimings = ({
                 onManualTimeChange(time.id, "label", e.target.value);
               }}
               isShop={isShop}
+              isModal={isModal}
               onRemoveTimingsField={() => onRemoveTimingsField(time.id)}
               mallTime={
                 mallTime?.length > 1
@@ -85,6 +93,7 @@ const AllTimings = ({
           setOpenTime={(value) => onDefaultTimeChange("openTime", value)}
           setCloseTime={(value) => onDefaultTimeChange("closeTime", value)}
           isShop={isShop}
+          isModal={isModal}
           showRemove={showManualTimings}
           minTime={typeof mallTime !== "undefined" && mallTime[0].openTime}
           maxTime={typeof mallTime !== "undefined" && mallTime[0].closeTime}
