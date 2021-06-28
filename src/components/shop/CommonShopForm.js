@@ -41,14 +41,14 @@ const CommonShopForm = ({
           payload: { name: name, value: value, index: index },
         });
   };
-
+  console.log(addedShopImages);
   const types = ["image/jpeg", "image/png"];
   const shopImageHandler = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
       let selectedShopImages = e.target.files[i];
 
       if (selectedShopImages && types.includes(selectedShopImages.type)) {
-        shopImageDispatch({
+        addedShopImagesDispatch({
           type: "ADD",
           payload: { index, selectedShopImages },
         });
@@ -65,10 +65,15 @@ const CommonShopForm = ({
     });
 
   const onDefaultTimeChange = (name, value) =>
-    dispatch({
-      type: "ADD_SHOP_TIMINGS",
-      payload: { index, name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "EDIT_SHOP_TIMINGS",
+          payload: { index, name, value },
+        })
+      : dispatch({
+          type: "ADD_SHOP_TIMINGS",
+          payload: { index, name, value },
+        });
 
   const addMoreTimingsFields = () =>
     s.timings.length === 8
@@ -266,36 +271,34 @@ const CommonShopForm = ({
                   <button
                     className={classes.button}
                     type="button"
-                    onClick={() => removeImage(img, index2)}
+                    onClick={() => removeImage(img, index)}
                   >
                     <IoIosClose />
                   </button>
                   {img.ImageName}
                 </p>
               ))
-            : null(
-                addedShopImages &&
-                  addedShopImages.map(
-                    (img, ind) =>
-                      ind === index2 &&
-                      img.images.map((img, i) => (
-                        <p key={i} className={classes.image}>
-                          <button
-                            className={classes.button}
-                            type="button"
-                            onClick={() =>
-                              addedShopImagesDispatch({
-                                type: "REMOVE_IMAGE",
-                                payload: { outerIndex: ind, name: img.name },
-                              })
-                            }
-                          >
-                            <IoIosClose />
-                          </button>
-                          {img.name}
-                        </p>
-                      ))
-                  )
+            : addedShopImages &&
+              addedShopImages.map(
+                (img, ind) =>
+                  ind === index2 &&
+                  img.images.map((img, i) => (
+                    <p key={i} className={classes.image}>
+                      <button
+                        className={classes.button}
+                        type="button"
+                        onClick={() =>
+                          addedShopImagesDispatch({
+                            type: "REMOVE_IMAGE",
+                            payload: { outerIndex: ind, name: img.name },
+                          })
+                        }
+                      >
+                        <IoIosClose />
+                      </button>
+                      {img.name}
+                    </p>
+                  ))
               )
           : shopImageState &&
             shopImageState?.map(
@@ -307,7 +310,7 @@ const CommonShopForm = ({
                       className={classes.button}
                       type="button"
                       onClick={() =>
-                        shopImageDispatch({
+                        addedShopImagesDispatch({
                           type: "REMOVE_IMAGE",
                           payload: { outerIndex: ind, name: img?.name },
                         })

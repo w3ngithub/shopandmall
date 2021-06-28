@@ -29,7 +29,7 @@ const SingleShop = () => {
         .doc(docId)
         .onSnapshot((doc) => {
           setMall(doc.data());
-          doc.data().shops.map(
+          doc?.data()?.shops?.map(
             (shop) =>
               type === shop.shopName &&
               shop.shopImages.map((s) =>

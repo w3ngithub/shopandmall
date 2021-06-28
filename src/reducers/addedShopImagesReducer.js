@@ -1,5 +1,4 @@
-
-const addedShopImagesReducer = (state,action) => {
+const addedShopImagesReducer = (state, action) => {
   switch (action.type) {
     case "ADD":
       const newArray = state.map((item) =>
@@ -20,9 +19,11 @@ const addedShopImagesReducer = (state,action) => {
               images: [action.payload.selectedShopImages],
             },
           ];
+      console.log(finalArray);
       return finalArray;
 
     case "REMOVE_IMAGE":
+      console.log(action.payload);
       return [
         ...state.map((item, ind) =>
           ind === action.payload.outerIndex

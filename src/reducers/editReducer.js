@@ -16,6 +16,26 @@ const editReducer = (state, action) => {
         ),
       };
 
+    case "EDIT_SHOP_TIMINGS":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, index) =>
+            index === action.payload.index
+              ? {
+                  ...shop,
+                  timings: [
+                    {
+                      ...shop.timings[0],
+                      [action.payload.name]: action.payload.value,
+                    },
+                  ],
+                }
+              : shop
+          ),
+        ],
+      };
+
     case "REMOVE_SHOP_FORM":
       return {
         ...state,
@@ -25,6 +45,7 @@ const editReducer = (state, action) => {
       };
 
     case "REMOVE_IMAGE":
+      console.log(action.payload);
       return {
         ...state,
         shops: state.shops.map((shop, i) =>

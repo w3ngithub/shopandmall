@@ -13,6 +13,7 @@ const MallForm = () => {
 
   const history = useHistory();
   const location = useLocation();
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
 
   //States
   const [editData, editDispatch] = useReducer(editReducer, location.dataToSend);
@@ -31,7 +32,7 @@ const MallForm = () => {
 
   const submitHandler = async (e) => {
     setIsLoading(true);
-    console.log(editData);
+
     try {
       const storageRef = storage.ref();
       let mallImageUrl = null;
@@ -39,6 +40,7 @@ const MallForm = () => {
       //Mall Image
       if (mallImage !== null) {
         //delete old image
+        setLoadingPercentage(30);
         storageRef
           .child(location.dataToSend.mallImage.imageName)
           .delete()
@@ -68,7 +70,7 @@ const MallForm = () => {
           )
         )
       );
-
+      setLoadingPercentage(60);
       //Remove Shop Images from Firebase Storage
       imagesToRemove.forEach((image) =>
         storage.ref().child(image.ImageName).delete()
@@ -157,6 +159,7 @@ const MallForm = () => {
           ...mall,
           shops: shops,
         });
+      setLoadingPercentage(100);
       history.push("/admin/malls");
     } catch (err) {
       console.log("Error", err);
@@ -169,6 +172,7 @@ const MallForm = () => {
         edit,
         editDispatch,
         editData,
+        loadingPercentage,
         submitHandler,
         setImagesToRemove,
         addedShopImagesDispatch,
