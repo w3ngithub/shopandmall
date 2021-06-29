@@ -216,7 +216,8 @@ const Modal = ({ setShowModal, docId, mall }) => {
                 {error && <p className={classes.error}>{error.message}</p>}
                 {error?.type === "validate" && (
                   <p className={classes.error}>
-                    * level must be less than mall levels {mall.levels}
+                    * level must be equal to or less than mall level (
+                    {mall.levels})
                   </p>
                 )}
               </>

@@ -1,5 +1,6 @@
 import TimePicker from "react-time-picker";
 import "./defaulttiming.css";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 const DefaultTimings = ({
   timing,
@@ -51,7 +52,7 @@ const DefaultTimings = ({
       </div>
       {showRemove && timing.label !== "Everyday" && (
         <p className="remove" onClick={onRemoveTimingsField}>
-          Remove
+          <AiFillCloseCircle />
         </p>
       )}
     </div>

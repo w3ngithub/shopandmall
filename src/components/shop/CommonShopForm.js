@@ -172,14 +172,15 @@ const CommonShopForm = ({
                 {error && <p className={classes.error}>{error.message}</p>}
                 {error?.type === "validate" && (
                   <p className={classes.error}>
-                    * level must match the mall levels
+                    * level must be equal to or less than mall level (
+                    {mallLevel})
                   </p>
                 )}
               </>
             )}
             rules={{
               required: { value: true, message: "* Level is Required" },
-              validate: (value) => value < mallLevel,
+              validate: (value) => value <= mallLevel,
             }}
           />
         </div>
