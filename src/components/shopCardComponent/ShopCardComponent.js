@@ -8,7 +8,7 @@ const Shop = ({ doc, docs }) => {
 
   return (
     <div>
-      {location.pathname === "/" ? (
+      {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
         <div
           className={classes.wrapper}
           onClick={() =>
@@ -52,7 +52,7 @@ const Shop = ({ doc, docs }) => {
                   {doc.shops[0].shopImages && (
                     <img
                       className={classes.image}
-                      src={shop.shopImages[0].url}
+                      src={shop?.shopImages[0]?.url}
                       alt=""
                     />
                   )}
