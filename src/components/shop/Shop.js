@@ -2,6 +2,7 @@ import React from "react";
 import ShopCardComponent from "../shopCardComponent/ShopCardComponent";
 
 import Slider from "react-slick";
+import classes from "./shop.module.css";
 
 import { useLocation, useHistory } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
@@ -16,11 +17,11 @@ const Shop = ({ docs, settings }) => {
 
   return (
     <div>
-      {location.pathname === "/" ? (
+      {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
         <div>
-          <Slider {...settings}>
+          <Slider {...settings} className={classes.slider}>
             {docs?.map((doc, ind) => (
-              <div>
+              <div key={ind}>
                 <ShopCardComponent key={doc.id} doc={doc} />
               </div>
             ))}

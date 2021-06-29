@@ -103,7 +103,13 @@ const Dashboard = () => {
           <h3>Shop Filters</h3>
           {shopCategory?.map((shopCat) => (
             <p key={shopCat.id}>
-              {shopCat.category}({shopCat.rowContent.rowData.length})
+              {shopCat.category}
+              <span className={classes.number}>
+                ({shopCat.rowContent.rowData.length})
+              </span>
+              <span className={classes.numberMob}>
+                {shopCat.rowContent.rowData.length}
+              </span>
             </p>
           ))}
         </div>

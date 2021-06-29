@@ -5,7 +5,7 @@
   width: 35px;
   height: 35px;
   background: #fff;
-  color: #3c475b;
+  color: black;
   border: 0;
   border-radius: 50%;
   box-shadow: 0 1px 3px 0 rgba(30, 41, 61, 0.1),
@@ -16,20 +16,25 @@
   cursor: pointer;
   visibility: visible;
   opacity: 1;
-  transition: all ease 0.5s;
+  transition: all ease 0.3s;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .arrow:hover {
-  background: rgb(91, 79, 145);
-  color: white;
+  color: #153074;
 }
 
 .next {
-  right: -10px;
+  right: 0px;
 }
 
 .left {
   left: -8px;
+}
+
+@media only screen and (max-width: 414px) {
+  .next {
+    right: -7px;
+  }
 }

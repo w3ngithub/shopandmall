@@ -6,3 +6,14 @@
   width: 100%;
   padding-left: 20px;
 }
+
+.slider {
+  width: 102%;
+  left: -10px;
+}
+
+@media only screen and (max-width: 414px) {
+  .slider {
+    width: 326px;
+  }
+}

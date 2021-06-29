@@ -13,11 +13,11 @@ const Mall = ({ docs, settings }) => {
 
   return (
     <div>
-      {location.pathname === "/" ? (
+      {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
         <div>
-          <Slider {...settings}>
+          <Slider {...settings} className={classes.slider}>
             {docs?.map((doc, ind) => (
-              <div>
+              <div key={ind}>
                 <MallCardComponent key={doc.id} doc={doc} />
               </div>
             ))}
