@@ -18,6 +18,7 @@
   background-color: rgb(236, 78, 78);
   color: white;
   margin: 40px 0 20px 0;
+  cursor: pointer;
 }
 
 .addBtn:hover {
