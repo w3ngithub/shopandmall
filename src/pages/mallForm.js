@@ -90,7 +90,7 @@ const MallForm = () => {
         !isShopImageError
       ) {
         setIsLoading(true);
-        setIsLoading(true);
+
         const storageRef = storage.ref();
         let mallImageUrl = null;
         setLoadingPercentage(10);

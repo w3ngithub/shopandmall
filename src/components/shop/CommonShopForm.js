@@ -272,7 +272,42 @@ const CommonShopForm = ({
       </div>
 
       <div className={classes.selectedImages}>
-        {edit
+        {edit &&
+          dataShop.shopImages.map((img, i) => (
+            <p key={i} className={classes.image}>
+              <button
+                className={classes.button}
+                type="button"
+                onClick={() => removeImage(img, index)}
+              >
+                <IoIosClose />
+              </button>
+              {img.ImageName}
+            </p>
+          ))}
+        {edit &&
+          addedShopImages.map((img, ind) =>
+            ind === index
+              ? img.images.map((img, i) => (
+                  <p key={i} className={classes.image}>
+                    <button
+                      className={classes.button}
+                      type="button"
+                      onClick={() =>
+                        addedShopImagesDispatch({
+                          type: "REMOVE_IMAGE",
+                          payload: { outerIndex: ind, name: img.name },
+                        })
+                      }
+                    >
+                      <IoIosClose />
+                    </button>
+                    {img.name}
+                  </p>
+                ))
+              : null
+          )}
+        {/* {edit
           ? dataShop.shopImages
             ? dataShop.shopImages.map((img, i) => (
                 <p key={i} className={classes.image}>
@@ -329,7 +364,7 @@ const CommonShopForm = ({
                     {img?.name}
                   </p>
                 ))
-            )}
+            )} */}
       </div>
     </div>
   );
