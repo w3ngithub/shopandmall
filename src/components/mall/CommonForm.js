@@ -67,24 +67,44 @@ const CommonForm = ({
   };
 
   const onManualTimeChange = (rowId, name, value) =>
-    dispatch({
-      type: "ADD_TIMINGS_MANUALLY",
-      payload: { rowId, name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "ADD_TIMINGS_MANUALLY",
+          payload: { rowId, name, value },
+        })
+      : dispatch({
+          type: "ADD_TIMINGS_MANUALLY",
+          payload: { rowId, name, value },
+        });
 
   const onDefaultTimeChange = (name, value) =>
-    dispatch({
-      type: "ADD_TIMINGS",
-      payload: { name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "ADD_TIMINGS",
+          payload: { name, value },
+        })
+      : dispatch({
+          type: "ADD_TIMINGS",
+          payload: { name, value },
+        });
 
   const addMoreTimingsFields = () =>
-    state.timings.length === 8
-      ? alert("No More Days Left")
-      : dispatch({ type: "ADD_TIMINGS_FIELDS" });
+    state?.timings?.length !== 8 && !edit
+      ? dispatch({ type: "ADD_TIMINGS_FIELDS" })
+      : editData.timings.length !== 8 && edit
+      ? editDispatch({ type: "ADD_TIMINGS_FIELDS" })
+      : alert("No More Days Left");
 
   const onRemoveTimingsField = (rowId) =>
-    dispatch({ type: "REMOVE_TIMINGS_FIELDS", payload: { rowId } });
+    edit
+      ? editDispatch({
+          type: "REMOVE_TIMINGS_FIELDS",
+          payload: { rowId },
+        })
+      : dispatch({
+          type: "REMOVE_TIMINGS_FIELDS",
+          payload: { rowId },
+        });
 
   //Loading
   useEffect(() => {

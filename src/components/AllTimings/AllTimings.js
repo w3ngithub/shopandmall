@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ManualTimings from "../ManualTimings/ManualTimings";
 import DefaultTimings from "../DefaultTimings/DefaultTimings";
 import "./alltimings.css";
@@ -15,9 +15,7 @@ const AllTimings = ({
   edit,
   isModal = false,
 }) => {
-  const [showManualTimings, setShowManualTimings] = useState(
-    edit && state?.timings?.length > 1
-  );
+  const [showManualTimings, setShowManualTimings] = useState(false);
   const [days, setDays] = useState([
     { label: "", id: 8 },
     { label: "Sunday", id: 7 },
@@ -28,6 +26,17 @@ const AllTimings = ({
     { label: "Friday", id: 5 },
     { label: "Saturday", id: 6 },
   ]);
+
+  useEffect(() => {
+    setShowManualTimings(
+      state.timings.every((time) => time.hasOwnProperty("openTime")) &&
+        state.timings.length > 1
+    );
+  }, []);
+
+  let isEveryDayChecked =
+    state.timings.length === 1 ||
+    state.timings.every((time) => !time.hasOwnProperty("openTime"));
 
   return (
     <div className="timingsform">
@@ -42,9 +51,7 @@ const AllTimings = ({
             value="every day"
             name={isShop ? `shopTimings${index}` : "mallTimings"}
             onChange={() => setShowManualTimings(false)}
-            defaultChecked={
-              edit ? state.timings.every((time) => time.openTime) : true
-            }
+            defaultChecked={isEveryDayChecked}
           />
           <label htmlFor="every day">Every Day</label>
         </div>
@@ -55,7 +62,7 @@ const AllTimings = ({
             value="manual timing"
             name={isShop ? `shopTimings${index}` : "mallTimings"}
             onChange={() => setShowManualTimings(true)}
-            defaultChecked={edit && state.timings.length > 1}
+            defaultChecked={!isEveryDayChecked}
           />
           <label htmlFor="manual ">Manual Timing</label>
         </div>

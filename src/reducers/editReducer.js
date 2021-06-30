@@ -36,6 +36,44 @@ const editReducer = (state, action) => {
         ],
       };
 
+    case "ADD_TIMINGS_FIELDS":
+      return {
+        ...state,
+        timings: [...state.timings, { id: Date.now() }],
+      };
+
+    case "ADD_TIMINGS":
+      return {
+        ...state,
+        timings: [
+          {
+            ...state?.timings[0],
+            label: "Everyday",
+            [action.payload.name]: action.payload.value,
+          },
+        ],
+      };
+
+    case "REMOVE_TIMINGS_FIELDS":
+      return {
+        ...state,
+        timings: [
+          ...state.timings.filter((time) => time.id !== action.payload.rowId),
+        ],
+      };
+
+    case "ADD_TIMINGS_MANUALLY":
+      return {
+        ...state,
+        timings: [
+          ...state.timings.map((data) =>
+            data.id === action.payload.rowId
+              ? { ...data, [action.payload.name]: action.payload.value }
+              : data
+          ),
+        ],
+      };
+
     case "ADD_SHOP_TIMINGS_MANUALLY":
       return {
         ...state,
