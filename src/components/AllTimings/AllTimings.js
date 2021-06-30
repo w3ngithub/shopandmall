@@ -42,7 +42,9 @@ const AllTimings = ({
             value="every day"
             name={isShop ? `shopTimings${index}` : "mallTimings"}
             onChange={() => setShowManualTimings(false)}
-            defaultChecked
+            defaultChecked={
+              edit ? state.timings.every((time) => time.openTime) : true
+            }
           />
           <label htmlFor="every day">Every Day</label>
         </div>
@@ -53,6 +55,7 @@ const AllTimings = ({
             value="manual timing"
             name={isShop ? `shopTimings${index}` : "mallTimings"}
             onChange={() => setShowManualTimings(true)}
+            defaultChecked={edit && state.timings.length > 1}
           />
           <label htmlFor="manual ">Manual Timing</label>
         </div>

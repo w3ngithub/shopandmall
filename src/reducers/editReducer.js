@@ -36,6 +36,61 @@ const editReducer = (state, action) => {
         ],
       };
 
+    case "ADD_SHOP_TIMINGS_MANUALLY":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, index) =>
+            index === action.payload.shopIndex
+              ? {
+                  ...shop,
+                  timings: [
+                    ...shop.timings.map((data) =>
+                      data.id === action.payload.rowId
+                        ? {
+                            ...data,
+                            [action.payload.name]: action.payload.value,
+                          }
+                        : data
+                    ),
+                  ],
+                }
+              : shop
+          ),
+        ],
+      };
+
+    case "ADD_SHOPTIMINGS_FIELDS":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, i) =>
+            i === action.payload.index
+              ? { ...shop, timings: [...shop.timings, { id: Date.now() }] }
+              : shop
+          ),
+        ],
+      };
+
+    case "REMOVE_SHOPTIMINGS_FIELDS":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, i) =>
+            i === action.payload.shopIndex
+              ? {
+                  ...shop,
+                  timings: [
+                    ...shop.timings.filter(
+                      (time) => time.id !== action.payload.rowId
+                    ),
+                  ],
+                }
+              : shop
+          ),
+        ],
+      };
+
     case "REMOVE_SHOP_FORM":
       return {
         ...state,

@@ -67,10 +67,15 @@ const CommonShopForm = ({
   };
 
   const onManualTimeChange = (rowId, name, value) =>
-    dispatch({
-      type: "ADD_SHOP_TIMINGS_MANUALLY",
-      payload: { shopIndex: index, rowId, name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "ADD_SHOP_TIMINGS_MANUALLY",
+          payload: { shopIndex: index, rowId, name, value },
+        })
+      : dispatch({
+          type: "ADD_SHOP_TIMINGS_MANUALLY",
+          payload: { shopIndex: index, rowId, name, value },
+        });
 
   const onDefaultTimeChange = (name, value) =>
     edit
@@ -84,15 +89,22 @@ const CommonShopForm = ({
         });
 
   const addMoreTimingsFields = () =>
-    s.timings.length === 8
-      ? alert("No More Days Left")
-      : dispatch({ type: "ADD_SHOPTIMINGS_FIELDS", payload: { index } });
+    s?.timings?.length !== 8 && !edit
+      ? dispatch({ type: "ADD_SHOPTIMINGS_FIELDS", payload: { index } })
+      : dataShop.timings.length !== 8 && edit
+      ? editDispatch({ type: "ADD_SHOPTIMINGS_FIELDS", payload: { index } })
+      : alert("No More Days Left");
 
   const onRemoveTimingsField = (rowId) =>
-    dispatch({
-      type: "REMOVE_SHOPTIMINGS_FIELDS",
-      payload: { shopIndex: index, rowId },
-    });
+    edit
+      ? editDispatch({
+          type: "REMOVE_SHOPTIMINGS_FIELDS",
+          payload: { shopIndex: index, rowId },
+        })
+      : dispatch({
+          type: "REMOVE_SHOPTIMINGS_FIELDS",
+          payload: { shopIndex: index, rowId },
+        });
 
   let listOfMallTimes = [mallTime[0]];
 
