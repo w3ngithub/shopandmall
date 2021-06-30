@@ -105,7 +105,7 @@ const CommonShopForm = ({
       }
     }
   });
-
+  console.log(shopImageState);
   return (
     <div className={classes.shopContainer}>
       <div
@@ -307,64 +307,28 @@ const CommonShopForm = ({
                 ))
               : null
           )}
-        {/* {edit
-          ? dataShop.shopImages
-            ? dataShop.shopImages.map((img, i) => (
+        {!edit &&
+          shopImageState?.map(
+            (image, ind) =>
+              ind === index &&
+              image?.images?.map((img, i) => (
                 <p key={i} className={classes.image}>
                   <button
                     className={classes.button}
                     type="button"
-                    onClick={() => removeImage(img, index)}
+                    onClick={() =>
+                      shopImageDispatch({
+                        type: "REMOVE_IMAGE",
+                        payload: { outerIndex: ind, name: img?.name },
+                      })
+                    }
                   >
                     <IoIosClose />
                   </button>
-                  {img.ImageName}
+                  {img?.name}
                 </p>
               ))
-            : addedShopImages &&
-              addedShopImages.map(
-                (img, ind) =>
-                  ind === index2 &&
-                  img.images.map((img, i) => (
-                    <p key={i} className={classes.image}>
-                      <button
-                        className={classes.button}
-                        type="button"
-                        onClick={() =>
-                          addedShopImagesDispatch({
-                            type: "REMOVE_IMAGE",
-                            payload: { outerIndex: ind, name: img.name },
-                          })
-                        }
-                      >
-                        <IoIosClose />
-                      </button>
-                      {img.name}
-                    </p>
-                  ))
-              )
-          : shopImageState &&
-            shopImageState?.map(
-              (image, ind) =>
-                ind === index &&
-                image?.images?.map((img, i) => (
-                  <p key={i} className={classes.image}>
-                    <button
-                      className={classes.button}
-                      type="button"
-                      onClick={() =>
-                        addedShopImagesDispatch({
-                          type: "REMOVE_IMAGE",
-                          payload: { outerIndex: ind, name: img?.name },
-                        })
-                      }
-                    >
-                      <IoIosClose />
-                    </button>
-                    {img?.name}
-                  </p>
-                ))
-            )} */}
+          )}
       </div>
     </div>
   );

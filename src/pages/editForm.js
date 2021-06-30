@@ -53,7 +53,7 @@ const MallForm = () => {
         }
       });
 
-      if (!isShopImageError && !isShopImageError) {
+      if (!isShopTimeError && !isShopImageError) {
         const storageRef = storage.ref();
         let mallImageUrl = null;
         setIsLoading(true);
@@ -75,7 +75,7 @@ const MallForm = () => {
         } else {
           mallImageUrl = location.dataToSend.mallImage.imageUrl;
         }
-
+        setLoadingPercentage(50);
         await Promise.all(
           addedShopImages.map((image) =>
             Promise.all(

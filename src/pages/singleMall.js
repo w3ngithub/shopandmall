@@ -26,6 +26,8 @@ const SingleMall = () => {
     };
 
     fetchData();
+
+    return () => fetchData();
   }, [docId]);
 
   return (
