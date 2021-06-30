@@ -26,6 +26,7 @@ const CommonShopForm = ({
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
+  const [categoryLists, setCategoryLists] = useState([]);
   const [subCategoryLists, setSubCategoryLists] = useState([]);
 
   const onChangeHandler = (e) => {
@@ -105,7 +106,28 @@ const CommonShopForm = ({
       }
     }
   });
-  console.log(shopImageState);
+
+  useEffect(() => {
+    if (edit) {
+      setCategoryLists([
+        ...docs.map((categories) =>
+          dataShop.category === categories.category
+            ? { ...categories, selected: true }
+            : categories
+        ),
+      ]);
+    }
+  }, [docs]);
+
+  useEffect(() => {
+    if (edit && docs.length > 0) {
+      setSubCategoryLists([
+        ...docs.find((category) => category.category === dataShop.category)
+          .rowContent.rowData,
+      ]);
+    }
+  }, [categoryLists, docs]);
+
   return (
     <div className={classes.shopContainer}>
       <div
@@ -233,19 +255,31 @@ const CommonShopForm = ({
           }}
         >
           <option hidden>Categories</option>
-          {docs.map(({ id, category }) => (
-            <option key={id} value={category}>
-              {category}
-            </option>
-          ))}
+          {edit
+            ? categoryLists.map(({ id, category, selected }) => (
+                <option key={id} value={category} selected={selected}>
+                  {category}
+                </option>
+              ))
+            : docs.map(({ id, category }) => (
+                <option key={id} value={category}>
+                  {category}
+                </option>
+              ))}
         </select>
         <select name="subCategory" onChange={onChangeHandler}>
           <option hidden>SubCategories</option>
-          {subCategoryLists.map(({ id, subCategory }) => (
-            <option key={id} value={subCategory}>
-              {subCategory}
-            </option>
-          ))}
+          {edit
+            ? subCategoryLists.map(({ id, subCategory }) => (
+                <option key={id} value={subCategory}>
+                  {subCategory}
+                </option>
+              ))
+            : subCategoryLists.map(({ id, subCategory }) => (
+                <option key={id} value={subCategory}>
+                  {subCategory}
+                </option>
+              ))}
         </select>
         <AllTimings
           state={edit ? dataShop : s}
