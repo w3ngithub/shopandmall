@@ -31,7 +31,7 @@ const ManualTimings = ({
       <div className="dayinputfield">
         <label htmlFor="days">Days:</label>
         <br />
-        <select id="days" onChange={setDays}>
+        <select id="days" onChange={setDays} value={time.label}>
           {filterDays}
         </select>
       </div>
