@@ -8,12 +8,17 @@
 }
 
 .slider {
-  width: 102%;
   left: -10px;
 }
 
 @media only screen and (max-width: 414px) {
+  .sliderContainer {
+    width: 100%;
+  }
+
   .slider {
-    width: 326px;
+    width: 100%;
+    position: relative;
+    left: 0px;
   }
 }

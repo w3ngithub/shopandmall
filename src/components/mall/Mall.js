@@ -14,7 +14,7 @@ const Mall = ({ docs, settings }) => {
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
-        <div>
+        <div className={classes.sliderContainer}>
           <Slider {...settings} className={classes.slider}>
             {docs?.map((doc, ind) => (
               <div key={ind}>
