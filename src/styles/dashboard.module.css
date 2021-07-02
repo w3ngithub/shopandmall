@@ -2,14 +2,14 @@
   border: none;
   padding: 10px 15px;
   width: 300px;
-  background-color: rgb(236, 78, 78);
+  background-color: #153074;
   color: white;
   margin: -10px 0 40px 0;
   cursor: pointer;
 }
 
 .addBtn:hover {
-  background-color: rgb(199, 59, 59);
+  background-color: #2b4ea7;
 }
 
 .userName {
@@ -362,6 +362,11 @@
     width: 90%;
     margin: auto;
     margin-top: 10px;
+  }
+
+  .addBtn {
+    padding: 10px 15px;
+    width: 100%;
   }
 
   .topImage {
