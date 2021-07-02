@@ -5,8 +5,8 @@ import MallCardComponent from "../mallCardComponent/MallCardComponent";
 import Slider from "react-slick";
 
 import { useLocation } from "react-router-dom";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
+
 
 const Mall = ({ docs, settings }) => {
   const location = useLocation();

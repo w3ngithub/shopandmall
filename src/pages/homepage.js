@@ -11,8 +11,6 @@ import { BiSearchAlt2 } from "react-icons/bi";
 //Slick
 import NextArrow from "../components/Arrows/NextArrow";
 import PrevArrow from "../components/Arrows/PrevArrow";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const Dashboard = () => {
   const [search, setSearch] = useState("");
