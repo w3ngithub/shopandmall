@@ -26,7 +26,6 @@ const CommonShopForm = ({
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
-  const [categoryLists, setCategoryLists] = useState([]);
   const [subCategoryLists, setSubCategoryLists] = useState([]);
 
   const onChangeHandler = (e) => {
@@ -120,25 +119,13 @@ const CommonShopForm = ({
   });
 
   useEffect(() => {
-    if (edit) {
-      setCategoryLists([
-        ...docs.map((categories) =>
-          dataShop.category === categories.category
-            ? { ...categories, selected: true }
-            : categories
-        ),
-      ]);
-    }
-  }, [docs]);
-
-  useEffect(() => {
     if (edit && docs.length > 0) {
       setSubCategoryLists([
         ...docs.find((category) => category.category === dataShop.category)
           .rowContent.rowData,
       ]);
     }
-  }, [categoryLists, docs]);
+  }, [docs]);
 
   return (
     <div className={classes.shopContainer}>
@@ -265,21 +252,20 @@ const CommonShopForm = ({
                 .rowContent.rowData,
             ]);
           }}
+          value={edit ? dataShop.category : s.category}
         >
           <option hidden>Categories</option>
-          {edit
-            ? categoryLists.map(({ id, category, selected }) => (
-                <option key={id} value={category} selected={selected}>
-                  {category}
-                </option>
-              ))
-            : docs.map(({ id, category }) => (
-                <option key={id} value={category}>
-                  {category}
-                </option>
-              ))}
+          {docs.map(({ id, category }) => (
+            <option key={id} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
-        <select name="subCategory" onChange={onChangeHandler}>
+        <select
+          name="subCategory"
+          onChange={onChangeHandler}
+          value={edit ? dataShop.subCategory : s.subCategory}
+        >
           <option hidden>SubCategories</option>
           {edit
             ? subCategoryLists.map(({ id, subCategory }) => (

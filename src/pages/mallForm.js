@@ -78,7 +78,7 @@ const MallForm = () => {
 
         if (shopImageError) {
           isShopImageError = true;
-          alert("please upload an image of shop no. " + index + 1);
+          alert(`please upload an image of shop no.${index + 1}`);
           return;
         }
       });
