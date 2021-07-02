@@ -1,4 +1,4 @@
-import NavBar from "./components/NavBar";
+import Nav from "./components/NavBar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./ProtectedRoute";
 import { Switch, Route, Redirect } from "react-router-dom";
@@ -42,10 +42,9 @@ function App() {
   }, []);
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <MyContext.Provider value={{ allDataState, allDataDispatch }}>
-        {/* {location.pathname.split("/")[1] === "admin" && <NavBar />} */}
-        {location.pathname !== "/login" && <NavBar />}
+        {location.pathname !== "/login" && <Nav />}
 
         <Switch>
           {/* ------------------User------------------ */}

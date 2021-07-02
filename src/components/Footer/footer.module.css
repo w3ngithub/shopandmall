@@ -24,7 +24,7 @@
   cursor: pointer;
 }
 
-p {
+.footer p {
   margin-bottom: 20px;
 }
 
@@ -70,11 +70,12 @@ p {
   }
 
   p {
-    font-size: 15px;
+    font-size: 14px;
     margin-bottom: 15px;
   }
 
   .phone {
+    font-size: 12px;
     margin-bottom: 20px;
   }
 
@@ -92,6 +93,10 @@ p {
     justify-content: center;
     margin-left: 10px;
     margin-bottom: 43px;
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .copyright {
+    font-size: 10px;
   }
 }

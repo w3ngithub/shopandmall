@@ -1,12 +1,30 @@
-.wrapper {
+.wrapper,
+.wrapper2 {
   width: 280px;
-  /* max-height: 391px; */
   overflow: hidden;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   cursor: pointer;
   background: #ffffff;
   margin: 0 10px;
+}
+
+.blankSpace {
+  height: 237px;
+  width: 280px;
+  margin-left: 10px;
+  background-color: rgba(30, 30, 30, 0.27);
+  text-align: center;
+  border-radius: 4px;
+  color: #153074;
+  position: relative;
+}
+
+.blankSpace p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .imageContainer {
@@ -32,6 +50,7 @@
 
 .closeIcon:hover {
   color: rgba(207, 46, 24, 1);
+  /* color: rgb(241, 109, 91); */
 }
 
 .image {
@@ -41,16 +60,18 @@
   transition: all 0.15s ease-in;
 }
 
-.wrapper:hover .image {
+.wrapper:hover .image,
+.wrapper2:hover .image {
   transform: scale(1.1);
   transform-origin: 50% 50%;
 }
 
-.wrapper:hover {
+.wrapper:hover,
+.wrapper2:hover {
   background-color: rgb(255, 236, 236);
 }
 
-.mallDetail {
+.shopDetail {
   color: #153074;
   padding: 5px 10px;
   line-height: 20px;
@@ -67,8 +88,19 @@
   margin: 0 5px;
 }
 
-.mallTime {
+.shopLoc {
   font-size: 15px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  row-gap: 20px;
+  margin: 20px 0;
+}
+
+.wrapper2 {
+  /* max-width: 350px; */
 }
 
 @media only screen and (max-width: 768px) {
@@ -80,6 +112,11 @@
     cursor: pointer;
     background: #ffffff;
     margin: 0 10px;
+  }
+
+  .blankSpace {
+    height: 180px;
+    width: 190px;
   }
 
   .image {
@@ -108,11 +145,17 @@
 }
 
 @media only screen and (max-width: 414px) {
-  .wrapper {
+  .wrapper,
+  .wrapper2 {
     width: 100%;
     margin: 0;
     height: 200px;
-    /* background-color: black; */
+  }
+
+  .blankSpace {
+    width: 100%;
+    height: 200px;
+    margin-left: 0px;
   }
 
   .imageContainer {

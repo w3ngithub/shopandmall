@@ -1,0 +1,74 @@
+.slick-slider {
+  .arrow {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 35px !important;
+    height: 35px !important;
+    background: #fff;
+    color: black;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px 0 rgba(30, 41, 61, 0.1),
+      0 1px 2px 0 rgba(30, 41, 61, 0.2);
+    opacity: 0.9;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    visibility: visible;
+    opacity: 1;
+    transition: all ease 1s;
+    top: 50%;
+    &-icon {
+      font-size: 1.5rem;
+    }
+    &:hover {
+      color: #153074;
+      background: #fff;
+    }
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+  .arrow-left {
+    left: -10px;
+  }
+  .arrow-right {
+    right: -2px;
+  }
+}
+.slick-disabled {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* ------------ Tab View -------------- */
+@media only screen and (max-width: 1024px) {
+  .slick-slider {
+    .arrow-right {
+      right: 8%;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .slick-slider {
+    .arrow-right {
+      right: -12px;
+    }
+  }
+}
+
+/* ------------ Mobile View -------------- */
+@media only screen and (max-width: 414px) {
+  .slick-slider {
+    .arrow-right {
+      right: -15px;
+    }
+
+    .arrow-left {
+      left: -15px;
+    }
+  }
+}
