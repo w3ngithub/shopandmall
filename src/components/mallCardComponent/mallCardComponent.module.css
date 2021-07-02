@@ -32,7 +32,6 @@
 
 .closeIcon:hover {
   color: rgba(207, 46, 24, 1);
-  /* color: rgb(241, 109, 91); */
 }
 
 .image {
@@ -72,8 +71,73 @@
   font-size: 15px;
 }
 
+@media only screen and (max-width: 768px) {
+  .wrapper {
+    width: 190px;
+    height: 180px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    background: #ffffff;
+    margin: 0 10px;
+  }
+
+  .image {
+    width: 100%;
+    object-fit: cover;
+    height: 226px;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.15s ease-in;
+  }
+
+  .imageContainer {
+    height: 130px;
+  }
+
+  .mallDetail {
+    padding: 4px 5px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+
+  .mallTime {
+    font-size: 12px;
+  }
+}
+
 @media only screen and (max-width: 414px) {
   .wrapper {
-    width: auto;
+    width: 100%;
+    margin: 0;
+    height: 200px;
+    /* background-color: black; */
+  }
+
+  .imageContainer {
+    position: relative;
+    height: 145px;
+    overflow: hidden;
+  }
+
+  .mallDetail {
+    padding: 5px 10px;
+    line-height: 20px;
+  }
+
+  .title {
+    font-size: 15px;
+    font-weight: 700;
+    height: 8px;
+    width: 500px;
+  }
+
+  .midLine {
+    margin: 0 5px;
+  }
+
+  .mallTime {
+    font-size: 12px;
   }
 }

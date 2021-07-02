@@ -1,12 +1,11 @@
 import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import classes from "./arrows.module.css";
 
 function PrevArrow(props) {
   const { onClick } = props;
   return (
-    <div className={`${classes.arrow} ${classes.left}`} onClick={onClick}>
-      <IoIosArrowBack />
+    <div className={`arrow arrow-left ${props.className}`} onClick={onClick}>
+      <IoIosArrowBack className="arrow-icon" />
     </div>
   );
 }

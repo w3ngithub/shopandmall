@@ -14,15 +14,19 @@ const Mall = ({ docs, settings }) => {
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
-        <div>
-          <Slider {...settings} className={classes.slider}>
-            {docs?.map((doc, ind) => (
-              <div key={ind}>
-                <MallCardComponent key={doc.id} doc={doc} />
-              </div>
-            ))}
-          </Slider>
-        </div>
+        docs.length === 0 ? (
+          "NOthing"
+        ) : (
+          <div className={classes.sliderContainer}>
+            <Slider {...settings} className={classes.slider}>
+              {docs?.map((doc, ind) => (
+                <div key={ind}>
+                  <MallCardComponent key={doc.id} doc={doc} />
+                </div>
+              ))}
+            </Slider>
+          </div>
+        )
       ) : (
         <div className={classes.container}>
           {docs?.map(
