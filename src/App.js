@@ -6,6 +6,8 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 import allDataReducer from "./reducers/allDataReducer";
 import "./index.css";
 import { useLocation } from "react-router-dom";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 import {
   HomePage,
