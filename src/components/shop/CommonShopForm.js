@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./shopform.module.css";
 import { IoIosClose } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
@@ -20,6 +20,7 @@ const CommonShopForm = ({
   addedShopImages,
   removeImage,
   control,
+  getValues,
   mallTime,
   mallLevel,
 }) => {
@@ -33,7 +34,7 @@ const CommonShopForm = ({
     edit
       ? editDispatch({
           type: "EDIT_SHOP_INFO",
-          payload: { name: name, value: value, index: index2 },
+          payload: { name: name, value: value, index: index },
         })
       : dispatch({
           type: "ADD_SHOP_INFO",
@@ -47,10 +48,17 @@ const CommonShopForm = ({
       let selectedShopImages = e.target.files[i];
 
       if (selectedShopImages && types.includes(selectedShopImages.type)) {
-        shopImageDispatch({
-          type: "ADD",
-          payload: { index, selectedShopImages },
-        });
+        if (edit) {
+          addedShopImagesDispatch({
+            type: "ADD",
+            payload: { index, selectedShopImages },
+          });
+        } else {
+          shopImageDispatch({
+            type: "ADD",
+            payload: { index, selectedShopImages },
+          });
+        }
       } else {
         setShopImageError("Please select an image file  (jpeg or png)");
       }
@@ -58,30 +66,48 @@ const CommonShopForm = ({
   };
 
   const onManualTimeChange = (rowId, name, value) =>
-    dispatch({
-      type: "ADD_SHOP_TIMINGS_MANUALLY",
-      payload: { shopIndex: index, rowId, name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "ADD_SHOP_TIMINGS_MANUALLY",
+          payload: { shopIndex: index, rowId, name, value },
+        })
+      : dispatch({
+          type: "ADD_SHOP_TIMINGS_MANUALLY",
+          payload: { shopIndex: index, rowId, name, value },
+        });
 
   const onDefaultTimeChange = (name, value) =>
-    dispatch({
-      type: "ADD_SHOP_TIMINGS",
-      payload: { index, name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "EDIT_SHOP_TIMINGS",
+          payload: { index, name, value },
+        })
+      : dispatch({
+          type: "ADD_SHOP_TIMINGS",
+          payload: { index, name, value },
+        });
 
   const addMoreTimingsFields = () =>
-    s.timings.length === 8
-      ? alert("No More Days Left")
-      : dispatch({ type: "ADD_SHOPTIMINGS_FIELDS", payload: { index } });
+    s?.timings?.length !== 8 && !edit
+      ? dispatch({ type: "ADD_SHOPTIMINGS_FIELDS", payload: { index } })
+      : dataShop.timings.length !== 8 && edit
+      ? editDispatch({ type: "ADD_SHOPTIMINGS_FIELDS", payload: { index } })
+      : alert("No More Days Left");
 
   const onRemoveTimingsField = (rowId) =>
-    dispatch({
-      type: "REMOVE_SHOPTIMINGS_FIELDS",
-      payload: { shopIndex: index, rowId },
-    });
+    edit
+      ? editDispatch({
+          type: "REMOVE_SHOPTIMINGS_FIELDS",
+          payload: { shopIndex: index, rowId },
+        })
+      : dispatch({
+          type: "REMOVE_SHOPTIMINGS_FIELDS",
+          payload: { shopIndex: index, rowId },
+        });
 
   let listOfMallTimes = [mallTime[0]];
-  s.timings.forEach((time, index) => {
+
+  s?.timings?.forEach((time, index) => {
     if (index > 0) {
       let isDayPresentInMallTime = mallTime.findIndex(
         (t) => t.label === time.label
@@ -91,6 +117,15 @@ const CommonShopForm = ({
       }
     }
   });
+
+  useEffect(() => {
+    if (edit && docs.length > 0) {
+      setSubCategoryLists([
+        ...docs.find((category) => category.category === dataShop.category)
+          .rowContent.rowData,
+      ]);
+    }
+  }, [docs]);
 
   return (
     <div className={classes.shopContainer}>
@@ -110,7 +145,8 @@ const CommonShopForm = ({
         <div>
           <Controller
             control={control}
-            name={`shops[${index}].name`}
+            name={`shops[${index}].shopName`}
+            defaultValue={edit && getValues(`shops[${index}].shopName`)}
             render={({
               field: { onChange },
               fieldState: { error, invalid },
@@ -137,6 +173,7 @@ const CommonShopForm = ({
           <Controller
             control={control}
             name={`shops[${index}].shopLevel`}
+            defaultValue={edit && getValues(`shops[${index}].shopLevel`)}
             render={({
               field: { onChange },
               fieldState: { error, invalid },
@@ -156,21 +193,23 @@ const CommonShopForm = ({
                 {error && <p className={classes.error}>{error.message}</p>}
                 {error?.type === "validate" && (
                   <p className={classes.error}>
-                    * level must match the mall levels
+                    * level must be equal to or less than mall level (
+                    {mallLevel})
                   </p>
                 )}
               </>
             )}
             rules={{
               required: { value: true, message: "* Level is Required" },
-              validate: (value) => value < mallLevel,
+              validate: (value) => value <= mallLevel,
             }}
           />
         </div>
         <div>
           <Controller
             control={control}
-            name={`shops[${index}].number`}
+            name={`shops[${index}].shopPhoneNumber`}
+            defaultValue={edit && getValues(`shops[${index}].shopPhoneNumber`)}
             render={({
               field: { onChange },
               fieldState: { error, invalid },
@@ -180,7 +219,7 @@ const CommonShopForm = ({
                   type="text"
                   placeholder="Phone Number"
                   name="shopPhoneNumber"
-                  value={edit ? dataShop?.phoneNumber : s?.shopPhoneNumber}
+                  value={edit ? dataShop?.shopPhoneNumber : s?.shopPhoneNumber}
                   onChange={(e) => {
                     onChangeHandler(e);
                     onChange(e);
@@ -213,6 +252,7 @@ const CommonShopForm = ({
                 .rowContent.rowData,
             ]);
           }}
+          value={edit ? dataShop.category : s.category}
         >
           <option hidden>Categories</option>
           {docs.map(({ id, category }) => (
@@ -221,16 +261,26 @@ const CommonShopForm = ({
             </option>
           ))}
         </select>
-        <select name="subCategory" onChange={onChangeHandler}>
+        <select
+          name="subCategory"
+          onChange={onChangeHandler}
+          value={edit ? dataShop.subCategory : s.subCategory}
+        >
           <option hidden>SubCategories</option>
-          {subCategoryLists.map(({ id, subCategory }) => (
-            <option key={id} value={subCategory}>
-              {subCategory}
-            </option>
-          ))}
+          {edit
+            ? subCategoryLists.map(({ id, subCategory }) => (
+                <option key={id} value={subCategory}>
+                  {subCategory}
+                </option>
+              ))
+            : subCategoryLists.map(({ id, subCategory }) => (
+                <option key={id} value={subCategory}>
+                  {subCategory}
+                </option>
+              ))}
         </select>
         <AllTimings
-          state={s}
+          state={edit ? dataShop : s}
           index={index}
           onManualTimeChange={onManualTimeChange}
           onDefaultTimeChange={onDefaultTimeChange}
@@ -238,6 +288,7 @@ const CommonShopForm = ({
           onRemoveTimingsField={onRemoveTimingsField}
           isShop={true}
           mallTime={listOfMallTimes}
+          edit={edit}
         />
 
         {shopImageError && <p>{shopImageError}</p>}
@@ -253,66 +304,63 @@ const CommonShopForm = ({
       </div>
 
       <div className={classes.selectedImages}>
-        {edit
-          ? dataShop.shopImages
-            ? dataShop.shopImages.map((img, i) => (
-                <p key={i} className={classes.image}>
-                  <button
-                    className={classes.button}
-                    type="button"
-                    onClick={() => removeImage(img, index2)}
-                  >
-                    <IoIosClose />
-                  </button>
-                  {img.ImageName}
-                </p>
-              ))
-            : null(
-                addedShopImages &&
-                  addedShopImages.map(
-                    (img, ind) =>
-                      ind === index2 &&
-                      img.images.map((img, i) => (
-                        <p key={i} className={classes.image}>
-                          <button
-                            className={classes.button}
-                            type="button"
-                            onClick={() =>
-                              addedShopImagesDispatch({
-                                type: "REMOVE_IMAGE",
-                                payload: { outerIndex: ind, name: img.name },
-                              })
-                            }
-                          >
-                            <IoIosClose />
-                          </button>
-                          {img.name}
-                        </p>
-                      ))
-                  )
-              )
-          : shopImageState &&
-            shopImageState?.map(
-              (image, ind) =>
-                ind === index &&
-                image?.images?.map((img, i) => (
+        {edit &&
+          dataShop.shopImages.map((img, i) => (
+            <p key={i} className={classes.image}>
+              <button
+                className={classes.button}
+                type="button"
+                onClick={() => removeImage(img, index)}
+              >
+                <IoIosClose />
+              </button>
+              {img.ImageName}
+            </p>
+          ))}
+        {edit &&
+          addedShopImages.map((img, ind) =>
+            ind === index
+              ? img.images.map((img, i) => (
                   <p key={i} className={classes.image}>
                     <button
                       className={classes.button}
                       type="button"
                       onClick={() =>
-                        shopImageDispatch({
+                        addedShopImagesDispatch({
                           type: "REMOVE_IMAGE",
-                          payload: { outerIndex: ind, name: img?.name },
+                          payload: { outerIndex: ind, name: img.name },
                         })
                       }
                     >
                       <IoIosClose />
                     </button>
-                    {img?.name}
+                    {img.name}
                   </p>
                 ))
-            )}
+              : null
+          )}
+        {!edit &&
+          shopImageState?.map(
+            (image, ind) =>
+              ind === index &&
+              image?.images?.map((img, i) => (
+                <p key={i} className={classes.image}>
+                  <button
+                    className={classes.button}
+                    type="button"
+                    onClick={() =>
+                      shopImageDispatch({
+                        type: "REMOVE_IMAGE",
+                        payload: { outerIndex: ind, name: img?.name },
+                      })
+                    }
+                  >
+                    <IoIosClose />
+                  </button>
+                  {img?.name}
+                </p>
+              ))
+          )}
       </div>
     </div>
   );

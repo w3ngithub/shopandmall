@@ -16,7 +16,7 @@
 .modal {
   position: absolute;
   background-color: #f9fafb;
-  width: 493px;
+  width: 600px;
   height: auto;
   top: 20%;
   left: 50%;
@@ -63,6 +63,14 @@
   margin: 25px 30px;
   text-align: center;
   /* margin-bottom: 25px; */
+}
+
+.form > select {
+  width: 200px;
+  margin-bottom: 10px;
+  border: 1px solid rgb(146, 146, 146);
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .input,
@@ -203,4 +211,8 @@
 
 .subCategoryError {
   top: 75%;
+}
+.error {
+  color: red;
+  text-align: left;
 }

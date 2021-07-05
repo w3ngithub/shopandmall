@@ -27,8 +27,7 @@ export const checkShopValidation = (state, image) => {
   );
 
   //check for empty image
-  const shopImageError =
-    image?.images?.length === 0 || typeof image === "undefined";
+  const shopImageError = image?.length === 0 || typeof image === "undefined";
 
   return { shopTimeError, shopImageError };
 };

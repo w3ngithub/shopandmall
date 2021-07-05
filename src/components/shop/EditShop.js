@@ -5,10 +5,14 @@ const ShopForm = ({
   edit,
   dataShop,
   editDispatch,
-  index2,
+  index,
   setImagesToRemove,
   addedShopImagesDispatch,
   addedShopImages,
+  control,
+  getValues,
+  mallTime,
+  mallLevel,
 }) => {
   const closeShopForm = (dataShop) => {
     editDispatch({
@@ -26,6 +30,7 @@ const ShopForm = ({
   //Remove Image
 
   const removeImage = (img, index) => {
+    console.log(index);
     setImagesToRemove((prevState) => [...prevState, img]);
     editDispatch({
       type: "REMOVE_IMAGE",
@@ -42,12 +47,16 @@ const ShopForm = ({
         edit,
         dataShop,
         editDispatch,
-        index2,
+        index,
         setImagesToRemove,
         addedShopImagesDispatch,
         addedShopImages,
         removeImage,
         closeShopForm,
+        control,
+        getValues,
+        mallTime,
+        mallLevel,
       }}
     />
   );
