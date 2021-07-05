@@ -7,6 +7,9 @@ import { useHistory, Link, useLocation } from "react-router-dom";
 import HomepageImage from "../assets/images/homepage.png";
 
 import { BiSearchAlt2 } from "react-icons/bi";
+import CategoryIcon from "../assets/images/categoryIcon.svg";
+
+import MobileShopCategory from "../components/MobileShopCategory";
 
 //Slick
 import NextArrow from "../components/Arrows/NextArrow";
@@ -14,14 +17,13 @@ import PrevArrow from "../components/Arrows/PrevArrow";
 
 const Dashboard = () => {
   const [search, setSearch] = useState("");
+  const [showCategoryMobile, setShowCategoryMobile] = useState(false);
 
   const history = useHistory();
   const location = useLocation();
   let { docs } = useFirestore("Shopping Mall");
 
   let shopCategory = useFirestore("Shop Categories").docs;
-
-  console.log("check", shopCategory);
 
   const filter = (e) => {
     setSearch(e.target.value);
@@ -32,8 +34,6 @@ const Dashboard = () => {
       doc.mallName.toLowerCase().includes(search.toLowerCase())
     );
   }
-
-  console.log("asdf", docs);
 
   var settings = {
     dots: true,
@@ -76,6 +76,16 @@ const Dashboard = () => {
 
   return (
     <div>
+      <div
+        className={
+          showCategoryMobile
+            ? classes.showCategoryDropdown
+            : classes.hideCategoryDropdown
+        }
+      >
+        <MobileShopCategory {...{ shopCategory, setShowCategoryMobile }} />
+      </div>
+
       <div className={classes.topImage}>
         <div className={classes.img}>
           <img src={HomepageImage} alt="" />
@@ -97,10 +107,37 @@ const Dashboard = () => {
       </div>
 
       <main className={classes.bodyWrapper}>
+        {/* ------------ ShopFilter ------------ */}
         <div className={classes.shopFilter}>
           <h3>Shop Filters</h3>
+          <p className={classes.categoryDesktop}>
+            <img src={CategoryIcon} alt="" />
+            All Categories
+          </p>
+          <p
+            className={classes.categoryMobile}
+            onClick={() => setShowCategoryMobile((prevState) => !prevState)}
+          >
+            <img src={CategoryIcon} alt="" />
+            All Categories
+          </p>
+
+          {/* ---------- Desktop ---------- */}
           {shopCategory?.map((shopCat) => (
-            <p key={shopCat.id}>
+            <p key={shopCat.id} className={classes.desktopShopFilter}>
+              {shopCat.category}
+              <span className={classes.number}>
+                ({shopCat.rowContent.rowData.length})
+              </span>
+              <span className={classes.numberMob}>
+                {shopCat.rowContent.rowData.length}
+              </span>
+            </p>
+          ))}
+
+          {/* ---------- Mobile ---------- */}
+          {shopCategory?.slice(0, 3).map((shopCat) => (
+            <p key={shopCat.id} className={classes.mobileShopFilter}>
               {shopCat.category}
               <span className={classes.number}>
                 ({shopCat.rowContent.rowData.length})
@@ -142,24 +179,25 @@ const Dashboard = () => {
             </div>
             <Mall {...{ docs, settings }} />
           </div>
+          {docs.length !== 0 && (
+            <div className={classes.mallContainer}>
+              <div className={classes.header}>
+                <h4 className={classes.heading}>Shops</h4>
+                {docs.length > 3 &&
+                  (location.pathname === "/admin/dashboard" ? (
+                    <Link className={classes.view} to="/admin/shops">
+                      View all
+                    </Link>
+                  ) : (
+                    <Link className={classes.view} to="/shops">
+                      View all
+                    </Link>
+                  ))}
+              </div>
 
-          <div className={classes.mallContainer}>
-            <div className={classes.header}>
-              <h4 className={classes.heading}>Shops</h4>
-              {docs.length > 3 &&
-                (location.pathname === "/admin/dashboard" ? (
-                  <Link className={classes.view} to="/admin/shops">
-                    View all
-                  </Link>
-                ) : (
-                  <Link className={classes.view} to="/shops">
-                    View all
-                  </Link>
-                ))}
+              <Shop {...{ docs, settings }} />
             </div>
-
-            <Shop {...{ docs, settings }} />
-          </div>
+          )}
         </div>
       </main>
     </div>

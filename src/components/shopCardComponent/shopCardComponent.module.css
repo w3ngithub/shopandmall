@@ -10,8 +10,9 @@
 }
 
 .blankSpace {
+  /* display: none; */
   height: 237px;
-  width: 280px;
+  width: 0px;
   margin-left: 10px;
   background-color: rgba(30, 30, 30, 0.27);
   text-align: center;
@@ -148,6 +149,7 @@
 @media only screen and (max-width: 414px) {
   .wrapper,
   .wrapper2 {
+    max-width: none;
     width: 100%;
     margin: 0;
     height: 200px;
@@ -181,7 +183,8 @@
     margin: 0 5px;
   }
 
-  .mallTime {
-    font-size: 12px;
+  .shopLoc {
+    font-size: 15px;
+    margin-top: 12px;
   }
 }
