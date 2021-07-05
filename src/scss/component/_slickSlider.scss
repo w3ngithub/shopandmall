@@ -6,7 +6,7 @@
     width: 35px !important;
     height: 35px !important;
     background: #fff;
-    color: black;
+    color: var(--button);
     border: 0;
     border-radius: 50%;
     box-shadow: 0 1px 3px 0 rgba(30, 41, 61, 0.1),
@@ -35,7 +35,7 @@
     left: -10px;
   }
   .arrow-right {
-    right: -2px;
+    right: -10px;
   }
 }
 .slick-disabled {
@@ -71,4 +71,9 @@
       left: -15px;
     }
   }
+}
+
+.slick-dots li.slick-active button:before {
+  color: #2e6fba!important;
+  opacity: 1!important;
 }
