@@ -1,0 +1,34 @@
+.dropdown {
+  color: black;
+}
+
+.dropdown .header {
+  padding: 16px 15px;
+  font-size: 20px;
+  border-bottom: 1px solid #c0c0c0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.dropdown p {
+  padding: 12px 25px;
+}
+
+.dropdown a {
+  color: black;
+}
+
+.subCategory {
+  background-color: rgba(184, 184, 184, 0.3);
+  padding: 3px 0px;
+}
+
+.paragraph {
+  margin-left: 20px;
+  font-size: 15px;
+}

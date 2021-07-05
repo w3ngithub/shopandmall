@@ -9,36 +9,30 @@ const Shop = ({ doc, docs }) => {
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
-        doc.shops.length !== 0 ? (
-          <div
-            className={classes.wrapper}
-            onClick={() =>
-              location.pathname.split("/")[1] === "admin"
-                ? history.push(
-                    "/admin/" + doc.mallName + "/shops/" + doc.shops[0].shopName
-                  )
-                : history.push(doc.mallName + "/shops/" + doc.shops[0].shopName)
-            }
-          >
-            <div className={classes.imageContainer}>
-              {doc.shops[0].shopImages && (
-                <img
-                  className={classes.image}
-                  src={doc?.shops[0]?.shopImages[0]?.url}
-                  alt=""
-                />
-              )}
-            </div>
-            <div className={classes.shopDetail}>
-              <p className={classes.title}>{doc.shops[0].shopName}</p>
-              <p className={classes.shopLoc}>(Inside {doc.mallName})</p>
-            </div>
+        <div
+          className={classes.wrapper}
+          onClick={() =>
+            location.pathname.split("/")[1] === "admin"
+              ? history.push(
+                  "/admin/" + doc.mallName + "/shops/" + doc.shops[0].shopName
+                )
+              : history.push(doc.mallName + "/shops/" + doc.shops[0].shopName)
+          }
+        >
+          <div className={classes.imageContainer}>
+            {doc.shops[0].shopImages && (
+              <img
+                className={classes.image}
+                src={doc?.shops[0]?.shopImages[0]?.url}
+                alt=""
+              />
+            )}
           </div>
-        ) : (
-          <div className={classes.blankSpace}>
-            <p>No Shops Yet</p>
+          <div className={classes.shopDetail}>
+            <p className={classes.title}>{doc.shops[0].shopName}</p>
+            <p className={classes.shopLoc}>(Inside {doc.mallName})</p>
           </div>
-        )
+        </div>
       ) : (
         <div className={classes.container}>
           {docs?.map((doc, ind) =>
