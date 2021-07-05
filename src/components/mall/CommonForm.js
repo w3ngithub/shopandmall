@@ -34,6 +34,8 @@ const CommonForm = ({
     register,
     formState: { errors },
     handleSubmit,
+    reset,
+    getValues,
   } = useForm();
 
   //Change Handler
@@ -65,30 +67,61 @@ const CommonForm = ({
   };
 
   const onManualTimeChange = (rowId, name, value) =>
-    dispatch({
-      type: "ADD_TIMINGS_MANUALLY",
-      payload: { rowId, name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "ADD_TIMINGS_MANUALLY",
+          payload: { rowId, name, value },
+        })
+      : dispatch({
+          type: "ADD_TIMINGS_MANUALLY",
+          payload: { rowId, name, value },
+        });
 
   const onDefaultTimeChange = (name, value) =>
-    dispatch({
-      type: "ADD_TIMINGS",
-      payload: { name, value },
-    });
+    edit
+      ? editDispatch({
+          type: "ADD_TIMINGS",
+          payload: { name, value },
+        })
+      : dispatch({
+          type: "ADD_TIMINGS",
+          payload: { name, value },
+        });
 
   const addMoreTimingsFields = () =>
-    state.timings.length === 8
-      ? alert("No More Days Left")
-      : dispatch({ type: "ADD_TIMINGS_FIELDS" });
+    state?.timings?.length !== 8 && !edit
+      ? dispatch({ type: "ADD_TIMINGS_FIELDS" })
+      : editData.timings.length !== 8 && edit
+      ? editDispatch({ type: "ADD_TIMINGS_FIELDS" })
+      : alert("No More Days Left");
 
   const onRemoveTimingsField = (rowId) =>
-    dispatch({ type: "REMOVE_TIMINGS_FIELDS", payload: { rowId } });
+    edit
+      ? editDispatch({
+          type: "REMOVE_TIMINGS_FIELDS",
+          payload: { rowId },
+        })
+      : dispatch({
+          type: "REMOVE_TIMINGS_FIELDS",
+          payload: { rowId },
+        });
 
   //Loading
   useEffect(() => {
     setIsLoading(false);
+    if (edit) {
+      reset({
+        shops: [
+          ...editData.shops.map((shop) => ({
+            shopName: shop.shopName,
+            shopLevel: shop.shopLevel,
+            shopPhoneNumber: shop.shopPhoneNumber,
+          })),
+        ],
+      });
+    }
   }, []);
-  console.log(errors);
+
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>
@@ -179,7 +212,7 @@ const CommonForm = ({
           </div>
 
           <AllTimings
-            state={state}
+            state={edit ? editData : state}
             onManualTimeChange={onManualTimeChange}
             onDefaultTimeChange={onDefaultTimeChange}
             addMoreTimingsFields={addMoreTimingsFields}
@@ -197,8 +230,8 @@ const CommonForm = ({
           )}
 
           {edit
-            ? editData?.shops?.map((dataShop, index2) => (
-                <div key={index2}>
+            ? editData?.shops?.map((dataShop, index) => (
+                <div key={index}>
                   <EditShop
                     {...{
                       edit,
@@ -206,9 +239,13 @@ const CommonForm = ({
                       editData,
                       dataShop,
                       editDispatch,
-                      index2,
+                      index,
                       addedShopImagesDispatch,
                       addedShopImages,
+                      control,
+                      getValues,
+                      mallTime: editData?.timings,
+                      mallLevel: editData?.levels,
                     }}
                   />
                   <div className={classes.line}></div>

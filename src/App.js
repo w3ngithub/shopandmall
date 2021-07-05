@@ -139,7 +139,7 @@ function App() {
           <Route exact path="/pageNotFound" component={PageNotFound} />
           <Redirect to="/pageNotFound" />
         </Switch>
-        {location.pathname !== "/login" && <Footer />}
+        {/* {location.pathname !== "/login" && <Footer />} */}
       </MyContext.Provider>
     </div>
   );

@@ -68,7 +68,7 @@ const MallForm = () => {
       state.shops.forEach((shop, index) => {
         const { shopTimeError, shopImageError } = checkShopValidation(
           shop,
-          shopImageState[index]
+          shopImageState[index].images
         );
         if (shopTimeError) {
           isShopTimeError = true;
@@ -78,7 +78,7 @@ const MallForm = () => {
 
         if (shopImageError) {
           isShopImageError = true;
-          alert("please upload an image of shop no. " + index + 1);
+          alert(`please upload an image of shop no.${index + 1}`);
           return;
         }
       });
@@ -90,7 +90,7 @@ const MallForm = () => {
         !isShopImageError
       ) {
         setIsLoading(true);
-        setIsLoading(true);
+
         const storageRef = storage.ref();
         let mallImageUrl = null;
         setLoadingPercentage(10);

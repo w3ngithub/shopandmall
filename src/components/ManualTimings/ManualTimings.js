@@ -8,6 +8,7 @@ const ManualTimings = ({
   setCloseTime,
   days,
   setDays,
+  isModal,
   isShop,
   mallTime,
   onRemoveTimingsField,
@@ -30,7 +31,7 @@ const ManualTimings = ({
       <div className="dayinputfield">
         <label htmlFor="days">Days:</label>
         <br />
-        <select id="days" onChange={setDays}>
+        <select id="days" onChange={setDays} value={time.label}>
           {filterDays}
         </select>
       </div>
@@ -39,6 +40,7 @@ const ManualTimings = ({
         setOpenTime={setOpenTime}
         setCloseTime={setCloseTime}
         isShop={isShop}
+        isModal={isModal}
         onRemoveTimingsField={onRemoveTimingsField}
         minTime={mallTime?.openTime}
         maxTime={mallTime?.closeTime}
