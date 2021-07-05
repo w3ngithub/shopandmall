@@ -123,7 +123,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
           url: items,
         })),
       };
-
+      console.log(result, mall.shops);
       //FireStore
       mall.shops.length > 0
         ? fireStore
@@ -138,7 +138,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
             .doc(docId)
             .set({
               ...mall,
-              result,
+              shops: [result],
             });
     } catch (e) {
       console.log(e);

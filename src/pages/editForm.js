@@ -23,6 +23,7 @@ const MallForm = () => {
   //Added Images
   const shopImageValues = [];
 
+  // console.log(location.dataToSend.shops, shopImageValues);
   const [addedShopImages, addedShopImagesDispatch] = useReducer(
     addedShopImagesReducer,
     shopImageValues
@@ -76,23 +77,36 @@ const MallForm = () => {
           mallImageUrl = location.dataToSend.mallImage.imageUrl;
         }
         setLoadingPercentage(50);
-        await Promise.all(
-          addedShopImages.map((image) =>
-            Promise.all(
-              image.images.map((img) => storage.ref().child(img.name).put(img))
-            )
-          )
-        );
 
-        const shopImageUrl = await Promise.all(
-          addedShopImages.map((image) =>
-            Promise.all(
-              image.images.map((img) => storage.ref(img.name).getDownloadURL())
+        let shopImageUrl = null;
+
+        if (addedShopImages.some((img) => img.hasOwnProperty("images"))) {
+          console.log("addedshopimages");
+
+          await Promise.all(
+            addedShopImages.map((image) =>
+              Promise.all(
+                image.images.map((img) =>
+                  storage.ref().child(img.name).put(img)
+                )
+              )
             )
-          )
-        );
+          );
+
+          shopImageUrl = await Promise.all(
+            addedShopImages.map((image) =>
+              Promise.all(
+                image.images.map((img) =>
+                  storage.ref(img.name).getDownloadURL()
+                )
+              )
+            )
+          );
+          console.log(shopImageUrl);
+        }
+
         setLoadingPercentage(60);
-        //Remove Shop Images from Firebase Storage
+        // Remove Shop Images from Firebase Storage
         imagesToRemove.forEach((image) =>
           storage.ref().child(image.ImageName).delete()
         );
@@ -117,7 +131,7 @@ const MallForm = () => {
 
         let shops = editData?.shops?.map((s, i) =>
           s.shopImages
-            ? shopImageUrl[i]
+            ? shopImageUrl !== null
               ? {
                   id: i,
                   shopName: s.shopName,
