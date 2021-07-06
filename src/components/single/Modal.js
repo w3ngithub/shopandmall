@@ -123,7 +123,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
           url: items,
         })),
       };
-
+      console.log(result, mall.shops);
       //FireStore
       mall.shops.length > 0
         ? fireStore
@@ -138,7 +138,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
             .doc(docId)
             .set({
               ...mall,
-              result,
+              shops: [result],
             });
     } catch (e) {
       console.log(e);
@@ -180,7 +180,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
             control={control}
             name="shopName"
             render={({ field: { onChange }, fieldState: { error } }) => (
-              <>
+              <div className={classes.formGroup}>
                 <input
                   type="text"
                   placeholder="Name of Shop"
@@ -193,7 +193,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
                   className={classes.input}
                 />
                 {error && <p className={classes.error}>{error.message}</p>}
-              </>
+              </div>
             )}
             rules={{ required: { value: true, message: "* Name is Required" } }}
           />
@@ -201,9 +201,9 @@ const Modal = ({ setShowModal, docId, mall }) => {
             control={control}
             name="shopLevel"
             render={({ field: { onChange }, fieldState: { error } }) => (
-              <>
+              <div className={classes.formGroup}>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Level"
                   name="shopLevel"
                   value={shop.shopLevel}
@@ -220,7 +220,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
                     {mall.levels})
                   </p>
                 )}
-              </>
+              </div>
             )}
             rules={{
               required: { value: true, message: "* Level is Required" },
@@ -231,9 +231,9 @@ const Modal = ({ setShowModal, docId, mall }) => {
             control={control}
             name="shopPhoneNumber"
             render={({ field: { onChange }, fieldState: { error } }) => (
-              <>
+              <div className={classes.formGroup}>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Phone number"
                   name="shopPhoneNumber"
                   value={shop.shopPhoneNumber}
@@ -244,7 +244,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
                   className={classes.input}
                 />
                 {error && <p className={classes.error}>{error.message}</p>}
-              </>
+              </div>
             )}
             rules={{
               required: {
