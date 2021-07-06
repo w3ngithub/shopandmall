@@ -6,9 +6,8 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 import allDataReducer from "./reducers/allDataReducer";
 import "./index.css";
 import { useLocation } from "react-router-dom";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 
 import {
   HomePage,
@@ -140,7 +139,7 @@ function App() {
           <Route exact path="/pageNotFound" component={PageNotFound} />
           <Redirect to="/pageNotFound" />
         </Switch>
-        {/* {location.pathname !== "/login" && <Footer />} */}
+        {location.pathname !== "/login" && <Footer />}
       </MyContext.Provider>
     </div>
   );
