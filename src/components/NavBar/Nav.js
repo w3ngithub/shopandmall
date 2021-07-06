@@ -60,13 +60,26 @@ const NavBar = ({ check }) => {
                     {docs.map((doc) => (
                       <div className={classes.col} key={doc.category}>
                         <li className={classes.row}>
-                          <h3>{doc.category}</h3>
+                          <h3
+                            onClick={() =>
+                              history.push(`/shops/${doc.category}`)
+                            }
+                          >
+                            {doc.category}
+                          </h3>
                           <FaAngleDown className={classes.headerIcon} />
 
                           <ul className={checked ? classes.drop : classes.hide}>
                             {doc.rowContent.rowData.map((row) => {
                               return (
-                                <li key={row.id}>
+                                <li
+                                  key={row.id}
+                                  onClick={() =>
+                                    history.push(
+                                      `/shops/${doc.category}/${row.subCategory}`
+                                    )
+                                  }
+                                >
                                   {row.subCategory}
                                 </li>
                               );

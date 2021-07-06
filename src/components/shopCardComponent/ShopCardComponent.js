@@ -45,7 +45,9 @@ const Shop = ({ doc, docs }) => {
                     ? history.push(
                         "/admin/" + doc.mallName + "/shops/" + shop.shopName
                       )
-                    : history.push(doc.mallName + "/shops/" + shop.shopName)
+                    : history.push(
+                        "/" + doc.mallName + "/shops/" + shop.shopName
+                      )
                 }
               >
                 <div className={classes.imageContainer}>

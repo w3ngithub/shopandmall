@@ -6,9 +6,8 @@ import React, { useState, useEffect, useReducer, createContext } from "react";
 import allDataReducer from "./reducers/allDataReducer";
 import "./index.css";
 import { useLocation } from "react-router-dom";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 
 import {
   HomePage,
@@ -24,6 +23,7 @@ import {
   ContactUs,
 } from "./pages";
 import AddShopCategory from "./pages/addShopCategory";
+import ShopCategory from "./pages/ShopCategory";
 
 const MyContext = createContext();
 
@@ -59,6 +59,12 @@ function App() {
           <Route exact path="/mall/:id/shops/:type" component={SingleShop} />
 
           {/*------------------ Both ------------------ */}
+          <Route exact path="/shops/:category" component={ShopCategory} />
+          <Route
+            exact
+            path="/shops/:category/:subcategory"
+            component={ShopCategory}
+          />
           <Route exact path="/about-us" component={AboutUs} />
           <Route exact path="/contact-us" component={ContactUs} />
 
