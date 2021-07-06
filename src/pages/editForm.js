@@ -131,7 +131,7 @@ const MallForm = () => {
 
         let shops = editData?.shops?.map((s, i) =>
           s.shopImages
-            ? shopImageUrl !== null
+            ? shopImageUrl[addedShopImages.findIndex((image) => image.id === i)]
               ? {
                   id: i,
                   shopName: s.shopName,
@@ -143,9 +143,18 @@ const MallForm = () => {
                   subCategory: s?.subCategory,
                   shopImages: [
                     ...s.shopImages,
-                    ...shopImageUrl[i].map((items, index) => ({
-                      id: Math.random() + addedShopImages[i].images[index].name,
-                      ImageName: addedShopImages[i].images[index].name,
+                    ...shopImageUrl[
+                      addedShopImages.findIndex((image) => image.id === i)
+                    ].map((items, index) => ({
+                      id:
+                        Math.random() +
+                        addedShopImages[
+                          addedShopImages.findIndex((image) => image.id === i)
+                        ].images[index].name,
+                      ImageName:
+                        addedShopImages[
+                          addedShopImages.findIndex((image) => image.id === i)
+                        ].images[index].name,
                       url: items,
                     })),
                   ],
