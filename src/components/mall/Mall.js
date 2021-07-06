@@ -6,8 +6,6 @@ import Slider from "react-slick";
 
 import { useLocation } from "react-router-dom";
 
-
-
 const Mall = ({ docs, settings }) => {
   const location = useLocation();
 
@@ -15,7 +13,7 @@ const Mall = ({ docs, settings }) => {
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
         docs.length === 0 ? (
-          "NOthing"
+          <h3 className={classes.empty}>No any records</h3>
         ) : (
           <div className={classes.sliderContainer}>
             <Slider {...settings} className={classes.slider}>

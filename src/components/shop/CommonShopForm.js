@@ -216,7 +216,7 @@ const CommonShopForm = ({
             }) => (
               <>
                 <input
-                  type="text"
+                  type="number"
                   placeholder="Phone Number"
                   name="shopPhoneNumber"
                   value={edit ? dataShop?.shopPhoneNumber : s?.shopPhoneNumber}
@@ -305,7 +305,7 @@ const CommonShopForm = ({
 
       <div className={classes.selectedImages}>
         {edit &&
-          dataShop.shopImages.map((img, i) => (
+          dataShop?.shopImages?.map((img, i) => (
             <p key={i} className={classes.image}>
               <button
                 className={classes.button}
@@ -318,9 +318,9 @@ const CommonShopForm = ({
             </p>
           ))}
         {edit &&
-          addedShopImages.map((img, ind) =>
+          addedShopImages?.map((img, ind) =>
             img.id === index
-              ? img.images.map((img, i) => (
+              ? img?.images?.map((img, i) => (
                   <p key={i} className={classes.image}>
                     <button
                       className={classes.button}
@@ -328,7 +328,7 @@ const CommonShopForm = ({
                       onClick={() =>
                         addedShopImagesDispatch({
                           type: "REMOVE_IMAGE",
-                          payload: { outerIndex: ind, name: img.name },
+                          payload: { outerIndex: ind, id: i },
                         })
                       }
                     >

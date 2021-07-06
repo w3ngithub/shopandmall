@@ -30,13 +30,12 @@ const ShopForm = ({
   //Remove Image
 
   const removeImage = (img, index) => {
-    console.log(index);
     setImagesToRemove((prevState) => [...prevState, img]);
     editDispatch({
       type: "REMOVE_IMAGE",
       payload: {
-        img,
         index,
+        id: img.id,
       },
     });
   };

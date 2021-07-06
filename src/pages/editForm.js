@@ -23,6 +23,7 @@ const MallForm = () => {
   //Added Images
   const shopImageValues = [];
 
+  // console.log(location.dataToSend.shops, shopImageValues);
   const [addedShopImages, addedShopImagesDispatch] = useReducer(
     addedShopImagesReducer,
     shopImageValues
@@ -76,23 +77,36 @@ const MallForm = () => {
           mallImageUrl = location.dataToSend.mallImage.imageUrl;
         }
         setLoadingPercentage(50);
-        await Promise.all(
-          addedShopImages.map((image) =>
-            Promise.all(
-              image.images.map((img) => storage.ref().child(img.name).put(img))
-            )
-          )
-        );
 
-        const shopImageUrl = await Promise.all(
-          addedShopImages.map((image) =>
-            Promise.all(
-              image.images.map((img) => storage.ref(img.name).getDownloadURL())
+        let shopImageUrl = null;
+
+        if (addedShopImages.some((img) => img.hasOwnProperty("images"))) {
+          console.log("addedshopimages");
+
+          await Promise.all(
+            addedShopImages.map((image) =>
+              Promise.all(
+                image.images.map((img) =>
+                  storage.ref().child(img.name).put(img)
+                )
+              )
             )
-          )
-        );
+          );
+
+          shopImageUrl = await Promise.all(
+            addedShopImages.map((image) =>
+              Promise.all(
+                image.images.map((img) =>
+                  storage.ref(img.name).getDownloadURL()
+                )
+              )
+            )
+          );
+          console.log(shopImageUrl);
+        }
+
         setLoadingPercentage(60);
-        //Remove Shop Images from Firebase Storage
+        // Remove Shop Images from Firebase Storage
         imagesToRemove.forEach((image) =>
           storage.ref().child(image.ImageName).delete()
         );
@@ -114,10 +128,19 @@ const MallForm = () => {
           timings: editData?.timings,
           mallImage: setMallImage,
         };
-        console.log(shopImageUrl);
-        let shops = editData?.shops?.map((s, i) =>
-          s.shopImages
-            ? shopImageUrl[addedShopImages.findIndex((image) => image.id === i)]
+
+        let shops = [];
+
+        editData?.shops?.forEach((s, i) => {
+          const isShopImagesPresent = s.shopImages.length > 0;
+          const isNewShopImagesAdded = shopImageUrl !== null;
+          const indexOfAddedImages = addedShopImages.findIndex(
+            (image) => image.id === i
+          );
+
+          shops = [
+            ...shops,
+            isShopImagesPresent && isNewShopImagesAdded
               ? {
                   id: i,
                   shopName: s.shopName,
@@ -129,23 +152,18 @@ const MallForm = () => {
                   subCategory: s?.subCategory,
                   shopImages: [
                     ...s.shopImages,
-                    ...shopImageUrl[
-                      addedShopImages.findIndex((image) => image.id === i)
-                    ].map((items, index) => ({
+                    ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
                       id:
                         Math.random() +
-                        addedShopImages[
-                          addedShopImages.findIndex((image) => image.id === i)
-                        ].images[index].name,
+                        addedShopImages[indexOfAddedImages].images[index].name,
                       ImageName:
-                        addedShopImages[
-                          addedShopImages.findIndex((image) => image.id === i)
-                        ].images[index].name,
+                        addedShopImages[indexOfAddedImages].images[index].name,
                       url: items,
                     })),
                   ],
                 }
-              : {
+              : isShopImagesPresent
+              ? {
                   id: i,
                   shopName: s.shopName,
                   shopDescription: s.shopDescription,
@@ -156,24 +174,28 @@ const MallForm = () => {
                   subCategory: s?.subCategory,
                   shopImages: [...s.shopImages],
                 }
-            : {
-                id: i,
-                shopName: s.shopName,
-                shopDescription: s.shopDescription,
-                shopLevel: s?.shopLevel,
-                shopPhoneNumber: s?.shopPhoneNumber,
-                timings: s?.timings,
-                category: s?.category,
-                subCategory: s?.subCategory,
-                shopImages: [
-                  ...shopImageUrl[i].map((items, index) => ({
-                    id: Math.random() + addedShopImages[i].images[index].name,
-                    ImageName: addedShopImages[i].images[index].name,
-                    url: items,
-                  })),
-                ],
-              }
-        );
+              : {
+                  id: i,
+                  shopName: s.shopName,
+                  shopDescription: s.shopDescription,
+                  shopLevel: s?.shopLevel,
+                  shopPhoneNumber: s?.shopPhoneNumber,
+                  timings: s?.timings,
+                  category: s?.category,
+                  subCategory: s?.subCategory,
+                  shopImages: [
+                    ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
+                      id:
+                        Math.random() +
+                        addedShopImages[indexOfAddedImages].images[index].name,
+                      ImageName:
+                        addedShopImages[indexOfAddedImages].images[index].name,
+                      url: items,
+                    })),
+                  ],
+                },
+          ];
+        });
 
         //FireStore
         fireStore
