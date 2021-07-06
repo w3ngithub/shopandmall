@@ -9,7 +9,7 @@ const Shop = ({ doc, docs }) => {
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
-        doc.shops.length !== 0 ? (
+        doc?.shops?.length !== 0 ? (
           <div
             className={classes.wrapper}
             onClick={() =>
@@ -21,7 +21,7 @@ const Shop = ({ doc, docs }) => {
             }
           >
             <div className={classes.imageContainer}>
-              {doc.shops[0].shopImages && (
+              {doc?.shops[0]?.shopImages && (
                 <img
                   className={classes.image}
                   src={doc?.shops[0]?.shopImages[0]?.url}
@@ -30,8 +30,8 @@ const Shop = ({ doc, docs }) => {
               )}
             </div>
             <div className={classes.shopDetail}>
-              <p className={classes.title}>{doc.shops[0].shopName}</p>
-              <p className={classes.shopLoc}>(Inside {doc.mallName})</p>
+              <p className={classes.title}>{doc?.shops[0]?.shopName}</p>
+              <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
             </div>
           </div>
         ) : (
@@ -42,7 +42,7 @@ const Shop = ({ doc, docs }) => {
       ) : (
         <div className={classes.container}>
           {docs?.map((doc, ind) =>
-            doc.shops.map((shop, ind) => (
+            doc?.shops?.map((shop, ind) => (
               <div
                 key={ind}
                 className={classes.wrapper}
@@ -55,7 +55,7 @@ const Shop = ({ doc, docs }) => {
                 }
               >
                 <div className={classes.imageContainer}>
-                  {doc.shops[0].shopImages && (
+                  {doc?.shops[0]?.shopImages && (
                     <img
                       className={classes.image}
                       src={shop?.shopImages[0]?.url}
@@ -64,8 +64,8 @@ const Shop = ({ doc, docs }) => {
                   )}
                 </div>
                 <div className={classes.mallDetail}>
-                  <p className={classes.title}>{shop.shopName}</p>
-                  <p className={classes.shopLoc}>(Inside {doc.mallName})</p>
+                  <p className={classes.title}>{shop?.shopName}</p>
+                  <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
                 </div>
               </div>
             ))
