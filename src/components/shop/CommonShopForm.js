@@ -319,7 +319,7 @@ const CommonShopForm = ({
           ))}
         {edit &&
           addedShopImages.map((img, ind) =>
-            ind === index
+            img.id === index
               ? img.images.map((img, i) => (
                   <p key={i} className={classes.image}>
                     <button
