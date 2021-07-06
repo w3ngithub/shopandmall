@@ -25,7 +25,7 @@ const Mall = ({ docs, settings, loading }) => {
                 </div>
               ))
             ) : (
-              <p>Npthing</p>
+              <p>No any Records</p>
             )}
           </Slider>
         </div>

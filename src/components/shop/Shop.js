@@ -13,13 +13,17 @@ const Shop = ({ docs, settings, loading }) => {
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
         <div>
           <Slider {...settings} className={classes.slider}>
-            {loading
-              ? [1, 2, 3].map((n) => <SkeletonCard key={n} />)
-              : docs.map((doc) => (
-                  <div key={doc.id}>
-                    <ShopCardComponent doc={doc} />
-                  </div>
-                ))}
+            {loading ? (
+              [1, 2, 3].map((n) => <SkeletonCard key={n} />)
+            ) : docs.length !== 0 ? (
+              docs.map((doc) => (
+                <div key={doc.id}>
+                  <ShopCardComponent doc={doc} />
+                </div>
+              ))
+            ) : (
+              <p>No any Records</p>
+            )}
           </Slider>
         </div>
       ) : (
