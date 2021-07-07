@@ -138,7 +138,6 @@ const editReducer = (state, action) => {
       };
 
     case "REMOVE_IMAGE":
-      console.log(action.payload);
       return {
         ...state,
         shops: state.shops.map((shop, i) =>
@@ -146,7 +145,7 @@ const editReducer = (state, action) => {
             ? {
                 ...shop,
                 shopImages: shop.shopImages.filter(
-                  (s) => s.ImageName !== action.payload.img.ImageName
+                  (s) => s.id !== action.payload.id
                 ),
               }
             : shop

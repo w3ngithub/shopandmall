@@ -19,23 +19,25 @@ const addedShopImagesReducer = (state, action) => {
               images: [action.payload.selectedShopImages],
             },
           ];
-      console.log(finalArray);
+
       return finalArray;
 
     case "REMOVE_IMAGE":
-      console.log(action.payload);
       return [
         ...state.map((item, ind) =>
           ind === action.payload.outerIndex
             ? {
                 ...item,
                 images: item.images.filter(
-                  (i) => i.name !== action.payload.name
+                  (i, index) => index !== action.payload.id
                 ),
               }
             : item
         ),
       ];
+
+    case "SET_IMAGES":
+      return [...action.payload.images.map((image, index) => ({ id: index }))];
 
     default:
       return state;
