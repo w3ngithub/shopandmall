@@ -62,7 +62,7 @@ const NavBar = ({ check }) => {
                         <li className={classes.row}>
                           <h3
                             onClick={() =>
-                              history.push(`/shops/${doc.category}`)
+                              history.push(`/shops/category/${doc.category}`)
                             }
                           >
                             {doc.category}
@@ -76,7 +76,7 @@ const NavBar = ({ check }) => {
                                   key={row.id}
                                   onClick={() =>
                                     history.push(
-                                      `/shops/${doc.category}/${row.subCategory}`
+                                      `/shops/category/${doc.category}/${row.subCategory}`
                                     )
                                   }
                                 >

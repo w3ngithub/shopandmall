@@ -6,6 +6,35 @@ const Shop = ({ doc, docs }) => {
   const history = useHistory();
   const location = useLocation();
 
+  let shops = docs?.map((doc, ind) =>
+    doc?.shops?.map((shop, ind) => (
+      <div
+        key={ind}
+        className={classes.wrapper}
+        onClick={() =>
+          location.pathname.split("/")[1] === "admin"
+            ? history.push("/admin/" + doc.mallName + "/shops/" + shop.shopName)
+            : history.push("/" + doc.mallName + "/shops/" + shop.shopName)
+        }
+      >
+        <div className={classes.imageContainer}>
+          {doc?.shops[0]?.shopImages && (
+            <img
+              className={classes.image}
+              src={shop?.shopImages[0]?.url}
+              alt=""
+            />
+          )}
+        </div>
+        <div className={classes.mallDetail}>
+          <p className={classes.title}>{shop?.shopName}</p>
+          <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
+        </div>
+      </div>
+    ))
+  );
+
+  console.log(location.pathname);
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
@@ -34,39 +63,7 @@ const Shop = ({ doc, docs }) => {
           </div>
         </div>
       ) : (
-        <div className={classes.container}>
-          {docs?.map((doc, ind) =>
-            doc?.shops?.map((shop, ind) => (
-              <div
-                key={ind}
-                className={classes.wrapper}
-                onClick={() =>
-                  location.pathname.split("/")[1] === "admin"
-                    ? history.push(
-                        "/admin/" + doc.mallName + "/shops/" + shop.shopName
-                      )
-                    : history.push(
-                        "/" + doc.mallName + "/shops/" + shop.shopName
-                      )
-                }
-              >
-                <div className={classes.imageContainer}>
-                  {doc?.shops[0]?.shopImages && (
-                    <img
-                      className={classes.image}
-                      src={shop?.shopImages[0]?.url}
-                      alt=""
-                    />
-                  )}
-                </div>
-                <div className={classes.mallDetail}>
-                  <p className={classes.title}>{shop?.shopName}</p>
-                  <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+        <div className={classes.container}>{shops}</div>
       )}
     </div>
   );
