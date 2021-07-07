@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
 
-const Shop = ({ docs, settings, isShopCategorySelected }) => {
+const Shop = ({ malls, settings, isShopCategorySelected }) => {
   const location = useLocation();
 
   return (
@@ -12,7 +12,7 @@ const Shop = ({ docs, settings, isShopCategorySelected }) => {
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
         <div>
           <Slider {...settings} className={classes.slider}>
-            {docs?.map(
+            {malls?.map(
               (doc, ind) =>
                 doc.shops.length !== 0 && (
                   <div key={ind}>
@@ -24,7 +24,7 @@ const Shop = ({ docs, settings, isShopCategorySelected }) => {
         </div>
       ) : (
         <ShopCardComponent
-          docs={docs}
+          malls={malls}
           isShopCategorySelected={isShopCategorySelected}
         />
       )}

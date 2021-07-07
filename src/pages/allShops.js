@@ -1,5 +1,5 @@
 import Shop from "../components/shop/Shop";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useFirestore from "../hooks/useFirestore";
 import classes from "../styles/allShops.module.css";
 import { useHistory, useLocation } from "react-router-dom";
@@ -7,22 +7,27 @@ import { AiOutlineRight } from "react-icons/ai";
 
 const AllShops = () => {
   let { docs } = useFirestore("Shopping Mall");
-  const [search, setSearch] = useState("");
+  const [malls, setMalls] = useState("");
   const location = useLocation();
   const history = useHistory();
 
   const filter = (e) => {
-    setSearch(e.target.value);
+    let filteredMalls = [];
+    docs?.forEach((doc) => {
+      const filterShops = [
+        ...doc.shops.filter((shop) =>
+          shop.shopName.toLowerCase().includes(e.target.value.toLowerCase())
+        ),
+      ];
+      filteredMalls = [...filteredMalls, { ...doc, shops: filterShops }];
+    });
+
+    setMalls(filteredMalls);
   };
 
-  if (search) {
-    docs = docs?.map((doc) => {
-      doc.shops = doc.shops.filter((shop) =>
-        shop.shopName.toLowerCase().includes(search.toLowerCase())
-      );
-      return doc;
-    });
-  }
+  useEffect(() => {
+    setMalls(docs);
+  }, [docs]);
 
   //show category list according to selected path
   let categoriesPath = null;
@@ -78,7 +83,7 @@ const AllShops = () => {
           <h4 className={classes.heading}>Shops</h4>
         </div>
         {docs?.length !== 0 ? (
-          <Shop {...{ docs, isShopCategorySelected }} />
+          <Shop {...{ malls, isShopCategorySelected }} />
         ) : (
           <h3>No Shops Added Yet</h3>
         )}

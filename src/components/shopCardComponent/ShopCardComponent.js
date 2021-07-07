@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import classes from "./shopCardComponent.module.css";
 import { useHistory, useLocation } from "react-router-dom";
 
-const Shop = ({ doc, docs, isShopCategorySelected }) => {
+const Shop = ({ doc, malls, isShopCategorySelected }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -13,7 +13,7 @@ const Shop = ({ doc, docs, isShopCategorySelected }) => {
     const selectedSubCategory = location.pathname.split("/")[4];
     let filtering = [];
 
-    docs.forEach((mall) => {
+    malls.forEach((mall) => {
       const shopsWithTheCategory = mall.shops.filter(
         (shop) => shop.category === selectedCategory
       );
@@ -42,9 +42,9 @@ const Shop = ({ doc, docs, isShopCategorySelected }) => {
     if (isShopCategorySelected) {
       handleFilterShops();
     } else {
-      setFilteredMalls(docs);
+      setFilteredMalls(malls);
     }
-  }, [location.pathname]);
+  }, [malls, isShopCategorySelected, location.pathname]);
 
   return (
     <div>
@@ -75,10 +75,10 @@ const Shop = ({ doc, docs, isShopCategorySelected }) => {
         </div>
       ) : (
         <div className={classes.container}>
-          {filteredMalls.length === 0 ? (
+          {filteredMalls?.length === 0 ? (
             <h3>No shops available for the selected category or subcategory</h3>
           ) : (
-            filteredMalls.map((doc) =>
+            filteredMalls?.map((doc) =>
               doc.shops.map((shop, ind) => (
                 <div
                   key={ind}
