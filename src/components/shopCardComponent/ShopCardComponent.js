@@ -6,9 +6,6 @@ const Shop = ({ doc, docs }) => {
   const history = useHistory();
   const location = useLocation();
 
-  console.log(doc);
-  console.log(docs);
-
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (

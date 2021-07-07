@@ -5,12 +5,10 @@ import classes from "../styles/dashboard.module.css";
 import useFirestore from "../hooks/useFirestore";
 import { useHistory, Link, useLocation } from "react-router-dom";
 import HomepageImage from "../assets/images/homepage.png";
-
+import ShopFilter from "../components/ShopFilter";
 import { BiSearchAlt2 } from "react-icons/bi";
-import CategoryIcon from "../assets/images/categoryIcon.svg";
 
 import MobileShopCategory from "../components/MobileShopCategory";
-import SkeletonText from "../skeletons/SkeletonText";
 
 //Slick
 import NextArrow from "../components/Arrows/NextArrow";
@@ -23,8 +21,6 @@ const Dashboard = () => {
   const history = useHistory();
   const location = useLocation();
   let { docs, loading } = useFirestore("Shopping Mall");
-
-  console.log(loading, "loading");
 
   let shopCategory = useFirestore("Shop Categories").docs;
 
@@ -111,54 +107,7 @@ const Dashboard = () => {
 
       <main className={classes.bodyWrapper}>
         {/* ------------ ShopFilter ------------ */}
-        <div className={classes.shopFilter}>
-          <h3>Shop Filters</h3>
-          <p className={classes.categoryDesktop}>
-            <img src={CategoryIcon} alt="" />
-            All Categories
-          </p>
-
-          {/* ---------- Desktop ---------- */}
-          <div className={classes.desktopShopFilter}>
-            {loading
-              ? [1, 2, 3].map((n) => <SkeletonText key={n} />)
-              : shopCategory?.map((shopCat) => (
-                  <p key={shopCat.id}>
-                    {shopCat.category}
-                    <span className={classes.number}>
-                      ({shopCat.rowContent.rowData.length})
-                    </span>
-                    <span className={classes.numberMob}>
-                      {shopCat.rowContent.rowData.length}
-                    </span>
-                  </p>
-                ))}
-          </div>
-
-          {/* ---------- Mobile ---------- */}
-          <div className={classes.mobileShopFilter}>
-            <p
-              className={classes.categoryMobile}
-              onClick={() => setShowCategoryMobile((prevState) => !prevState)}
-            >
-              <img src={CategoryIcon} alt="" />
-              All Categories
-            </p>
-            {loading
-              ? [1, 2, 3].map((n) => <SkeletonText key={n} />)
-              : shopCategory?.slice(0, 3).map((shopCat) => (
-                  <p key={shopCat.id}>
-                    {shopCat.category}
-                    <span className={classes.number}>
-                      ({shopCat.rowContent.rowData.length})
-                    </span>
-                    <span className={classes.numberMob}>
-                      {shopCat.rowContent.rowData.length}
-                    </span>
-                  </p>
-                ))}
-          </div>
-        </div>
+        <ShopFilter {...{ setShowCategoryMobile, loading, shopCategory }} />
 
         <div className={classes.main}>
           {location.pathname === "/admin/dashboard" && (
@@ -191,22 +140,24 @@ const Dashboard = () => {
             <Mall {...{ docs, settings, loading }} />
           </div>
 
-          <div className={classes.mallContainer}>
-            <div className={classes.header}>
-              <h4 className={classes.heading}>Shops</h4>
-              {docs.length > 3 &&
-                (location.pathname === "/admin/dashboard" ? (
-                  <Link className={classes.view} to="/admin/shops">
-                    View all
-                  </Link>
-                ) : (
-                  <Link className={classes.view} to="/shops">
-                    View all
-                  </Link>
-                ))}
+          {loading === false && docs.length === 0 ? null : (
+            <div className={classes.mallContainer}>
+              <div className={classes.header}>
+                <h4 className={classes.heading}>Shops</h4>
+                {docs.length > 3 &&
+                  (location.pathname === "/admin/dashboard" ? (
+                    <Link className={classes.view} to="/admin/shops">
+                      View all
+                    </Link>
+                  ) : (
+                    <Link className={classes.view} to="/shops">
+                      View all
+                    </Link>
+                  ))}
+              </div>
+              <Shop {...{ docs, settings, loading }} />
             </div>
-            <Shop {...{ docs, settings, loading }} />
-          </div>
+          )}
         </div>
       </main>
     </div>

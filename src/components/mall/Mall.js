@@ -25,7 +25,7 @@ const Mall = ({ docs, settings, loading }) => {
                 </div>
               ))
             ) : (
-              <p>No any Records</p>
+              <p className={classes.noRecords}>No any Records</p>
             )}
           </Slider>
         </div>
