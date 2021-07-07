@@ -1,7 +1,6 @@
 .wrapper {
-  max-width: 300px;
+  max-width: 280px;
   max-height: 391px;
-  /* width: 100%; */
   overflow: hidden;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
@@ -76,7 +75,7 @@
 @media only screen and (max-width: 768px) {
   .wrapper {
     max-width: none;
-    width: 100%;
+    width: 190px;
     height: 180px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     border-radius: 4px;

@@ -19,6 +19,10 @@
   text-shadow: 5px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+.noRecords {
+  margin-left: 10px;
+}
+
 @media only screen and (max-width: 768px) {
   .slider {
     left: -10px;
@@ -34,5 +38,9 @@
     width: 100%;
     position: relative;
     left: 0px;
+  }
+
+  .noRecords {
+    margin-left: 0px;
   }
 }
