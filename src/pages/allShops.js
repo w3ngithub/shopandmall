@@ -78,7 +78,7 @@ const AllShops = () => {
           <h4 className={classes.heading}>Shops</h4>
         </div>
         {docs?.length !== 0 ? (
-          <Shop {...{ docs }} />
+          <Shop {...{ docs, isShopCategorySelected }} />
         ) : (
           <h3>No Shops Added Yet</h3>
         )}
