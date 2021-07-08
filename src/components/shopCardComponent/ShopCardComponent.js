@@ -1,10 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classes from "../styles/Card.module.css";
 import { useHistory, useLocation } from "react-router-dom";
 
-const Shop = ({ doc, docs }) => {
+const Shop = ({ doc, docs, malls, isShopCategorySelected }) => {
   const history = useHistory();
   const location = useLocation();
+
+  const [filteredMalls, setFilteredMalls] = useState([]);
+
+  const handleFilterShops = () => {
+    const selectedCategory = location.pathname.split("/")[3];
+    const selectedSubCategory = location.pathname.split("/")[4];
+    let filtering = [];
+
+    malls.forEach((mall) => {
+      const shopsWithTheCategory = mall.shops.filter(
+        (shop) => shop.category === selectedCategory
+      );
+      const shopsWithTheCategoryAndSubCategory = mall.shops.filter(
+        (shop) =>
+          shop.category === selectedCategory &&
+          shop.subCategory === selectedSubCategory
+      );
+
+      if (shopsWithTheCategory.length > 0 && !Boolean(selectedSubCategory)) {
+        filtering = [...filtering, { ...mall, shops: shopsWithTheCategory }];
+      }
+
+      if (shopsWithTheCategoryAndSubCategory.length > 0) {
+        filtering = [
+          ...filtering,
+          { ...mall, shops: shopsWithTheCategoryAndSubCategory },
+        ];
+      }
+    });
+
+    setFilteredMalls(filtering);
+  };
+
+  useEffect(() => {
+    if (isShopCategorySelected) {
+      handleFilterShops();
+    } else {
+      setFilteredMalls(malls);
+    }
+  }, [location.pathname, malls]);
 
   return (
     <div>

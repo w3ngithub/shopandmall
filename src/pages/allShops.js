@@ -9,7 +9,17 @@ const AllShops = () => {
   const [search, setSearch] = useState("");
 
   const filter = (e) => {
-    setSearch(e.target.value);
+    let filteredMalls = [];
+    docs?.forEach((doc) => {
+      const filterShops = [
+        ...doc.shops.filter((shop) =>
+          shop.shopName.toLowerCase().includes(e.target.value.toLowerCase())
+        ),
+      ];
+      filteredMalls = [...filteredMalls, { ...doc, shops: filterShops }];
+    });
+    console.log(e.target.value);
+    // setMalls(filteredMalls);
   };
 
   if (search) {
