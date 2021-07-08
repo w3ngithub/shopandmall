@@ -2,7 +2,6 @@
   width: 85%;
   margin: auto;
   margin-top: 65px;
-
 }
 
 .link {
@@ -43,4 +42,24 @@
   font-weight: 600;
   font-size: 1.8em;
   border-bottom: 2px solid rgba(236, 78, 78, 0.3);
+}
+
+.categoryLists {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.categoryLists > p {
+  margin: 0 5px;
+}
+
+.deleteicon {
+  color: red;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.righticon {
+  font-weight: 700 !important;
 }
