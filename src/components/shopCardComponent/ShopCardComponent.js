@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import classes from "./shopCardComponent.module.css";
+import classes from "../styles/Card.module.css";
 import { useHistory, useLocation } from "react-router-dom";
 
-const Shop = ({ doc, malls, isShopCategorySelected }) => {
+const Shop = ({ doc, docs, malls, isShopCategorySelected }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -75,40 +75,34 @@ const Shop = ({ doc, malls, isShopCategorySelected }) => {
         </div>
       ) : (
         <div className={classes.container}>
-          {filteredMalls?.length === 0 ? (
-            <h3>No shops available for the selected category or subcategory</h3>
-          ) : (
-            filteredMalls?.map((doc) =>
-              doc.shops.map((shop, ind) => (
-                <div
-                  key={ind}
-                  className={classes.wrapper}
-                  onClick={() =>
-                    location.pathname.split("/")[1] === "admin"
-                      ? history.push(
-                          "/admin/" + doc.mallName + "/shops/" + shop.shopName
-                        )
-                      : history.push(
-                          "/" + doc.mallName + "/shops/" + shop.shopName
-                        )
-                  }
-                >
-                  <div className={classes.imageContainer}>
-                    {doc?.shops[0]?.shopImages && (
-                      <img
-                        className={classes.image}
-                        src={shop?.shopImages[0]?.url}
-                        alt=""
-                      />
-                    )}
-                  </div>
-                  <div className={classes.mallDetail}>
-                    <p className={classes.title}>{shop?.shopName}</p>
-                    <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
-                  </div>
+          {docs?.map((doc, ind) =>
+            doc?.shops?.map((shop, ind) => (
+              <div
+                key={ind}
+                className={classes.wrapper2}
+                onClick={() =>
+                  location.pathname.split("/")[1] === "admin"
+                    ? history.push(
+                        "/admin/" + doc.mallName + "/shops/" + shop.shopName
+                      )
+                    : history.push(doc.mallName + "/shops/" + shop.shopName)
+                }
+              >
+                <div className={classes.imageContainer}>
+                  {doc?.shops[0]?.shopImages && (
+                    <img
+                      className={classes.image}
+                      src={shop?.shopImages[0]?.url}
+                      alt=""
+                    />
+                  )}
                 </div>
-              ))
-            )
+                <div className={classes.mallDetail}>
+                  <p className={classes.title}>{shop?.shopName}</p>
+                  <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
+                </div>
+              </div>
+            ))
           )}
         </div>
       )}

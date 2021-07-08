@@ -31,10 +31,14 @@ const Mall = ({ docs, settings, loading }) => {
         </div>
       ) : (
         <div className={classes.container}>
-          {docs.length === 0 && [1, 2, 3].map((n) => <SkeletonCard key={n} />)}
-          {docs?.map(
-            (doc, ind) =>
-              ind <= 2 && <MallCardComponent key={doc.id} doc={doc} />
+          {loading ? (
+            [1, 2, 3, 4, 5, 6].map((n) => <SkeletonCard key={n} />)
+          ) : docs.length !== 0 ? (
+            docs?.map((doc) => (
+              <MallCardComponent key={doc.id} doc={doc} />
+            ))
+          ) : (
+            <p className={classes.noRecords}>No any Malls Yet.</p>
           )}
         </div>
       )}

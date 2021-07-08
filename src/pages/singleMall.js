@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import classes from "../styles/singleMall.module.css";
 import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
-import cls from "../styles/allMalls.module.css";
+import cls from "../styles/allMallsShops.module.css";
 import { useParams, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 

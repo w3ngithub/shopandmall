@@ -354,6 +354,11 @@
   .text p {
     font-size: 20px;
   }
+
+  .addBtn {
+    padding: 10px 15px;
+    width: 190px;
+  }
 }
 
 /* ------------ Mobile View ------------ */
