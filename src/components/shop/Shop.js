@@ -28,7 +28,17 @@ const Shop = ({ docs, settings, loading }) => {
         </div>
       ) : (
         <div>
-          <ShopCardComponent docs={docs} />
+          {loading ? (
+            <div className={classes.container}>
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <SkeletonCard key={n} />
+              ))}
+            </div>
+          ) : docs.length !== 0 ? (
+            <ShopCardComponent docs={docs} />
+          ) : (
+            <p className={classes.noRecords}>No any Shops Yet.</p>
+          )}
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./shopCardComponent.module.css";
+import classes from "../styles/Card.module.css";
 import { useHistory, useLocation } from "react-router-dom";
 
 const Shop = ({ doc, docs }) => {
@@ -39,7 +39,7 @@ const Shop = ({ doc, docs }) => {
             doc?.shops?.map((shop, ind) => (
               <div
                 key={ind}
-                className={classes.wrapper}
+                className={classes.wrapper2}
                 onClick={() =>
                   location.pathname.split("/")[1] === "admin"
                     ? history.push(

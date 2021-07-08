@@ -22,8 +22,7 @@ const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
 
       {shopCategory?.map((shopCat) => (
         <div key={shopCat.id}>
-          <Link
-            to="/"
+          <div
             onClick={() => {
               childNodeId(shopCat.id);
             }}
@@ -34,7 +33,7 @@ const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
                 ({shopCat.rowContent.rowData.length})
               </span>
             </p>
-          </Link>
+          </div>
           {openDD[shopCat.id] && (
             <div className={classes.subCategory}>
               {shopCat.rowContent.rowData.map((subCat) => (

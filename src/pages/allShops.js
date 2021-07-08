@@ -1,10 +1,11 @@
-import Shop from "../components/shop/Shop";
 import React, { useState } from "react";
+import Shop from "../components/shop/Shop";
+import { BiSearchAlt2 } from "react-icons/bi";
 import useFirestore from "../hooks/useFirestore";
-import classes from "../styles/allShops.module.css";
+import classes from "../styles/allMallsShops.module.css";
 
 const AllShops = () => {
-  let { docs } = useFirestore("Shopping Mall");
+  let { docs, loading } = useFirestore("Shopping Mall");
   const [search, setSearch] = useState("");
 
   const filter = (e) => {
@@ -12,7 +13,7 @@ const AllShops = () => {
   };
 
   if (search) {
-    docs = docs?.map((doc) => {
+    docs = docs?.filter((doc) => {
       doc.shops = doc.shops.filter((shop) =>
         shop.shopName.toLowerCase().includes(search.toLowerCase())
       );
@@ -20,29 +21,35 @@ const AllShops = () => {
     });
   }
 
-  return (
-    <div className={classes.main}>
-      <div className={classes.mallContainer}>
-        <div className={classes.search}>
-          <input
-            className={classes.searchBar}
-            type="text"
-            placeholder="Search..."
-            onChange={filter}
-          />
-        </div>
+  // if (search) {
+  //   docs = docs.filter((doc) =>
+  //     doc.shops.map((shop) =>
+  //       shop.shopName.toLowerCase().includes(search.toLowerCase())
+  //     )
+  //   );
+  // }
 
-        <div className={classes.header}>
-          <h4 className={classes.heading}>Shops</h4>
-        </div>
-        {docs?.length !== 0 ? (
-          <Shop {...{ docs }} />
-        ) : (
-          <h3>No Shops Added Yet</h3>
-        )}
-        <div className={classes.link}></div>
+  return (
+    <>
+      <div className={classes.search}>
+        <BiSearchAlt2 className={classes.icon} />
+        <input
+          className={classes.searchBar}
+          type="text"
+          placeholder="Search Shops..."
+          onChange={filter}
+        />
       </div>
-    </div>
+
+      <div className={classes.mainShops}>
+        <div className={classes.shopContainer}>
+          <div className={classes.header}>
+            <h4 className={classes.heading}>Shops</h4>
+          </div>
+          <Shop {...{ docs, loading }} />
+        </div>
+      </div>
+    </>
   );
 };
 
