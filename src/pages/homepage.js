@@ -5,9 +5,8 @@ import classes from "../styles/dashboard.module.css";
 import useFirestore from "../hooks/useFirestore";
 import { useHistory, Link, useLocation } from "react-router-dom";
 import HomepageImage from "../assets/images/homepage.png";
-
+import ShopFilter from "../components/ShopFilter";
 import { BiSearchAlt2 } from "react-icons/bi";
-import CategoryIcon from "../assets/images/categoryIcon.svg";
 
 import MobileShopCategory from "../components/MobileShopCategory";
 
@@ -21,7 +20,7 @@ const Dashboard = () => {
 
   const history = useHistory();
   const location = useLocation();
-  let { docs } = useFirestore("Shopping Mall");
+  let { docs, loading } = useFirestore("Shopping Mall");
 
   let shopCategory = useFirestore("Shop Categories").docs;
 
@@ -108,46 +107,7 @@ const Dashboard = () => {
 
       <main className={classes.bodyWrapper}>
         {/* ------------ ShopFilter ------------ */}
-        <div className={classes.shopFilter}>
-          <h3>Shop Filters</h3>
-          <p className={classes.categoryDesktop}>
-            <img src={CategoryIcon} alt="" />
-            All Categories
-          </p>
-          <p
-            className={classes.categoryMobile}
-            onClick={() => setShowCategoryMobile((prevState) => !prevState)}
-          >
-            <img src={CategoryIcon} alt="" />
-            All Categories
-          </p>
-
-          {/* ---------- Desktop ---------- */}
-          {shopCategory?.map((shopCat) => (
-            <p key={shopCat.id} className={classes.desktopShopFilter}>
-              {shopCat.category}
-              <span className={classes.number}>
-                ({shopCat.rowContent.rowData.length})
-              </span>
-              <span className={classes.numberMob}>
-                {shopCat.rowContent.rowData.length}
-              </span>
-            </p>
-          ))}
-
-          {/* ---------- Mobile ---------- */}
-          {shopCategory?.slice(0, 3).map((shopCat) => (
-            <p key={shopCat.id} className={classes.mobileShopFilter}>
-              {shopCat.category}
-              <span className={classes.number}>
-                ({shopCat.rowContent.rowData.length})
-              </span>
-              <span className={classes.numberMob}>
-                {shopCat.rowContent.rowData.length}
-              </span>
-            </p>
-          ))}
-        </div>
+        <ShopFilter {...{ setShowCategoryMobile, loading, shopCategory }} />
 
         <div className={classes.main}>
           {location.pathname === "/admin/dashboard" && (
@@ -177,9 +137,10 @@ const Dashboard = () => {
                   </Link>
                 ))}
             </div>
-            <Mall {...{ docs, settings }} />
+            <Mall {...{ docs, settings, loading }} />
           </div>
-          {docs.length !== 0 && (
+
+          {loading === false && docs.length === 0 ? null : (
             <div className={classes.mallContainer}>
               <div className={classes.header}>
                 <h4 className={classes.heading}>Shops</h4>
@@ -194,8 +155,7 @@ const Dashboard = () => {
                     </Link>
                   ))}
               </div>
-
-              <Shop {...{ docs, settings }} />
+              <Shop {...{ docs, settings, loading }} />
             </div>
           )}
         </div>

@@ -3,8 +3,13 @@ import ShopCardComponent from "../shopCardComponent/ShopCardComponent";
 import Slider from "react-slick";
 import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
+import SkeletonCard from "../../skeletons/SkeletonCard";
 
+<<<<<<< HEAD
 const Shop = ({ malls, settings, isShopCategorySelected }) => {
+=======
+const Shop = ({ docs, settings, loading }) => {
+>>>>>>> dev
   const location = useLocation();
 
   return (
@@ -12,13 +17,16 @@ const Shop = ({ malls, settings, isShopCategorySelected }) => {
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
         <div>
           <Slider {...settings} className={classes.slider}>
-            {malls?.map(
-              (doc, ind) =>
-                doc.shops.length !== 0 && (
-                  <div key={ind}>
-                    <ShopCardComponent key={doc.id} doc={doc} />
-                  </div>
-                )
+            {loading ? (
+              [1, 2, 3].map((n) => <SkeletonCard key={n} />)
+            ) : docs.length !== 0 ? (
+              docs.map((doc) => (
+                <div key={doc.id}>
+                  <ShopCardComponent doc={doc} />
+                </div>
+              ))
+            ) : (
+              <p>No any Records</p>
             )}
           </Slider>
         </div>

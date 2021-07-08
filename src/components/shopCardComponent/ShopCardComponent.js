@@ -60,7 +60,7 @@ const Shop = ({ doc, malls, isShopCategorySelected }) => {
           }
         >
           <div className={classes.imageContainer}>
-            {doc.shops[0].shopImages && (
+            {doc?.shops[0]?.shopImages && (
               <img
                 className={classes.image}
                 src={doc?.shops[0]?.shopImages[0]?.url}
@@ -69,7 +69,7 @@ const Shop = ({ doc, malls, isShopCategorySelected }) => {
             )}
           </div>
           <div className={classes.shopDetail}>
-            <p className={classes.title}>{doc.shops[0].shopName}</p>
+            <p className={classes.title}>{doc?.shops[0]?.shopName}</p>
             <p className={classes.shopLoc}>(Inside {doc.mallName})</p>
           </div>
         </div>
