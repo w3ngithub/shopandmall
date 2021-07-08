@@ -13,7 +13,9 @@ const Mall = ({ docs, settings, loading }) => {
 
   return (
     <div>
-      {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
+      {location.pathname === "/" ||
+      location.pathname === "/admin/dashboard" ||
+      location.pathname.split("/").includes("home") ? (
         <div className={classes.sliderContainer}>
           <Slider {...settings} className={classes.slider}>
             {loading ? (
@@ -31,10 +33,13 @@ const Mall = ({ docs, settings, loading }) => {
         </div>
       ) : (
         <div className={classes.container}>
-          {docs.length === 0 && [1, 2, 3].map((n) => <SkeletonCard key={n} />)}
-          {docs?.map(
-            (doc, ind) =>
-              ind <= 2 && <MallCardComponent key={doc.id} doc={doc} />
+          {loading && [1, 2, 3].map((n) => <SkeletonCard key={n} />)}
+          {docs.length !== 0 ? (
+            docs?.map((doc, ind) => (
+              <MallCardComponent key={doc.id} doc={doc} />
+            ))
+          ) : (
+            <p className={classes.noRecords}>No any Records</p>
           )}
         </div>
       )}

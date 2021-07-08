@@ -4,6 +4,7 @@ import useFirestore from "../hooks/useFirestore";
 import classes from "../styles/allShops.module.css";
 import { useHistory, useLocation } from "react-router-dom";
 import { AiOutlineRight } from "react-icons/ai";
+import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 
 const AllShops = () => {
   let { docs } = useFirestore("Shopping Mall");
@@ -11,31 +12,33 @@ const AllShops = () => {
   const location = useLocation();
   const history = useHistory();
 
+  const isShopCategorySelected = location.pathname
+    .split("/")
+    .includes("category");
+  const { filteredMalls } = useFilterMallAndShops(docs, isShopCategorySelected);
+
   const filter = (e) => {
-    let filteredMalls = [];
-    docs?.forEach((doc) => {
+    let filteredMalls2 = [];
+    filteredMalls?.forEach((doc) => {
       const filterShops = [
         ...doc.shops.filter((shop) =>
           shop.shopName.toLowerCase().includes(e.target.value.toLowerCase())
         ),
       ];
-      filteredMalls = [...filteredMalls, { ...doc, shops: filterShops }];
+      filteredMalls2 = [...filteredMalls2, { ...doc, shops: filterShops }];
     });
-    console.log(e.target.value);
-    setMalls(filteredMalls);
+
+    setMalls(filteredMalls2);
   };
 
   useEffect(() => {
-    setMalls(docs);
-  }, [docs]);
+    setMalls(filteredMalls);
+  }, [filteredMalls]);
 
   //show category list according to selected path
   let categoriesPath = null;
   const category = location.pathname.split("/")[3];
   const subCategory = location.pathname.split("/")[4];
-  const isShopCategorySelected = location.pathname
-    .split("/")
-    .includes("category");
 
   if (isShopCategorySelected) {
     categoriesPath = (
@@ -82,10 +85,10 @@ const AllShops = () => {
         <div className={classes.header}>
           <h4 className={classes.heading}>Shops</h4>
         </div>
-        {docs?.length !== 0 ? (
-          <Shop docs={malls} isShopCategorySelected={isShopCategorySelected} />
+        {malls?.length !== 0 ? (
+          <Shop docs={malls} />
         ) : (
-          <h3>No Shops Added Yet</h3>
+          <h3>No shops available for the selected category or subcategory</h3>
         )}
         <div className={classes.link}></div>
       </div>

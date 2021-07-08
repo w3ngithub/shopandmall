@@ -57,6 +57,12 @@ function App() {
           <Route exact path="/:id/shops/:type" component={SingleShop} />
           <Route exact path="/mall/:id/shops/:type" component={SingleShop} />
           <Route exact path="/shops/category/:category" component={AllShops} />
+          <Route exact path="/Home/category/:category" component={HomePage} />
+          <Route
+            exact
+            path="/Home/category/:category/:subCategory"
+            component={HomePage}
+          />
           <Route
             exact
             path="/shops/category/:category/:subCategory"

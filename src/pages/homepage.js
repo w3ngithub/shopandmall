@@ -1,6 +1,6 @@
 import Shop from "../components/shop/Shop";
 import Mall from "../components/mall/Mall";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "../styles/dashboard.module.css";
 import useFirestore from "../hooks/useFirestore";
 import { useHistory, Link, useLocation } from "react-router-dom";
@@ -13,26 +13,34 @@ import MobileShopCategory from "../components/MobileShopCategory";
 //Slick
 import NextArrow from "../components/Arrows/NextArrow";
 import PrevArrow from "../components/Arrows/PrevArrow";
+import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 
 const Dashboard = () => {
-  const [search, setSearch] = useState("");
+  const [malls, setMalls] = useState([]);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
 
   const history = useHistory();
   const location = useLocation();
   let { docs, loading } = useFirestore("Shopping Mall");
 
+  const isShopCategorySelected = location.pathname
+    .split("/")
+    .includes("category");
+  const { filteredMalls } = useFilterMallAndShops(docs, isShopCategorySelected);
+
   let shopCategory = useFirestore("Shop Categories").docs;
 
   const filter = (e) => {
-    setSearch(e.target.value);
+    let docs1 = [];
+    docs1 = filteredMalls.filter((doc) =>
+      doc.mallName.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setMalls(docs1);
   };
 
-  if (search) {
-    docs = docs.filter((doc) =>
-      doc.mallName.toLowerCase().includes(search.toLowerCase())
-    );
-  }
+  useEffect(() => {
+    setMalls(filteredMalls);
+  }, [filteredMalls]);
 
   var settings = {
     dots: true,
@@ -126,7 +134,7 @@ const Dashboard = () => {
           <div className={classes.mallContainer}>
             <div className={classes.header}>
               <h4 className={classes.heading}>Malls</h4>
-              {docs.length > 3 &&
+              {malls.length > 3 &&
                 (location.pathname === "/admin/dashboard" ? (
                   <Link className={classes.view} to="/admin/malls">
                     View all
@@ -137,14 +145,14 @@ const Dashboard = () => {
                   </Link>
                 ))}
             </div>
-            <Mall {...{ docs, settings, loading }} />
+            <Mall docs={malls} settings={settings} loading={loading} />
           </div>
 
           {loading === false && docs.length === 0 ? null : (
             <div className={classes.mallContainer}>
               <div className={classes.header}>
                 <h4 className={classes.heading}>Shops</h4>
-                {docs.length > 3 &&
+                {malls.length > 3 &&
                   (location.pathname === "/admin/dashboard" ? (
                     <Link className={classes.view} to="/admin/shops">
                       View all
@@ -155,7 +163,7 @@ const Dashboard = () => {
                     </Link>
                   ))}
               </div>
-              <Shop {...{ docs, settings, loading }} />
+              <Shop docs={malls} settings={settings} loading={loading} />
             </div>
           )}
         </div>
