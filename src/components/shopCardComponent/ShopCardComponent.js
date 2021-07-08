@@ -65,6 +65,7 @@ const Shop = ({ doc, malls }) => {
                   <p className={classes.title}>{shop?.shopName}</p>
                   <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
                 </div>
+                )
               </div>
             ))
           )}
