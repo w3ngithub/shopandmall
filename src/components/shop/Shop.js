@@ -5,9 +5,9 @@ import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 
-const Shop = ({ docs, settings, loading }) => {
+const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
   const location = useLocation();
-
+  console.log(docs);
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
@@ -27,9 +27,10 @@ const Shop = ({ docs, settings, loading }) => {
           </Slider>
         </div>
       ) : (
-        <div>
-          <ShopCardComponent docs={docs} />
-        </div>
+        <ShopCardComponent
+          malls={docs}
+          isShopCategorySelected={isShopCategorySelected}
+        />
       )}
     </div>
   );
