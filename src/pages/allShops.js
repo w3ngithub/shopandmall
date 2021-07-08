@@ -21,7 +21,7 @@ const AllShops = () => {
       ];
       filteredMalls = [...filteredMalls, { ...doc, shops: filterShops }];
     });
-
+    console.log(e.target.value);
     setMalls(filteredMalls);
   };
 
@@ -83,7 +83,7 @@ const AllShops = () => {
           <h4 className={classes.heading}>Shops</h4>
         </div>
         {docs?.length !== 0 ? (
-          <Shop {...{ malls, isShopCategorySelected }} />
+          <Shop docs={malls} isShopCategorySelected={isShopCategorySelected} />
         ) : (
           <h3>No Shops Added Yet</h3>
         )}

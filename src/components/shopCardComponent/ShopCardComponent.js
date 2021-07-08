@@ -44,7 +44,7 @@ const Shop = ({ doc, malls, isShopCategorySelected }) => {
     } else {
       setFilteredMalls(malls);
     }
-  }, [location.pathname]);
+  }, [location.pathname, malls]);
 
   return (
     <div>

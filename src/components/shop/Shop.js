@@ -5,13 +5,9 @@ import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 
-<<<<<<< HEAD
-const Shop = ({ malls, settings, isShopCategorySelected }) => {
-=======
-const Shop = ({ docs, settings, loading }) => {
->>>>>>> dev
+const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
   const location = useLocation();
-
+  console.log(docs);
   return (
     <div>
       {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
@@ -32,7 +28,7 @@ const Shop = ({ docs, settings, loading }) => {
         </div>
       ) : (
         <ShopCardComponent
-          malls={malls}
+          malls={docs}
           isShopCategorySelected={isShopCategorySelected}
         />
       )}
