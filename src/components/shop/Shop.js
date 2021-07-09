@@ -5,12 +5,14 @@ import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 
-const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
+const Shop = ({ docs, settings, loading }) => {
   const location = useLocation();
-  console.log(docs);
+
   return (
     <div>
-      {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
+      {location.pathname === "/" ||
+      location.pathname === "/admin/dashboard" ||
+      location.pathname.split("/").includes("home") ? (
         <div>
           <Slider {...settings} className={classes.slider}>
             {loading ? (
@@ -22,7 +24,7 @@ const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
                 </div>
               ))
             ) : (
-              <p>No any Records</p>
+              <p>No any records</p>
             )}
           </Slider>
         </div>
@@ -35,9 +37,9 @@ const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
               ))}
             </div>
           ) : docs.length !== 0 ? (
-            <ShopCardComponent docs={docs} />
+            <ShopCardComponent malls={docs} />
           ) : (
-            <p className={classes.noRecords}>No any Shops Yet.</p>
+            <p className={classes.noRecords}>No any records</p>
           )}
         </div>
       )}

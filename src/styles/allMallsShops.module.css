@@ -79,6 +79,26 @@
   margin-left: 10px;
 }
 
+.categoryLists {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.categoryLists > p {
+  margin: 0 5px;
+}
+
+.deleteicon {
+  color: red;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.righticon {
+  font-weight: 700 !important;
+}
+
 /* ------------------ */
 
 .container {
