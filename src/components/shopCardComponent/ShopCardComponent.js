@@ -5,7 +5,7 @@ import classes from "../styles/Card.module.css";
 const Shop = ({ doc, malls }) => {
   const history = useHistory();
   const location = useLocation();
-  console.log(malls);
+
   return (
     <div>
       {location.pathname === "/" ||
