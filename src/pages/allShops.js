@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import Shop from "../components/shop/Shop";
 import { BiSearchAlt2 } from "react-icons/bi";
 import useFirestore from "../hooks/useFirestore";
-// import classes from "../styles/allShops.module.css";
 import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 import classes from "../styles/allMallsShops.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
+import { AiOutlineRight } from "react-icons/ai";
 
 const AllShops = () => {
   let { docs, loading } = useFirestore("Shopping Mall");
   const location = useLocation();
   const [malls, setMalls] = useState([]);
-  const [search, setSearch] = useState("");
+  const history = useHistory();
 
   const isShopCategorySelected = location.pathname
     .split("/")
@@ -41,6 +41,36 @@ const AllShops = () => {
   const category = location.pathname.split("/")[3];
   const subCategory = location.pathname.split("/")[4];
 
+  if (isShopCategorySelected) {
+    categoriesPath = (
+      <div className={classes.categoryLists}>
+        {location.pathname.split("/").length === 4 ? (
+          <>
+            <p>{category}</p>
+            <p
+              className={classes.deleteicon}
+              onClick={() => history.push("/shops")}
+            >
+              X
+            </p>
+          </>
+        ) : (
+          <>
+            <p>{category}</p>
+            <AiOutlineRight className={classes.righticon} />
+            <p>{subCategory}</p>
+            <p
+              className={classes.deleteicon}
+              onClick={() => history.push("/shops/category/" + category)}
+            >
+              X
+            </p>
+          </>
+        )}
+      </div>
+    );
+  }
+
   return (
     <>
       <div className={classes.search}>
@@ -55,6 +85,7 @@ const AllShops = () => {
 
       <div className={classes.mainShops}>
         <div className={classes.shopContainer}>
+          {categoriesPath}
           <div className={classes.header}>
             <h4 className={classes.heading}>Shops</h4>
           </div>
