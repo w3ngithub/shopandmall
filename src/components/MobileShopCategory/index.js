@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import classes from "./mobileShopCategory.module.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
 
 const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
   const [openDD, setOpenDD] = useState({});
-  const history = useHistory();
 
   const childNodeId = (id) => {
     console.log("clicked");

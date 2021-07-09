@@ -1,6 +1,6 @@
 import React from "react";
 import { IoMdCloseCircle } from "react-icons/io";
-import classes from "./mallCardComponent.module.css";
+import classes from "../styles/Card.module.css";
 import NoImage from "../../image/No_Image_Available.jpg";
 import { useHistory, useLocation } from "react-router-dom";
 import { fireStore, storage } from "../../firebase/config";
@@ -9,9 +9,13 @@ const MallCardComponent = ({ doc }) => {
   const history = useHistory();
   const location = useLocation();
 
-  return ( 
+  return (
     <div
-      className={classes.wrapper}
+      className={
+        location.pathname === "/" || location.pathname === "/admin/dashboard"
+          ? classes.wrapper
+          : classes.wrapper2
+      }
       key={doc.id}
       onClick={() => {
         location.pathname.split("/")[1] === "admin"

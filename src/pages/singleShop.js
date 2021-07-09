@@ -2,7 +2,7 @@ import cls from "../styles/singleMall.module.css";
 import { useParams } from "react-router-dom";
 import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
-import classes from "../styles/allMalls.module.css";
+import classes from "../styles/allMallsShops.module.css";
 
 import modalclasses from "../components/single/modal.module.css";
 

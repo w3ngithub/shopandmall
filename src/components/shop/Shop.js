@@ -5,9 +5,9 @@ import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 
-const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
+const Shop = ({ docs, settings, loading }) => {
   const location = useLocation();
-  console.log(docs);
+
   return (
     <div>
       {location.pathname === "/" ||
@@ -28,10 +28,20 @@ const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
             )}
           </Slider>
         </div>
-      ) : docs.length !== 0 ? (
-        <ShopCardComponent malls={docs} />
       ) : (
-        <p>No any records</p>
+        <div>
+          {loading ? (
+            <div className={classes.container}>
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <SkeletonCard key={n} />
+              ))}
+            </div>
+          ) : docs.length !== 0 ? (
+            <ShopCardComponent malls={docs} />
+          ) : (
+            <p className={classes.noRecords}>No any records</p>
+          )}
+        </div>
       )}
     </div>
   );
