@@ -1,17 +1,3 @@
-.addBtn {
-  border: none;
-  padding: 10px 15px;
-  width: 300px;
-  background-color: #153074;
-  color: white;
-  margin: -10px 0 40px 0;
-  cursor: pointer;
-}
-
-.addBtn:hover {
-  background-color: #2b4ea7;
-}
-
 .userName {
   width: 40px;
   height: 40px;
@@ -354,11 +340,6 @@
   .text p {
     font-size: 20px;
   }
-
-  .addBtn {
-    padding: 10px 15px;
-    width: 190px;
-  }
 }
 
 /* ------------ Mobile View ------------ */
@@ -372,11 +353,6 @@
     width: 90%;
     margin: auto;
     margin-top: 10px;
-  }
-
-  .addBtn {
-    padding: 10px 15px;
-    width: 100%;
   }
 
   .topImage {

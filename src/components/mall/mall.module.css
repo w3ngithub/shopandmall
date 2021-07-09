@@ -5,8 +5,17 @@
   width: 100%;
 }
 
+.sliderSkeleton {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 5px;
+  margin: 30px 0;
+  width: 103%;
+}
+
 .slider {
   left: -10px;
+  width: 100%;
 }
 
 .empty {

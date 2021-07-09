@@ -79,7 +79,10 @@ const MallCardComponent = ({ doc }) => {
           <span className={classes.midLine}> | </span>
           {doc.mallAddress}
         </p>
-        <p className={classes.mallTime}>11 AM - 9 PM, +977-0000000</p>
+        <p className={classes.mallTime}>
+          {doc.timings[0].openTime} - {doc.timings[0].closeTime}, +977-
+          {doc.phoneNumber}
+        </p>
       </div>
     </div>
   );

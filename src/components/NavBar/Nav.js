@@ -91,7 +91,7 @@ const NavBar = ({ check }) => {
                   </div>
                 </ul>
               </li>
-              {check === "true" && (
+              {check === "true" && location.pathname.split("/")[1] === "admin" && (
                 <li>
                   <Link to="/admin/addshopcategories">Shop Category</Link>
                 </li>

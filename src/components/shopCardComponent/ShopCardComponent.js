@@ -69,8 +69,16 @@ const Shop = ({ doc, docs, malls, isShopCategorySelected }) => {
             )}
           </div>
           <div className={classes.shopDetail}>
-            <p className={classes.title}>{doc?.shops[0]?.shopName}</p>
-            <p className={classes.shopLoc}>(Inside {doc.mallName})</p>
+            <p className={classes.title}>
+              {doc?.shops[0]?.shopName}
+              <span className={classes.midLine}> | </span>
+              (Inside {doc?.mallName})
+            </p>
+            <p className={classes.mallTime}>
+              {doc.shops[0].timings[0].openTime} -
+              {doc.shops[0].timings[0].closeTime}, +977-
+              {doc?.shops[0]?.shopPhoneNumber}
+            </p>
           </div>
         </div>
       ) : (
@@ -98,8 +106,16 @@ const Shop = ({ doc, docs, malls, isShopCategorySelected }) => {
                   )}
                 </div>
                 <div className={classes.mallDetail}>
-                  <p className={classes.title}>{shop?.shopName}</p>
-                  <p className={classes.shopLoc}>(Inside {doc?.mallName})</p>
+                  <p className={classes.title}>
+                    {shop?.shopName}
+                    <span className={classes.midLine}> | </span>
+                    (Inside {doc?.mallName})
+                  </p>
+                  <p className={classes.mallTime}>
+                    {shop.timings[0].openTime} - {shop.timings[0].closeTime},
+                    +977-
+                    {shop.shopPhoneNumber}
+                  </p>
                 </div>
               </div>
             ))

@@ -1,12 +1,13 @@
+import React, { useState } from "react";
 import Shop from "../components/shop/Shop";
 import Mall from "../components/mall/Mall";
-import React, { useState } from "react";
-import classes from "../styles/dashboard.module.css";
-import useFirestore from "../hooks/useFirestore";
-import { useHistory, Link, useLocation } from "react-router-dom";
-import HomepageImage from "../assets/images/homepage.png";
-import ShopFilter from "../components/ShopFilter";
 import { BiSearchAlt2 } from "react-icons/bi";
+import useFirestore from "../hooks/useFirestore";
+import ShopFilter from "../components/ShopFilter";
+import classes from "../styles/dashboard.module.css";
+import HomepageImage from "../assets/images/homepage.png";
+import AddNewMallButton from "../components/AddNewMallButton";
+import { useHistory, Link, useLocation } from "react-router-dom";
 
 import MobileShopCategory from "../components/MobileShopCategory";
 
@@ -110,18 +111,7 @@ const Dashboard = () => {
         <ShopFilter {...{ setShowCategoryMobile, loading, shopCategory }} />
 
         <div className={classes.main}>
-          {location.pathname === "/admin/dashboard" && (
-            <button
-              className={classes.addBtn}
-              onClick={() =>
-                history.push({
-                  pathname: "/admin/newMall",
-                })
-              }
-            >
-              Add New Mall
-            </button>
-          )}
+          {location.pathname === "/admin/dashboard" && <AddNewMallButton />}
 
           <div className={classes.mallContainer}>
             <div className={classes.header}>
