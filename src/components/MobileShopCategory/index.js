@@ -7,6 +7,7 @@ const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
   const [openDD, setOpenDD] = useState({});
 
   const childNodeId = (id) => {
+    console.log("clicked");
     setOpenDD({
       ...openDD,
       [id]: !openDD[id],
@@ -22,7 +23,8 @@ const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
 
       {shopCategory?.map((shopCat) => (
         <div key={shopCat.id}>
-          <div
+          <Link
+            to={`/home/category/${shopCat.category}`}
             onClick={() => {
               childNodeId(shopCat.id);
             }}
@@ -33,12 +35,15 @@ const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
                 ({shopCat.rowContent.rowData.length})
               </span>
             </p>
-          </div>
+          </Link>
           {openDD[shopCat.id] && (
             <div className={classes.subCategory}>
               {shopCat.rowContent.rowData.map((subCat) => (
                 <div key={subCat.id}>
-                  <Link to="/" onClick={() => setShowCategoryMobile(false)}>
+                  <Link
+                    to={`/home/category/${shopCat.category}/${subCat.subCategory}`}
+                    onClick={() => setShowCategoryMobile(false)}
+                  >
                     <p className={classes.paragraph}>{subCat.subCategory}</p>
                   </Link>
                 </div>

@@ -13,14 +13,28 @@ const Mall = ({ docs, settings, loading }) => {
 
   return (
     <div>
-      {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
+      {location.pathname === "/" ||
+      location.pathname === "/admin/dashboard" ||
+      location.pathname.split("/").includes("home") ? (
         <div className={classes.sliderContainer}>
           {loading ? (
-            <div className={classes.sliderSkeleton}>
-              {[1, 2, 3].map((n) => (
-                <SkeletonCard key={n} />
-              ))}
-            </div>
+            <>
+              <div className={classes.sliderSkeletonDesktop}>
+                {[1, 2, 3].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonTab}>
+                {[1, 2].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonMobile}>
+                {[1].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+            </>
           ) : (
             <Slider {...settings} className={classes.slider}>
               {docs.length !== 0 ? (

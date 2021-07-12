@@ -1,22 +1,33 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import SkeletonText from "../../skeletons/SkeletonText";
 import CategoryIcon from "../../assets/images/categoryIcon.svg";
 import classes from "./shopFilter.module.css";
 
 const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
   const [singleShopCategory, setSingleShopCategory] = useState([]);
+  const history = useHistory();
+  const location = useLocation();
 
   const subCategoryId = (id, shopCat) => {
     setSingleShopCategory([shopCat]);
   };
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setSingleShopCategory([]);
+    }
+  }, [location.pathname]);
 
   return (
     <div className={classes.shopFilter}>
       <h3>Shop Filters</h3>
       <p
         className={classes.categoryDesktop}
-        onClick={() => setSingleShopCategory([])}
+        onClick={() => {
+          setSingleShopCategory([]);
+          history.push("/");
+        }}
       >
         <img src={CategoryIcon} alt="" />
         All Categories
@@ -29,7 +40,12 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
           : singleShopCategory.length === 0
           ? shopCategory?.map((shopCat) => (
               <div key={shopCat.id}>
-                <p onClick={() => subCategoryId(shopCat.id, shopCat)}>
+                <p
+                  onClick={() => {
+                    subCategoryId(shopCat.id, shopCat);
+                    history.push("/home/category/" + shopCat.category);
+                  }}
+                >
                   {shopCat.category}
                   <span className={classes.number}>
                     ({shopCat.rowContent.rowData.length})
@@ -55,7 +71,9 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
                 <div className={classes.subCategory}>
                   {s.rowContent.rowData.map((subCat) => (
                     <div key={subCat.id}>
-                      <Link to="/">
+                      <Link
+                        to={`/home/category/${s.category}/${subCat.subCategory}`}
+                      >
                         <p>{subCat.subCategory}</p>
                       </Link>
                     </div>
@@ -77,7 +95,12 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
         {loading
           ? [1, 2, 3].map((n) => <SkeletonText key={n} />)
           : shopCategory?.slice(0, 3).map((shopCat) => (
-              <p key={shopCat.id}>
+              <p
+                key={shopCat.id}
+                onClick={() =>
+                  history.push("/home/category/" + shopCat.category)
+                }
+              >
                 {shopCat.category}
                 <span className={classes.number}>
                   ({shopCat.rowContent.rowData.length})

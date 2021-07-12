@@ -5,18 +5,37 @@ import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 
-const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
+const Shop = ({ docs, settings, loading }) => {
   const location = useLocation();
+
+  let empty = docs.map((doc) => doc.shops.length);
+
+  let emptyCheck = Math.max.apply(0, empty);
+
   return (
     <div>
-      {location.pathname === "/" || location.pathname === "/admin/dashboard" ? (
+      {location.pathname === "/" ||
+      location.pathname === "/admin/dashboard" ||
+      location.pathname.split("/").includes("home") ? (
         <div>
           {loading ? (
-            <div className={classes.sliderSkeleton}>
-              {[1, 2, 3].map((n) => (
-                <SkeletonCard key={n} />
-              ))}
-            </div>
+            <>
+              <div className={classes.sliderSkeletonDesktop}>
+                {[1, 2, 3].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonTab}>
+                {[1, 2].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonMobile}>
+                {[1].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+            </>
           ) : (
             <Slider {...settings} className={classes.slider}>
               {docs.length !== 0 ? (
@@ -39,10 +58,10 @@ const Shop = ({ docs, settings, isShopCategorySelected, loading }) => {
                 <SkeletonCard key={n} />
               ))}
             </div>
-          ) : docs.length !== 0 ? (
-            <ShopCardComponent docs={docs} />
+          ) : emptyCheck !== 0 ? (
+            <ShopCardComponent malls={docs} />
           ) : (
-            <p className={classes.noRecords}>No any Shops Yet.</p>
+            <p className={classes.noRecords}>No any records</p>
           )}
         </div>
       )}
