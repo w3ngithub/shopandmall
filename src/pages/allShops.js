@@ -13,7 +13,6 @@ import { AiOutlineRight } from "react-icons/ai";
 const AllShops = () => {
   let { docs, loading } = useFirestore("Shopping Mall");
   let shopCategory = useFirestore("Shop Categories").docs;
-
   const [search, setSearch] = useState("");
   const [showShopCategories, setShowShopCategories] = useState(false);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
@@ -89,7 +88,9 @@ const AllShops = () => {
             : classes.hideCategoryDropdown
         }
       >
-        <MobileShopCategory {...{ shopCategory, setShowCategoryMobile }} />
+        <MobileShopCategory
+          {...{ isHome: false, shopCategory, setShowCategoryMobile }}
+        />
       </div>
 
       <div
@@ -138,8 +139,8 @@ const AllShops = () => {
         ></div>
 
         <div className={classes.shopContainer}>
-          {categoriesPath}
           <div className={classes.header}>
+            {categoriesPath}
             <h4 className={classes.heading}>Shops</h4>
           </div>
 

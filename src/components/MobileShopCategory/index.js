@@ -3,7 +3,11 @@ import classes from "./mobileShopCategory.module.css";
 import { Link } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
 
-const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
+const MobileShopCategory = ({
+  isHome = false,
+  shopCategory,
+  setShowCategoryMobile,
+}) => {
   const [openDD, setOpenDD] = useState({});
 
   const childNodeId = (id) => {
@@ -24,7 +28,11 @@ const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
       {shopCategory?.map((shopCat) => (
         <div key={shopCat.id}>
           <Link
-            to={`/home/category/${shopCat.category}`}
+            to={
+              isHome
+                ? `/home/category/${shopCat.category}`
+                : `/shops/category/${shopCat.category}`
+            }
             onClick={() => {
               childNodeId(shopCat.id);
             }}
@@ -41,7 +49,11 @@ const MobileShopCategory = ({ shopCategory, setShowCategoryMobile }) => {
               {shopCat.rowContent.rowData.map((subCat) => (
                 <div key={subCat.id}>
                   <Link
-                    to={`/home/category/${shopCat.category}/${subCat.subCategory}`}
+                    to={
+                      isHome
+                        ? `/home/category/${shopCat.category}/${subCat.subCategory}`
+                        : `/shops/category/${shopCat.category}/${subCat.subCategory}`
+                    }
                     onClick={() => setShowCategoryMobile(false)}
                   >
                     <p className={classes.paragraph}>{subCat.subCategory}</p>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classes from "./shopCategories.module.css";
 import { FaAngleDown, FaAngleUp, FaAngleRight } from "react-icons/fa";
 import CategoryIcon from "../../assets/images/categoryIcon.svg";
+import { useHistory } from "react-router-dom";
 
 const ShopCategories = ({
   shopCategory,
@@ -10,6 +11,7 @@ const ShopCategories = ({
   setShowCategoryMobile,
 }) => {
   const [hoverSubCategory, setHoverSubCategory] = useState({});
+  const history = useHistory();
 
   const openSubCategory = (id) => {
     setHoverSubCategory({
@@ -50,6 +52,9 @@ const ShopCategories = ({
               <div key={shopCat.id}>
                 <div
                   className={classes.category}
+                  onClick={() =>
+                    history.push("/shops/category/" + shopCat.category)
+                  }
                   onMouseEnter={() => openSubCategory(shopCat.id)}
                   onMouseLeave={() => closeSubCategory(shopCat.id)}
                 >
@@ -68,7 +73,16 @@ const ShopCategories = ({
                     onMouseLeave={() => closeSubCategory(shopCat.id)}
                   >
                     {shopCat.rowContent.rowData.map((row) => (
-                      <p key={row.id}>{row.subCategory}</p>
+                      <p
+                        key={row.id}
+                        onClick={() =>
+                          history.push(
+                            `/shops/category/${shopCat.category}/${row.subCategory}`
+                          )
+                        }
+                      >
+                        {row.subCategory}
+                      </p>
                     ))}
                   </div>
                 )}
