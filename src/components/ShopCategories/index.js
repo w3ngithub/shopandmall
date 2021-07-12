@@ -5,6 +5,7 @@ import CategoryIcon from "../../assets/images/categoryIcon.svg";
 import { useHistory } from "react-router-dom";
 
 const ShopCategories = ({
+  isShopPage = false,
   shopCategory,
   showShopCategories,
   setShowShopCategories,
@@ -53,7 +54,11 @@ const ShopCategories = ({
                 <div
                   className={classes.category}
                   onClick={() =>
-                    history.push("/shops/category/" + shopCat.category)
+                    history.push(
+                      isShopPage
+                        ? "/shops/category/" + shopCat.category
+                        : "/malls/category/" + shopCat.category
+                    )
                   }
                   onMouseEnter={() => openSubCategory(shopCat.id)}
                   onMouseLeave={() => closeSubCategory(shopCat.id)}
@@ -77,7 +82,9 @@ const ShopCategories = ({
                         key={row.id}
                         onClick={() =>
                           history.push(
-                            `/shops/category/${shopCat.category}/${row.subCategory}`
+                            isShopPage
+                              ? `/shops/category/${shopCat.category}/${row.subCategory}`
+                              : `/malls/category/${shopCat.category}/${row.subCategory}`
                           )
                         }
                       >

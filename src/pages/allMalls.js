@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Mall from "../components/mall/Mall";
 import { BiSearchAlt2 } from "react-icons/bi";
 import useFirestore from "../hooks/useFirestore";
@@ -9,15 +9,16 @@ import ShopCategories from "../components/ShopCategories";
 
 import MobileShopCategory from "../components/MobileShopCategory";
 import { FaPlus } from "react-icons/fa";
+import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 
 // import Pagination from "../components/mall/Pagination";
 
 const AllMalls = () => {
-  const [search, setSearch] = useState("");
   const [showShopCategories, setShowShopCategories] = useState(false);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
 
   let { docs, loading } = useFirestore("Shopping Mall");
+  const [malls, setMalls] = useState([]);
 
   //Pagination
   // const [currentPage, setCurrentPage] = useState(1);
@@ -35,16 +36,23 @@ const AllMalls = () => {
   const history = useHistory();
 
   let shopCategory = useFirestore("Shop Categories").docs;
+  const isShopCategorySelected = location.pathname
+    .split("/")
+    .includes("category");
+  const { filteredMalls } = useFilterMallAndShops(docs, isShopCategorySelected);
 
   const filter = (e) => {
-    setSearch(e.target.value);
+    setMalls(
+      filteredMalls.filter((doc) =>
+        doc.mallName.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
   };
 
-  if (search) {
-    docs = docs.filter((doc) =>
-      doc.mallName.toLowerCase().includes(search.toLowerCase())
-    );
-  }
+  useEffect(() => {
+    setMalls(filteredMalls);
+  }, [filteredMalls]);
+
   return (
     <>
       <div
@@ -54,7 +62,9 @@ const AllMalls = () => {
             : classes.hideCategoryDropdown
         }
       >
-        <MobileShopCategory {...{ shopCategory, setShowCategoryMobile }} />
+        <MobileShopCategory
+          {...{ isHome: false, shopCategory, setShowCategoryMobile }}
+        />
       </div>
       <div
         className={classes.search}
@@ -123,7 +133,7 @@ const AllMalls = () => {
         ></div>
 
         <div className={classes.mallContainer}>
-          <Mall docs={docs} loading={loading} />
+          <Mall docs={malls} loading={loading} />
         </div>
         {/* <Pagination
             mallsPerPage={mallsPerPage}

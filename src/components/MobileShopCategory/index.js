@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
 
 const MobileShopCategory = ({
+  isShopPage,
   isHome = false,
   shopCategory,
   setShowCategoryMobile,
@@ -31,7 +32,9 @@ const MobileShopCategory = ({
             to={
               isHome
                 ? `/home/category/${shopCat.category}`
-                : `/shops/category/${shopCat.category}`
+                : isShopPage
+                ? `/shops/category/${shopCat.category}`
+                : `/malls/category/${shopCat.category}`
             }
             onClick={() => {
               childNodeId(shopCat.id);
@@ -52,7 +55,9 @@ const MobileShopCategory = ({
                     to={
                       isHome
                         ? `/home/category/${shopCat.category}/${subCat.subCategory}`
-                        : `/shops/category/${shopCat.category}/${subCat.subCategory}`
+                        : isShopPage
+                        ? `/shops/category/${shopCat.category}/${subCat.subCategory}`
+                        : `/malls/category/${shopCat.category}/${subCat.subCategory}`
                     }
                     onClick={() => setShowCategoryMobile(false)}
                   >

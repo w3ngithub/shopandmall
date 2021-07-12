@@ -89,7 +89,12 @@ const AllShops = () => {
         }
       >
         <MobileShopCategory
-          {...{ isHome: false, shopCategory, setShowCategoryMobile }}
+          {...{
+            isShopPage: true,
+            isHome: false,
+            shopCategory,
+            setShowCategoryMobile,
+          }}
         />
       </div>
 
@@ -120,6 +125,7 @@ const AllShops = () => {
       <div className={classes.mainShops}>
         <ShopCategories
           {...{
+            isShopPage: true,
             shopCategory,
             showShopCategories,
             setShowShopCategories,
