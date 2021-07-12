@@ -17,19 +17,37 @@ const Mall = ({ docs, settings, loading }) => {
       location.pathname === "/admin/dashboard" ||
       location.pathname.split("/").includes("home") ? (
         <div className={classes.sliderContainer}>
-          <Slider {...settings} className={classes.slider}>
-            {loading ? (
-              [1, 2, 3].map((n) => <SkeletonCard key={n} />)
-            ) : docs.length !== 0 ? (
-              docs?.map((doc, ind) => (
-                <div key={ind}>
-                  <MallCardComponent key={doc.id} doc={doc} />
-                </div>
-              ))
-            ) : (
-              <p className={classes.noRecords}>No any Records</p>
-            )}
-          </Slider>
+          {loading ? (
+            <>
+              <div className={classes.sliderSkeletonDesktop}>
+                {[1, 2, 3].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonTab}>
+                {[1, 2].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonMobile}>
+                {[1].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <Slider {...settings} className={classes.slider}>
+              {docs.length !== 0 ? (
+                docs?.map((doc, ind) => (
+                  <div key={ind}>
+                    <MallCardComponent key={doc.id} doc={doc} />
+                  </div>
+                ))
+              ) : (
+                <p className={classes.noRecords}>No any Records</p>
+              )}
+            </Slider>
+          )}
         </div>
       ) : (
         <div className={classes.container}>

@@ -4,8 +4,8 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import useFirestore from "../hooks/useFirestore";
 import classes from "../styles/allMallsShops.module.css";
 import { useHistory, useLocation } from "react-router-dom";
-import CategoryIcon from "../assets/images/categoryIcon.svg";
-import { FaAngleDown, FaAngleUp, FaAngleRight } from "react-icons/fa";
+
+import ShopCategories from "../components/ShopCategories";
 
 import MobileShopCategory from "../components/MobileShopCategory";
 import { FaPlus } from "react-icons/fa";
@@ -15,7 +15,6 @@ import { FaPlus } from "react-icons/fa";
 const AllMalls = () => {
   const [search, setSearch] = useState("");
   const [showShopCategories, setShowShopCategories] = useState(false);
-  const [hoverSubCategory, setHoverSubCategory] = useState({});
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
 
   let { docs, loading } = useFirestore("Shopping Mall");
@@ -41,20 +40,6 @@ const AllMalls = () => {
     setSearch(e.target.value);
   };
 
-  const openSubCategory = (id) => {
-    setHoverSubCategory({
-      ...!hoverSubCategory,
-      [id]: true,
-    });
-  };
-
-  const closeSubCategory = (id) => {
-    setHoverSubCategory({
-      ...hoverSubCategory,
-      [id]: false,
-    });
-  };
-
   if (search) {
     docs = docs.filter((doc) =>
       doc.mallName.toLowerCase().includes(search.toLowerCase())
@@ -71,7 +56,10 @@ const AllMalls = () => {
       >
         <MobileShopCategory {...{ shopCategory, setShowCategoryMobile }} />
       </div>
-      <div className={classes.search}>
+      <div
+        className={classes.search}
+        onClick={() => setShowShopCategories(false)}
+      >
         <BiSearchAlt2 className={classes.icon} />
         <input
           className={classes.searchBar}
@@ -80,6 +68,18 @@ const AllMalls = () => {
           onChange={filter}
         />
       </div>
+
+      <div
+        onClick={() => setShowShopCategories(false)}
+        style={{
+          position: "absolute",
+          height: "100vh",
+          width: "100%",
+          left: 0,
+          top: 0,
+        }}
+      ></div>
+
       <div className={classes.main}>
         <div>
           {location.pathname === "/admin/malls" && (
@@ -102,71 +102,25 @@ const AllMalls = () => {
           )}
         </div>
 
-        {/* --------------- Shop Category Desktop --------------- */}
-
-        <div className={`${classes.shopCategories} ${classes.desktop}`}>
-          <p
-            className={classes.title}
-            onClick={() => setShowShopCategories((prevState) => !prevState)}
-          >
-            <span>
-              <img src={CategoryIcon} alt="" /> Shop Categories
-            </span>
-            {showShopCategories ? (
-              <FaAngleUp className={classes.downIcon} />
-            ) : (
-              <FaAngleDown className={classes.downIcon} />
-            )}
-          </p>
-
-          {showShopCategories && (
-            <div className={classes.allCategories}>
-              {shopCategory?.map((shopCat) => (
-                <div key={shopCat.id}>
-                  <div
-                    className={classes.category}
-                    onMouseEnter={() => openSubCategory(shopCat.id)}
-                    onMouseLeave={() => closeSubCategory(shopCat.id)}
-                  >
-                    <p>
-                      {shopCat.category}
-                      <span className={classes.number}>
-                        ({shopCat.rowContent.rowData.length})
-                      </span>
-                    </p>
-                    {shopCat.rowContent.rowData.length !== 0 && (
-                      <FaAngleRight />
-                    )}
-                  </div>
-                  {hoverSubCategory[shopCat.id] && (
-                    <div
-                      className={classes.sideBlock}
-                      onMouseEnter={() => openSubCategory(shopCat.id)}
-                      onMouseLeave={() => closeSubCategory(shopCat.id)}
-                    >
-                      {shopCat.rowContent.rowData.map((row) => (
-                        <p key={row.id}>{row.subCategory}</p>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* --------------- Shop Category Mobile --------------- */}
+        <ShopCategories
+          {...{
+            shopCategory,
+            showShopCategories,
+            setShowShopCategories,
+            setShowCategoryMobile,
+          }}
+        />
 
         <div
-          className={`${classes.shopCategories} ${classes.mobile}`}
-          onClick={() => setShowCategoryMobile((prevState) => !prevState)}
-        >
-          <p className={classes.title}>
-            <span>
-              <img src={CategoryIcon} alt="" /> Shop Categories
-            </span>
-          </p>
-        </div>
+          onClick={() => setShowShopCategories(false)}
+          style={{
+            position: "absolute",
+            height: "100%",
+            width: "100%",
+            left: 0,
+            top: 0,
+          }}
+        ></div>
 
         <div className={classes.mallContainer}>
           <Mall docs={docs} loading={loading} />

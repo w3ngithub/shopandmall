@@ -8,25 +8,47 @@ import SkeletonCard from "../../skeletons/SkeletonCard";
 const Shop = ({ docs, settings, loading }) => {
   const location = useLocation();
 
+  let empty = docs.map((doc) => doc.shops.length);
+
+  let emptyCheck = Math.max.apply(0, empty);
+
   return (
     <div>
       {location.pathname === "/" ||
       location.pathname === "/admin/dashboard" ||
       location.pathname.split("/").includes("home") ? (
         <div>
-          <Slider {...settings} className={classes.slider}>
-            {loading ? (
-              [1, 2, 3].map((n) => <SkeletonCard key={n} />)
-            ) : docs.length !== 0 ? (
-              docs.map((doc) => (
-                <div key={doc.id}>
-                  <ShopCardComponent doc={doc} />
-                </div>
-              ))
-            ) : (
-              <p>No any records</p>
-            )}
-          </Slider>
+          {loading ? (
+            <>
+              <div className={classes.sliderSkeletonDesktop}>
+                {[1, 2, 3].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonTab}>
+                {[1, 2].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+              <div className={classes.sliderSkeletonMobile}>
+                {[1].map((n) => (
+                  <SkeletonCard key={n} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <Slider {...settings} className={classes.slider}>
+              {docs.length !== 0 ? (
+                docs.map((doc) => (
+                  <div key={doc.id}>
+                    <ShopCardComponent doc={doc} />
+                  </div>
+                ))
+              ) : (
+                <p>No any Records</p>
+              )}
+            </Slider>
+          )}
         </div>
       ) : (
         <div>
@@ -36,7 +58,7 @@ const Shop = ({ docs, settings, loading }) => {
                 <SkeletonCard key={n} />
               ))}
             </div>
-          ) : docs.length !== 0 ? (
+          ) : emptyCheck !== 0 ? (
             <ShopCardComponent malls={docs} />
           ) : (
             <p className={classes.noRecords}>No any records</p>

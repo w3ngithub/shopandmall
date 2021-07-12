@@ -1,0 +1,26 @@
+.addBtn {
+  border: none;
+  padding: 10px 15px;
+  width: auto;
+  background-color: #153074;
+  color: white;
+  margin: -10px 0 40px 0;
+  cursor: pointer;
+}
+
+.addBtn:hover {
+  background-color: #2b4ea7;
+}
+
+@media only screen and (max-width: 768px) {
+  .addBtn {
+    padding: 10px 15px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .addBtn {
+    padding: 10px 15px;
+    width: 100%;
+  }
+}
