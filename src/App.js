@@ -68,6 +68,12 @@ function App() {
             path="/shops/category/:category/:subCategory"
             component={AllShops}
           />
+          <Route exact path="/malls/category/:category" component={AllMalls} />
+          <Route
+            exact
+            path="/malls/category/:category/:subCategory"
+            component={AllMalls}
+          />
           {/*------------------ Both ------------------ */}
           <Route exact path="/about-us" component={AboutUs} />
           <Route exact path="/contact-us" component={ContactUs} />
