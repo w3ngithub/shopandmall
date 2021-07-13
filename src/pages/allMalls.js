@@ -165,7 +165,10 @@ const AllMalls = () => {
           }}
         ></div>
 
-        <div className={classes.mallContainer}>
+        <div
+          className={classes.mallContainer}
+          onClick={() => setShowShopCategories(false)}
+        >
           <div className={classes.categoryLists}>{categoriesPath}</div>
           <div className={classes.header}>
             <h4 className={classes.heading}>Malls</h4>

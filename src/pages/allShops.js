@@ -141,7 +141,10 @@ const AllShops = () => {
           }}
         ></div>
 
-        <div className={classes.shopContainer}>
+        <div
+          className={classes.shopContainer}
+          onClick={() => setShowShopCategories(false)}
+        >
           <div className={classes.categoryLists}>{categoriesPath}</div>
 
           <div className={classes.header}>
