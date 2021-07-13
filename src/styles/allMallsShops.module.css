@@ -58,7 +58,8 @@
 
 .mallContainer {
   position: relative;
-  margin-top: 70px;
+  margin-top: 50px;
+  margin-bottom: 50px;
   width: 100%;
 }
 
@@ -73,12 +74,15 @@
   color: #5b5b5b;
   font-size: 20px;
   margin-left: 10px;
+  margin-top: 30px;
 }
 
 .categoryLists {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin-bottom: 45px;
+  margin-left: 9px;
+  height: 16px;
 }
 
 .categoryLists > p {
