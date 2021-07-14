@@ -1,8 +1,13 @@
-.ShopContainer {
+.mainContainerShop,
+.mainContainerMall {
   max-width: 100vw;
   overflow: hidden;
   margin-top: 68px;
   margin-bottom: 90px;
+}
+
+.mainContainerMall {
+  margin-bottom: 48px;
 }
 
 .topImage {
@@ -17,10 +22,16 @@
   height: 408px;
 }
 
-.main {
+.mainShop,
+.mainMall {
   width: 75%;
   margin: -18px auto;
   position: relative;
+  height: auto;
+}
+
+.mainMall {
+  margin: 50px auto;
 }
 
 .mainSkeleton {
@@ -64,12 +75,16 @@
   justify-content: center;
 }
 
-.shopDetails {
+.details {
   margin-bottom: 10px;
   padding-bottom: 10px;
 }
 
-.shopDetails h1 {
+.details p {
+  padding-bottom: 7px;
+}
+
+.details h1 {
   font-size: 30px;
   margin-bottom: 10px;
 }
@@ -82,8 +97,14 @@
   margin-bottom: 50px;
 }
 
+.title {
+  margin-top: 20px;
+  margin-bottom: -10px;
+}
+
 .descriptionSkeleton {
-  margin-bottom: 45px;
+  margin-top: -10px;
+  margin-bottom: 36px;
 }
 
 .description h3 {
@@ -95,13 +116,19 @@
   margin-bottom: 10px;
 }
 
-.container {
+.container,
+.mallContainerSkeleton {
   height: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 25px;
   row-gap: 25px;
   padding-bottom: 20px;
+}
+
+.mallContainerSkeleton {
+  margin-top: 30px;
+  margin-left: -10px;
 }
 
 .wrapper {
@@ -116,8 +143,47 @@
   height: 200px;
 }
 
+/* Button */
+
+.buttons,
+.buttonsMobile {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  right: 0px;
+}
+
+.buttonsMobile {
+  display: none;
+}
+
+.addBtn,
+.addBtnMobile {
+  border: none;
+  padding: 10px 15px;
+  width: auto;
+  color: white;
+  cursor: pointer;
+  right: 10px;
+}
+
+.addBtn:hover,
+.addBtnMobile:hover {
+  background-color: #2b4ea7;
+}
+
+.editBtn {
+  display: flex;
+  border: none;
+  padding: 10px 15px;
+  width: auto;
+  color: white;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1423px) and (min-width: 1281px) {
-  .main {
+  .mainShop,
+  .mainMall {
     width: 75%;
   }
 
@@ -127,7 +193,8 @@
 }
 
 @media screen and (max-width: 1601px) and (min-width: 1424px) {
-  .main {
+  .mainShop,
+  .mainMall {
     width: 68%;
   }
 
@@ -137,7 +204,8 @@
 }
 
 @media screen and (max-width: 1708px) and (min-width: 1601px) {
-  .main {
+  .mainShop,
+  .mainMall {
     width: 63.5%;
   }
 
@@ -147,7 +215,8 @@
 }
 
 @media screen and (max-width: 1921px) and (min-width: 1708px) {
-  .main {
+  .mainShop,
+  .mainMall {
     width: 56.5%;
   }
 
@@ -157,7 +226,8 @@
 }
 
 @media only screen and (min-width: 1921px) {
-  .main {
+  .mainShop,
+  .mainMall {
     width: 42.5%;
   }
 
@@ -167,8 +237,17 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .container {
+  .container,
+  .mallContainerSkeleton {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .topImage {
+    height: 320px;
+  }
+
+  .topImage img {
+    height: 320px;
   }
 
   .descriptionSkeleton {
@@ -185,17 +264,22 @@
 }
 
 @media only screen and (max-width: 414px) {
-  .ShopContainer {
+  .mainContainerShop,
+  .mainContainerMall {
     margin-top: 55px;
     margin-bottom: 55px;
   }
 
+  .mainContainerMall {
+    margin-bottom: 30px;
+  }
+
   .topImage {
-    height: 300px;
+    height: 210px;
   }
 
   .topImage img {
-    height: 300px;
+    height: 210px;
   }
 
   .description {
@@ -206,7 +290,8 @@
     margin-bottom: 8px;
   }
 
-  .container {
+  .container,
+  .mallContainerSkeleton {
     grid-template-columns: repeat(1, 1fr);
   }
 
@@ -218,9 +303,9 @@
     width: 100%;
   }
 
-  .main {
+  .mainShop,
+  .mainMall {
     width: 80%;
-    margin: -15px auto;
   }
 
   .mainSkeleton {
@@ -235,5 +320,13 @@
   .box > div {
     width: 120px;
     padding: 5px 8px;
+  }
+
+  .buttons {
+    display: none;
+  }
+
+  .buttonsMobile {
+    display: flex;
   }
 }

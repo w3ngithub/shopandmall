@@ -1,14 +1,22 @@
-import Modal from "../components/single/Modal";
-import { useHistory } from "react-router-dom";
-import classes from "../styles/singleMall.module.css";
-import { fireStore } from "../firebase/config";
-import React, { useEffect, useState } from "react";
-import cls from "../styles/allMallsShops.module.css";
-import { useParams, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
+import Modal from "../components/single/Modal";
+import { fireStore } from "../firebase/config";
+// import classes from "../styles/singleMall.module.css";
+import React, { useEffect, useState } from "react";
+import { useParams, useLocation } from "react-router-dom";
+
+import { FaPlus } from "react-icons/fa";
+import classes from "../styles/single.module.css";
+import ShopCardComponent from "../components/shopCardComponent/ShopCardComponent";
+
+import SkeletonText from "../skeletons/SkeletonText";
+import SkeletonBlock from "../skeletons/SkeletonBlock";
+import SkeletonCard from "../skeletons/SkeletonCard";
 
 const SingleMall = () => {
   const [mall, setMall] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [showModal, setShowModal] = useState(false);
   const history = useHistory();
@@ -22,7 +30,10 @@ const SingleMall = () => {
       await fireStore
         .collection("Shopping Mall")
         .doc(docId)
-        .onSnapshot((doc) => setMall(doc.data()));
+        .onSnapshot((doc) => {
+          setMall(doc.data());
+          setLoading(false);
+        });
     };
 
     fetchData();
@@ -31,29 +42,29 @@ const SingleMall = () => {
   }, [docId]);
 
   return (
-    <div className={classes.container}>
+    <div className={classes.mainContainerMall}>
       {/* Modal */}
       {showModal === true && <Modal {...{ setShowModal, docId, mall }} />}
-      <div className={classes.wrapper}>
-        <div className={classes.name}>
-          <h1 className={classes.title}>{mall.mallName}</h1>
-          <h4>{mall.mallAddress}</h4>
-        </div>
 
-        <div className={classes.imageContainer}>
+      <div className={classes.topImage}>
+        {loading ? (
+          <SkeletonBlock />
+        ) : (
           <img
             className={classes.image}
             src={mall?.mallImage?.imageUrl}
             alt=""
           />
-        </div>
+        )}
+      </div>
 
-        <div className={(cls.main, classes.main)}>
-          <div>
-            {location.pathname.split("/")[1] === "admin" ? (
+      <div className={classes.mainMall}>
+        <div>
+          {location.pathname.split("/")[1] === "admin" ? (
+            <>
               <div className={classes.buttons}>
                 <button
-                  className={cls.addBtn}
+                  className={classes.addBtn}
                   onClick={() => setShowModal(true)}
                 >
                   Add New Shop
@@ -71,62 +82,84 @@ const SingleMall = () => {
                   <span className={classes.text}>Edit</span>
                 </button>
               </div>
-            ) : (
-              <div className={classes.break}></div>
-            )}
-          </div>
 
-          <div className={classes.mallContainer}>
-            <div className={classes.header}>
-              <h4 className={cls.heading}>Shops</h4>
-            </div>
-
-            {mall.shops && mall?.shops?.length > 0 ? (
-              <div className={cls.container}>
-                {mall.shops &&
-                  mall?.shops?.map((shop, index) => (
-                    <div className={cls.wrapper} key={index}>
-                      {shop.shopImages &&
-                        shop.shopImages.map(
-                          (s, i) =>
-                            i === 0 && (
-                              <div
-                                key={i}
-                                className={cls.imageContainer}
-                                onClick={() =>
-                                  location.pathname.split("/")[1] === "admin"
-                                    ? history.push(
-                                        "/admin/" +
-                                          mall.mallName +
-                                          "/shops/" +
-                                          shop.shopName
-                                      )
-                                    : history.push(
-                                        "/mall/" +
-                                          mall.mallName +
-                                          "/shops/" +
-                                          shop.shopName
-                                      )
-                                }
-                              >
-                                <img
-                                  className={cls.image}
-                                  key={i}
-                                  src={s.url}
-                                  alt="thumbnails"
-                                />
-                              </div>
-                            )
-                        )}
-                      <h3>{shop.shopName}</h3>
-                    </div>
-                  ))}
+              <div className={classes.buttonsMobile}>
+                <button
+                  className={classes.addBtn}
+                  onClick={() => setShowModal(true)}
+                >
+                  <FaPlus />
+                </button>
+                <button
+                  className={classes.editBtn}
+                  onClick={() => {
+                    history.push({
+                      pathname: "/admin/editMall",
+                      dataToSend: mall,
+                    });
+                  }}
+                >
+                  <FaEdit className={classes.editIcon} />
+                </button>
               </div>
-            ) : (
-              <h3>No Shops Yet</h3>
-            )}
-          </div>
+            </>
+          ) : (
+            <div className={classes.break}></div>
+          )}
         </div>
+
+        <div
+          style={{ borderBottom: "2px solid rgb(244,244,244)" }}
+          className={classes.details}
+        >
+          {loading ? (
+            <div style={{ marginTop: "60px" }}>
+              <SkeletonText />
+            </div>
+          ) : (
+            <h1>{mall.mallName}</h1>
+          )}
+          {loading ? (
+            <div style={{ marginTop: "3px" }}>
+              <SkeletonText />
+            </div>
+          ) : (
+            <p>
+              <b>{mall.mallAddress}</b>
+            </p>
+          )}
+
+          {loading ? (
+            <div style={{ marginTop: "-10px", marginBottom: "-2px" }}>
+              <SkeletonText />
+            </div>
+          ) : (
+            <p>
+              {mall?.timings?.map((time) => (
+                <span key={time.id}>
+                  {time.openTime} - {time.closeTime},
+                </span>
+              ))}
+              <span>{!loading && +977 - mall.phoneNumber}</span>
+            </p>
+          )}
+        </div>
+
+        <div className={classes.title}>
+          <h3>Shops</h3>
+        </div>
+
+        {loading ? (
+          <div className={classes.mallContainerSkeleton}>
+            {[1, 2, 3, 5, 6].map((n) => (
+              <SkeletonCard key={n} />
+            ))}
+          </div>
+        ) : (
+          <div style={{ marginLeft: "-10px" }}>
+            <ShopCardComponent malls={mall} single={true} />
+          </div>
+        )}
       </div>
     </div>
   );
