@@ -12,6 +12,8 @@ const CommonShopForm = ({
   index,
   shopImageState,
   shopImageDispatch,
+  shopVideoState,
+  shopVideoDispatch,
   closeShopForm,
   dataShop,
   editDispatch,
@@ -62,6 +64,19 @@ const CommonShopForm = ({
       } else {
         setShopImageError("Please select an image file  (jpeg or png)");
       }
+    }
+  };
+
+  const shopVideoHandler = (e) => {
+    const selectedShopVideo = e.target.files[0];
+
+    if (selectedShopVideo.size / 1000000 > 100) {
+      alert("the size of the video must be less than 100mb");
+    } else {
+      shopVideoDispatch({
+        type: "ADD",
+        payload: { index, video: selectedShopVideo },
+      });
     }
   };
 
@@ -301,66 +316,90 @@ const CommonShopForm = ({
         {!edit && (
           <p className={classes.para}>**First chosen Image will be Thumnail</p>
         )}
-      </div>
-
-      <div className={classes.selectedImages}>
-        {edit &&
-          dataShop?.shopImages?.map((img, i) => (
-            <p key={i} className={classes.image}>
-              <button
-                className={classes.button}
-                type="button"
-                onClick={() => removeImage(img, index)}
-              >
-                <IoIosClose />
-              </button>
-              {img.ImageName}
-            </p>
-          ))}
-        {edit &&
-          addedShopImages?.map((img, ind) =>
-            img.id === index
-              ? img?.images?.map((img, i) => (
+        <div className={classes.selectedImages}>
+          {edit &&
+            dataShop?.shopImages?.map((img, i) => (
+              <p key={i} className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => removeImage(img, index)}
+                >
+                  <IoIosClose />
+                </button>
+                {img.ImageName}
+              </p>
+            ))}
+          {edit &&
+            addedShopImages?.map((img, ind) =>
+              img.id === index
+                ? img?.images?.map((img, i) => (
+                    <p key={i} className={classes.image}>
+                      <button
+                        className={classes.button}
+                        type="button"
+                        onClick={() =>
+                          addedShopImagesDispatch({
+                            type: "REMOVE_IMAGE",
+                            payload: { outerIndex: ind, id: i },
+                          })
+                        }
+                      >
+                        <IoIosClose />
+                      </button>
+                      {img.name}
+                    </p>
+                  ))
+                : null
+            )}
+          {!edit &&
+            shopImageState?.map(
+              (image, ind) =>
+                ind === index &&
+                image?.images?.map((img, i) => (
                   <p key={i} className={classes.image}>
                     <button
                       className={classes.button}
                       type="button"
                       onClick={() =>
-                        addedShopImagesDispatch({
+                        shopImageDispatch({
                           type: "REMOVE_IMAGE",
-                          payload: { outerIndex: ind, id: i },
+                          payload: { outerIndex: ind, name: img?.name },
                         })
                       }
                     >
                       <IoIosClose />
                     </button>
-                    {img.name}
+                    {img?.name}
                   </p>
                 ))
-              : null
-          )}
-        {!edit &&
-          shopImageState?.map(
-            (image, ind) =>
-              ind === index &&
-              image?.images?.map((img, i) => (
-                <p key={i} className={classes.image}>
-                  <button
-                    className={classes.button}
-                    type="button"
-                    onClick={() =>
-                      shopImageDispatch({
-                        type: "REMOVE_IMAGE",
-                        payload: { outerIndex: ind, name: img?.name },
-                      })
-                    }
-                  >
-                    <IoIosClose />
-                  </button>
-                  {img?.name}
-                </p>
-              ))
-          )}
+            )}
+        </div>
+        <label className={classes.label}>
+          <input type="file" onChange={shopVideoHandler} accept="video/*" />
+          <span>
+            <div className={classes.imgButton}>Add Video</div>
+          </span>
+        </label>
+        {!edit && (
+          <p className={classes.para}>
+            **the size of the video must be less than 100mb
+          </p>
+        )}
+        {shopVideoState.map((video, i) =>
+          video.id === index ? (
+            <p key={i} className={classes.image}>
+              <button
+                className={classes.button}
+                type="button"
+                onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
+              >
+                <IoIosClose />
+              </button>
+              {video.video.name}
+            </p>
+          ) : null
+        )}
       </div>
     </div>
   );

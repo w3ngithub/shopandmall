@@ -4,6 +4,7 @@ import CommonForm from "../components/mall/CommonForm";
 import reducer from "../reducers/reducer";
 import { storage, fireStore } from "../firebase/config";
 import shopImageReducer from "../reducers/shopImageReducer";
+import shopVideoReducer from "../reducers/shopVideoReducer";
 import React, { useState, useReducer, useContext } from "react";
 import {
   checkMallValidation,
@@ -41,12 +42,14 @@ const MallForm = () => {
     shopImageValues
   );
 
+  const [shopVideoState, shopVideoDispatch] = useReducer(shopVideoReducer, []);
+
   //Loading
   const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = async (e) => {
     try {
-      //mall validation
+      // mall validation
       const { isMallTimeError, isMallImageError } = checkMallValidation(
         state,
         mallImage
@@ -124,6 +127,24 @@ const MallForm = () => {
           )
         );
 
+        let shopVideoUrl = null;
+        if (shopVideoState.length > 0) {
+          await Promise.all(
+            shopVideoState.map(({ id, video }) =>
+              storage
+                .ref()
+                .child(id + video.name)
+                .put(video)
+            )
+          );
+
+          shopVideoUrl = await Promise.all(
+            shopVideoState.map(({ id, video }) =>
+              storage.ref(id + video.name).getDownloadURL()
+            )
+          );
+        }
+
         let mall = {
           mallId: Math.random() * 9999,
           mallName: state?.mallName,
@@ -151,7 +172,28 @@ const MallForm = () => {
             ImageName: shopImageState[i]?.images[index]?.name,
             url: items,
           })),
+          shopVideo:
+            shopVideoUrl !== null
+              ? {
+                  id:
+                    shopVideoState[
+                      shopVideoState.findIndex((video) => video.id === i)
+                    ].id +
+                    shopVideoState[
+                      shopVideoState.findIndex((video) => video.id === i)
+                    ].video.name,
+                  url:
+                    shopVideoUrl[
+                      shopVideoState.findIndex((video) => video.id === i)
+                    ],
+                  videoName:
+                    shopVideoState[
+                      shopVideoState.findIndex((video) => video.id === i)
+                    ].video.name,
+                }
+              : null,
         }));
+        console.log(shops);
         setLoadingPercentage(80);
         //FireStore
         fireStore
@@ -173,7 +215,7 @@ const MallForm = () => {
         history.goBack();
       }
     } catch (err) {
-      alert("some error ocurred");
+      alert(err);
       setIsLoading(false);
     }
   };
@@ -193,6 +235,8 @@ const MallForm = () => {
         newShopForm,
         shopImageState,
         shopImageDispatch,
+        shopVideoState,
+        shopVideoDispatch,
         mallImage,
         setMallImage,
         isLoading,

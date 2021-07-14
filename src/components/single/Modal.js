@@ -11,6 +11,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
   const { docs } = useFirestore("Shop Categories");
   const [subCategoryLists, setSubCategoryLists] = useState([]);
   const [images, setImages] = useState([]);
+  const [video, setVideo] = useState({});
   const [imageErrors, setImageErrors] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
@@ -47,6 +48,16 @@ const Modal = ({ setShowModal, docId, mall }) => {
       } else {
         setImageErrors("Please select an image file  (jpeg or png)");
       }
+    }
+  };
+
+  const shopVideoHandleer = (e) => {
+    const selectedShopVideo = e.target.files[0];
+
+    if (selectedShopVideo.size / 1000000 > 100) {
+      alert("the size of the video must be less than 100mb");
+    } else {
+      setVideo({ id: mall.shops.length, video: selectedShopVideo });
     }
   };
   const onManualTimeChange = (rowId, name, value) => {
@@ -123,7 +134,34 @@ const Modal = ({ setShowModal, docId, mall }) => {
           url: items,
         })),
       };
-      console.log(result, mall.shops);
+      if (video.hasOwnProperty("video")) {
+        await storage.ref(video.id + video.video.name).put(video.video);
+
+        const shopVideoUrl = await storage
+          .ref(video.id + video.video.name)
+          .getDownloadURL();
+
+        result = {
+          id: Math.random(),
+          shopName: shop.shopName,
+          shopDescription: shop.shopDescription,
+          shopLevel: shop.shopLevel,
+          shopPhoneNumber: shop.shopPhoneNumber,
+          category: shop.category,
+          subCategory: shop.subCategory,
+          timings: shop.timings,
+          shopImages: shopImageUrl.map((items, index) => ({
+            id: Math.random() + images[index].name,
+            ImageName: images[index].name,
+            url: items,
+          })),
+          shopVideo: {
+            id: video.id + video.video.name,
+            name: video.video.name,
+            url: shopVideoUrl,
+          },
+        };
+      }
       //FireStore
       mall.shops.length > 0
         ? fireStore
@@ -319,6 +357,20 @@ const Modal = ({ setShowModal, docId, mall }) => {
                   {image.name}
                 </p>
               ))}
+          </div>
+          <label className={classes.label}>
+            Add Video
+            <input
+              className={classes.upload}
+              type="file"
+              onChange={shopVideoHandleer}
+            />
+            <IoIosAddCircle className={classes.addIcon} />
+          </label>
+          <div className={classes.selectedImages}>
+            {video.hasOwnProperty("video") && (
+              <p className={classes.image}>{video.video.name}</p>
+            )}
           </div>
 
           <button

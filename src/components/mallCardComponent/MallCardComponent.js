@@ -55,6 +55,16 @@ const MallCardComponent = ({ doc }) => {
                   .delete()
                   .then(() => "Images Deleted SuccessFUlly")
                   .catch((err) => "Images Not Deleted");
+
+                //shop video
+                doc.shops.forEach((shop) => {
+                  if (shop.shopVideo.hasOwnProperty("url")) {
+                    storageRef
+                      .child(shop.shopVideo.id)
+                      .delete()
+                      .then(() => console.log("deleted video"));
+                  }
+                });
               }}
             >
               <IoMdCloseCircle />
