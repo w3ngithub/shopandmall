@@ -1,10 +1,15 @@
-.container {
+.container,
+.container2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 40px;
   width: 100%;
   margin-top: 30px;
   /* background-color: black; */
+}
+
+.container2 {
+  grid-column-gap: 10px;
 }
 
 .wrapper {
@@ -18,7 +23,8 @@
   margin: 0 10px;
 }
 
-.wrapper2 {
+.wrapper2,
+.wrapper3 {
   width: auto;
   max-height: 391px;
   overflow: hidden;
@@ -27,6 +33,10 @@
   cursor: pointer;
   background: #ffffff;
   margin: 0 10px;
+}
+
+.wrapper3 {
+  width: 96%;
 }
 
 .imageContainer {
@@ -47,7 +57,8 @@
 }
 
 .wrapper:hover .closeIcon,
-.wrapper2:hover .closeIcon {
+.wrapper2:hover .closeIcon,
+.wrapper3:hover .closeIcon {
   display: block;
 }
 
@@ -64,13 +75,15 @@
 }
 
 .wrapper:hover .image,
-.wrapper2:hover .image {
+.wrapper2:hover .image,
+.wrapper3:hover .image {
   transform: scale(1.1);
   transform-origin: 50% 50%;
 }
 
 .wrapper:hover,
-.wrapper2:hover {
+.wrapper2:hover,
+.wrapper3:hover {
   background-color: rgb(255, 236, 236);
 }
 
@@ -106,7 +119,8 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .container {
+  .container,
+  .container2 {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 40px;
     width: 100%;
@@ -150,7 +164,8 @@
 }
 
 @media only screen and (max-width: 414px) {
-  .container {
+  .container,
+  .container2 {
     grid-template-columns: repeat(1, 1fr);
     row-gap: 40px;
     width: 100%;

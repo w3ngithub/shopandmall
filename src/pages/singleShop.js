@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
-import classes from "../styles/singleShop.module.css";
+import classes from "../styles/single.module.css";
 import modalclasses from "../components/single/modal.module.css";
 
 import ImageGallery from "react-image-gallery";
@@ -10,9 +10,9 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import { FaRegWindowClose } from "react-icons/fa";
 import { BiImage, BiVideo } from "react-icons/bi";
 
-import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
+import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 
 const SingleShop = () => {
   const [mall, setMall] = useState();
@@ -59,15 +59,15 @@ const SingleShop = () => {
       {/* {modal && <ImageGallery items={galleryImage} />} */}
 
       {loading ? (
-        <div className={classes.ShopContainer}>
+        <div className={classes.mainContainerShop}>
           <div className={classes.topImage}>
             <SkeletonBlock />
           </div>
 
           <div className={classes.mainSkeleton}>
             <div
-              style={{ borderBottom: "1px solid #C1C1C1" }}
-              className={`${classes.shopDetails} ${classes.shopDetailsSkeleton}`}
+              // style={{ borderBottom: "2px solid #C1C1C1" }}
+              className={`${classes.details} ${classes.shopDetailsSkeleton}`}
             >
               <h1>
                 <SkeletonText />
@@ -95,12 +95,12 @@ const SingleShop = () => {
         mall?.shops?.map(
           (shop, ind) =>
             type === shop.shopName && (
-              <div key={ind} className={classes.ShopContainer}>
+              <div key={ind} className={classes.mainContainerShop}>
                 <div className={classes.topImage}>
                   <img src={shop.shopImages[0].url} alt="" />
                 </div>
 
-                <div className={classes.main}>
+                <div className={classes.mainShop}>
                   <div className={classes.box}>
                     <div className={classes.photosBox}>
                       <div>
@@ -122,8 +122,8 @@ const SingleShop = () => {
                   </div>
 
                   <div
-                    style={{ borderBottom: "1px solid #C1C1C1" }}
-                    className={classes.shopDetails}
+                    style={{ borderBottom: "2px solid rgb(244,244,244)" }}
+                    className={classes.details}
                   >
                     <h1>{shop.shopName}</h1>
                     <p>
