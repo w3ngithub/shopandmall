@@ -130,17 +130,17 @@ const MallForm = () => {
         let shopVideoUrl = null;
         if (shopVideoState.length > 0) {
           await Promise.all(
-            shopVideoState.map(({ id, video }) =>
+            shopVideoState.map(({ id, video, uniqueId }) =>
               storage
                 .ref()
-                .child(id + video.name)
+                .child(uniqueId + video.name)
                 .put(video)
             )
           );
 
           shopVideoUrl = await Promise.all(
-            shopVideoState.map(({ id, video }) =>
-              storage.ref(id + video.name).getDownloadURL()
+            shopVideoState.map(({ id, video, uniqueId }) =>
+              storage.ref(uniqueId + video.name).getDownloadURL()
             )
           );
         }
@@ -158,41 +158,44 @@ const MallForm = () => {
             imageUrl: mallImageUrl,
           },
         };
-        let shops = state?.shops?.map((s, i) => ({
-          id: i,
-          shopName: s?.shopName,
-          shopDescription: s?.shopDescription,
-          shopLevel: s?.shopLevel,
-          shopPhoneNumber: s?.shopPhoneNumber,
-          timings: s?.timings,
-          category: s?.category,
-          subCategory: s?.subCategory,
-          shopImages: shopImageUrl[i]?.map((items, index) => ({
-            id: Math.random() + shopImageState[i]?.images[index]?.name,
-            ImageName: shopImageState[i]?.images[index]?.name,
-            url: items,
-          })),
-          shopVideo:
-            shopVideoUrl !== null
-              ? {
+        let shops = [];
+        state?.shops?.forEach((s, i) => {
+          const indexOfVideo = shopVideoState.findIndex(
+            (video) => video.id === i
+          );
+          const isVideoPresent = indexOfVideo >= 0;
+          const shop = {
+            id: i,
+            shopName: s?.shopName,
+            shopDescription: s?.shopDescription,
+            shopLevel: s?.shopLevel,
+            shopPhoneNumber: s?.shopPhoneNumber,
+            timings: s?.timings,
+            category: s?.category,
+            subCategory: s?.subCategory,
+            shopImages: shopImageUrl[i]?.map((items, index) => ({
+              id: Math.random() + shopImageState[i]?.images[index]?.name,
+              ImageName: shopImageState[i]?.images[index]?.name,
+              url: items,
+            })),
+          };
+
+          if (isVideoPresent) {
+            shops = [
+              ...shops,
+              {
+                ...shop,
+                shopVideo: {
                   id:
-                    shopVideoState[
-                      shopVideoState.findIndex((video) => video.id === i)
-                    ].id +
-                    shopVideoState[
-                      shopVideoState.findIndex((video) => video.id === i)
-                    ].video.name,
-                  url:
-                    shopVideoUrl[
-                      shopVideoState.findIndex((video) => video.id === i)
-                    ],
-                  videoName:
-                    shopVideoState[
-                      shopVideoState.findIndex((video) => video.id === i)
-                    ].video.name,
-                }
-              : null,
-        }));
+                    shopVideoState[indexOfVideo].uniqueId +
+                    shopVideoState[indexOfVideo].video.name,
+                  url: shopVideoUrl[indexOfVideo],
+                  videoName: shopVideoState[indexOfVideo].video.name,
+                },
+              },
+            ];
+          }
+        });
         console.log(shops);
         setLoadingPercentage(80);
         //FireStore

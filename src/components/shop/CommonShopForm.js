@@ -386,19 +386,32 @@ const CommonShopForm = ({
             **the size of the video must be less than 100mb
           </p>
         )}
-        {shopVideoState.map((video, i) =>
-          video.id === index ? (
-            <p key={i} className={classes.image}>
-              <button
-                className={classes.button}
-                type="button"
-                onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
-              >
-                <IoIosClose />
-              </button>
-              {video.video.name}
-            </p>
-          ) : null
+        {!edit &&
+          shopVideoState.map((video, i) =>
+            video.id === index ? (
+              <p key={i} className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
+                >
+                  <IoIosClose />
+                </button>
+                {video.video.name}
+              </p>
+            ) : null
+          )}
+        {edit && dataShop.shopVideo && (
+          <p className={classes.image}>
+            <button
+              className={classes.button}
+              type="button"
+              onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
+            >
+              <IoIosClose />
+            </button>
+            {dataShop.shopVideo.name}
+          </p>
         )}
       </div>
     </div>

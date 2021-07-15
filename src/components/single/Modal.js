@@ -57,7 +57,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
     if (selectedShopVideo.size / 1000000 > 100) {
       alert("the size of the video must be less than 100mb");
     } else {
-      setVideo({ id: mall.shops.length, video: selectedShopVideo });
+      setVideo({ id: Date.now(), video: selectedShopVideo });
     }
   };
   const onManualTimeChange = (rowId, name, value) => {
@@ -142,19 +142,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
           .getDownloadURL();
 
         result = {
-          id: Math.random(),
-          shopName: shop.shopName,
-          shopDescription: shop.shopDescription,
-          shopLevel: shop.shopLevel,
-          shopPhoneNumber: shop.shopPhoneNumber,
-          category: shop.category,
-          subCategory: shop.subCategory,
-          timings: shop.timings,
-          shopImages: shopImageUrl.map((items, index) => ({
-            id: Math.random() + images[index].name,
-            ImageName: images[index].name,
-            url: items,
-          })),
+          ...result,
           shopVideo: {
             id: video.id + video.video.name,
             name: video.video.name,

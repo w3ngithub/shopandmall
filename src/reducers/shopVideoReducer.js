@@ -9,7 +9,14 @@ const shopVideoReducer = (state, action) => {
                 : video
             ),
           ]
-        : [...state, { id: action.payload.index, video: action.payload.video }];
+        : [
+            ...state,
+            {
+              id: action.payload.index,
+              video: action.payload.video,
+              uniqueId: Date.now(),
+            },
+          ];
     case "REMOVE":
       return [...state.filter((video) => video.id !== action.index)];
     default:

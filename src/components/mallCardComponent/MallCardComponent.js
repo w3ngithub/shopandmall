@@ -58,7 +58,7 @@ const MallCardComponent = ({ doc }) => {
 
                 //shop video
                 doc.shops.forEach((shop) => {
-                  if (shop.shopVideo.hasOwnProperty("url")) {
+                  if (shop.shopVideo) {
                     storageRef
                       .child(shop.shopVideo.id)
                       .delete()
