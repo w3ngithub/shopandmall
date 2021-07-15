@@ -144,7 +144,7 @@ const CommonShopForm = ({
       ]);
     }
   }, [docs]);
-  console.log(isLoading);
+
   return (
     <div className={classes.shopContainer}>
       <div
@@ -406,14 +406,10 @@ const CommonShopForm = ({
           )}
         {edit && dataShop.shopVideo && (
           <p className={classes.image}>
-            <button
-              className={classes.button}
-              type="button"
-              onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
-            >
+            <button className={classes.button} type="button">
               <IoIosClose />
             </button>
-            {dataShop.shopVideo.name}
+            {dataShop.shopVideo.videoName}
           </p>
         )}
         {isLoading && <Loader loadingPercentage={videoUploadPercentage} />}

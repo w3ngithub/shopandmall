@@ -156,7 +156,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
                 ...result,
                 shopVideo: {
                   id: video.id + video.video.name,
-                  name: video.video.name,
+                  videoName: video.video.name,
                   url: downloadURL,
                 },
               };
