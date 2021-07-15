@@ -23,6 +23,7 @@ const SingleMall = () => {
   const location = useLocation();
 
   const { id } = useParams();
+
   const docId = id.replace("_", " ");
 
   useEffect(() => {

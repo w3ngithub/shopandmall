@@ -19,6 +19,8 @@ const SingleShop = () => {
   const { id, type } = useParams();
   const docId = id.replace("_", " ");
 
+  // console.log(type);
+
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
 

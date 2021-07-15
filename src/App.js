@@ -1,28 +1,31 @@
+import "./index.css";
 import Nav from "./components/NavBar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./ProtectedRoute";
+import { useLocation } from "react-router-dom";
+import AddShopCategory from "./pages/addShopCategory";
+import allDataReducer from "./reducers/allDataReducer";
 import { Switch, Route, Redirect } from "react-router-dom";
 import React, { useState, useEffect, useReducer, createContext } from "react";
-import allDataReducer from "./reducers/allDataReducer";
-import "./index.css";
-import { useLocation } from "react-router-dom";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import "react-toastify/dist/ReactToastify.css";
+
 import {
+  Login,
+  AboutUs,
   HomePage,
   AllMalls,
-  Login,
   AllShops,
-  SingleMall,
-  SingleShop,
   MallForm,
   EditMall,
-  PageNotFound,
-  AboutUs,
   ContactUs,
+  SingleMall,
+  SingleShop,
+  PageNotFound,
 } from "./pages";
-import AddShopCategory from "./pages/addShopCategory";
 
 const MyContext = createContext();
 
