@@ -4,6 +4,7 @@ import { IoIosClose } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
 import useFirestore from "../../hooks/useFirestore";
 import { Controller } from "react-hook-form";
+import Loader from "../Loader/Loader";
 
 const CommonShopForm = ({
   edit,
@@ -25,6 +26,8 @@ const CommonShopForm = ({
   getValues,
   mallTime,
   mallLevel,
+  videoUploadPercentage = 0,
+  isLoading,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
@@ -141,7 +144,7 @@ const CommonShopForm = ({
       ]);
     }
   }, [docs]);
-
+  console.log(isLoading);
   return (
     <div className={classes.shopContainer}>
       <div
@@ -413,6 +416,7 @@ const CommonShopForm = ({
             {dataShop.shopVideo.name}
           </p>
         )}
+        {isLoading && <Loader loadingPercentage={videoUploadPercentage} />}
       </div>
     </div>
   );

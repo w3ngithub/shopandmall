@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import useFirestore from "../../hooks/useFirestore";
 import AllTimings from "../AllTimings/AllTimings";
 import { checkShopValidation } from "../../utils/checkValidation";
+import Loader from "../Loader/Loader";
 
 const Modal = ({ setShowModal, docId, mall }) => {
   const { docs } = useFirestore("Shop Categories");
@@ -15,6 +16,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
   const [imageErrors, setImageErrors] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [percentage, setPercentage] = useState(0);
   const { control, handleSubmit } = useForm();
   useEffect(() => setIsLoading(false), []);
 
@@ -135,43 +137,72 @@ const Modal = ({ setShowModal, docId, mall }) => {
         })),
       };
       if (video.hasOwnProperty("video")) {
-        await storage.ref(video.id + video.video.name).put(video.video);
-
-        const shopVideoUrl = await storage
+        const uploadTask = storage
           .ref(video.id + video.video.name)
-          .getDownloadURL();
+          .put(video.video);
 
-        result = {
-          ...result,
-          shopVideo: {
-            id: video.id + video.video.name,
-            name: video.video.name,
-            url: shopVideoUrl,
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            var progress = Math.floor(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setPercentage(progress);
           },
-        };
-      }
-      //FireStore
-      mall.shops.length > 0
-        ? fireStore
-            .collection("Shopping Mall")
-            .doc(docId)
-            .set({
-              ...mall,
-              shops: [...mall.shops, result],
-            })
-        : fireStore
-            .collection("Shopping Mall")
-            .doc(docId)
-            .set({
-              ...mall,
-              shops: [result],
+          (error) => {},
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              result = {
+                ...result,
+                shopVideo: {
+                  id: video.id + video.video.name,
+                  name: video.video.name,
+                  url: downloadURL,
+                },
+              };
+              mall.shops.length > 0
+                ? fireStore
+                    .collection("Shopping Mall")
+                    .doc(docId)
+                    .set({
+                      ...mall,
+                      shops: [...mall.shops, result],
+                    })
+                : fireStore
+                    .collection("Shopping Mall")
+                    .doc(docId)
+                    .set({
+                      ...mall,
+                      shops: [result],
+                    });
+
+              setShowModal(false);
             });
+          }
+        );
+      } else {
+        //FireStore
+        mall.shops.length > 0
+          ? fireStore
+              .collection("Shopping Mall")
+              .doc(docId)
+              .set({
+                ...mall,
+                shops: [...mall.shops, result],
+              })
+          : fireStore
+              .collection("Shopping Mall")
+              .doc(docId)
+              .set({
+                ...mall,
+                shops: [result],
+              });
+        setShowModal(false);
+      }
     } catch (e) {
       console.log(e);
       setIsLoading(false);
     }
-
-    setShowModal(false);
   };
 
   let listOfMallTimes = [mall.timings[0]];
@@ -360,6 +391,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
               <p className={classes.image}>{video.video.name}</p>
             )}
           </div>
+          {isLoading && <Loader loadingPercentage={percentage} />}
 
           <button
             className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}

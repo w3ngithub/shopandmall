@@ -15,6 +15,8 @@ const ShopForm = ({
   control,
   mallTime,
   mallLevel,
+  videoUploadPercentage,
+  isLoading,
 }) => {
   const closeShopForm = () => {
     dispatch({
@@ -40,6 +42,8 @@ const ShopForm = ({
         control,
         mallTime,
         mallLevel,
+        videoUploadPercentage,
+        isLoading,
       }}
     />
   );

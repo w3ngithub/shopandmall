@@ -46,6 +46,7 @@ const MallForm = () => {
 
   //Loading
   const [isLoading, setIsLoading] = useState(false);
+  const [videoUploadPercentage, setVideoUploadPercentage] = useState({});
 
   const submitHandler = async (e) => {
     try {
@@ -108,6 +109,7 @@ const MallForm = () => {
           mallImageUrl = null;
         }
         setLoadingPercentage(60);
+
         await Promise.all(
           shopImageState?.map((item) =>
             Promise.all(
@@ -127,17 +129,28 @@ const MallForm = () => {
           )
         );
 
-        let shopVideoUrl = null;
+        let shopVideoUrl = [];
+
         if (shopVideoState.length > 0) {
           await Promise.all(
-            shopVideoState.map(({ id, video, uniqueId }) =>
-              storage
+            shopVideoState.map(({ id, video, uniqueId }) => {
+              const uploadTask = storage
                 .ref()
                 .child(uniqueId + video.name)
-                .put(video)
-            )
+                .put(video);
+              uploadTask.on("state_changed", (snapshot) => {
+                var progress = Math.floor(
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                setVideoUploadPercentage((prevState) => ({
+                  ...prevState,
+                  [id]: progress,
+                }));
+              });
+              return uploadTask;
+            })
           );
-
+          setLoadingPercentage(80);
           shopVideoUrl = await Promise.all(
             shopVideoState.map(({ id, video, uniqueId }) =>
               storage.ref(uniqueId + video.name).getDownloadURL()
@@ -196,8 +209,7 @@ const MallForm = () => {
             ];
           }
         });
-        console.log(shops);
-        setLoadingPercentage(80);
+
         //FireStore
         fireStore
           .collection("Shopping Mall")
@@ -245,6 +257,7 @@ const MallForm = () => {
         isLoading,
         setIsLoading,
         loadingPercentage,
+        videoUploadPercentage,
       }}
     />
   );

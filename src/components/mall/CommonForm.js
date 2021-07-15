@@ -27,6 +27,7 @@ const CommonForm = ({
   isLoading,
   setIsLoading,
   loadingPercentage,
+  videoUploadPercentage,
 }) => {
   //States
 
@@ -123,7 +124,7 @@ const CommonForm = ({
       });
     }
   }, []);
-
+  console.log(isLoading);
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>
@@ -268,6 +269,8 @@ const CommonForm = ({
                       control,
                       mallTime: state.timings,
                       mallLevel: state.levels,
+                      videoUploadPercentage: videoUploadPercentage[index],
+                      isLoading,
                     }}
                   />
                   <div className={classes.line}></div>
