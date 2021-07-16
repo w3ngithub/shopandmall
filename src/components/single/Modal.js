@@ -233,57 +233,62 @@ const Modal = ({ setShowModal, docId, mall }) => {
         <div className={classes.line}></div>
 
         <form onSubmit={handleSubmit(onSubmitHandler)} className={classes.form}>
-          <Controller
-            control={control}
-            name="shopName"
-            render={({ field: { onChange }, fieldState: { error } }) => (
-              <div className={classes.formGroup}>
-                <input
-                  type="text"
-                  placeholder="Name of Shop"
-                  name="shopName"
-                  value={shop.shopName}
-                  onChange={(e) => {
-                    onChangeHandler(e);
-                    onChange(e);
-                  }}
-                  className={classes.input}
-                />
-                {error && <p className={classes.error}>{error.message}</p>}
-              </div>
-            )}
-            rules={{ required: { value: true, message: "* Name is Required" } }}
-          />
-          <Controller
-            control={control}
-            name="shopLevel"
-            render={({ field: { onChange }, fieldState: { error } }) => (
-              <div className={classes.formGroup}>
-                <input
-                  type="number"
-                  placeholder="Level"
-                  name="shopLevel"
-                  value={shop.shopLevel}
-                  onChange={(e) => {
-                    onChangeHandler(e);
-                    onChange(e);
-                  }}
-                  className={classes.input}
-                />
-                {error && <p className={classes.error}>{error.message}</p>}
-                {error?.type === "validate" && (
-                  <p className={classes.error}>
-                    * level must be equal to or less than mall level (
-                    {mall.levels})
-                  </p>
-                )}
-              </div>
-            )}
-            rules={{
-              required: { value: true, message: "* Level is Required" },
-              validate: (value) => value <= mall.levels,
-            }}
-          />
+          <div className={classes.inputdiv}>
+            <Controller
+              control={control}
+              name="shopName"
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <div className={classes.formGroup}>
+                  <input
+                    type="text"
+                    placeholder="Name of Shop"
+                    name="shopName"
+                    value={shop.shopName}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.input}
+                  />
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </div>
+              )}
+              rules={{
+                required: { value: true, message: "* Name is Required" },
+              }}
+            />
+            <Controller
+              control={control}
+              name="shopLevel"
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <div className={classes.formGroup}>
+                  <input
+                    type="number"
+                    placeholder="Level"
+                    name="shopLevel"
+                    value={shop.shopLevel}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.input}
+                  />
+                  {error && <p className={classes.error}>{error.message}</p>}
+                  {error?.type === "validate" && (
+                    <p className={classes.error}>
+                      * level must be equal to or less than mall level (
+                      {mall.levels})
+                    </p>
+                  )}
+                </div>
+              )}
+              rules={{
+                required: { value: true, message: "* Level is Required" },
+                validate: (value) => value <= mall.levels,
+              }}
+            />
+          </div>
+
           <Controller
             control={control}
             name="shopPhoneNumber"
@@ -320,31 +325,40 @@ const Modal = ({ setShowModal, docId, mall }) => {
             onChange={onChangeHandler}
             className={classes.textarea}
           />
-          <select
-            name="category"
-            onChange={(e) => {
-              onChangeHandler(e);
-              setSubCategoryLists([
-                ...docs.find((category) => category.category === e.target.value)
-                  .rowContent.rowData,
-              ]);
-            }}
-          >
-            <option hidden>Categories</option>
-            {docs.map(({ id, category }) => (
-              <option key={id} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          <select name="subCategory" onChange={onChangeHandler}>
-            <option hidden>SubCategories</option>
-            {subCategoryLists.map(({ id, subCategory }) => (
-              <option key={id} value={subCategory}>
-                {subCategory}
-              </option>
-            ))}
-          </select>
+          <div className={classes.inputdiv}>
+            <select
+              name="category"
+              className={classes.inputcategory}
+              onChange={(e) => {
+                onChangeHandler(e);
+                setSubCategoryLists([
+                  ...docs.find(
+                    (category) => category.category === e.target.value
+                  ).rowContent.rowData,
+                ]);
+              }}
+            >
+              <option hidden>Categories</option>
+              {docs.map(({ id, category }) => (
+                <option key={id} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <select
+              name="subCategory"
+              onChange={onChangeHandler}
+              className={classes.inputcategory}
+            >
+              <option hidden>SubCategories</option>
+              {subCategoryLists.map(({ id, subCategory }) => (
+                <option key={id} value={subCategory}>
+                  {subCategory}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <AllTimings
             state={shop}
             index={mall.shops.length}

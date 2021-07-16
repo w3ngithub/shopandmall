@@ -77,6 +77,12 @@
   margin-bottom: 15px;
 }
 
+.inputdiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .textarea {
   margin-bottom: 15px;
 }
@@ -91,6 +97,16 @@
   border-radius: 5px;
   background-color: #f3f3f3;
   font-size: 18px;
+}
+
+.inputcategory {
+  border: 1px solid rgba(146, 146, 146, 0.5);
+  outline: none;
+  padding: 5px 8px;
+  width: 40%;
+  border-radius: 5px;
+  background-color: #f3f3f3;
+  font-size: 16px;
 }
 
 .textarea {

@@ -297,7 +297,7 @@ const CommonForm = ({
               isLoading
                 ? edit
                   ? "Updating..."
-                  : "Loading..."
+                  : "Saving..."
                 : edit
                 ? "Update"
                 : "Save"
