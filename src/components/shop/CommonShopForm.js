@@ -160,7 +160,7 @@ const CommonShopForm = ({
         <IoIosClose />
       </div>
       <div className={classes.innerDiv}>
-        <div>
+        <div className={classes.inputdiv}>
           <Controller
             control={control}
             name={`shops[${index}].shopName`}
@@ -186,8 +186,6 @@ const CommonShopForm = ({
             )}
             rules={{ required: { value: true, message: "* Name is Required" } }}
           />
-        </div>
-        <div>
           <Controller
             control={control}
             name={`shops[${index}].shopLevel`}
@@ -222,8 +220,6 @@ const CommonShopForm = ({
               validate: (value) => value <= mallLevel,
             }}
           />
-        </div>
-        <div>
           <Controller
             control={control}
             name={`shops[${index}].shopPhoneNumber`}
@@ -252,51 +248,47 @@ const CommonShopForm = ({
             }}
           />
         </div>
+        <div className={classes.inputcategory}>
+          <select
+            name="category"
+            className={classes.input}
+            onChange={(e) => {
+              onChangeHandler(e);
+              setSubCategoryLists([
+                ...docs.find((category) => category.category === e.target.value)
+                  .rowContent.rowData,
+              ]);
+            }}
+            value={edit ? dataShop.category : s.category}
+          >
+            <option hidden>Categories</option>
+            {docs.map(({ id, category }) => (
+              <option key={id} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <select
+            name="subCategory"
+            className={classes.input}
+            onChange={onChangeHandler}
+            value={edit ? dataShop.subCategory : s.subCategory}
+          >
+            <option hidden>SubCategories</option>
+            {edit
+              ? subCategoryLists.map(({ id, subCategory }) => (
+                  <option key={id} value={subCategory}>
+                    {subCategory}
+                  </option>
+                ))
+              : subCategoryLists.map(({ id, subCategory }) => (
+                  <option key={id} value={subCategory}>
+                    {subCategory}
+                  </option>
+                ))}
+          </select>
+        </div>
 
-        <textarea
-          type="text"
-          placeholder="Description"
-          name="shopDescription"
-          value={edit ? dataShop?.shopDescription : s?.shopDescription}
-          onChange={onChangeHandler}
-          className={classes.textarea}
-        />
-        <select
-          name="category"
-          onChange={(e) => {
-            onChangeHandler(e);
-            setSubCategoryLists([
-              ...docs.find((category) => category.category === e.target.value)
-                .rowContent.rowData,
-            ]);
-          }}
-          value={edit ? dataShop.category : s.category}
-        >
-          <option hidden>Categories</option>
-          {docs.map(({ id, category }) => (
-            <option key={id} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-        <select
-          name="subCategory"
-          onChange={onChangeHandler}
-          value={edit ? dataShop.subCategory : s.subCategory}
-        >
-          <option hidden>SubCategories</option>
-          {edit
-            ? subCategoryLists.map(({ id, subCategory }) => (
-                <option key={id} value={subCategory}>
-                  {subCategory}
-                </option>
-              ))
-            : subCategoryLists.map(({ id, subCategory }) => (
-                <option key={id} value={subCategory}>
-                  {subCategory}
-                </option>
-              ))}
-        </select>
         <AllTimings
           state={edit ? dataShop : s}
           index={index}
@@ -307,6 +299,14 @@ const CommonShopForm = ({
           isShop={true}
           mallTime={listOfMallTimes}
           edit={edit}
+        />
+        <textarea
+          type="text"
+          placeholder="Description"
+          name="shopDescription"
+          value={edit ? dataShop?.shopDescription : s?.shopDescription}
+          onChange={onChangeHandler}
+          className={classes.textarea}
         />
 
         {shopImageError && <p>{shopImageError}</p>}
