@@ -411,7 +411,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
             className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}
             type="submit"
           >
-            {isLoading ? "Loading..." : "Save"}
+            {isLoading ? "Saving..." : "Save"}
           </button>
         </form>
       </div>

@@ -16,6 +16,7 @@ const CommonForm = ({
   submitHandler,
   newShopForm,
   setImagesToRemove,
+  setRemovedVideo,
   addedShopImagesDispatch,
   addedShopImages,
   shopImageState,
@@ -239,16 +240,21 @@ const CommonForm = ({
                     {...{
                       edit,
                       setImagesToRemove,
+                      setRemovedVideo,
                       editData,
                       dataShop,
                       editDispatch,
                       index,
+                      shopVideoState,
+                      shopVideoDispatch,
                       addedShopImagesDispatch,
                       addedShopImages,
                       control,
                       getValues,
                       mallTime: editData?.timings,
                       mallLevel: editData?.levels,
+                      videoUploadPercentage: videoUploadPercentage[index],
+                      isLoading,
                     }}
                   />
                   <div className={classes.line}></div>

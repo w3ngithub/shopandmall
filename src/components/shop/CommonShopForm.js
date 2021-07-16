@@ -22,6 +22,7 @@ const CommonShopForm = ({
   addedShopImagesDispatch,
   addedShopImages,
   removeImage,
+  removeVideo,
   control,
   getValues,
   mallTime,
@@ -75,6 +76,18 @@ const CommonShopForm = ({
 
     if (selectedShopVideo.size / 1000000 > 100) {
       alert("the size of the video must be less than 100mb");
+      return;
+    }
+
+    if (edit) {
+      if (dataShop?.shopVideo?.hasOwnProperty("url")) {
+        removeVideo(dataShop.ShopVideo, index);
+      }
+
+      shopVideoDispatch({
+        type: "ADD",
+        payload: { index, video: selectedShopVideo },
+      });
     } else {
       shopVideoDispatch({
         type: "ADD",
@@ -144,7 +157,7 @@ const CommonShopForm = ({
       ]);
     }
   }, [docs]);
-
+  console.log(dataShop, dataShop?.shopVideo?.hasOwnProperty("url"));
   return (
     <div className={classes.shopContainer}>
       <div
@@ -404,15 +417,36 @@ const CommonShopForm = ({
               </p>
             ) : null
           )}
-        {edit && dataShop.shopVideo && (
+        {edit && dataShop?.shopVideo?.hasOwnProperty("url") && (
           <p className={classes.image}>
-            <button className={classes.button} type="button">
+            <button
+              className={classes.button}
+              type="button"
+              onClick={() => removeVideo(dataShop.shopVideo, index)}
+            >
               <IoIosClose />
             </button>
             {dataShop.shopVideo.videoName}
           </p>
         )}
-        {isLoading && <Loader loadingPercentage={videoUploadPercentage} />}
+        {edit &&
+          shopVideoState?.map((video) =>
+            video.id === index ? (
+              <p className={classes.image} key={video.uniqueId}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => removeVideo(dataShop.shopVideo, index)}
+                >
+                  <IoIosClose />
+                </button>
+                {video.video.name}
+              </p>
+            ) : null
+          )}
+        {isLoading && shopVideoState.length > 0 && (
+          <Loader loadingPercentage={videoUploadPercentage} />
+        )}
       </div>
     </div>
   );

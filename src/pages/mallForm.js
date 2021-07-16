@@ -207,6 +207,8 @@ const MallForm = () => {
                 },
               },
             ];
+          } else {
+            shops = [...shops, shop];
           }
         });
 
