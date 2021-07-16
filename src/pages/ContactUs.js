@@ -9,7 +9,7 @@ const AboutUs = () => {
 
   const customId = "custom-id-yes";
 
-  const notify = () => toast.info("Successful!", { toastId: customId });
+  const notify = () => toast.success("Successful!", { toastId: customId });
   // console.log(inputData);
 
   const {
@@ -78,7 +78,7 @@ const AboutUs = () => {
               rows="10"
             ></textarea>
             {errors.message && (
-              <p className={classes.error}>This is required </p>
+              <p className={classes.errorArea}>This is required </p>
             )}
           </div>
           <button
