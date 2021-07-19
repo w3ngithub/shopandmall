@@ -4,6 +4,7 @@ import { IoIosClose } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
 import useFirestore from "../../hooks/useFirestore";
 import { Controller } from "react-hook-form";
+import Loader from "../Loader/Loader";
 
 const CommonShopForm = ({
   edit,
@@ -12,6 +13,8 @@ const CommonShopForm = ({
   index,
   shopImageState,
   shopImageDispatch,
+  shopVideoState,
+  shopVideoDispatch,
   closeShopForm,
   dataShop,
   editDispatch,
@@ -19,10 +22,13 @@ const CommonShopForm = ({
   addedShopImagesDispatch,
   addedShopImages,
   removeImage,
+  removeVideo,
   control,
   getValues,
   mallTime,
   mallLevel,
+  videoUploadPercentage = 0,
+  isLoading,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
@@ -62,6 +68,31 @@ const CommonShopForm = ({
       } else {
         setShopImageError("Please select an image file  (jpeg or png)");
       }
+    }
+  };
+
+  const shopVideoHandler = (e) => {
+    const selectedShopVideo = e.target.files[0];
+
+    if (selectedShopVideo.size / 1000000 > 100) {
+      alert("the size of the video must be less than 100mb");
+      return;
+    }
+
+    if (edit) {
+      if (dataShop?.shopVideo?.hasOwnProperty("url")) {
+        removeVideo(dataShop.ShopVideo, index);
+      }
+
+      shopVideoDispatch({
+        type: "ADD",
+        payload: { index, video: selectedShopVideo },
+      });
+    } else {
+      shopVideoDispatch({
+        type: "ADD",
+        payload: { index, video: selectedShopVideo },
+      });
     }
   };
 
@@ -126,7 +157,7 @@ const CommonShopForm = ({
       ]);
     }
   }, [docs]);
-
+  console.log(dataShop, dataShop?.shopVideo?.hasOwnProperty("url"));
   return (
     <div className={classes.shopContainer}>
       <div
@@ -142,7 +173,7 @@ const CommonShopForm = ({
         <IoIosClose />
       </div>
       <div className={classes.innerDiv}>
-        <div>
+        <div className={classes.inputdiv}>
           <Controller
             control={control}
             name={`shops[${index}].shopName`}
@@ -168,8 +199,6 @@ const CommonShopForm = ({
             )}
             rules={{ required: { value: true, message: "* Name is Required" } }}
           />
-        </div>
-        <div>
           <Controller
             control={control}
             name={`shops[${index}].shopLevel`}
@@ -204,8 +233,6 @@ const CommonShopForm = ({
               validate: (value) => value <= mallLevel,
             }}
           />
-        </div>
-        <div>
           <Controller
             control={control}
             name={`shops[${index}].shopPhoneNumber`}
@@ -234,51 +261,47 @@ const CommonShopForm = ({
             }}
           />
         </div>
+        <div className={classes.inputcategory}>
+          <select
+            name="category"
+            className={classes.input}
+            onChange={(e) => {
+              onChangeHandler(e);
+              setSubCategoryLists([
+                ...docs.find((category) => category.category === e.target.value)
+                  .rowContent.rowData,
+              ]);
+            }}
+            value={edit ? dataShop.category : s.category}
+          >
+            <option hidden>Categories</option>
+            {docs.map(({ id, category }) => (
+              <option key={id} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <select
+            name="subCategory"
+            className={classes.input}
+            onChange={onChangeHandler}
+            value={edit ? dataShop.subCategory : s.subCategory}
+          >
+            <option hidden>SubCategories</option>
+            {edit
+              ? subCategoryLists.map(({ id, subCategory }) => (
+                  <option key={id} value={subCategory}>
+                    {subCategory}
+                  </option>
+                ))
+              : subCategoryLists.map(({ id, subCategory }) => (
+                  <option key={id} value={subCategory}>
+                    {subCategory}
+                  </option>
+                ))}
+          </select>
+        </div>
 
-        <textarea
-          type="text"
-          placeholder="Description"
-          name="shopDescription"
-          value={edit ? dataShop?.shopDescription : s?.shopDescription}
-          onChange={onChangeHandler}
-          className={classes.textarea}
-        />
-        <select
-          name="category"
-          onChange={(e) => {
-            onChangeHandler(e);
-            setSubCategoryLists([
-              ...docs.find((category) => category.category === e.target.value)
-                .rowContent.rowData,
-            ]);
-          }}
-          value={edit ? dataShop.category : s.category}
-        >
-          <option hidden>Categories</option>
-          {docs.map(({ id, category }) => (
-            <option key={id} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-        <select
-          name="subCategory"
-          onChange={onChangeHandler}
-          value={edit ? dataShop.subCategory : s.subCategory}
-        >
-          <option hidden>SubCategories</option>
-          {edit
-            ? subCategoryLists.map(({ id, subCategory }) => (
-                <option key={id} value={subCategory}>
-                  {subCategory}
-                </option>
-              ))
-            : subCategoryLists.map(({ id, subCategory }) => (
-                <option key={id} value={subCategory}>
-                  {subCategory}
-                </option>
-              ))}
-        </select>
         <AllTimings
           state={edit ? dataShop : s}
           index={index}
@@ -289,6 +312,14 @@ const CommonShopForm = ({
           isShop={true}
           mallTime={listOfMallTimes}
           edit={edit}
+        />
+        <textarea
+          type="text"
+          placeholder="Description"
+          name="shopDescription"
+          value={edit ? dataShop?.shopDescription : s?.shopDescription}
+          onChange={onChangeHandler}
+          className={classes.textarea}
         />
 
         {shopImageError && <p>{shopImageError}</p>}
@@ -301,66 +332,121 @@ const CommonShopForm = ({
         {!edit && (
           <p className={classes.para}>**First chosen Image will be Thumnail</p>
         )}
-      </div>
-
-      <div className={classes.selectedImages}>
-        {edit &&
-          dataShop?.shopImages?.map((img, i) => (
-            <p key={i} className={classes.image}>
-              <button
-                className={classes.button}
-                type="button"
-                onClick={() => removeImage(img, index)}
-              >
-                <IoIosClose />
-              </button>
-              {img.ImageName}
-            </p>
-          ))}
-        {edit &&
-          addedShopImages?.map((img, ind) =>
-            img.id === index
-              ? img?.images?.map((img, i) => (
+        <div className={classes.selectedImages}>
+          {edit &&
+            dataShop?.shopImages?.map((img, i) => (
+              <p key={i} className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => removeImage(img, index)}
+                >
+                  <IoIosClose />
+                </button>
+                {img.ImageName}
+              </p>
+            ))}
+          {edit &&
+            addedShopImages?.map((img, ind) =>
+              img.id === index
+                ? img?.images?.map((img, i) => (
+                    <p key={i} className={classes.image}>
+                      <button
+                        className={classes.button}
+                        type="button"
+                        onClick={() =>
+                          addedShopImagesDispatch({
+                            type: "REMOVE_IMAGE",
+                            payload: { outerIndex: ind, id: i },
+                          })
+                        }
+                      >
+                        <IoIosClose />
+                      </button>
+                      {img.name}
+                    </p>
+                  ))
+                : null
+            )}
+          {!edit &&
+            shopImageState?.map(
+              (image, ind) =>
+                ind === index &&
+                image?.images?.map((img, i) => (
                   <p key={i} className={classes.image}>
                     <button
                       className={classes.button}
                       type="button"
                       onClick={() =>
-                        addedShopImagesDispatch({
+                        shopImageDispatch({
                           type: "REMOVE_IMAGE",
-                          payload: { outerIndex: ind, id: i },
+                          payload: { outerIndex: ind, name: img?.name },
                         })
                       }
                     >
                       <IoIosClose />
                     </button>
-                    {img.name}
+                    {img?.name}
                   </p>
                 ))
-              : null
-          )}
+            )}
+        </div>
+        <label className={classes.label}>
+          <input type="file" onChange={shopVideoHandler} accept="video/*" />
+          <span>
+            <div className={classes.imgButton}>Add Video</div>
+          </span>
+        </label>
+        {!edit && (
+          <p className={classes.para}>
+            **the size of the video must be less than 100mb
+          </p>
+        )}
         {!edit &&
-          shopImageState?.map(
-            (image, ind) =>
-              ind === index &&
-              image?.images?.map((img, i) => (
-                <p key={i} className={classes.image}>
-                  <button
-                    className={classes.button}
-                    type="button"
-                    onClick={() =>
-                      shopImageDispatch({
-                        type: "REMOVE_IMAGE",
-                        payload: { outerIndex: ind, name: img?.name },
-                      })
-                    }
-                  >
-                    <IoIosClose />
-                  </button>
-                  {img?.name}
-                </p>
-              ))
+          shopVideoState.map((video, i) =>
+            video.id === index ? (
+              <p key={i} className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
+                >
+                  <IoIosClose />
+                </button>
+                {video.video.name}
+              </p>
+            ) : null
           )}
+        {edit && dataShop?.shopVideo?.hasOwnProperty("url") && (
+          <p className={classes.image}>
+            <button
+              className={classes.button}
+              type="button"
+              onClick={() => removeVideo(dataShop.shopVideo, index)}
+            >
+              <IoIosClose />
+            </button>
+            {dataShop.shopVideo.videoName}
+          </p>
+        )}
+        {edit &&
+          shopVideoState?.map((video) =>
+            video.id === index ? (
+              <p className={classes.image} key={video.uniqueId}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => removeVideo(dataShop.shopVideo, index)}
+                >
+                  <IoIosClose />
+                </button>
+                {video.video.name}
+              </p>
+            ) : null
+          )}
+        {isLoading && shopVideoState.length > 0 && (
+          <Loader loadingPercentage={videoUploadPercentage} />
+        )}
       </div>
     </div>
   );

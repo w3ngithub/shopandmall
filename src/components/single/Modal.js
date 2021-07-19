@@ -6,14 +6,17 @@ import { useForm, Controller } from "react-hook-form";
 import useFirestore from "../../hooks/useFirestore";
 import AllTimings from "../AllTimings/AllTimings";
 import { checkShopValidation } from "../../utils/checkValidation";
+import Loader from "../Loader/Loader";
 
 const Modal = ({ setShowModal, docId, mall }) => {
   const { docs } = useFirestore("Shop Categories");
   const [subCategoryLists, setSubCategoryLists] = useState([]);
   const [images, setImages] = useState([]);
+  const [video, setVideo] = useState({});
   const [imageErrors, setImageErrors] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [percentage, setPercentage] = useState(0);
   const { control, handleSubmit } = useForm();
   useEffect(() => setIsLoading(false), []);
 
@@ -47,6 +50,16 @@ const Modal = ({ setShowModal, docId, mall }) => {
       } else {
         setImageErrors("Please select an image file  (jpeg or png)");
       }
+    }
+  };
+
+  const shopVideoHandleer = (e) => {
+    const selectedShopVideo = e.target.files[0];
+
+    if (selectedShopVideo.size / 1000000 > 100) {
+      alert("the size of the video must be less than 100mb");
+    } else {
+      setVideo({ id: Date.now(), video: selectedShopVideo });
     }
   };
   const onManualTimeChange = (rowId, name, value) => {
@@ -123,29 +136,73 @@ const Modal = ({ setShowModal, docId, mall }) => {
           url: items,
         })),
       };
-      console.log(result, mall.shops);
-      //FireStore
-      mall.shops.length > 0
-        ? fireStore
-            .collection("Shopping Mall")
-            .doc(docId)
-            .set({
-              ...mall,
-              shops: [...mall.shops, result],
-            })
-        : fireStore
-            .collection("Shopping Mall")
-            .doc(docId)
-            .set({
-              ...mall,
-              shops: [result],
+      if (video.hasOwnProperty("video")) {
+        const uploadTask = storage
+          .ref(video.id + video.video.name)
+          .put(video.video);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            var progress = Math.floor(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setPercentage(progress);
+          },
+          (error) => {},
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              result = {
+                ...result,
+                shopVideo: {
+                  id: video.id + video.video.name,
+                  videoName: video.video.name,
+                  url: downloadURL,
+                },
+              };
+              mall.shops.length > 0
+                ? fireStore
+                    .collection("Shopping Mall")
+                    .doc(docId)
+                    .set({
+                      ...mall,
+                      shops: [...mall.shops, result],
+                    })
+                : fireStore
+                    .collection("Shopping Mall")
+                    .doc(docId)
+                    .set({
+                      ...mall,
+                      shops: [result],
+                    });
+
+              setShowModal(false);
             });
+          }
+        );
+      } else {
+        //FireStore
+        mall.shops.length > 0
+          ? fireStore
+              .collection("Shopping Mall")
+              .doc(docId)
+              .set({
+                ...mall,
+                shops: [...mall.shops, result],
+              })
+          : fireStore
+              .collection("Shopping Mall")
+              .doc(docId)
+              .set({
+                ...mall,
+                shops: [result],
+              });
+        setShowModal(false);
+      }
     } catch (e) {
       console.log(e);
       setIsLoading(false);
     }
-
-    setShowModal(false);
   };
 
   let listOfMallTimes = [mall.timings[0]];
@@ -176,57 +233,62 @@ const Modal = ({ setShowModal, docId, mall }) => {
         <div className={classes.line}></div>
 
         <form onSubmit={handleSubmit(onSubmitHandler)} className={classes.form}>
-          <Controller
-            control={control}
-            name="shopName"
-            render={({ field: { onChange }, fieldState: { error } }) => (
-              <div className={classes.formGroup}>
-                <input
-                  type="text"
-                  placeholder="Name of Shop"
-                  name="shopName"
-                  value={shop.shopName}
-                  onChange={(e) => {
-                    onChangeHandler(e);
-                    onChange(e);
-                  }}
-                  className={classes.input}
-                />
-                {error && <p className={classes.error}>{error.message}</p>}
-              </div>
-            )}
-            rules={{ required: { value: true, message: "* Name is Required" } }}
-          />
-          <Controller
-            control={control}
-            name="shopLevel"
-            render={({ field: { onChange }, fieldState: { error } }) => (
-              <div className={classes.formGroup}>
-                <input
-                  type="number"
-                  placeholder="Level"
-                  name="shopLevel"
-                  value={shop.shopLevel}
-                  onChange={(e) => {
-                    onChangeHandler(e);
-                    onChange(e);
-                  }}
-                  className={classes.input}
-                />
-                {error && <p className={classes.error}>{error.message}</p>}
-                {error?.type === "validate" && (
-                  <p className={classes.error}>
-                    * level must be equal to or less than mall level (
-                    {mall.levels})
-                  </p>
-                )}
-              </div>
-            )}
-            rules={{
-              required: { value: true, message: "* Level is Required" },
-              validate: (value) => value <= mall.levels,
-            }}
-          />
+          <div className={classes.inputdiv}>
+            <Controller
+              control={control}
+              name="shopName"
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <div className={classes.formGroup}>
+                  <input
+                    type="text"
+                    placeholder="Name of Shop"
+                    name="shopName"
+                    value={shop.shopName}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.input}
+                  />
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </div>
+              )}
+              rules={{
+                required: { value: true, message: "* Name is Required" },
+              }}
+            />
+            <Controller
+              control={control}
+              name="shopLevel"
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <div className={classes.formGroup}>
+                  <input
+                    type="number"
+                    placeholder="Level"
+                    name="shopLevel"
+                    value={shop.shopLevel}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.input}
+                  />
+                  {error && <p className={classes.error}>{error.message}</p>}
+                  {error?.type === "validate" && (
+                    <p className={classes.error}>
+                      * level must be equal to or less than mall level (
+                      {mall.levels})
+                    </p>
+                  )}
+                </div>
+              )}
+              rules={{
+                required: { value: true, message: "* Level is Required" },
+                validate: (value) => value <= mall.levels,
+              }}
+            />
+          </div>
+
           <Controller
             control={control}
             name="shopPhoneNumber"
@@ -263,31 +325,40 @@ const Modal = ({ setShowModal, docId, mall }) => {
             onChange={onChangeHandler}
             className={classes.textarea}
           />
-          <select
-            name="category"
-            onChange={(e) => {
-              onChangeHandler(e);
-              setSubCategoryLists([
-                ...docs.find((category) => category.category === e.target.value)
-                  .rowContent.rowData,
-              ]);
-            }}
-          >
-            <option hidden>Categories</option>
-            {docs.map(({ id, category }) => (
-              <option key={id} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          <select name="subCategory" onChange={onChangeHandler}>
-            <option hidden>SubCategories</option>
-            {subCategoryLists.map(({ id, subCategory }) => (
-              <option key={id} value={subCategory}>
-                {subCategory}
-              </option>
-            ))}
-          </select>
+          <div className={classes.inputdiv}>
+            <select
+              name="category"
+              className={classes.inputcategory}
+              onChange={(e) => {
+                onChangeHandler(e);
+                setSubCategoryLists([
+                  ...docs.find(
+                    (category) => category.category === e.target.value
+                  ).rowContent.rowData,
+                ]);
+              }}
+            >
+              <option hidden>Categories</option>
+              {docs.map(({ id, category }) => (
+                <option key={id} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <select
+              name="subCategory"
+              onChange={onChangeHandler}
+              className={classes.inputcategory}
+            >
+              <option hidden>SubCategories</option>
+              {subCategoryLists.map(({ id, subCategory }) => (
+                <option key={id} value={subCategory}>
+                  {subCategory}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <AllTimings
             state={shop}
             index={mall.shops.length}
@@ -320,12 +391,27 @@ const Modal = ({ setShowModal, docId, mall }) => {
                 </p>
               ))}
           </div>
+          <label className={classes.label}>
+            Add Video
+            <input
+              className={classes.upload}
+              type="file"
+              onChange={shopVideoHandleer}
+            />
+            <IoIosAddCircle className={classes.addIcon} />
+          </label>
+          <div className={classes.selectedImages}>
+            {video.hasOwnProperty("video") && (
+              <p className={classes.image}>{video.video.name}</p>
+            )}
+          </div>
+          {isLoading && <Loader loadingPercentage={percentage} />}
 
           <button
             className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}
             type="submit"
           >
-            {isLoading ? "Loading..." : "Save"}
+            {isLoading ? "Saving..." : "Save"}
           </button>
         </form>
       </div>

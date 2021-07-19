@@ -38,7 +38,7 @@ const Dashboard = () => {
     );
     setMalls(docs1);
   };
-
+  console.log(docs);
   useEffect(() => {
     setMalls(filteredMalls);
   }, [filteredMalls]);

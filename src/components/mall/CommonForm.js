@@ -16,15 +16,19 @@ const CommonForm = ({
   submitHandler,
   newShopForm,
   setImagesToRemove,
+  setRemovedVideo,
   addedShopImagesDispatch,
   addedShopImages,
   shopImageState,
   shopImageDispatch,
+  shopVideoState,
+  shopVideoDispatch,
   mallImage,
   setMallImage,
   isLoading,
   setIsLoading,
   loadingPercentage,
+  videoUploadPercentage,
 }) => {
   //States
 
@@ -121,7 +125,7 @@ const CommonForm = ({
       });
     }
   }, []);
-
+  console.log(isLoading);
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>
@@ -236,16 +240,21 @@ const CommonForm = ({
                     {...{
                       edit,
                       setImagesToRemove,
+                      setRemovedVideo,
                       editData,
                       dataShop,
                       editDispatch,
                       index,
+                      shopVideoState,
+                      shopVideoDispatch,
                       addedShopImagesDispatch,
                       addedShopImages,
                       control,
                       getValues,
                       mallTime: editData?.timings,
                       mallLevel: editData?.levels,
+                      videoUploadPercentage: videoUploadPercentage[index],
+                      isLoading,
                     }}
                   />
                   <div className={classes.line}></div>
@@ -261,9 +270,13 @@ const CommonForm = ({
                       index,
                       shopImageState,
                       shopImageDispatch,
+                      shopVideoState,
+                      shopVideoDispatch,
                       control,
                       mallTime: state.timings,
                       mallLevel: state.levels,
+                      videoUploadPercentage: videoUploadPercentage[index],
+                      isLoading,
                     }}
                   />
                   <div className={classes.line}></div>
@@ -290,7 +303,7 @@ const CommonForm = ({
               isLoading
                 ? edit
                   ? "Updating..."
-                  : "Loading..."
+                  : "Saving..."
                 : edit
                 ? "Update"
                 : "Save"

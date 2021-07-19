@@ -50,33 +50,30 @@ const AllShops = () => {
   const subCategory = location.pathname.split("/")[4];
 
   if (isShopCategorySelected) {
-    categoriesPath = (
-      <div className={classes.categoryLists}>
-        {location.pathname.split("/").length === 4 ? (
-          <>
-            <p>{category}</p>
-            <p
-              className={classes.deleteicon}
-              onClick={() => history.push("/shops")}
-            >
-              X
-            </p>
-          </>
-        ) : (
-          <>
-            <p>{category}</p>
-            <AiOutlineRight className={classes.righticon} />
-            <p>{subCategory}</p>
-            <p
-              className={classes.deleteicon}
-              onClick={() => history.push("/shops/category/" + category)}
-            >
-              X
-            </p>
-          </>
-        )}
-      </div>
-    );
+    categoriesPath =
+      location.pathname.split("/").length === 4 ? (
+        <>
+          <p>{category}</p>
+          <p
+            className={classes.deleteicon}
+            onClick={() => history.push("/shops")}
+          >
+            X
+          </p>
+        </>
+      ) : (
+        <>
+          <p>{category}</p>
+          <AiOutlineRight className={classes.righticon} />
+          <p>{subCategory}</p>
+          <p
+            className={classes.deleteicon}
+            onClick={() => history.push("/shops/category/" + category)}
+          >
+            X
+          </p>
+        </>
+      );
   }
 
   return (
@@ -144,9 +141,13 @@ const AllShops = () => {
           }}
         ></div>
 
-        <div className={classes.shopContainer}>
+        <div
+          className={classes.shopContainer}
+          onClick={() => setShowShopCategories(false)}
+        >
+          <div className={classes.categoryLists}>{categoriesPath}</div>
+
           <div className={classes.header}>
-            {categoriesPath}
             <h4 className={classes.heading}>Shops</h4>
           </div>
 

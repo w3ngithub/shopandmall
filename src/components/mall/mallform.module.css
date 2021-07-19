@@ -123,7 +123,8 @@
 .submitBtnOnLoad {
   border: none;
   padding: 10px 15px;
-  width: 100%;
+  width: 15%;
+  margin: auto;
   background-color: rgb(236, 78, 78);
   color: white;
   font-weight: 600;

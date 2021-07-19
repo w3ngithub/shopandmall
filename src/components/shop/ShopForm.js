@@ -8,11 +8,15 @@ const ShopForm = ({
   index,
   shopImageState,
   shopImageDispatch,
+  shopVideoState,
+  shopVideoDispatch,
   register,
   errors,
   control,
   mallTime,
   mallLevel,
+  videoUploadPercentage,
+  isLoading,
 }) => {
   const closeShopForm = () => {
     dispatch({
@@ -32,10 +36,14 @@ const ShopForm = ({
         index,
         shopImageState,
         shopImageDispatch,
+        shopVideoState,
+        shopVideoDispatch,
         closeShopForm,
         control,
         mallTime,
         mallLevel,
+        videoUploadPercentage,
+        isLoading,
       }}
     />
   );

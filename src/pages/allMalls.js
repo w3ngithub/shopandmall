@@ -10,6 +10,7 @@ import ShopCategories from "../components/ShopCategories";
 import MobileShopCategory from "../components/MobileShopCategory";
 import { FaPlus } from "react-icons/fa";
 import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
+import { AiOutlineRight } from "react-icons/ai";
 
 // import Pagination from "../components/mall/Pagination";
 
@@ -52,6 +53,38 @@ const AllMalls = () => {
   useEffect(() => {
     setMalls(filteredMalls);
   }, [filteredMalls]);
+
+  //show category list according to selected path
+  let categoriesPath = null;
+  const category = location.pathname.split("/")[3];
+  const subCategory = location.pathname.split("/")[4];
+
+  if (isShopCategorySelected) {
+    categoriesPath =
+      location.pathname.split("/").length === 4 ? (
+        <>
+          <p>{category}</p>
+          <p
+            className={classes.deleteicon}
+            onClick={() => history.push("/malls")}
+          >
+            X
+          </p>
+        </>
+      ) : (
+        <>
+          <p>{category}</p>
+          <AiOutlineRight className={classes.righticon} />
+          <p>{subCategory}</p>
+          <p
+            className={classes.deleteicon}
+            onClick={() => history.push("/malls/category/" + category)}
+          >
+            X
+          </p>
+        </>
+      );
+  }
 
   return (
     <>
@@ -132,7 +165,14 @@ const AllMalls = () => {
           }}
         ></div>
 
-        <div className={classes.mallContainer}>
+        <div
+          className={classes.mallContainer}
+          onClick={() => setShowShopCategories(false)}
+        >
+          <div className={classes.categoryLists}>{categoriesPath}</div>
+          <div className={classes.header}>
+            <h4 className={classes.heading}>Malls</h4>
+          </div>
           <Mall docs={malls} loading={loading} />
         </div>
         {/* <Pagination

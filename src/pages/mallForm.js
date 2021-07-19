@@ -4,6 +4,7 @@ import CommonForm from "../components/mall/CommonForm";
 import reducer from "../reducers/reducer";
 import { storage, fireStore } from "../firebase/config";
 import shopImageReducer from "../reducers/shopImageReducer";
+import shopVideoReducer from "../reducers/shopVideoReducer";
 import React, { useState, useReducer, useContext } from "react";
 import {
   checkMallValidation,
@@ -41,12 +42,15 @@ const MallForm = () => {
     shopImageValues
   );
 
+  const [shopVideoState, shopVideoDispatch] = useReducer(shopVideoReducer, []);
+
   //Loading
   const [isLoading, setIsLoading] = useState(false);
+  const [videoUploadPercentage, setVideoUploadPercentage] = useState({});
 
   const submitHandler = async (e) => {
     try {
-      //mall validation
+      // mall validation
       const { isMallTimeError, isMallImageError } = checkMallValidation(
         state,
         mallImage
@@ -105,6 +109,7 @@ const MallForm = () => {
           mallImageUrl = null;
         }
         setLoadingPercentage(60);
+
         await Promise.all(
           shopImageState?.map((item) =>
             Promise.all(
@@ -124,6 +129,35 @@ const MallForm = () => {
           )
         );
 
+        let shopVideoUrl = [];
+
+        if (shopVideoState.length > 0) {
+          await Promise.all(
+            shopVideoState.map(({ id, video, uniqueId }) => {
+              const uploadTask = storage
+                .ref()
+                .child(uniqueId + video.name)
+                .put(video);
+              uploadTask.on("state_changed", (snapshot) => {
+                var progress = Math.floor(
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                setVideoUploadPercentage((prevState) => ({
+                  ...prevState,
+                  [id]: progress,
+                }));
+              });
+              return uploadTask;
+            })
+          );
+          setLoadingPercentage(80);
+          shopVideoUrl = await Promise.all(
+            shopVideoState.map(({ id, video, uniqueId }) =>
+              storage.ref(uniqueId + video.name).getDownloadURL()
+            )
+          );
+        }
+
         let mall = {
           mallId: Math.random() * 9999,
           mallName: state?.mallName,
@@ -137,22 +171,47 @@ const MallForm = () => {
             imageUrl: mallImageUrl,
           },
         };
-        let shops = state?.shops?.map((s, i) => ({
-          id: i,
-          shopName: s?.shopName,
-          shopDescription: s?.shopDescription,
-          shopLevel: s?.shopLevel,
-          shopPhoneNumber: s?.shopPhoneNumber,
-          timings: s?.timings,
-          category: s?.category,
-          subCategory: s?.subCategory,
-          shopImages: shopImageUrl[i]?.map((items, index) => ({
-            id: Math.random() + shopImageState[i]?.images[index]?.name,
-            ImageName: shopImageState[i]?.images[index]?.name,
-            url: items,
-          })),
-        }));
-        setLoadingPercentage(80);
+        let shops = [];
+        state?.shops?.forEach((s, i) => {
+          const indexOfVideo = shopVideoState.findIndex(
+            (video) => video.id === i
+          );
+          const isVideoPresent = indexOfVideo >= 0;
+          const shop = {
+            id: i,
+            shopName: s?.shopName,
+            shopDescription: s?.shopDescription,
+            shopLevel: s?.shopLevel,
+            shopPhoneNumber: s?.shopPhoneNumber,
+            timings: s?.timings,
+            category: s?.category,
+            subCategory: s?.subCategory,
+            shopImages: shopImageUrl[i]?.map((items, index) => ({
+              id: Math.random() + shopImageState[i]?.images[index]?.name,
+              ImageName: shopImageState[i]?.images[index]?.name,
+              url: items,
+            })),
+          };
+
+          if (isVideoPresent) {
+            shops = [
+              ...shops,
+              {
+                ...shop,
+                shopVideo: {
+                  id:
+                    shopVideoState[indexOfVideo].uniqueId +
+                    shopVideoState[indexOfVideo].video.name,
+                  url: shopVideoUrl[indexOfVideo],
+                  videoName: shopVideoState[indexOfVideo].video.name,
+                },
+              },
+            ];
+          } else {
+            shops = [...shops, shop];
+          }
+        });
+
         //FireStore
         fireStore
           .collection("Shopping Mall")
@@ -173,7 +232,7 @@ const MallForm = () => {
         history.goBack();
       }
     } catch (err) {
-      alert("some error ocurred");
+      alert(err);
       setIsLoading(false);
     }
   };
@@ -193,11 +252,14 @@ const MallForm = () => {
         newShopForm,
         shopImageState,
         shopImageDispatch,
+        shopVideoState,
+        shopVideoDispatch,
         mallImage,
         setMallImage,
         isLoading,
         setIsLoading,
         loadingPercentage,
+        videoUploadPercentage,
       }}
     />
   );

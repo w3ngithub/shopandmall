@@ -9,11 +9,13 @@ const editReducer = (state, action) => {
     case "EDIT_SHOP_INFO":
       return {
         ...state,
-        shops: state.shops.map((shop, i) =>
-          i === action.payload.index
-            ? { ...shop, [action.payload.name]: action.payload.value }
-            : shop
-        ),
+        shops: [
+          ...state.shops.map((shop, i) =>
+            i === action.payload.index
+              ? { ...shop, [action.payload.name]: action.payload.value }
+              : shop
+          ),
+        ],
       };
 
     case "EDIT_SHOP_TIMINGS":
@@ -149,6 +151,14 @@ const editReducer = (state, action) => {
                 ),
               }
             : shop
+        ),
+      };
+
+    case "REMOVE_VIDEO":
+      return {
+        ...state,
+        shops: state.shops.map((shop, i) =>
+          i === action.payload.index ? { ...shop, shopVideo: null } : shop
         ),
       };
 
