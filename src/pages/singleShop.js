@@ -3,6 +3,7 @@ import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
 import classes from "../styles/single.module.css";
 import modalclasses from "../components/single/modal.module.css";
+import EditModal from "../components/single/Modal";
 
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
@@ -23,10 +24,18 @@ const SingleShop = () => {
 
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
+  const [selectedShop, setSelectedShop] = useState({});
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const [galleryImage, setGalleryImage] = useState([]);
   const [ind, setInd] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const openEditModal = () => {
+    const shop = mall.shops.find((shop) => shop.shopName === type);
+    setShowEditModal(true);
+    setSelectedShop(shop);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +68,14 @@ const SingleShop = () => {
     <div>
       {modal && <Modal {...{ setModal, image, setImage, galleryImage, ind }} />}
       {/* {modal && <ImageGallery items={galleryImage} />} */}
-
+      {showEditModal && (
+        <EditModal
+          setShowModal={setShowEditModal}
+          mall={mall}
+          dataToEdit={selectedShop}
+          edit={true}
+        />
+      )}
       {loading ? (
         <div className={classes.mainContainerShop}>
           <div className={classes.topImage}>
@@ -137,7 +153,7 @@ const SingleShop = () => {
                         ,<span> +977 - {mall.phoneNumber}</span>
                       </p>
                     </div>
-                    <button className={classes.editBtn}>
+                    <button className={classes.editBtn} onClick={openEditModal}>
                       <FaEdit className={classes.editIcon} />
                       <span className={classes.text}>Edit</span>
                     </button>

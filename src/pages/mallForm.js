@@ -194,6 +194,7 @@ const MallForm = () => {
           };
 
           if (isVideoPresent) {
+            console.log("video");
             shops = [
               ...shops,
               {
