@@ -4,6 +4,7 @@
 
 .shopFilter {
   position: relative;
+  color: #374151;
 }
 
 .shopFilter h3 {
@@ -15,7 +16,6 @@
 
 .shopFilter p {
   margin-bottom: 16px;
-  color: #374151;
   cursor: pointer;
 }
 
@@ -33,8 +33,19 @@
 .categoryMobile {
   display: none;
 }
+
 .subCategory {
   margin-left: 20px;
+}
+
+.current {
+  font-weight: bold;
+  font-size: 17px;
+  color: rgb(64, 29, 110);
+}
+
+.normal {
+  color: #374151;
 }
 
 /* ------------ Mobile View ------------ */

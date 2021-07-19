@@ -83,6 +83,11 @@ li a:hover,
   transition: all 0.5s ease-in;
 }
 
+.row h3:hover {
+  color: rgb(43, 36, 131);
+  transform: scale(1.1);
+}
+
 .shopsDropdown::after {
   content: "";
   position: absolute;
