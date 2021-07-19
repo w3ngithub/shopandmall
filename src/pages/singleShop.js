@@ -7,7 +7,7 @@ import modalclasses from "../components/single/modal.module.css";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
-import { FaRegWindowClose } from "react-icons/fa";
+import { FaRegWindowClose, FaEdit } from "react-icons/fa";
 import { BiImage, BiVideo } from "react-icons/bi";
 
 import SkeletonText from "../skeletons/SkeletonText";
@@ -125,16 +125,22 @@ const SingleShop = () => {
 
                   <div
                     style={{ borderBottom: "2px solid rgb(244,244,244)" }}
-                    className={classes.details}
+                    className={classes.shopDetails}
                   >
-                    <h1>{shop.shopName}</h1>
-                    <p>
-                      <b>{mall.mallName}</b>
-                    </p>
-                    <p>
-                      {mall.timings[0].openTime} - {mall.timings[0].closeTime},
-                      <span> +977 - {mall.phoneNumber}</span>
-                    </p>
+                    <div>
+                      <h1>{shop.shopName}</h1>
+                      <p>
+                        <b>{mall.mallName}</b>
+                      </p>
+                      <p>
+                        {mall.timings[0].openTime} - {mall.timings[0].closeTime}
+                        ,<span> +977 - {mall.phoneNumber}</span>
+                      </p>
+                    </div>
+                    <button className={classes.editBtn}>
+                      <FaEdit className={classes.editIcon} />
+                      <span className={classes.text}>Edit</span>
+                    </button>
                   </div>
 
                   <div className={classes.description}>
