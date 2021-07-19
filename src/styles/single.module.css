@@ -135,6 +135,7 @@
   height: 200px;
   width: auto;
   overflow: hidden;
+  background-color: black;
 }
 
 .image {

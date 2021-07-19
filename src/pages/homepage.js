@@ -7,7 +7,7 @@ import useFirestore from "../hooks/useFirestore";
 import ShopFilter from "../components/ShopFilter";
 import HomepageImage from "../assets/images/homepage.png";
 import AddNewMallButton from "../components/AddNewMallButton";
-import { useHistory, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import MobileShopCategory from "../components/MobileShopCategory";
 
@@ -20,7 +20,8 @@ const Dashboard = () => {
   const [malls, setMalls] = useState([]);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
 
-  const history = useHistory();
+  console.log(malls);
+
   const location = useLocation();
   let { docs, loading } = useFirestore("Shopping Mall");
 
@@ -38,7 +39,6 @@ const Dashboard = () => {
     );
     setMalls(docs1);
   };
-  console.log(docs);
   useEffect(() => {
     setMalls(filteredMalls);
   }, [filteredMalls]);
@@ -138,7 +138,7 @@ const Dashboard = () => {
             <Mall docs={malls} settings={settings} loading={loading} />
           </div>
 
-          {loading === false && docs.length === 0 ? null : (
+          {loading === false && malls.length === 0 ? null : (
             <div className={classes.mallContainer}>
               <div className={classes.header}>
                 <h4 className={classes.heading}>Shops</h4>

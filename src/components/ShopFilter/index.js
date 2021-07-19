@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation, NavLink } from "react-router-dom";
 import SkeletonText from "../../skeletons/SkeletonText";
 import CategoryIcon from "../../assets/images/categoryIcon.svg";
 import classes from "./shopFilter.module.css";
@@ -8,6 +8,8 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
   const [singleShopCategory, setSingleShopCategory] = useState([]);
   const history = useHistory();
   const location = useLocation();
+
+  const [current, setCurrent] = useState({ active: "" });
 
   const subCategoryId = (id, shopCat) => {
     setSingleShopCategory([shopCat]);
@@ -18,6 +20,10 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
       setSingleShopCategory([]);
     }
   }, [location.pathname]);
+
+  const currentPage = (id) => {
+    setCurrent({ active: id });
+  };
 
   return (
     <div className={classes.shopFilter}>
@@ -73,6 +79,12 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
                     <div key={subCat.id}>
                       <Link
                         to={`/home/category/${s.category}/${subCat.subCategory}`}
+                        onClick={() => currentPage(subCat.id)}
+                        className={
+                          current.active === subCat.id
+                            ? classes.current
+                            : classes.normal
+                        }
                       >
                         <p>{subCat.subCategory}</p>
                       </Link>

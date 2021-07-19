@@ -14,12 +14,14 @@ import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
 import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 
+import ReactPlayer from "react-player";
+
 const SingleShop = () => {
-  const [mall, setMall] = useState();
+  const [mall, setMall] = useState(null);
   const { id, type } = useParams();
   const docId = id.replace("_", " ");
 
-  // console.log(type);
+  console.log(mall);
 
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
@@ -118,8 +120,9 @@ const SingleShop = () => {
                         <BiVideo className={classes.icon} />
                         Videos
                       </div>
-                      <div className={classes.number}>0</div>
-                      {/* Need to add Dynamic value */}
+                      <div className={classes.number}>
+                        {shop.shopVideo ? 1 : 0}
+                      </div>
                     </div>
                   </div>
 
@@ -143,6 +146,17 @@ const SingleShop = () => {
                   </div>
 
                   <div className={classes.container}>
+                    {shop.shopVideo ? (
+                      <div className={classes.wrapper}>
+                        <ReactPlayer
+                          controls
+                          url={shop.shopVideo.url}
+                          width="100%"
+                          height="200px"
+                        />
+                      </div>
+                    ) : null}
+
                     {shop.shopImages &&
                       shop.shopImages.map((s, i) => {
                         return (
