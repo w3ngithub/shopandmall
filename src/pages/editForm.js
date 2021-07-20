@@ -86,8 +86,6 @@ const MallForm = () => {
         let shopImageUrl = null;
 
         if (addedShopImages.some((img) => img.hasOwnProperty("images"))) {
-          console.log("addedshopimages");
-
           await Promise.all(
             addedShopImages.map((image) =>
               Promise.all(
@@ -107,7 +105,6 @@ const MallForm = () => {
               )
             )
           );
-          console.log(shopImageUrl);
         }
 
         setLoadingPercentage(60);
@@ -174,7 +171,8 @@ const MallForm = () => {
 
         editData?.shops?.forEach((s, i) => {
           const isShopImagesPresent = s.shopImages.length > 0;
-          const isNewShopImagesAdded = shopImageUrl !== null;
+          const isNewShopImagesAdded =
+            addedShopImages.findIndex((image) => image.id === i) >= 0;
           const indexOfAddedImages = addedShopImages.findIndex(
             (image) => image.id === i
           );
