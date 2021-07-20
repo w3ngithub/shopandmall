@@ -181,7 +181,7 @@ const MallForm = () => {
           );
           const isNewVideo = indexOfVideo >= 0;
 
-          const shop =
+          let shop =
             isShopImagesPresent && isNewShopImagesAdded
               ? {
                   id: i,
@@ -192,7 +192,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
-                  shopVideo: s?.shopVideo,
+
                   shopImages: [
                     ...s.shopImages,
                     ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
@@ -215,7 +215,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
-                  shopVideo: s?.shopVideo,
+
                   shopImages: [...s.shopImages],
                 }
               : {
@@ -227,7 +227,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
-                  shopVideo: s?.shopVideo,
+
                   shopImages: [
                     ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
                       id:
@@ -240,23 +240,25 @@ const MallForm = () => {
                   ],
                 };
 
-          if (isNewVideo) {
-            shops = [
-              ...shops,
-              {
-                ...shop,
-                shopVideo: {
-                  id:
-                    shopVideoState[indexOfVideo].uniqueId +
-                    shopVideoState[indexOfVideo].video.name,
-                  url: shopVideoUrl[indexOfVideo],
-                  videoName: shopVideoState[indexOfVideo].video.name,
-                },
-              },
-            ];
-          } else {
-            shops = [...shops, shop];
+          if (s.shopVideo !== undefined) {
+            shop = { ...shop, shopVideo: s.shopVideo };
           }
+
+          shops = isNewVideo
+            ? [
+                ...shops,
+                {
+                  ...shop,
+                  shopVideo: {
+                    id:
+                      shopVideoState[indexOfVideo].uniqueId +
+                      shopVideoState[indexOfVideo].video.name,
+                    url: shopVideoUrl[indexOfVideo],
+                    videoName: shopVideoState[indexOfVideo].video.name,
+                  },
+                },
+              ]
+            : [...shops, shop];
         });
 
         //FireStore
