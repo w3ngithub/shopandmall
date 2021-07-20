@@ -125,7 +125,7 @@ const CommonForm = ({
       });
     }
   }, []);
-  console.log(isLoading);
+
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>

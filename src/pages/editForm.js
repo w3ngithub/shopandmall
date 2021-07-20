@@ -192,6 +192,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
+                  shopVideo: s?.shopVideo,
                   shopImages: [
                     ...s.shopImages,
                     ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
@@ -214,6 +215,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
+                  shopVideo: s?.shopVideo,
                   shopImages: [...s.shopImages],
                 }
               : {
@@ -225,6 +227,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
+                  shopVideo: s?.shopVideo,
                   shopImages: [
                     ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
                       id:
