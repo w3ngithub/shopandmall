@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
 import classes from "../styles/single.module.css";
@@ -30,6 +30,8 @@ const SingleShop = () => {
   const [galleryImage, setGalleryImage] = useState([]);
   const [ind, setInd] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const location = useLocation();
 
   const openEditModal = () => {
     const shop = mall.shops.find((shop) => shop.shopName === type);
@@ -63,7 +65,7 @@ const SingleShop = () => {
 
     fetchData();
   }, [docId]);
-
+  console.log();
   return (
     <div>
       {modal && <Modal {...{ setModal, image, setImage, galleryImage, ind }} />}
@@ -153,10 +155,15 @@ const SingleShop = () => {
                         ,<span> +977 - {mall.phoneNumber}</span>
                       </p>
                     </div>
-                    <button className={classes.editBtn} onClick={openEditModal}>
-                      <FaEdit className={classes.editIcon} />
-                      <span className={classes.text}>Edit</span>
-                    </button>
+                    {location.pathname.split("/")[1] === "admin" && (
+                      <button
+                        className={classes.editBtn}
+                        onClick={openEditModal}
+                      >
+                        <FaEdit className={classes.editIcon} />
+                        <span className={classes.text}>Edit</span>
+                      </button>
+                    )}
                   </div>
 
                   <div className={classes.description}>
