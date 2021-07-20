@@ -10,6 +10,7 @@ import {
   checkMallValidation,
   checkShopValidation,
 } from "../utils/checkValidation";
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const MallForm = () => {
   const { allDataDispatch } = useContext(MyContext);
@@ -47,6 +48,13 @@ const MallForm = () => {
   //Loading
   const [isLoading, setIsLoading] = useState(false);
   const [videoUploadPercentage, setVideoUploadPercentage] = useState({});
+
+  const successNotification = () =>
+    toast.success("Successfull Saved!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      onClose: () => history.goBack(),
+    });
 
   const submitHandler = async (e) => {
     try {
@@ -220,6 +228,9 @@ const MallForm = () => {
           .set({
             ...mall,
             shops,
+          })
+          .then(() => {
+            successNotification();
           });
         dispatch({
           type: "ADD_IMAGE_URLS",
@@ -230,7 +241,6 @@ const MallForm = () => {
           payload: { mall, shops },
         });
         setLoadingPercentage(100);
-        history.goBack();
       }
     } catch (err) {
       alert(err);
@@ -261,6 +271,7 @@ const MallForm = () => {
         setIsLoading,
         loadingPercentage,
         videoUploadPercentage,
+        ToastContainer,
       }}
     />
   );

@@ -6,6 +6,7 @@ import React, { useState, useReducer } from "react";
 import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
 import { checkShopValidation } from "../utils/checkValidation";
 import shopVideoReducer from "../reducers/shopVideoReducer";
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const MallForm = () => {
   //Removed Images
@@ -36,6 +37,13 @@ const MallForm = () => {
   //Loading
   const [isLoading, setIsLoading] = useState(false);
   const [videoUploadPercentage, setVideoUploadPercentage] = useState({});
+
+  const successNotification = () =>
+    toast.success("Successfull Updated!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      onClose: () => history.push("/admin/malls"),
+    });
 
   const submitHandler = async (e) => {
     try {
@@ -274,9 +282,11 @@ const MallForm = () => {
           .set({
             ...mall,
             shops: shops,
+          })
+          .then(() => {
+            successNotification();
           });
         setLoadingPercentage(100);
-        history.push("/admin/malls");
       }
     } catch (err) {
       console.log("Error", err);
@@ -302,6 +312,7 @@ const MallForm = () => {
         isLoading,
         setIsLoading,
         videoUploadPercentage,
+        ToastContainer,
       }}
     />
   );
