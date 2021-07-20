@@ -1,13 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
 import classes from "../styles/single.module.css";
 import modalclasses from "../components/single/modal.module.css";
+import EditModal from "../components/single/Modal";
 
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 
-import { FaRegWindowClose } from "react-icons/fa";
+import { FaRegWindowClose, FaEdit } from "react-icons/fa";
 import { BiImage, BiVideo } from "react-icons/bi";
 
 import SkeletonText from "../skeletons/SkeletonText";
@@ -25,10 +26,20 @@ const SingleShop = () => {
 
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
+  const [selectedShop, setSelectedShop] = useState({});
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const [galleryImage, setGalleryImage] = useState([]);
   const [ind, setInd] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const location = useLocation();
+
+  const openEditModal = () => {
+    const shop = mall.shops.find((shop) => shop.shopName === type);
+    setShowEditModal(true);
+    setSelectedShop(shop);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,12 +67,19 @@ const SingleShop = () => {
 
     fetchData();
   }, [docId]);
-
+  console.log();
   return (
     <div>
       {modal && <Modal {...{ setModal, image, setImage, galleryImage, ind }} />}
       {/* {modal && <ImageGallery items={galleryImage} />} */}
-
+      {showEditModal && (
+        <EditModal
+          setShowModal={setShowEditModal}
+          mall={mall}
+          dataToEdit={selectedShop}
+          edit={true}
+        />
+      )}
       {loading ? (
         <div className={classes.mainContainerShop}>
           <div className={classes.topImage}>
@@ -128,16 +146,27 @@ const SingleShop = () => {
 
                   <div
                     style={{ borderBottom: "2px solid rgb(244,244,244)" }}
-                    className={classes.details}
+                    className={classes.shopDetails}
                   >
-                    <h1>{shop.shopName}</h1>
-                    <p>
-                      <b>{mall.mallName}</b>
-                    </p>
-                    <p>
-                      {mall.timings[0].openTime} - {mall.timings[0].closeTime},
-                      <span> +977 - {mall.phoneNumber}</span>
-                    </p>
+                    <div>
+                      <h1>{shop.shopName}</h1>
+                      <p>
+                        <b>{mall.mallName}</b>
+                      </p>
+                      <p>
+                        {mall.timings[0].openTime} - {mall.timings[0].closeTime}
+                        ,<span> +977 - {mall.phoneNumber}</span>
+                      </p>
+                    </div>
+                    {location.pathname.split("/")[1] === "admin" && (
+                      <button
+                        className={classes.editBtn}
+                        onClick={openEditModal}
+                      >
+                        <FaEdit className={classes.editIcon} />
+                        <span className={classes.text}>Edit</span>
+                      </button>
+                    )}
                   </div>
 
                   <div className={classes.description}>

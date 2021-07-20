@@ -7,18 +7,22 @@ import useFirestore from "../../hooks/useFirestore";
 import AllTimings from "../AllTimings/AllTimings";
 import { checkShopValidation } from "../../utils/checkValidation";
 import Loader from "../Loader/Loader";
+import { useHistory } from "react-router-dom";
+import { IoIosClose } from "react-icons/io";
 
-const Modal = ({ setShowModal, docId, mall }) => {
+const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
   const { docs } = useFirestore("Shop Categories");
+  const history = useHistory();
   const [subCategoryLists, setSubCategoryLists] = useState([]);
   const [images, setImages] = useState([]);
+  const [removedImages, setRemovedImages] = useState([]);
   const [video, setVideo] = useState({});
+  const [removedVideo, setRemovedVideo] = useState({});
   const [imageErrors, setImageErrors] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const [percentage, setPercentage] = useState(0);
   const { control, handleSubmit } = useForm();
-  useEffect(() => setIsLoading(false), []);
 
   const [shop, setShop] = useState({
     shopName: "",
@@ -58,9 +62,14 @@ const Modal = ({ setShowModal, docId, mall }) => {
 
     if (selectedShopVideo.size / 1000000 > 100) {
       alert("the size of the video must be less than 100mb");
-    } else {
-      setVideo({ id: Date.now(), video: selectedShopVideo });
+      return;
     }
+
+    if (edit && video.hasOwnProperty("videoName")) {
+      setRemovedVideo(video);
+    }
+
+    setVideo({ id: Date.now(), video: selectedShopVideo });
   };
   const onManualTimeChange = (rowId, name, value) => {
     setShop({
@@ -205,6 +214,108 @@ const Modal = ({ setShowModal, docId, mall }) => {
     }
   };
 
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    console.log(video, removedVideo);
+
+    if (removedImages.length > 0) {
+      removedImages.forEach((image) =>
+        storage.ref().child(image.ImageName).delete()
+      );
+    }
+    if (removedVideo.length > 0) {
+      removedVideo.forEach((video) => storage.ref().child(video.id).delete());
+    }
+
+    let shopVideoUrl = [],
+      shopTemp = { ...shop };
+
+    if (video.hasOwnProperty("video")) {
+      await Promise.all(
+        [video].map(({ id, video, uniqueId }) => {
+          const uploadTask = storage
+            .ref()
+            .child(uniqueId + video.name)
+            .put(video);
+          uploadTask.on("state_changed", (snapshot) => {
+            var progress = Math.floor(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setPercentage(progress);
+          });
+          return uploadTask;
+        })
+      );
+
+      shopVideoUrl = await Promise.all(
+        [video].map(({ id, video, uniqueId }) =>
+          storage.ref(uniqueId + video.name).getDownloadURL()
+        )
+      );
+      shopTemp = {
+        ...shop,
+        shopVideo: {
+          id: video.id + video.video.name,
+          videoName: video.video.name,
+          url: shopVideoUrl[0],
+        },
+      };
+    }
+
+    if (images.length > 0) {
+      await Promise.all(
+        images.map((image) => storage.ref(image.name).put(image))
+      );
+
+      const shopImageUrl = await Promise.all(
+        images.map((image) => storage.ref(image.name).getDownloadURL())
+      );
+      shopTemp = {
+        ...shop,
+        shopImages: [
+          ...dataToEdit.shopImages,
+          ...images.map((img, i) => ({
+            id: Math.random() + img.name,
+            ImageName: img.name,
+            url: shopImageUrl[i],
+          })),
+        ],
+      };
+    }
+
+    fireStore
+      .collection("Shopping Mall")
+      .doc(mall.mallName)
+      .update({
+        ...mall,
+        shops: [
+          ...mall.shops.map((s) => (s.id === shop.id ? { ...shopTemp } : s)),
+        ],
+      })
+      .then(() => {
+        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
+        setShowModal(false);
+      });
+  };
+
+  useEffect(() => {
+    setIsLoading(false);
+
+    if (edit) {
+      setShop(dataToEdit);
+      setVideo(dataToEdit.shopVideo);
+    }
+
+    if (edit && docs.length > 0) {
+      setSubCategoryLists([
+        ...docs.find((category) => category.category === dataToEdit.category)
+          .rowContent.rowData,
+      ]);
+    }
+  }, [dataToEdit, docs]);
+
   let listOfMallTimes = [mall.timings[0]];
 
   shop?.timings?.forEach((time, index) => {
@@ -232,7 +343,10 @@ const Modal = ({ setShowModal, docId, mall }) => {
         </div>
         <div className={classes.line}></div>
 
-        <form onSubmit={handleSubmit(onSubmitHandler)} className={classes.form}>
+        <form
+          onSubmit={edit ? handleEditSubmit : handleSubmit(onSubmitHandler)}
+          className={classes.form}
+        >
           <div className={classes.inputdiv}>
             <Controller
               control={control}
@@ -322,6 +436,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
             type="text"
             placeholder="Description"
             name="shopDescription"
+            value={shop.shopDescription}
             onChange={onChangeHandler}
             className={classes.textarea}
           />
@@ -337,6 +452,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
                   ).rowContent.rowData,
                 ]);
               }}
+              value={shop.category}
             >
               <option hidden>Categories</option>
               {docs.map(({ id, category }) => (
@@ -349,6 +465,7 @@ const Modal = ({ setShowModal, docId, mall }) => {
               name="subCategory"
               onChange={onChangeHandler}
               className={classes.inputcategory}
+              value={shop.subCategory}
             >
               <option hidden>SubCategories</option>
               {subCategoryLists.map(({ id, subCategory }) => (
@@ -384,9 +501,43 @@ const Modal = ({ setShowModal, docId, mall }) => {
           </label>
 
           <div className={classes.selectedImages}>
+            {edit &&
+              shop.shopImages.map((image, ind) => (
+                <p className={classes.image} key={ind}>
+                  <button
+                    className={classes.button}
+                    type="button"
+                    onClick={() => {
+                      setRemovedImages([...removedImages, image]);
+                      setShop({
+                        ...shop,
+                        shopImages: [
+                          ...shop.shopImages.filter(
+                            (img) => img.ImageName !== image.ImageName
+                          ),
+                        ],
+                      });
+                    }}
+                  >
+                    <IoIosClose />
+                  </button>
+                  {image.ImageName}
+                </p>
+              ))}
             {images &&
               images.map((image, ind) => (
                 <p key={ind} className={classes.image}>
+                  <button
+                    className={classes.button}
+                    type="button"
+                    onClick={() =>
+                      setImages([
+                        ...images.filter((img) => img.name !== image.name),
+                      ])
+                    }
+                  >
+                    <IoIosClose />
+                  </button>
                   {image.name}
                 </p>
               ))}
@@ -404,15 +555,32 @@ const Modal = ({ setShowModal, docId, mall }) => {
             {video.hasOwnProperty("video") && (
               <p className={classes.image}>{video.video.name}</p>
             )}
+            {edit && video.hasOwnProperty("videoName") && (
+              <p className={classes.image}>{shop.shopVideo.videoName}</p>
+            )}
           </div>
-          {isLoading && <Loader loadingPercentage={percentage} />}
-
-          <button
-            className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}
-            type="submit"
-          >
-            {isLoading ? "Saving..." : "Save"}
-          </button>
+          {isLoading && video.hasOwnProperty("video") && (
+            <Loader loadingPercentage={percentage} />
+          )}
+          {edit ? (
+            <button
+              className={
+                isLoading ? classes.submitBtnOnLoad : classes.submitBtn
+              }
+              type="submit"
+            >
+              {isLoading ? "Updating..." : "Update"}
+            </button>
+          ) : (
+            <button
+              className={
+                isLoading ? classes.submitBtnOnLoad : classes.submitBtn
+              }
+              type="submit"
+            >
+              {isLoading ? "Saving..." : "Save"}
+            </button>
+          )}
         </form>
       </div>
     </div>
