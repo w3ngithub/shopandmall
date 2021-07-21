@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { IoIosAddCircleOutline, IoIosImage } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
 import { useForm } from "react-hook-form";
+import { Slide } from "react-toastify";
 
 const CommonForm = ({
   edit,
@@ -29,6 +30,7 @@ const CommonForm = ({
   setIsLoading,
   loadingPercentage,
   videoUploadPercentage,
+  ToastContainer,
 }) => {
   //States
 
@@ -310,6 +312,7 @@ const CommonForm = ({
             }
           />
         </form>
+        <ToastContainer />
       </div>
     </div>
   );

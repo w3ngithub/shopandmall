@@ -30,12 +30,7 @@ const MallCardComponent = ({ doc }) => {
               className={classes.closeIcon}
               onClick={(e) => {
                 e.stopPropagation();
-                fireStore
-                  .collection("Shopping Mall")
-                  .doc(doc.mallName)
-                  .delete()
-                  .then(() => console.log("DELETED Successfully"))
-                  .catch((error) => console.log("Error deleting mall"));
+
                 let storageRef = storage.ref();
                 let mallImageDel = storageRef.child(doc.mallImage.imageName);
 
@@ -65,6 +60,12 @@ const MallCardComponent = ({ doc }) => {
                       .then(() => console.log("deleted video"));
                   }
                 });
+                fireStore
+                  .collection("Shopping Mall")
+                  .doc(doc.mallName)
+                  .delete()
+                  .then(() => console.log("DELETED Successfully"))
+                  .catch((error) => console.log("Error deleting mall"));
               }}
             >
               <IoMdCloseCircle />

@@ -9,6 +9,7 @@ import { checkShopValidation } from "../../utils/checkValidation";
 import Loader from "../Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
+import { ToastContainer, toast } from "react-toastify";
 
 const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
   const { docs } = useFirestore("Shop Categories");
@@ -103,6 +104,16 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       timings: [...shop.timings.filter((shop) => shop.id !== rowId)],
     });
   };
+
+  const successNotification = () =>
+    toast.success("Successfull Saved!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      onClose: () => {
+        setShowModal(false);
+        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
+      },
+    });
 
   const onSubmitHandler = async (e) => {
     try {
@@ -206,7 +217,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
                 ...mall,
                 shops: [result],
               });
-        setShowModal(false);
+        successNotification();
       }
     } catch (e) {
       console.log(e);
@@ -295,8 +306,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
         ],
       })
       .then(() => {
-        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
-        setShowModal(false);
+        successNotification();
       });
   };
 
@@ -305,7 +315,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
 
     if (edit) {
       setShop(dataToEdit);
-      setVideo(dataToEdit.shopVideo);
+      setVideo(dataToEdit.shopVideo || {});
     }
 
     if (edit && docs.length > 0) {
@@ -552,14 +562,14 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
             <IoIosAddCircle className={classes.addIcon} />
           </label>
           <div className={classes.selectedImages}>
-            {video.hasOwnProperty("video") && (
+            {video?.hasOwnProperty("video") && (
               <p className={classes.image}>{video.video.name}</p>
             )}
-            {edit && video.hasOwnProperty("videoName") && (
+            {edit && video?.hasOwnProperty("videoName") && (
               <p className={classes.image}>{shop.shopVideo.videoName}</p>
             )}
           </div>
-          {isLoading && video.hasOwnProperty("video") && (
+          {isLoading && video?.hasOwnProperty("video") && (
             <Loader loadingPercentage={percentage} />
           )}
           {edit ? (
@@ -583,6 +593,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
           )}
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
