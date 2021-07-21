@@ -198,13 +198,15 @@ const Modal = ({
                       ...mall,
                       shops: [...mall.shops, result],
                     })
+                    .then(() => setPercentage(100))
                 : fireStore
                     .collection("Shopping Mall")
                     .doc(docId)
                     .set({
                       ...mall,
                       shops: [result],
-                    });
+                    })
+                    .then(() => setPercentage(100));
 
               setShowModal(false);
             });
@@ -220,18 +222,18 @@ const Modal = ({
                 ...mall,
                 shops: [...mall.shops, result],
               })
+              .then(() => setPercentage(100))
           : fireStore
               .collection("Shopping Mall")
               .doc(docId)
               .set({
                 ...mall,
                 shops: [result],
-              });
+              })
+              .then(() => setPercentage(100));
         successNotification();
       }
-      setPercentage(100);
     } catch (e) {
-      console.log(e);
       setIsLoading(false);
     }
   };
