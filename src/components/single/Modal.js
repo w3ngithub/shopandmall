@@ -23,6 +23,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [percentage, setPercentage] = useState(0);
+  const [videoPercentage, setVideoPercentage] = useState(0);
   const { control, handleSubmit } = useForm();
 
   const [shop, setShop] = useState({
@@ -133,6 +134,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       }
 
       setIsLoading(true);
+      setPercentage(30);
       await Promise.all(
         images.map((image) => storage.ref(image.name).put(image))
       );
@@ -156,6 +158,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
           url: items,
         })),
       };
+      setPercentage(60);
       if (video.hasOwnProperty("video")) {
         const uploadTask = storage
           .ref(video.id + video.video.name)
@@ -167,7 +170,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
             var progress = Math.floor(
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
-            setPercentage(progress);
+            setVideoPercentage(progress);
           },
           (error) => {},
           () => {
@@ -219,6 +222,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
               });
         successNotification();
       }
+      setPercentage(100);
     } catch (e) {
       console.log(e);
       setIsLoading(false);
@@ -229,8 +233,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log(video, removedVideo);
-
+    setPercentage(30);
     if (removedImages.length > 0) {
       removedImages.forEach((image) =>
         storage.ref().child(image.ImageName).delete()
@@ -242,7 +245,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
 
     let shopVideoUrl = [],
       shopTemp = { ...shop };
-
+    setPercentage(60);
     if (video.hasOwnProperty("video")) {
       await Promise.all(
         [video].map(({ id, video, uniqueId }) => {
@@ -254,7 +257,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
             var progress = Math.floor(
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
-            setPercentage(progress);
+            setVideoPercentage(progress);
           });
           return uploadTask;
         })
@@ -274,7 +277,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
         },
       };
     }
-
+    setPercentage(80);
     if (images.length > 0) {
       await Promise.all(
         images.map((image) => storage.ref(image.name).put(image))
@@ -308,6 +311,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       .then(() => {
         successNotification();
       });
+    setPercentage(100);
   };
 
   useEffect(() => {
@@ -570,8 +574,9 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
             )}
           </div>
           {isLoading && video?.hasOwnProperty("video") && (
-            <Loader loadingPercentage={percentage} />
+            <Loader loadingPercentage={videoPercentage} />
           )}
+          {isLoading && <Loader loadingPercentage={percentage} />}
           {edit ? (
             <button
               className={
