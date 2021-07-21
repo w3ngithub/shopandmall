@@ -55,7 +55,7 @@ const Modal = ({
   const types = ["image/jpeg", "image/png"];
 
   const successNotification = () =>
-    toast.success("Successfull Saved!", {
+    toast.success(edit ? "Successfully Updated" : "Successfully Saved!", {
       position: "bottom-right",
       autoClose: 2000,
       onOpen: () => {
@@ -296,7 +296,7 @@ const Modal = ({
       shopTemp = {
         ...shop,
         shopImages: [
-          ...dataToEdit.shopImages,
+          ...shop.shopImages,
           ...images.map((img, i) => ({
             id: Math.random() + img.name,
             ImageName: img.name,
