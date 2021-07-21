@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { fireStore } from "../firebase/config";
 import React, { useEffect, useState } from "react";
 import classes from "../styles/single.module.css";
@@ -14,7 +14,7 @@ import { BiImage, BiVideo } from "react-icons/bi";
 import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
 import SkeletonShopCard from "../skeletons/SkeletonShopCard";
-
+import { ToastContainer, toast } from "react-toastify";
 import ReactPlayer from "react-player";
 
 const SingleShop = () => {
@@ -22,12 +22,11 @@ const SingleShop = () => {
   const { id, type } = useParams();
   const docId = id.replace("_", " ");
 
-  console.log(mall);
-
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
   const [selectedShop, setSelectedShop] = useState({});
   const [showEditModal, setShowEditModal] = useState(false);
+  const history = useHistory();
 
   const [galleryImage, setGalleryImage] = useState([]);
   const [ind, setInd] = useState(null);
@@ -67,7 +66,7 @@ const SingleShop = () => {
 
     fetchData();
   }, [docId]);
-  console.log();
+
   return (
     <div>
       {modal && <Modal {...{ setModal, image, setImage, galleryImage, ind }} />}
@@ -78,6 +77,8 @@ const SingleShop = () => {
           mall={mall}
           dataToEdit={selectedShop}
           edit={true}
+          setShowEditModal={setShowEditModal}
+          toast={toast}
         />
       )}
       {loading ? (
@@ -208,6 +209,7 @@ const SingleShop = () => {
             )
         )
       )}
+      <ToastContainer />
     </div>
   );
 };

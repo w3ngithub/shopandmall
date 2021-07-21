@@ -9,18 +9,25 @@ import { checkShopValidation } from "../../utils/checkValidation";
 import Loader from "../Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
-const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
+const Modal = ({
+  setShowModal,
+  docId,
+  mall,
+  dataToEdit,
+  edit = false,
+
+  setShowEditModal,
+}) => {
   const { docs } = useFirestore("Shop Categories");
-  const history = useHistory();
   const [subCategoryLists, setSubCategoryLists] = useState([]);
   const [images, setImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
   const [video, setVideo] = useState({});
   const [removedVideo, setRemovedVideo] = useState({});
   const [imageErrors, setImageErrors] = useState("");
-
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [percentage, setPercentage] = useState(0);
   const [videoPercentage, setVideoPercentage] = useState(0);
@@ -46,6 +53,16 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
   };
 
   const types = ["image/jpeg", "image/png"];
+
+  const successNotification = () =>
+    toast.success("Successfull Saved!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      onOpen: () => {
+        setShowEditModal(false);
+        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
+      },
+    });
 
   const shopImageHandler = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
@@ -105,16 +122,6 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       timings: [...shop.timings.filter((shop) => shop.id !== rowId)],
     });
   };
-
-  const successNotification = () =>
-    toast.success("Successfull Saved!", {
-      position: "bottom-right",
-      autoClose: 2000,
-      onClose: () => {
-        setShowModal(false);
-        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
-      },
-    });
 
   const onSubmitHandler = async (e) => {
     try {
@@ -353,7 +360,9 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       ></div>
       <div className={classes.modal}>
         <div className={classes.header}>
-          <h3 className={classes.title}>Add New Shop</h3>
+          <h3 className={classes.title}>
+            {edit ? "Update Shop" : "Add New Shop"}
+          </h3>
         </div>
         <div className={classes.line}></div>
 
@@ -598,7 +607,6 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
           )}
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };
