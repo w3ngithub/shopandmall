@@ -136,6 +136,14 @@ const CommonShopForm = ({
           payload: { shopIndex: index, rowId },
         });
 
+  const thumbnailImageHandler = (e) => {
+    const selectedImage = e.target.files[0];
+    shopVideoDispatch({
+      type: "ADD_THUMBNAIL",
+      payload: { index, thumbnail: selectedImage },
+    });
+  };
+
   let listOfMallTimes = [mallTime[0]];
 
   s?.timings?.forEach((time, index) => {
@@ -149,6 +157,8 @@ const CommonShopForm = ({
     }
   });
 
+  const currentVideo = shopVideoState?.find((video) => video.id === index);
+
   useEffect(() => {
     if (edit && docs.length > 0) {
       setSubCategoryLists([
@@ -157,7 +167,7 @@ const CommonShopForm = ({
       ]);
     }
   }, [docs]);
-
+  console.log(shopVideoState);
   return (
     <div className={classes.shopContainer}>
       <div
@@ -446,6 +456,30 @@ const CommonShopForm = ({
           )}
         {isLoading && shopVideoState.length > 0 && (
           <Loader loadingPercentage={videoUploadPercentage} />
+        )}
+        {currentVideo?.hasOwnProperty("video") && (
+          <label className={classes.label}>
+            <input
+              type="file"
+              onChange={thumbnailImageHandler}
+              accept="images/*"
+            />
+            <span>
+              <div className={classes.imgButton}>Add Video Thumbnail</div>
+            </span>
+          </label>
+        )}
+        {currentVideo?.hasOwnProperty("thumbnail") && (
+          <p className={classes.image}>
+            <button
+              className={classes.button}
+              type="button"
+              onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
+            >
+              <IoIosClose />
+            </button>
+            {currentVideo.thumbnail.name}
+          </p>
         )}
       </div>
     </div>
