@@ -39,9 +39,7 @@
 }
 
 .current {
-  font-weight: bold;
-  font-size: 17px;
-  color: rgb(64, 29, 110);
+  color: #395fbf;
 }
 
 .normal {

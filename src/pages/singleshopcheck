@@ -14,7 +14,7 @@ import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
 import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 
-// import ReactPlayer from "react-player";
+import ReactPlayer from "react-player";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Image from "../assets/images/defaultImage.png";
 
@@ -219,7 +219,7 @@ const SingleShop = () => {
                   <div className={classes.container}>
                     {shop.shopVideo ? (
                       <div className={classes.wrapper}>
-                        {/* <ReactPlayer
+                        <ReactPlayer
                           controls
                           url={shop.shopVideo.url}
                           width="100%"
@@ -228,7 +228,7 @@ const SingleShop = () => {
                             setModal(true);
                             setInd(0);
                           }}
-                        /> */}
+                        />
                       </div>
                     ) : null}
 
@@ -304,6 +304,7 @@ const Modal = ({ setModal, setImage, galleryImage, ind }) => {
           disableArrowKeys={false}
           renderLeftNav={renderLeftNav}
           renderRightNav={renderRightNav}
+          // renderPlayPauseButton={renderPlayPauseButton}
         />
       </div>
     </div>

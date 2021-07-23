@@ -10,16 +10,37 @@
   margin-bottom: 48px;
 }
 
-.topImage {
+.topImage,
+.mobTopImage {
   width: 100%;
   height: 408px;
   overflow: hidden;
 }
 
-.topImage img {
+.topImage img,
+.mobTopImage img {
   object-fit: cover;
   width: 100%;
   height: 408px;
+}
+
+.mobTopImage {
+  display: none;
+  position: relative;
+}
+
+.mobTopImage .imageNumber {
+  position: absolute;
+  color: white;
+  padding: 5px 10px;
+  background-color: rgba(11, 32, 71, 0.5);
+  right: 10px;
+  bottom: 0px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 18px;
+  letter-spacing: 4px;
+  /* font-size: 20px; */
 }
 
 .mainShop,
@@ -57,10 +78,24 @@
 }
 
 .photosBox > div,
-.videosBox > div {
+.videosBox > div,
+.emptyBox > div {
   display: flex;
   align-items: center;
   gap: 2px;
+}
+
+.emptyBox > div {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.video {
+  height: 497px;
+}
+
+.videoWrapper {
+  height: 90vh;
+  margin-bottom: -22px;
 }
 
 .icon {
@@ -135,6 +170,7 @@
   height: 200px;
   width: auto;
   overflow: hidden;
+  position: relative;
   background-color: black;
 }
 
@@ -182,6 +218,108 @@
   cursor: pointer;
 }
 
+.imageGalleryIconLeft,
+.imageGalleryIconRight {
+  color: #fff;
+  transition: all 0.2s ease-out;
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  outline: 0;
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  filter: drop-shadow(0 2px 2px #1a1a1a);
+}
+
+.imageGalleryIconLeft {
+  left: 10px;
+}
+
+.imageGalleryIconRight {
+  right: 10px;
+}
+
+.imageGalleryIconLeft:hover,
+.imageGalleryIconRight:hover {
+  background-color: transparent;
+}
+
+.arrowIcon {
+  font-size: 20px;
+}
+
+.imageGalleryIconLeft:hover .arrowIcon,
+.imageGalleryIconRight:hover .arrowIcon {
+  transform: scale(1.2);
+  color: rgb(87, 154, 218);
+}
+
+.imageGalleryPlayButton {
+  color: white;
+  background-color: transparent;
+  font-size: 30px;
+  position: absolute;
+  left: 20px;
+  border: none;
+  outline: none;
+}
+
+.shopSideImage {
+  display: none;
+}
+
+/* ---------------- Gallery Css New Added ----------------------- */
+
+.playBtn {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  height: 60px;
+  width: 100px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px;
+}
+.playBtn:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+.playBtn:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 16.5px;
+  left: 40px;
+  margin: 0 auto;
+  border-style: solid;
+  border-width: 12.5px 0 12.5px 20px;
+  border-color: transparent transparent transparent rgba(255, 255, 255, 1);
+}
+
+.videoIcon {
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.videoIcon:hover {
+  font-size: 50px;
+}
+
+/* .imageGalleryImage {
+  width: auto;
+  object-fit: contain;
+} */
+
 @media screen and (max-width: 1423px) and (min-width: 1281px) {
   .mainShop,
   .mainMall {
@@ -190,6 +328,15 @@
 
   .mainSkeleton {
     width: 75%;
+  }
+
+  .videoWrapper {
+    height: 91vh;
+    margin-bottom: -22px;
+  }
+
+  .video {
+    height: 90vh;
   }
 }
 
@@ -202,6 +349,15 @@
   .mainSkeleton {
     width: 68%;
   }
+
+  .videoWrapper {
+    height: 92vh;
+    margin-bottom: -22px;
+  }
+
+  .video {
+    height: 91vh;
+  }
 }
 
 @media screen and (max-width: 1708px) and (min-width: 1601px) {
@@ -212,6 +368,15 @@
 
   .mainSkeleton {
     width: 63.5%;
+  }
+
+  .videoWrapper {
+    height: 93vh;
+    margin-bottom: -25px;
+  }
+
+  .video {
+    height: 91vh;
   }
 }
 
@@ -224,6 +389,14 @@
   .mainSkeleton {
     width: 56.5%;
   }
+  .videoWrapper {
+    height: 94vh;
+    margin-bottom: -28px;
+  }
+
+  .video {
+    height: 91vh;
+  }
 }
 
 @media only screen and (min-width: 1921px) {
@@ -234,6 +407,26 @@
 
   .mainSkeleton {
     width: 42.5%;
+  }
+
+  .videoWrapper {
+    height: 95vh;
+    margin-bottom: -20px;
+  }
+
+  .video {
+    height: 95vh;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .videoWrapper {
+    height: 38vh;
+    margin-bottom: -22px;
+  }
+
+  .video {
+    height: 36vh;
   }
 }
 
@@ -262,6 +455,15 @@
   .image {
     width: 100%;
   }
+
+  .videoWrapper {
+    height: 38.8vh;
+    margin-bottom: -22px;
+  }
+
+  .video {
+    height: 35vh;
+  }
 }
 
 @media only screen and (max-width: 414px) {
@@ -276,10 +478,15 @@
   }
 
   .topImage {
+    display: none;
+  }
+
+  .mobTopImage {
+    display: block;
     height: 210px;
   }
 
-  .topImage img {
+  .mobTopImage img {
     height: 210px;
   }
 
@@ -329,5 +536,39 @@
 
   .buttonsMobile {
     display: flex;
+  }
+
+  .videoWrapper {
+    height: 30.3vh;
+    margin-bottom: -22px;
+  }
+
+  .video {
+    height: 27vh;
+  }
+
+  .shopSideImage {
+    display: block;
+  }
+
+  .playBtn {
+    height: 50px;
+    width: 70px;
+  }
+
+  .playBtn:after {
+    top: 12.5px;
+    left: 30px;
+  }
+}
+
+@media only screen and (max-width: 376px) {
+  .videoWrapper {
+    height: 25vh;
+    margin-bottom: -22px;
+  }
+
+  .video {
+    height: 24vh;
   }
 }

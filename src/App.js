@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import "react-toastify/dist/ReactToastify.css";
+import SingleClassTry from "./pages/checkSingleShop";
 
 import {
   Login,
@@ -57,8 +58,12 @@ function App() {
           <Route exact path="/malls" component={AllMalls} />
           <Route exact path="/shops" component={AllShops} />
           <Route exact path="/malls/:id" component={SingleMall} />
-          <Route exact path="/:id/shops/:type" component={SingleShop} />
-          <Route exact path="/mall/:id/shops/:type" component={SingleShop} />
+          <Route exact path="/:id/shops/:type" component={SingleClassTry} />
+          <Route
+            exact
+            path="/mall/:id/shops/:type"
+            component={SingleClassTry}
+          />
           <Route exact path="/shops/category/:category" component={AllShops} />
           <Route exact path="/Home/category/:category" component={HomePage} />
           <Route
@@ -115,7 +120,7 @@ function App() {
           <ProtectedRoute
             exact
             path="/admin/:id/shops/:type"
-            component={SingleShop}
+            component={SingleClassTry}
           />
 
           {/* ------------------Admin------------------ */}
@@ -152,7 +157,7 @@ function App() {
           <ProtectedRoute
             exact
             path="/admin/:id/shops/:type"
-            component={SingleShop}
+            component={SingleClassTry}
           />
 
           {/* ----------No Url------------------ */}
