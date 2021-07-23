@@ -24,7 +24,13 @@ const shopVideoReducer = (state, action) => {
       return [
         ...state.map((video) =>
           video.id === action.payload.index
-            ? { ...video, thumbnail: action.payload.thumbnail }
+            ? {
+                ...video,
+                thumbnail: {
+                  id: Date.now(),
+                  thumbnail: action.payload.thumbnail,
+                },
+              }
             : video
         ),
       ];

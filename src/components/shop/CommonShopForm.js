@@ -478,7 +478,7 @@ const CommonShopForm = ({
             >
               <IoIosClose />
             </button>
-            {currentVideo.thumbnail.name}
+            {currentVideo.thumbnail.thumbnail.name}
           </p>
         )}
       </div>
