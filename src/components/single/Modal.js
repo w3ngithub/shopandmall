@@ -9,20 +9,28 @@ import { checkShopValidation } from "../../utils/checkValidation";
 import Loader from "../Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
-const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
+const Modal = ({
+  setShowModal,
+  docId,
+  mall,
+  dataToEdit,
+  edit = false,
+
+  setShowEditModal,
+}) => {
   const { docs } = useFirestore("Shop Categories");
-  const history = useHistory();
   const [subCategoryLists, setSubCategoryLists] = useState([]);
   const [images, setImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
   const [video, setVideo] = useState({});
   const [removedVideo, setRemovedVideo] = useState({});
   const [imageErrors, setImageErrors] = useState("");
-
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [percentage, setPercentage] = useState(0);
+  const [videoPercentage, setVideoPercentage] = useState(0);
   const { control, handleSubmit } = useForm();
 
   const [shop, setShop] = useState({
@@ -45,6 +53,16 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
   };
 
   const types = ["image/jpeg", "image/png"];
+
+  const successNotification = () =>
+    toast.success(edit ? "Successfully Updated" : "Successfully Saved!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      onOpen: () => {
+        setShowEditModal(false);
+        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
+      },
+    });
 
   const shopImageHandler = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
@@ -105,16 +123,6 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
     });
   };
 
-  const successNotification = () =>
-    toast.success("Successfull Saved!", {
-      position: "bottom-right",
-      autoClose: 2000,
-      onClose: () => {
-        setShowModal(false);
-        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
-      },
-    });
-
   const onSubmitHandler = async (e) => {
     try {
       //shop validation
@@ -133,6 +141,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       }
 
       setIsLoading(true);
+      setPercentage(30);
       await Promise.all(
         images.map((image) => storage.ref(image.name).put(image))
       );
@@ -156,6 +165,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
           url: items,
         })),
       };
+      setPercentage(60);
       if (video.hasOwnProperty("video")) {
         const uploadTask = storage
           .ref(video.id + video.video.name)
@@ -167,7 +177,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
             var progress = Math.floor(
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
-            setPercentage(progress);
+            setVideoPercentage(progress);
           },
           (error) => {},
           () => {
@@ -188,13 +198,15 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
                       ...mall,
                       shops: [...mall.shops, result],
                     })
+                    .then(() => setPercentage(100))
                 : fireStore
                     .collection("Shopping Mall")
                     .doc(docId)
                     .set({
                       ...mall,
                       shops: [result],
-                    });
+                    })
+                    .then(() => setPercentage(100));
 
               setShowModal(false);
             });
@@ -210,17 +222,18 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
                 ...mall,
                 shops: [...mall.shops, result],
               })
+              .then(() => setPercentage(100))
           : fireStore
               .collection("Shopping Mall")
               .doc(docId)
               .set({
                 ...mall,
                 shops: [result],
-              });
+              })
+              .then(() => setPercentage(100));
         successNotification();
       }
     } catch (e) {
-      console.log(e);
       setIsLoading(false);
     }
   };
@@ -229,8 +242,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log(video, removedVideo);
-
+    setPercentage(30);
     if (removedImages.length > 0) {
       removedImages.forEach((image) =>
         storage.ref().child(image.ImageName).delete()
@@ -242,7 +254,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
 
     let shopVideoUrl = [],
       shopTemp = { ...shop };
-
+    setPercentage(60);
     if (video.hasOwnProperty("video")) {
       await Promise.all(
         [video].map(({ id, video, uniqueId }) => {
@@ -254,7 +266,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
             var progress = Math.floor(
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
-            setPercentage(progress);
+            setVideoPercentage(progress);
           });
           return uploadTask;
         })
@@ -274,7 +286,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
         },
       };
     }
-
+    setPercentage(80);
     if (images.length > 0) {
       await Promise.all(
         images.map((image) => storage.ref(image.name).put(image))
@@ -286,7 +298,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       shopTemp = {
         ...shop,
         shopImages: [
-          ...dataToEdit.shopImages,
+          ...shop.shopImages,
           ...images.map((img, i) => ({
             id: Math.random() + img.name,
             ImageName: img.name,
@@ -308,6 +320,7 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       .then(() => {
         successNotification();
       });
+    setPercentage(100);
   };
 
   useEffect(() => {
@@ -349,7 +362,9 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
       ></div>
       <div className={classes.modal}>
         <div className={classes.header}>
-          <h3 className={classes.title}>Add New Shop</h3>
+          <h3 className={classes.title}>
+            {edit ? "Update Shop" : "Add New Shop"}
+          </h3>
         </div>
         <div className={classes.line}></div>
 
@@ -570,8 +585,9 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
             )}
           </div>
           {isLoading && video?.hasOwnProperty("video") && (
-            <Loader loadingPercentage={percentage} />
+            <Loader loadingPercentage={videoPercentage} />
           )}
+          {isLoading && <Loader loadingPercentage={percentage} />}
           {edit ? (
             <button
               className={
@@ -593,7 +609,6 @@ const Modal = ({ setShowModal, docId, mall, dataToEdit, edit = false }) => {
           )}
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };
