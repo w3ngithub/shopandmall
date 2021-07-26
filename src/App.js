@@ -6,7 +6,8 @@ import { useLocation } from "react-router-dom";
 import AddShopCategory from "./pages/addShopCategory";
 import allDataReducer from "./reducers/allDataReducer";
 import { Switch, Route, Redirect } from "react-router-dom";
-import React, { useState, useEffect, useReducer, createContext } from "react";
+import React, { useState, useEffect, useReducer } from "react";
+import { MyContext } from "./Context";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -28,8 +29,6 @@ import {
   PageNotFound,
 } from "./pages";
 
-const MyContext = createContext();
-
 function App() {
   const allData = [];
   const location = useLocation();
@@ -37,6 +36,15 @@ function App() {
   //State
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
   const [allDataState, allDataDispatch] = useReducer(allDataReducer, allData);
+  const [sideImageWithFooter, setSideImageWithFooter] = useState(false);
+
+  const showSideImage = () => {
+    setSideImageWithFooter(true);
+  };
+
+  const hideSideImage = () => {
+    setSideImageWithFooter(false);
+  };
 
   //Local Storage Thing
   useEffect(() => {
@@ -49,7 +57,15 @@ function App() {
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <MyContext.Provider value={{ allDataState, allDataDispatch }}>
+      <MyContext.Provider
+        value={{
+          allDataState,
+          allDataDispatch,
+          sideImageWithFooter,
+          showSideImage,
+          hideSideImage,
+        }}
+      >
         {location.pathname !== "/login" && <Nav />}
 
         <Switch>
@@ -164,7 +180,9 @@ function App() {
           <Route exact path="/pageNotFound" component={PageNotFound} />
           <Redirect to="/pageNotFound" />
         </Switch>
-        {location.pathname !== "/login" && <Footer />}
+        {location.pathname !== "/login" && sideImageWithFooter === false && (
+          <Footer />
+        )}
       </MyContext.Provider>
     </div>
   );

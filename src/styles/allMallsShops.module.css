@@ -91,8 +91,12 @@
   /* height: 16px; */
 }
 
-.categoryLists > p {
-  margin: 0 5px;
+.mainParagraph {
+  cursor: pointer;
+}
+
+.mainParagraph:hover {
+  color: rgb(87, 154, 218);
 }
 
 .deleteicon {
@@ -103,6 +107,7 @@
 
 .righticon {
   font-weight: 700 !important;
+  margin: 0 5px;
 }
 
 /* ------------------ */
@@ -164,7 +169,8 @@
 }
 
 .closeIcon {
-  margin-top: 4px;
+  margin: 3px 0 0 5px;
+  font-size: 18px;
 }
 
 @media screen and (max-width: 1423px) and (min-width: 1281px) {

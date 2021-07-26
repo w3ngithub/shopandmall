@@ -46,6 +46,10 @@
   color: #374151;
 }
 
+.normal:hover {
+  color: #395fbf;
+}
+
 /* ------------ Mobile View ------------ */
 @media only screen and (max-width: 414px) {
   .shopFilter {

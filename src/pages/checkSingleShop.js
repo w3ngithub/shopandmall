@@ -16,7 +16,11 @@ import Image from "../assets/images/defaultImage.png";
 import SideImage from "../components/SideImage";
 import { FaPlay } from "react-icons/fa";
 
+import { MyContext } from "../Context";
+
 class SingleClassTry extends React.Component {
+  static contextType = MyContext;
+
   constructor() {
     super();
     this.state = {
@@ -273,7 +277,12 @@ class SingleClassTry extends React.Component {
 
     let type = this.props.match.params.type;
 
-    console.log(this.state.galleryImage);
+    const { sideImageWithFooter, showSideImage, hideSideImage } = this.context;
+
+    console.log(sideImageWithFooter);
+
+    this.state.modal === false && (document.body.style.overflow = "auto");
+
     return (
       // Image Gallery Carousel
       <section className="app">
@@ -285,6 +294,7 @@ class SingleClassTry extends React.Component {
                 this.setState({ modal: false, image: null });
               }}
             ></div>
+            {(document.body.style.overflow = "hidden")}
             <div
               className={modalclasses.closeBtn}
               onClick={() => this.setState({ modal: false })}
@@ -359,6 +369,7 @@ class SingleClassTry extends React.Component {
             sideImage={this.state.sideImage}
             setSideImageFalse={this.setSideImageFalse}
             galleryImages={this.state.galleryImage}
+            hideSideImage={hideSideImage}
           />
         </div>
 
@@ -401,16 +412,27 @@ class SingleClassTry extends React.Component {
         ) : (
           this.state.mall?.shops?.map(
             (shop, ind) =>
-              type === shop.shopName && (
-                <div key={ind} className={classes.mainContainerShop}>
+              type === shop.shopName &&
+              (this.state.sideImage === true ? (
+                <div className={classes.emptyPage} key={ind}></div>
+              ) : (
+                <div
+                  key={ind}
+                  className={
+                    this.state.modal === true
+                      ? classes.noScroll
+                      : classes.mainContainerShop
+                  }
+                >
                   <div className={classes.topImage}>
                     <img src={shop?.shopImages[0].url} alt="" />
                   </div>
                   <div
                     className={classes.mobTopImage}
-                    onClick={() =>
-                      this.setState({ sideImage: true, selectedShop: shop })
-                    }
+                    onClick={() => {
+                      this.setState({ sideImage: true, selectedShop: shop });
+                      showSideImage();
+                    }}
                   >
                     <img src={shop?.shopImages[0].url} alt="" />
                     <div className={classes.imageNumber}>
@@ -420,7 +442,12 @@ class SingleClassTry extends React.Component {
 
                   <div className={classes.mainShop}>
                     <div className={classes.box}>
-                      <div className={classes.photosBox}>
+                      <div
+                        className={classes.photosBox}
+                        onClick={() => {
+                          this.setState({ modal: true, ind: 1 });
+                        }}
+                      >
                         <div>
                           <BiImage className={classes.icon} />
                           Photos
@@ -433,6 +460,9 @@ class SingleClassTry extends React.Component {
                         className={
                           shop.shopVideo ? classes.videosBox : classes.emptyBox
                         }
+                        onClick={() => {
+                          this.setState({ modal: true, ind: 0 });
+                        }}
                       >
                         <div>
                           <BiVideo className={classes.icon} />
@@ -503,7 +533,7 @@ class SingleClassTry extends React.Component {
                     </div>
                   </div>
                 </div>
-              )
+              ))
           )
         )}
       </section>
