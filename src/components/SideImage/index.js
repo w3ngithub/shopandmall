@@ -3,10 +3,7 @@ import classes from "./sideImage.module.css";
 import ImageGallery from "react-image-gallery";
 import { FaRegWindowClose } from "react-icons/fa";
 import modalclasses from "../single/modal.module.css";
-import {
-  BsChevronLeft,
-  BsChevronRight,
-} from "react-icons/bs";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { FaPlay } from "react-icons/fa";
 
 const SideImage = ({
@@ -15,6 +12,7 @@ const SideImage = ({
   sideImage,
   setSideImageFalse,
   galleryImages,
+  hideSideImage,
 }) => {
   const [modal, setModal] = useState(false);
   const [ind, setInd] = useState(null);
@@ -82,7 +80,10 @@ const SideImage = ({
 
       <div className={classes.container}>
         <BsChevronLeft
-          onClick={() => setSideImageFalse()}
+          onClick={() => {
+            setSideImageFalse();
+            hideSideImage();
+          }}
           className={classes.backIcon}
         />
       </div>

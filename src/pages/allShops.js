@@ -64,7 +64,12 @@ const AllShops = () => {
         </>
       ) : (
         <>
-          <p>{category}</p>
+          <p
+            className={classes.mainParagraph}
+            onClick={() => history.push("/shops/category/" + category)}
+          >
+            {category}
+          </p>
           <HiChevronDoubleRight className={classes.righticon} />
           <p>{subCategory}</p>
           <p

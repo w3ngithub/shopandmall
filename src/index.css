@@ -43,8 +43,6 @@ body {
   right: 94% !important;
   top: 10px;
   z-index: 4;
-  font-weight: bold;
-  font-size: 16px;
 }
 
 @media screen and (max-width: 1423px) and (min-width: 1281px) {

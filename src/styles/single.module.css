@@ -1,9 +1,15 @@
 .mainContainerShop,
-.mainContainerMall {
+.mainContainerMall,
+.noScroll {
   max-width: 100vw;
   overflow: hidden;
   margin-top: 68px;
   margin-bottom: 90px;
+}
+
+.emptyPage {
+  height: 100vh;
+  background-color: #f9f9f9;
 }
 
 .mainContainerMall {
@@ -34,7 +40,7 @@
   color: white;
   padding: 5px 10px;
   background-color: rgba(11, 32, 71, 0.5);
-  right: 10px;
+  right: 0px;
   bottom: 0px;
   font-size: 14px;
   font-weight: bold;
@@ -64,6 +70,7 @@
 .box {
   display: flex;
   margin-bottom: 40px;
+  cursor: pointer;
 }
 
 .box > div {
@@ -251,11 +258,11 @@
 }
 
 .imageGalleryIconLeft {
-  left: 10px;
+  left: 17px;
 }
 
 .imageGalleryIconRight {
-  right: 10px;
+  right: 17px;
 }
 
 .imageGalleryIconLeft:hover,
