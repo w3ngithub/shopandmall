@@ -164,7 +164,6 @@ const CommonShopForm = ({
       });
     }
   };
-  console.log(videoThumbnail[0]);
 
   let listOfMallTimes = [mallTime[0]];
 
@@ -188,15 +187,8 @@ const CommonShopForm = ({
           .rowContent.rowData,
       ]);
     }
-
-    // if (edit) {
-    //   shopVideoDispatch({
-    //     type: "ADD_THUMBNAIL",
-    //     payload: { index, thumbnail: dataShop.shopVideo.thumbnail.name },
-    //   });
-    // }
   }, [docs]);
-  // console.log(dataShop.shopVideo);
+
   return (
     <div className={classes.shopContainer}>
       <div
@@ -506,7 +498,7 @@ const CommonShopForm = ({
         )}
         {edit &&
           (dataShop?.shopVideo?.hasOwnProperty("thumbnail") ||
-            videoThumbnail[index]) && (
+            videoThumbnail?.hasOwnProperty(index)) && (
             <p className={classes.image}>
               {videoThumbnail[index]?.thumbnail?.name ??
                 dataShop.shopVideo.thumbnail.name}
