@@ -8,7 +8,8 @@ import ShopCategories from "../components/ShopCategories";
 
 import MobileShopCategory from "../components/MobileShopCategory";
 import { useLocation, useHistory } from "react-router-dom";
-import { AiOutlineRight } from "react-icons/ai";
+import { HiChevronDoubleRight } from "react-icons/hi";
+import { IoCloseSharp } from "react-icons/io5";
 
 const AllShops = () => {
   let { docs, loading } = useFirestore("Shopping Mall");
@@ -58,19 +59,19 @@ const AllShops = () => {
             className={classes.deleteicon}
             onClick={() => history.push("/shops")}
           >
-            X
+            <IoCloseSharp className={classes.closeIcon} />
           </p>
         </>
       ) : (
         <>
           <p>{category}</p>
-          <AiOutlineRight className={classes.righticon} />
+          <HiChevronDoubleRight className={classes.righticon} />
           <p>{subCategory}</p>
           <p
             className={classes.deleteicon}
             onClick={() => history.push("/shops/category/" + category)}
           >
-            X
+            <IoCloseSharp className={classes.closeIcon} />
           </p>
         </>
       );
@@ -142,7 +143,11 @@ const AllShops = () => {
         ></div>
 
         <div
-          className={classes.shopContainer}
+          className={
+            isShopCategorySelected
+              ? classes.shopContainer
+              : classes.shopContainer2
+          }
           onClick={() => setShowShopCategories(false)}
         >
           <div className={classes.categoryLists}>{categoriesPath}</div>

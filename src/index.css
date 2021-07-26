@@ -23,3 +23,84 @@ body {
 .slick-list > .slick-track {
   margin-left: 0;
 }
+
+.thumbnail img {
+  max-width: 100px;
+  height: 60px;
+  background-color: black;
+}
+
+.original img {
+  height: 86vh;
+}
+
+.image-gallery-index {
+  background: rgba(255, 255, 255, 0.5) !important;
+  color: #fff;
+  line-height: 1;
+  padding: 10px 20px;
+  position: absolute;
+  right: 94% !important;
+  top: 10px;
+  z-index: 4;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 1423px) and (min-width: 1281px) {
+  .original img {
+    height: 87.7vh;
+  }
+}
+
+@media screen and (max-width: 1601px) and (min-width: 1424px) {
+  .original img {
+    height: 88.7vh;
+  }
+}
+
+@media screen and (max-width: 1708px) and (min-width: 1601px) {
+  .original img {
+    height: 89.7vh;
+  }
+}
+
+@media screen and (max-width: 1921px) and (min-width: 1708px) {
+  .original img {
+    height: 90.8vh;
+  }
+}
+
+@media screen and (min-width: 1921px) {
+  .original img {
+    height: 93vh;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .original img {
+    height: 56vh;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .original img {
+    height: 40vh;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .original img {
+    height: 47vh;
+  }
+
+  .image-gallery-index {
+    background: rgba(0, 0, 0, 1) !important;
+  }
+}
+
+@media only screen and (max-width: 376px) {
+  .original img {
+    height: 25vh;
+  }
+}

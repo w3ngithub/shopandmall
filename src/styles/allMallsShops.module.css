@@ -1,7 +1,7 @@
 .main,
 .mainShops {
   width: 75%;
-  margin: 50px auto;
+  margin: 0px auto;
   position: relative;
 }
 
@@ -63,11 +63,16 @@
   width: 100%;
 }
 
-.shopContainer {
+.shopContainer,
+.shopContainer2 {
   position: relative;
   margin-top: 50px;
   margin-bottom: 50px;
   width: 100%;
+}
+
+.shopContainer2 {
+  margin-top: 70px;
 }
 
 .heading {
@@ -80,9 +85,10 @@
 .categoryLists {
   display: flex;
   align-items: center;
-  margin-bottom: 45px;
-  margin-left: 9px;
-  height: 16px;
+  margin-bottom: 65px;
+  margin-left: 10px;
+  margin-top: -10px;
+  /* height: 16px; */
 }
 
 .categoryLists > p {
@@ -155,6 +161,10 @@
 .hideCategoryDropdown {
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0);
   top: -50%;
+}
+
+.closeIcon {
+  margin-top: 4px;
 }
 
 @media screen and (max-width: 1423px) and (min-width: 1281px) {
