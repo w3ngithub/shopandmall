@@ -23,12 +23,15 @@ const CommonShopForm = ({
   addedShopImages,
   removeImage,
   removeVideo,
+  setRemovedVideoThumbnail,
   control,
   getValues,
   mallTime,
   mallLevel,
   videoUploadPercentage = 0,
   isLoading,
+  setVideoThumbnail,
+  videoThumbnail,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
@@ -74,7 +77,7 @@ const CommonShopForm = ({
   const shopVideoHandler = (e) => {
     const selectedShopVideo = e.target.files[0];
 
-    if (selectedShopVideo.size / 1000000 > 100) {
+    if (selectedShopVideo?.size / 1000000 > 100) {
       alert("the size of the video must be less than 100mb");
       return;
     }
@@ -83,11 +86,12 @@ const CommonShopForm = ({
       if (dataShop?.shopVideo?.hasOwnProperty("url")) {
         removeVideo(dataShop.ShopVideo, index);
       }
-
-      shopVideoDispatch({
-        type: "ADD",
-        payload: { index, video: selectedShopVideo },
-      });
+      if (typeof selectedShopVideo === "object") {
+        shopVideoDispatch({
+          type: "ADD",
+          payload: { index, video: selectedShopVideo },
+        });
+      }
     } else {
       shopVideoDispatch({
         type: "ADD",
@@ -138,11 +142,29 @@ const CommonShopForm = ({
 
   const thumbnailImageHandler = (e) => {
     const selectedImage = e.target.files[0];
-    shopVideoDispatch({
-      type: "ADD_THUMBNAIL",
-      payload: { index, thumbnail: selectedImage },
-    });
+
+    if (edit) {
+      if (
+        typeof dataShop?.shopVideo?.thumbnail?.thumbnail === "string" &&
+        !videoThumbnail.hasOwnProperty(index)
+      ) {
+        setRemovedVideoThumbnail((prev) => [
+          ...prev,
+          dataShop?.shopVideo?.thumbnail?.id,
+        ]);
+      }
+      setVideoThumbnail((prev) => ({
+        ...prev,
+        [index]: { id: Date.now(), thumbnail: selectedImage },
+      }));
+    } else {
+      shopVideoDispatch({
+        type: "ADD_THUMBNAIL",
+        payload: { index, thumbnail: selectedImage },
+      });
+    }
   };
+  console.log(videoThumbnail[0]);
 
   let listOfMallTimes = [mallTime[0]];
 
@@ -157,7 +179,7 @@ const CommonShopForm = ({
     }
   });
 
-  const currentVideo = shopVideoState?.find((video) => video.id === index);
+  let currentVideo = shopVideoState?.find((video) => video.id === index);
 
   useEffect(() => {
     if (edit && docs.length > 0) {
@@ -166,8 +188,15 @@ const CommonShopForm = ({
           .rowContent.rowData,
       ]);
     }
+
+    // if (edit) {
+    //   shopVideoDispatch({
+    //     type: "ADD_THUMBNAIL",
+    //     payload: { index, thumbnail: dataShop.shopVideo.thumbnail.name },
+    //   });
+    // }
   }, [docs]);
-  console.log(shopVideoState);
+  // console.log(dataShop.shopVideo);
   return (
     <div className={classes.shopContainer}>
       <div
@@ -423,7 +452,7 @@ const CommonShopForm = ({
                 >
                   <IoIosClose />
                 </button>
-                {video.video.name}
+                {video?.video?.name}
               </p>
             ) : null
           )}
@@ -450,14 +479,15 @@ const CommonShopForm = ({
                 >
                   <IoIosClose />
                 </button>
-                {video.video.name}
+                {video?.video?.name}
               </p>
             ) : null
           )}
         {isLoading && shopVideoState.length > 0 && (
           <Loader loadingPercentage={videoUploadPercentage} />
         )}
-        {currentVideo?.hasOwnProperty("video") && (
+        {(currentVideo?.hasOwnProperty("video") ||
+          dataShop?.hasOwnProperty("shopVideo")) && (
           <label className={classes.label}>
             <input
               type="file"
@@ -471,16 +501,17 @@ const CommonShopForm = ({
         )}
         {currentVideo?.hasOwnProperty("thumbnail") && (
           <p className={classes.image}>
-            <button
-              className={classes.button}
-              type="button"
-              onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
-            >
-              <IoIosClose />
-            </button>
             {currentVideo.thumbnail.thumbnail.name}
           </p>
         )}
+        {edit &&
+          (dataShop?.shopVideo?.hasOwnProperty("thumbnail") ||
+            videoThumbnail[index]) && (
+            <p className={classes.image}>
+              {videoThumbnail[index]?.thumbnail?.name ??
+                dataShop.shopVideo.thumbnail.name}
+            </p>
+          )}
       </div>
     </div>
   );

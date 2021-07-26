@@ -13,6 +13,7 @@ import ShopCardComponent from "../components/shopCardComponent/ShopCardComponent
 import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
 import SkeletonCard from "../skeletons/SkeletonCard";
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const SingleMall = () => {
   const [mall, setMall] = useState([]);
@@ -43,7 +44,9 @@ const SingleMall = () => {
   return (
     <div className={classes.mainContainerMall}>
       {/* Modal */}
-      {showModal === true && <Modal {...{ setShowModal, docId, mall }} />}
+      {showModal === true && (
+        <Modal {...{ setShowModal, docId, mall, toast }} />
+      )}
 
       <div className={classes.topImage}>
         {loading ? (
@@ -160,6 +163,7 @@ const SingleMall = () => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

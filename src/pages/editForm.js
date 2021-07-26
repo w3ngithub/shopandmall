@@ -24,6 +24,8 @@ const MallForm = () => {
   const [editData, editDispatch] = useReducer(editReducer, location.dataToSend);
   const [mallImage, setMallImage] = useState(null);
   const [shopVideoState, shopVideoDispatch] = useReducer(shopVideoReducer, []);
+  const [removedVideoThumbnail, setRemovedVideoThumbnail] = useState([]);
+  const [videoThumbnail, setVideoThumbnail] = useState({});
 
   //Added Images
   const shopImageValues = [];
@@ -42,7 +44,7 @@ const MallForm = () => {
     toast.success("Successfull Updated!", {
       position: "bottom-right",
       autoClose: 2000,
-      onClose: () => history.push("/admin/malls"),
+      onClose: () => history.push(`/admin/malls/${editData.mallName}`),
     });
 
   const submitHandler = async (e) => {
@@ -126,7 +128,13 @@ const MallForm = () => {
 
         if (removedVideo.length > 0) {
           removedVideo.forEach((video) =>
-            storage.ref().child(video.id).delete()
+            storage.ref().child(video?.id).delete()
+          );
+        }
+
+        if (removedVideoThumbnail.length > 0) {
+          removedVideoThumbnail.forEach((id) =>
+            storage.ref().child(id).delete()
           );
         }
 
@@ -138,7 +146,9 @@ const MallForm = () => {
             imageUrl: mallImageUrl,
           };
         }
-        let shopVideoUrl = [];
+        let shopVideoUrl = [],
+          videoThumbnailUrl = [];
+
         if (shopVideoState.length > 0) {
           await Promise.all(
             shopVideoState.map(({ id, video, uniqueId }) => {
@@ -158,10 +168,35 @@ const MallForm = () => {
               return uploadTask;
             })
           );
-          setLoadingPercentage(80);
+          setLoadingPercentage(70);
           shopVideoUrl = await Promise.all(
             shopVideoState.map(({ id, video, uniqueId }) =>
               storage.ref(uniqueId + video.name).getDownloadURL()
+            )
+          );
+        }
+        let tempVideos = [];
+        if (videoThumbnail !== {}) {
+          for (const index in videoThumbnail) {
+            tempVideos = [
+              ...tempVideos,
+              {
+                id: videoThumbnail[index].id,
+                index,
+                thumbnail: videoThumbnail[index].thumbnail,
+              },
+            ];
+          }
+
+          await Promise.all(
+            tempVideos.map((image) =>
+              storage.ref(image.id + image.thumbnail.name).put(image.thumbnail)
+            )
+          );
+          setLoadingPercentage(80);
+          videoThumbnailUrl = await Promise.all(
+            tempVideos.map((image) =>
+              storage.ref(image.id + image.thumbnail.name).getDownloadURL()
             )
           );
         }
@@ -252,21 +287,54 @@ const MallForm = () => {
             shop = { ...shop, shopVideo: s.shopVideo };
           }
 
-          shops = isNewVideo
-            ? [
-                ...shops,
-                {
-                  ...shop,
-                  shopVideo: {
-                    id:
-                      shopVideoState[indexOfVideo].uniqueId +
-                      shopVideoState[indexOfVideo].video.name,
-                    url: shopVideoUrl[indexOfVideo],
-                    videoName: shopVideoState[indexOfVideo].video.name,
-                  },
-                },
-              ]
-            : [...shops, shop];
+          if (isNewVideo) {
+            // shops = [
+            //   ...shops,
+            //   {
+            //     ...shop,
+            //     shopVideo: {
+            //       id:
+            //         shopVideoState[indexOfVideo].uniqueId +
+            //         shopVideoState[indexOfVideo].video.name,
+            //       url: shopVideoUrl[indexOfVideo],
+            //       videoName: shopVideoState[indexOfVideo].video.name,
+            //     },
+            //   },
+            // ];
+            shop = {
+              ...shop,
+              shopVideo: {
+                id:
+                  shopVideoState[indexOfVideo].uniqueId +
+                  shopVideoState[indexOfVideo].video.name,
+                url: shopVideoUrl[indexOfVideo],
+                videoName: shopVideoState[indexOfVideo].video.name,
+              },
+            };
+          }
+          shops = [...shops, { ...shop }];
+          if (videoThumbnail.hasOwnProperty(i)) {
+            const ind = tempVideos.findIndex((v) => +v.index === i);
+            shops = [
+              ...shops.map((s, index) =>
+                index === i
+                  ? {
+                      ...shop,
+                      shopVideo: {
+                        ...shop.shopVideo,
+                        thumbnail: {
+                          id:
+                            videoThumbnail[i].id +
+                            videoThumbnail[i].thumbnail.name,
+                          name: videoThumbnail[i].thumbnail.name,
+                          thumbnail: videoThumbnailUrl[ind],
+                        },
+                      },
+                    }
+                  : s
+              ),
+            ];
+          }
         });
 
         //FireStore
@@ -313,6 +381,9 @@ const MallForm = () => {
         setIsLoading,
         videoUploadPercentage,
         ToastContainer,
+        setRemovedVideoThumbnail,
+        setVideoThumbnail,
+        videoThumbnail,
       }}
     />
   );

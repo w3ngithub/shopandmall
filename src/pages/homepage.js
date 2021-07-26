@@ -153,7 +153,7 @@ const Dashboard = () => {
                     </Link>
                   ))}
               </div>
-              <Shop docs={malls} settings={settings} loading={loading} />
+              {/* <Shop docs={malls} settings={settings} loading={loading} /> */}
             </div>
           )}
         </div>

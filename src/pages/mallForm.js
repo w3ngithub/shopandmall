@@ -95,10 +95,7 @@ const MallForm = () => {
           return;
         }
 
-        if (
-          shopVideoState[index].hasOwnProperty("video") &&
-          !shopVideoState[index].hasOwnProperty("thumbnail")
-        ) {
+        if (shopVideoState[index].thumbnail === undefined) {
           isVideoThumbnailError = true;
           alert(`please upload video thumbnail of shop no. ${index + 1}`);
           return;
@@ -181,7 +178,7 @@ const MallForm = () => {
             shopVideoState?.map((item) =>
               storage
                 .ref()
-                .child(item.thumbnail.thumbnail.name + item.thumbnail.id)
+                .child(item.thumbnail.id + item.thumbnail.thumbnail.name)
                 .put(item.thumbnail.thumbnail)
             )
           );
@@ -189,7 +186,7 @@ const MallForm = () => {
           videoThumbnailUrl = await Promise.all(
             shopVideoState?.map((item) =>
               storage
-                .ref(item.thumbnail.thumbnail.name + item.thumbnail.id)
+                .ref(item.thumbnail.id + item.thumbnail.thumbnail.name)
                 .getDownloadURL()
             )
           );
@@ -246,6 +243,7 @@ const MallForm = () => {
                       shopVideoState[indexOfVideo].thumbnail.id +
                       shopVideoState[indexOfVideo].thumbnail.thumbnail.name,
                     thumbnail: videoThumbnailUrl[indexOfVideo],
+                    name: shopVideoState[indexOfVideo].thumbnail.thumbnail.name,
                   },
                 },
               },
