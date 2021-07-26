@@ -75,7 +75,8 @@ const MallForm = () => {
 
       //shop validation
       let isShopTimeError = false,
-        isShopImageError = false;
+        isShopImageError = false,
+        isVideoThumbnailError = false;
 
       state.shops.forEach((shop, index) => {
         const { shopTimeError, shopImageError } = checkShopValidation(
@@ -93,13 +94,20 @@ const MallForm = () => {
           alert(`please upload an image of shop no.${index + 1}`);
           return;
         }
+
+        if (shopVideoState[index].thumbnail === undefined) {
+          isVideoThumbnailError = true;
+          alert(`please upload video thumbnail of shop no. ${index + 1}`);
+          return;
+        }
       });
 
       if (
         !isMallImageError &&
         !isMallTimeError &&
         !isShopTimeError &&
-        !isShopImageError
+        !isShopImageError &&
+        !isVideoThumbnailError
       ) {
         setIsLoading(true);
 
@@ -137,7 +145,8 @@ const MallForm = () => {
           )
         );
 
-        let shopVideoUrl = [];
+        let shopVideoUrl = [],
+          videoThumbnailUrl = [];
 
         if (shopVideoState.length > 0) {
           await Promise.all(
@@ -162,6 +171,23 @@ const MallForm = () => {
           shopVideoUrl = await Promise.all(
             shopVideoState.map(({ id, video, uniqueId }) =>
               storage.ref(uniqueId + video.name).getDownloadURL()
+            )
+          );
+
+          await Promise.all(
+            shopVideoState?.map((item) =>
+              storage
+                .ref()
+                .child(item.thumbnail.id + item.thumbnail.thumbnail.name)
+                .put(item.thumbnail.thumbnail)
+            )
+          );
+          setLoadingPercentage(90);
+          videoThumbnailUrl = await Promise.all(
+            shopVideoState?.map((item) =>
+              storage
+                .ref(item.thumbnail.id + item.thumbnail.thumbnail.name)
+                .getDownloadURL()
             )
           );
         }
@@ -202,7 +228,6 @@ const MallForm = () => {
           };
 
           if (isVideoPresent) {
-            console.log("video");
             shops = [
               ...shops,
               {
@@ -213,6 +238,13 @@ const MallForm = () => {
                     shopVideoState[indexOfVideo].video.name,
                   url: shopVideoUrl[indexOfVideo],
                   videoName: shopVideoState[indexOfVideo].video.name,
+                  thumbnail: {
+                    id:
+                      shopVideoState[indexOfVideo].thumbnail.id +
+                      shopVideoState[indexOfVideo].thumbnail.thumbnail.name,
+                    thumbnail: videoThumbnailUrl[indexOfVideo],
+                    name: shopVideoState[indexOfVideo].thumbnail.thumbnail.name,
+                  },
                 },
               },
             ];

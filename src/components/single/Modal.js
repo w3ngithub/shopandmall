@@ -9,7 +9,6 @@ import { checkShopValidation } from "../../utils/checkValidation";
 import Loader from "../Loader/Loader";
 import { useHistory } from "react-router-dom";
 import { IoIosClose } from "react-icons/io";
-import { toast } from "react-toastify";
 
 const Modal = ({
   setShowModal,
@@ -17,7 +16,7 @@ const Modal = ({
   mall,
   dataToEdit,
   edit = false,
-
+  toast,
   setShowEditModal,
 }) => {
   const { docs } = useFirestore("Shop Categories");
@@ -31,6 +30,7 @@ const Modal = ({
   const [isLoading, setIsLoading] = useState(false);
   const [percentage, setPercentage] = useState(0);
   const [videoPercentage, setVideoPercentage] = useState(0);
+  const [removedVideoThumbnail, setRemovedVideoThumbnail] = useState(null);
   const { control, handleSubmit } = useForm();
 
   const [shop, setShop] = useState({
@@ -59,7 +59,11 @@ const Modal = ({
       position: "bottom-right",
       autoClose: 2000,
       onOpen: () => {
-        setShowEditModal(false);
+        if (edit) {
+          setShowEditModal(false);
+        } else {
+          setShowModal(false);
+        }
         history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
       },
     });
@@ -79,16 +83,45 @@ const Modal = ({
   const shopVideoHandleer = (e) => {
     const selectedShopVideo = e.target.files[0];
 
-    if (selectedShopVideo.size / 1000000 > 100) {
+    if (selectedShopVideo?.size / 1000000 > 100) {
       alert("the size of the video must be less than 100mb");
       return;
     }
 
     if (edit && video.hasOwnProperty("videoName")) {
       setRemovedVideo(video);
+      setRemovedVideoThumbnail(video.thumbnail.id);
     }
 
     setVideo({ id: Date.now(), video: selectedShopVideo });
+  };
+
+  const videoThumbnailHandler = (e) => {
+    const selectedImage = e.target.files[0];
+
+    if (edit) {
+      if (video?.thumbnail?.hasOwnProperty("id")) {
+        setRemovedVideoThumbnail(video.thumbnail.id);
+      }
+
+      setVideo({
+        ...video,
+        thumbnail: {
+          id: Date.now(),
+          name: selectedImage.name,
+          thumbnail: selectedImage,
+        },
+      });
+    } else {
+      setVideo({
+        ...video,
+        thumbnail: {
+          id: Date.now(),
+          name: selectedImage.name,
+          thumbnail: selectedImage,
+        },
+      });
+    }
   };
   const onManualTimeChange = (rowId, name, value) => {
     setShop({
@@ -140,6 +173,11 @@ const Modal = ({
         return;
       }
 
+      if (video.hasOwnProperty("video") && !video.hasOwnProperty("thumbnail")) {
+        alert("Please upload thumbnail for video");
+        return;
+      }
+
       setIsLoading(true);
       setPercentage(30);
       await Promise.all(
@@ -171,6 +209,23 @@ const Modal = ({
           .ref(video.id + video.video.name)
           .put(video.video);
 
+        let videoThumbnailUrl = [];
+        await Promise.all(
+          [video].map((video) =>
+            storage
+              .ref(video.thumbnail.id + video.thumbnail.thumbnail.name)
+              .put(video.thumbnail.thumbnail)
+          )
+        );
+
+        videoThumbnailUrl = await Promise.all(
+          [video].map((video) =>
+            storage
+              .ref(video.thumbnail.id + video.thumbnail.thumbnail.name)
+              .getDownloadURL()
+          )
+        );
+
         uploadTask.on(
           "state_changed",
           (snapshot) => {
@@ -181,6 +236,7 @@ const Modal = ({
           },
           (error) => {},
           () => {
+            setPercentage(100);
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
               result = {
                 ...result,
@@ -188,6 +244,11 @@ const Modal = ({
                   id: video.id + video.video.name,
                   videoName: video.video.name,
                   url: downloadURL,
+                  thumbnail: {
+                    id: video.thumbnail.id + video.thumbnail.thumbnail.name,
+                    thumbnail: videoThumbnailUrl[0],
+                    name: video.thumbnail.thumbnail.name,
+                  },
                 },
               };
               mall.shops.length > 0
@@ -198,7 +259,9 @@ const Modal = ({
                       ...mall,
                       shops: [...mall.shops, result],
                     })
-                    .then(() => setPercentage(100))
+                    .then(() => {
+                      successNotification();
+                    })
                 : fireStore
                     .collection("Shopping Mall")
                     .doc(docId)
@@ -206,9 +269,9 @@ const Modal = ({
                       ...mall,
                       shops: [result],
                     })
-                    .then(() => setPercentage(100));
-
-              setShowModal(false);
+                    .then(() => {
+                      successNotification();
+                    });
             });
           }
         );
@@ -222,7 +285,7 @@ const Modal = ({
                 ...mall,
                 shops: [...mall.shops, result],
               })
-              .then(() => setPercentage(100))
+              .then(() => successNotification())
           : fireStore
               .collection("Shopping Mall")
               .doc(docId)
@@ -230,8 +293,7 @@ const Modal = ({
                 ...mall,
                 shops: [result],
               })
-              .then(() => setPercentage(100));
-        successNotification();
+              .then(() => successNotification());
       }
     } catch (e) {
       setIsLoading(false);
@@ -240,9 +302,16 @@ const Modal = ({
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
+
+    if (video.hasOwnProperty("video") && !video.hasOwnProperty("thumbnail")) {
+      alert("Please upload thumbnail for video");
+      return;
+    }
+
     setIsLoading(true);
 
     setPercentage(30);
+
     if (removedImages.length > 0) {
       removedImages.forEach((image) =>
         storage.ref().child(image.ImageName).delete()
@@ -252,40 +321,80 @@ const Modal = ({
       removedVideo.forEach((video) => storage.ref().child(video.id).delete());
     }
 
+    if (removedVideoThumbnail !== null) {
+      storage.ref().child(removedVideoThumbnail).delete();
+    }
+
     let shopVideoUrl = [],
       shopTemp = { ...shop };
     setPercentage(60);
-    if (video.hasOwnProperty("video")) {
-      await Promise.all(
-        [video].map(({ id, video, uniqueId }) => {
-          const uploadTask = storage
-            .ref()
-            .child(uniqueId + video.name)
-            .put(video);
-          uploadTask.on("state_changed", (snapshot) => {
-            var progress = Math.floor(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
-            setVideoPercentage(progress);
-          });
-          return uploadTask;
-        })
-      );
 
-      shopVideoUrl = await Promise.all(
-        [video].map(({ id, video, uniqueId }) =>
-          storage.ref(uniqueId + video.name).getDownloadURL()
+    if (typeof video?.thumbnail?.thumbnail === "object") {
+      console.log("new thumbnail");
+      let videoThumbnailUrl = [];
+      await Promise.all(
+        [video].map((video) =>
+          storage
+            .ref(video.thumbnail.id + video.thumbnail.thumbnail.name)
+            .put(video.thumbnail.thumbnail)
         )
       );
+
+      videoThumbnailUrl = await Promise.all(
+        [video].map((video) =>
+          storage
+            .ref(video.thumbnail.id + video.thumbnail.name)
+            .getDownloadURL()
+        )
+      );
+
       shopTemp = {
-        ...shop,
+        ...shopTemp,
         shopVideo: {
-          id: video.id + video.video.name,
-          videoName: video.video.name,
-          url: shopVideoUrl[0],
+          ...shopTemp.shopVideo,
+          thumbnail: {
+            id: video.thumbnail.id + video.thumbnail.name,
+            name: video.thumbnail.name,
+            thumbnail: videoThumbnailUrl[0],
+          },
         },
       };
+
+      if (video.hasOwnProperty("video")) {
+        await Promise.all(
+          [video].map(({ id, video, uniqueId }) => {
+            const uploadTask = storage
+              .ref()
+              .child(uniqueId + video.name)
+              .put(video);
+            uploadTask.on("state_changed", (snapshot) => {
+              var progress = Math.floor(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+              );
+              setVideoPercentage(progress);
+            });
+            return uploadTask;
+          })
+        );
+
+        shopVideoUrl = await Promise.all(
+          [video].map(({ id, video, uniqueId }) =>
+            storage.ref(uniqueId + video.name).getDownloadURL()
+          )
+        );
+
+        shopTemp = {
+          ...shopTemp,
+          shopVideo: {
+            ...shopTemp.shopVideo,
+            id: video.id + video.video.name,
+            videoName: video.video.name,
+            url: shopVideoUrl[0],
+          },
+        };
+      }
     }
+
     setPercentage(80);
     if (images.length > 0) {
       await Promise.all(
@@ -296,9 +405,9 @@ const Modal = ({
         images.map((image) => storage.ref(image.name).getDownloadURL())
       );
       shopTemp = {
-        ...shop,
+        ...shopTemp,
         shopImages: [
-          ...shop.shopImages,
+          ...shopTemp.shopImages,
           ...images.map((img, i) => ({
             id: Math.random() + img.name,
             ImageName: img.name,
@@ -587,6 +696,26 @@ const Modal = ({
           {isLoading && video?.hasOwnProperty("video") && (
             <Loader loadingPercentage={videoPercentage} />
           )}
+          {(video.hasOwnProperty("video") ||
+            video.hasOwnProperty("thumbnail")) && (
+            <label className={classes.label}>
+              Add Video Thumbnail
+              <input
+                className={classes.upload}
+                type="file"
+                onChange={videoThumbnailHandler}
+              />
+              <IoIosAddCircle className={classes.addIcon} />
+            </label>
+          )}
+          <div className={classes.selectedImages}>
+            {!edit && video?.thumbnail?.hasOwnProperty("thumbnail") && (
+              <p className={classes.image}>{video.thumbnail.name}</p>
+            )}
+            {edit && video?.thumbnail?.hasOwnProperty("thumbnail") && (
+              <p className={classes.image}>{video.thumbnail.name}</p>
+            )}
+          </div>
           {isLoading && <Loader loadingPercentage={percentage} />}
           {edit ? (
             <button

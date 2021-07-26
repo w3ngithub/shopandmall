@@ -1,5 +1,26 @@
 const editReducer = (state, action) => {
   switch (action.type) {
+    case "EDIT_THUMBNAIL":
+      return {
+        ...state,
+        shops: [
+          ...state.shops.map((shop, i) =>
+            i === action.payload.index
+              ? {
+                  ...shop,
+                  shopVideo: {
+                    ...shop.shopVideo,
+                    thumbnail: {
+                      id: Date.now(),
+                      name: action.payload.thumbnail.name,
+                      thumbnail: action.payload.thumbnail,
+                    },
+                  },
+                }
+              : shop
+          ),
+        ],
+      };
     case "EDIT_MALL_INFO":
       return {
         ...state,

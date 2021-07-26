@@ -19,6 +19,21 @@ const shopVideoReducer = (state, action) => {
           ];
     case "REMOVE":
       return [...state.filter((video) => video.id !== action.index)];
+
+    case "ADD_THUMBNAIL":
+      return [
+        ...state.map((video) =>
+          video.id === action.payload.index
+            ? {
+                ...video,
+                thumbnail: {
+                  id: Date.now(),
+                  thumbnail: action.payload.thumbnail,
+                },
+              }
+            : video
+        ),
+      ];
     default:
       return state;
   }

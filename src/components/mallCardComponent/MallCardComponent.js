@@ -60,6 +60,15 @@ const MallCardComponent = ({ doc }) => {
                       .then(() => console.log("deleted video"));
                   }
                 });
+                //video thumbnail
+                doc.shops.forEach((shop) => {
+                  if (shop.shopVideo) {
+                    storageRef
+                      .child(shop.shopVideo.thumbnail.id)
+                      .delete()
+                      .then(() => console.log("deleted Thumbnail"));
+                  }
+                });
                 fireStore
                   .collection("Shopping Mall")
                   .doc(doc.mallName)

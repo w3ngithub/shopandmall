@@ -31,6 +31,9 @@ const CommonForm = ({
   loadingPercentage,
   videoUploadPercentage,
   ToastContainer,
+  setRemovedVideoThumbnail,
+  setVideoThumbnail,
+  videoThumbnail,
 }) => {
   //States
 
@@ -257,6 +260,9 @@ const CommonForm = ({
                       mallLevel: editData?.levels,
                       videoUploadPercentage: videoUploadPercentage[index],
                       isLoading,
+                      setRemovedVideoThumbnail,
+                      setVideoThumbnail,
+                      videoThumbnail,
                     }}
                   />
                   <div className={classes.line}></div>

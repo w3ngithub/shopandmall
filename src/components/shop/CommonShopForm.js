@@ -23,12 +23,15 @@ const CommonShopForm = ({
   addedShopImages,
   removeImage,
   removeVideo,
+  setRemovedVideoThumbnail,
   control,
   getValues,
   mallTime,
   mallLevel,
   videoUploadPercentage = 0,
   isLoading,
+  setVideoThumbnail,
+  videoThumbnail,
 }) => {
   const [shopImageError, setShopImageError] = useState(null);
   const { docs } = useFirestore("Shop Categories");
@@ -74,7 +77,7 @@ const CommonShopForm = ({
   const shopVideoHandler = (e) => {
     const selectedShopVideo = e.target.files[0];
 
-    if (selectedShopVideo.size / 1000000 > 100) {
+    if (selectedShopVideo?.size / 1000000 > 100) {
       alert("the size of the video must be less than 100mb");
       return;
     }
@@ -83,11 +86,12 @@ const CommonShopForm = ({
       if (dataShop?.shopVideo?.hasOwnProperty("url")) {
         removeVideo(dataShop.ShopVideo, index);
       }
-
-      shopVideoDispatch({
-        type: "ADD",
-        payload: { index, video: selectedShopVideo },
-      });
+      if (typeof selectedShopVideo === "object") {
+        shopVideoDispatch({
+          type: "ADD",
+          payload: { index, video: selectedShopVideo },
+        });
+      }
     } else {
       shopVideoDispatch({
         type: "ADD",
@@ -136,6 +140,31 @@ const CommonShopForm = ({
           payload: { shopIndex: index, rowId },
         });
 
+  const thumbnailImageHandler = (e) => {
+    const selectedImage = e.target.files[0];
+
+    if (edit) {
+      if (
+        typeof dataShop?.shopVideo?.thumbnail?.thumbnail === "string" &&
+        !videoThumbnail.hasOwnProperty(index)
+      ) {
+        setRemovedVideoThumbnail((prev) => [
+          ...prev,
+          dataShop?.shopVideo?.thumbnail?.id,
+        ]);
+      }
+      setVideoThumbnail((prev) => ({
+        ...prev,
+        [index]: { id: Date.now(), thumbnail: selectedImage },
+      }));
+    } else {
+      shopVideoDispatch({
+        type: "ADD_THUMBNAIL",
+        payload: { index, thumbnail: selectedImage },
+      });
+    }
+  };
+
   let listOfMallTimes = [mallTime[0]];
 
   s?.timings?.forEach((time, index) => {
@@ -148,6 +177,8 @@ const CommonShopForm = ({
       }
     }
   });
+
+  let currentVideo = shopVideoState?.find((video) => video.id === index);
 
   useEffect(() => {
     if (edit && docs.length > 0) {
@@ -413,7 +444,7 @@ const CommonShopForm = ({
                 >
                   <IoIosClose />
                 </button>
-                {video.video.name}
+                {video?.video?.name}
               </p>
             ) : null
           )}
@@ -440,13 +471,39 @@ const CommonShopForm = ({
                 >
                   <IoIosClose />
                 </button>
-                {video.video.name}
+                {video?.video?.name}
               </p>
             ) : null
           )}
         {isLoading && shopVideoState.length > 0 && (
           <Loader loadingPercentage={videoUploadPercentage} />
         )}
+        {(currentVideo?.hasOwnProperty("video") ||
+          dataShop?.hasOwnProperty("shopVideo")) && (
+          <label className={classes.label}>
+            <input
+              type="file"
+              onChange={thumbnailImageHandler}
+              accept="images/*"
+            />
+            <span>
+              <div className={classes.imgButton}>Add Video Thumbnail</div>
+            </span>
+          </label>
+        )}
+        {currentVideo?.hasOwnProperty("thumbnail") && (
+          <p className={classes.image}>
+            {currentVideo.thumbnail.thumbnail.name}
+          </p>
+        )}
+        {edit &&
+          (dataShop?.shopVideo?.hasOwnProperty("thumbnail") ||
+            videoThumbnail?.hasOwnProperty(index)) && (
+            <p className={classes.image}>
+              {videoThumbnail[index]?.thumbnail?.name ??
+                dataShop.shopVideo.thumbnail.name}
+            </p>
+          )}
       </div>
     </div>
   );
