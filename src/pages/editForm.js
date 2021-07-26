@@ -6,6 +6,7 @@ import React, { useState, useReducer } from "react";
 import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
 import { checkShopValidation } from "../utils/checkValidation";
 import shopVideoReducer from "../reducers/shopVideoReducer";
+import { ToastContainer, toast, Slide } from "react-toastify";
 
 const MallForm = () => {
   //Removed Images
@@ -36,6 +37,13 @@ const MallForm = () => {
   //Loading
   const [isLoading, setIsLoading] = useState(false);
   const [videoUploadPercentage, setVideoUploadPercentage] = useState({});
+
+  const successNotification = () =>
+    toast.success("Successfull Updated!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      onClose: () => history.push("/admin/malls"),
+    });
 
   const submitHandler = async (e) => {
     try {
@@ -86,8 +94,6 @@ const MallForm = () => {
         let shopImageUrl = null;
 
         if (addedShopImages.some((img) => img.hasOwnProperty("images"))) {
-          console.log("addedshopimages");
-
           await Promise.all(
             addedShopImages.map((image) =>
               Promise.all(
@@ -107,7 +113,6 @@ const MallForm = () => {
               )
             )
           );
-          console.log(shopImageUrl);
         }
 
         setLoadingPercentage(60);
@@ -174,7 +179,8 @@ const MallForm = () => {
 
         editData?.shops?.forEach((s, i) => {
           const isShopImagesPresent = s.shopImages.length > 0;
-          const isNewShopImagesAdded = shopImageUrl !== null;
+          const isNewShopImagesAdded =
+            addedShopImages.findIndex((image) => image.id === i) >= 0;
           const indexOfAddedImages = addedShopImages.findIndex(
             (image) => image.id === i
           );
@@ -183,7 +189,7 @@ const MallForm = () => {
           );
           const isNewVideo = indexOfVideo >= 0;
 
-          const shop =
+          let shop =
             isShopImagesPresent && isNewShopImagesAdded
               ? {
                   id: i,
@@ -194,6 +200,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
+
                   shopImages: [
                     ...s.shopImages,
                     ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
@@ -216,6 +223,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
+
                   shopImages: [...s.shopImages],
                 }
               : {
@@ -227,6 +235,7 @@ const MallForm = () => {
                   timings: s?.timings,
                   category: s?.category,
                   subCategory: s?.subCategory,
+
                   shopImages: [
                     ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
                       id:
@@ -239,23 +248,25 @@ const MallForm = () => {
                   ],
                 };
 
-          if (isNewVideo) {
-            shops = [
-              ...shops,
-              {
-                ...shop,
-                shopVideo: {
-                  id:
-                    shopVideoState[indexOfVideo].uniqueId +
-                    shopVideoState[indexOfVideo].video.name,
-                  url: shopVideoUrl[indexOfVideo],
-                  videoName: shopVideoState[indexOfVideo].video.name,
-                },
-              },
-            ];
-          } else {
-            shops = [...shops, shop];
+          if (s.shopVideo !== undefined) {
+            shop = { ...shop, shopVideo: s.shopVideo };
           }
+
+          shops = isNewVideo
+            ? [
+                ...shops,
+                {
+                  ...shop,
+                  shopVideo: {
+                    id:
+                      shopVideoState[indexOfVideo].uniqueId +
+                      shopVideoState[indexOfVideo].video.name,
+                    url: shopVideoUrl[indexOfVideo],
+                    videoName: shopVideoState[indexOfVideo].video.name,
+                  },
+                },
+              ]
+            : [...shops, shop];
         });
 
         //FireStore
@@ -271,9 +282,11 @@ const MallForm = () => {
           .set({
             ...mall,
             shops: shops,
+          })
+          .then(() => {
+            successNotification();
           });
         setLoadingPercentage(100);
-        history.push("/admin/malls");
       }
     } catch (err) {
       console.log("Error", err);
@@ -299,6 +312,7 @@ const MallForm = () => {
         isLoading,
         setIsLoading,
         videoUploadPercentage,
+        ToastContainer,
       }}
     />
   );

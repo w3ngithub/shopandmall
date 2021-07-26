@@ -157,7 +157,7 @@ const CommonShopForm = ({
       ]);
     }
   }, [docs]);
-  console.log(dataShop, dataShop?.shopVideo?.hasOwnProperty("url"));
+
   return (
     <div className={classes.shopContainer}>
       <div

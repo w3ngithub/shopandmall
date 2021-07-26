@@ -115,6 +115,23 @@
   padding-bottom: 10px;
 }
 
+.shopDetails {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shopDetails p {
+  padding-bottom: 7px;
+}
+
+.shopDetails h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
 .details p {
   padding-bottom: 7px;
 }

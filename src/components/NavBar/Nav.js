@@ -19,12 +19,20 @@ const NavBar = ({ check }) => {
   const [checked, setChecked] = useState(false);
 
   const [_, setUserValidate] = useState(false);
+  console.log(location.pathname);
 
   return (
     <div className={classes.navbar}>
       <div className={classes.container}>
         <div className={classes.logo}>
-          <Link to="/" className={classes.logo2}>
+          <Link
+            to={
+              location.pathname.split("/")[1] === "admin"
+                ? "/admin/dashboard"
+                : "/"
+            }
+            className={classes.logo2}
+          >
             <img src={Logo} alt="" />
             <p>Shops and Malls</p>
           </Link>
