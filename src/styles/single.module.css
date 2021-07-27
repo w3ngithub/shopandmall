@@ -43,10 +43,8 @@
   right: 0px;
   bottom: 0px;
   font-size: 14px;
-  font-weight: bold;
   line-height: 18px;
   letter-spacing: 4px;
-  /* font-size: 20px; */
 }
 
 .mainShop,
@@ -70,7 +68,6 @@
 .box {
   display: flex;
   margin-bottom: 40px;
-  cursor: pointer;
 }
 
 .box > div {
@@ -84,6 +81,14 @@
   transition: all 0.2s ease-in;
 }
 
+.photosBox {
+  cursor: pointer;
+}
+
+.videosBox {
+  cursor: pointer;
+}
+
 .photosBox > div,
 .videosBox > div,
 .emptyBox > div {
@@ -94,6 +99,7 @@
 
 .emptyBox > div {
   color: rgba(0, 0, 0, 0.3);
+  cursor: auto;
 }
 
 .video {
@@ -196,6 +202,11 @@
   overflow: hidden;
   position: relative;
   background-color: black;
+  cursor: pointer;
+}
+
+.wrapper:hover .videoIcon {
+  font-size: 50px;
 }
 
 .image {
@@ -333,10 +344,6 @@
   transform: translate(-50%, -50%);
   cursor: pointer;
   transition: all 0.2s ease-in;
-}
-
-.videoIcon:hover {
-  font-size: 50px;
 }
 
 /* .imageGalleryImage {
@@ -568,7 +575,7 @@
   }
 
   .video {
-    height: 27vh;
+    height: 25vh;
   }
 
   .shopSideImage {
@@ -584,6 +591,32 @@
     top: 12.5px;
     left: 30px;
   }
+
+  .imageGalleryIconLeft,
+  .imageGalleryIconRight {
+    color: #fff;
+    transition: all 0.2s ease-out;
+    appearance: none;
+    /* background-color: transparent; */
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    filter: drop-shadow(0 2px 2px #1a1a1a);
+    background-color: rgba(0, 0, 0, 0.75) !important;
+    border-radius: 5px;
+    padding: 3px;
+  }
+
+  .imageGalleryIconLeft {
+    left: 4px;
+  }
+
+  .imageGalleryIconRight {
+    right: 4px;
+  }
 }
 
 @media only screen and (max-width: 376px) {
@@ -593,6 +626,6 @@
   }
 
   .video {
-    height: 24vh;
+    height: 23vh;
   }
 }

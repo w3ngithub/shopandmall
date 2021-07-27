@@ -10,7 +10,8 @@ import ShopCategories from "../components/ShopCategories";
 import MobileShopCategory from "../components/MobileShopCategory";
 import { FaPlus } from "react-icons/fa";
 import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
-import { AiOutlineRight } from "react-icons/ai";
+import { HiChevronDoubleRight } from "react-icons/hi";
+import { IoCloseSharp } from "react-icons/io5";
 
 // import Pagination from "../components/mall/Pagination";
 
@@ -68,19 +69,24 @@ const AllMalls = () => {
             className={classes.deleteicon}
             onClick={() => history.push("/malls")}
           >
-            X
+            <IoCloseSharp className={classes.closeIcon} />
           </p>
         </>
       ) : (
         <>
-          <p>{category}</p>
-          <AiOutlineRight className={classes.righticon} />
+          <p
+            className={classes.mainParagraph}
+            onClick={() => history.push("/malls/category/" + category)}
+          >
+            {category}
+          </p>
+          <HiChevronDoubleRight className={classes.righticon} />
           <p>{subCategory}</p>
           <p
             className={classes.deleteicon}
             onClick={() => history.push("/malls/category/" + category)}
           >
-            X
+            <IoCloseSharp className={classes.closeIcon} />
           </p>
         </>
       );
@@ -145,14 +151,22 @@ const AllMalls = () => {
           )}
         </div>
 
-        <ShopCategories
-          {...{
-            shopCategory,
-            showShopCategories,
-            setShowShopCategories,
-            setShowCategoryMobile,
-          }}
-        />
+        <div
+          className={
+            isShopCategorySelected
+              ? classes.shopCategories
+              : classes.shopCategories2
+          }
+        >
+          <ShopCategories
+            {...{
+              shopCategory,
+              showShopCategories,
+              setShowShopCategories,
+              setShowCategoryMobile,
+            }}
+          />
+        </div>
 
         <div
           onClick={() => setShowShopCategories(false)}
@@ -166,7 +180,11 @@ const AllMalls = () => {
         ></div>
 
         <div
-          className={classes.mallContainer}
+          className={
+            isShopCategorySelected
+              ? classes.mallContainer
+              : classes.mallContainer2
+          }
           onClick={() => setShowShopCategories(false)}
         >
           <div className={classes.categoryLists}>{categoriesPath}</div>

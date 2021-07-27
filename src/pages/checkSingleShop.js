@@ -58,9 +58,9 @@ class SingleClassTry extends React.Component {
                   galleryImage: [
                     ...this.state.galleryImage,
                     {
-                      original: `${Image}`,
-                      originalClass: "original",
-                      thumbnail: `${Image}`,
+                      original: `${shop?.shopVideo?.thumbnail?.thumbnail}`,
+                      originalClass: "originalVideo",
+                      thumbnail: `${shop?.shopVideo?.thumbnail?.thumbnail}`,
                       thumbnailClass: "thumbnail",
                       embedUrl: `${shop.shopVideo.url}`,
                       renderItem: this._renderVideo.bind(this),
@@ -239,18 +239,6 @@ class SingleClassTry extends React.Component {
     this.setState({ sideImage: false });
   }
 
-  // _renderCustomControls() {
-  //   return (
-  //     <Icons
-  //       name="Close"
-  //       //onClick={this._customAction.bind(this)}
-  //       onClick={() => this._customAction()}
-  //       className="gallery-close-icon"
-  //       size={35}
-  //     />
-  //   );
-  // }
-
   _customAction = () => {
     this._imageGallery.toggleFullScreen();
     this.props.handleImageGalleryActive(false);
@@ -279,9 +267,9 @@ class SingleClassTry extends React.Component {
 
     const { sideImageWithFooter, showSideImage, hideSideImage } = this.context;
 
-    console.log(sideImageWithFooter);
-
     this.state.modal === false && (document.body.style.overflow = "auto");
+
+    console.log("bar", this.state.mall);
 
     return (
       // Image Gallery Carousel
@@ -318,11 +306,8 @@ class SingleClassTry extends React.Component {
                 showNav={showNav}
                 isRTL={isRTL}
                 thumbnailPosition={thumbnailPosition}
-                // slideDuration={parseInt(slideDuration)}
-                // slideInterval={parseInt(slideInterval)}
                 slideOnThumbnailOver={true}
                 additionalClass="app-image-gallery"
-                // renderCustomControls={this._renderCustomControls}
                 useTranslate3D={useTranslate3D}
                 renderLeftNav={this.renderLeftNav}
                 renderRightNav={this.renderRightNav}
@@ -337,7 +322,7 @@ class SingleClassTry extends React.Component {
                 lazyLoad={lazyLoad}
                 infinite={infinite}
                 showBullets={showBullets}
-                showFullscreenButton={showFullscreenButton}
+                showFullscreenButton={false}
                 showPlayButton={
                   showPlayButton && this.state.showGalleryPlayButton
                 }
@@ -346,11 +331,8 @@ class SingleClassTry extends React.Component {
                 showNav={showNav}
                 isRTL={isRTL}
                 thumbnailPosition={thumbnailPosition}
-                // slideDuration={parseInt(slideDuration)}
-                // slideInterval={parseInt(slideInterval)}
                 slideOnThumbnailOver={true}
                 additionalClass="app-image-gallery"
-                // renderCustomControls={this._renderCustomControls}
                 useTranslate3D={useTranslate3D}
                 renderLeftNav={this.renderLeftNav}
                 renderRightNav={this.renderRightNav}
@@ -384,7 +366,6 @@ class SingleClassTry extends React.Component {
 
             <div className={classes.mainSkeleton}>
               <div
-                // style={{ borderBottom: "2px solid #C1C1C1" }}
                 className={`${classes.details} ${classes.shopDetailsSkeleton}`}
               >
                 <h1>
@@ -444,9 +425,13 @@ class SingleClassTry extends React.Component {
                     <div className={classes.box}>
                       <div
                         className={classes.photosBox}
-                        onClick={() => {
-                          this.setState({ modal: true, ind: 1 });
-                        }}
+                        onClick={
+                          shop.shopVideo
+                            ? () => {
+                                this.setState({ modal: true, ind: 1 });
+                              }
+                            : () => this.setState({ modal: true, ind: 0 })
+                        }
                       >
                         <div>
                           <BiImage className={classes.icon} />
@@ -460,9 +445,13 @@ class SingleClassTry extends React.Component {
                         className={
                           shop.shopVideo ? classes.videosBox : classes.emptyBox
                         }
-                        onClick={() => {
-                          this.setState({ modal: true, ind: 0 });
-                        }}
+                        onClick={
+                          shop.shopVideo
+                            ? () => {
+                                this.setState({ modal: true, ind: 0 });
+                              }
+                            : null
+                        }
                       >
                         <div>
                           <BiVideo className={classes.icon} />
@@ -496,19 +485,19 @@ class SingleClassTry extends React.Component {
 
                     <div className={classes.container}>
                       {shop.shopVideo ? (
-                        <div className={classes.wrapper}>
+                        <div
+                          className={classes.wrapper}
+                          onClick={() => {
+                            this.setState({ modal: true, ind: 0 });
+                          }}
+                        >
                           <video
                             src={shop.shopVideo.url}
                             controls={false}
                             width="100%"
                             height="200px"
                           ></video>
-                          <FaPlay
-                            onClick={() => {
-                              this.setState({ modal: true, ind: 0 });
-                            }}
-                            className={classes.videoIcon}
-                          />
+                          <FaPlay className={classes.videoIcon} />
                         </div>
                       ) : null}
 

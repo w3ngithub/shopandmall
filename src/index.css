@@ -15,6 +15,10 @@ body {
   position: relative;
 }
 
+.body {
+  min-height: 485px;
+}
+
 .slick-disabled {
   visibility: hidden !important;
   opacity: 0 !important;
@@ -34,6 +38,10 @@ body {
   height: 86vh;
 }
 
+.originalVideo img {
+  height: 86vh;
+}
+
 .image-gallery-index {
   background: rgba(255, 255, 255, 0.5) !important;
   color: #fff;
@@ -43,10 +51,15 @@ body {
   right: 94% !important;
   top: 10px;
   z-index: 4;
+  display: flex;
 }
 
 @media screen and (max-width: 1423px) and (min-width: 1281px) {
   .original img {
+    height: 87.7vh;
+  }
+
+  .originalVideo img {
     height: 87.7vh;
   }
 }
@@ -55,50 +68,96 @@ body {
   .original img {
     height: 88.7vh;
   }
+
+  .originalVideo img {
+    height: 88.7vh;
+  }
 }
 
 @media screen and (max-width: 1708px) and (min-width: 1601px) {
   .original img {
     height: 89.7vh;
   }
+
+  .originalVideo img {
+    height: 89.7vh;
+  }
 }
 
 @media screen and (max-width: 1921px) and (min-width: 1708px) {
+  .body {
+    min-height: 540px;
+  }
+
   .original img {
+    height: 90.8vh;
+  }
+
+  .originalVideo img {
     height: 90.8vh;
   }
 }
 
 @media screen and (min-width: 1921px) {
+  .body {
+    min-height: 828px;
+  }
+
   .original img {
+    height: 93vh;
+  }
+
+  .originalVideo img {
     height: 93vh;
   }
 }
 
 @media only screen and (max-width: 1024px) {
-  .original img {
-    height: 56vh;
+  .body {
+    min-height: 1039px;
   }
-}
 
-@media only screen and (max-width: 768px) {
-  .original img {
-    height: 40vh;
-  }
-}
-
-@media only screen and (max-width: 414px) {
   .original img {
     height: 47vh;
   }
 
+  .originalVideo img {
+    height: 37vh;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .body {
+    min-height: 699px;
+  }
+
+  .original img {
+    height: 45vh;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .body {
+    min-height: 485px;
+  }
+
+  .original img {
+    height: 47vh;
+  }
+
+  .originalVideo img {
+    height: 29vh;
+  }
+
   .image-gallery-index {
     background: rgba(0, 0, 0, 1) !important;
+    left: 11px !important;
+    display: flex;
   }
 }
 
 @media only screen and (max-width: 376px) {
   .original img {
-    height: 25vh;
+    height: 34vh;
   }
 }
