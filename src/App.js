@@ -34,7 +34,7 @@ function App() {
   const location = useLocation();
 
   //State
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
+
   const [allDataState, allDataDispatch] = useReducer(allDataReducer, allData);
   const [sideImageWithFooter, setSideImageWithFooter] = useState(false);
 
@@ -45,15 +45,6 @@ function App() {
   const hideSideImage = () => {
     setSideImageWithFooter(false);
   };
-
-  //Local Storage Thing
-  useEffect(() => {
-    if (localStorage.getItem("isAuth") === null) {
-      localStorage.setItem("isAuth", "false");
-    } else {
-      localStorage.getItem("isAuth");
-    }
-  }, []);
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -111,7 +102,7 @@ function App() {
           <Route
             exact
             path="/login"
-            render={() => <Login isAuth={isAuth} setIsAuth={setIsAuth} />}
+            render={() => <Login isAuth={localStorage.getItem("isAuth")} />}
           />
           <ProtectedRoute
             path="/admin/dashboard"
@@ -145,11 +136,7 @@ function App() {
             path="/admin/addshopcategories"
             component={AddShopCategory}
           />
-          <Route
-            exact
-            path="/login"
-            render={() => <Login isAuth={isAuth} setIsAuth={setIsAuth} />}
-          />
+
           <ProtectedRoute
             path="/admin/dashboard"
             component={HomePage}
