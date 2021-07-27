@@ -26,6 +26,14 @@
   gap: 10px;
 }
 
+.categoryDesktop:hover {
+  color: rgb(87, 154, 218);
+}
+
+.categoryP:hover {
+  color: rgb(87, 154, 218);
+}
+
 .mobileShopFilter {
   display: none;
 }

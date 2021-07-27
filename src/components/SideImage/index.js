@@ -42,7 +42,6 @@ const SideImage = ({
     );
   }
 
-  console.log("asdf", galleryImages);
   return (
     <div
       className={
@@ -73,6 +72,7 @@ const SideImage = ({
               renderLeftNav={renderLeftNav}
               renderRightNav={renderRightNav}
               showIndex={true}
+              showFullscreenButton={false}
             />
           </div>
         </div>
