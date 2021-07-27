@@ -94,10 +94,11 @@ function App() {
           <Route exact path="/contact-us" component={ContactUs} />
 
           {/* ------------------Admin------------------ */}
-          <Route
+          <ProtectedRoute
             exact
             path="/admin/addshopcategories"
             component={AddShopCategory}
+            page="/login"
           />
           <Route
             exact
@@ -129,40 +130,6 @@ function App() {
             path="/admin/:id/shops/:type"
             component={SingleClassTry}
           />
-
-          {/* ------------------Admin------------------ */}
-          <Route
-            exact
-            path="/admin/addshopcategories"
-            component={AddShopCategory}
-          />
-
-          <ProtectedRoute
-            path="/admin/dashboard"
-            component={HomePage}
-            page="/login"
-            exact
-          />
-          <ProtectedRoute
-            path="/admin/newMall"
-            component={MallForm}
-            page="/"
-            exact
-          />
-          <ProtectedRoute exact path="/admin/shops" component={AllShops} />
-          <ProtectedRoute exact path="/admin/malls" component={AllMalls} />
-          <ProtectedRoute exact path="/admin/editMall" component={EditMall} />
-          <ProtectedRoute
-            exact
-            path="/admin/malls/:id"
-            component={SingleMall}
-          />
-          <ProtectedRoute
-            exact
-            path="/admin/:id/shops/:type"
-            component={SingleClassTry}
-          />
-
           {/* ----------No Url------------------ */}
           <Route exact path="/pageNotFound" component={PageNotFound} />
           <Redirect to="/pageNotFound" />
