@@ -15,6 +15,11 @@
   cursor: pointer;
   position: absolute;
   right: 10px;
+  margin-top: 15px;
+}
+
+.addBtnMobile {
+  margin-top: 72px;
 }
 
 .addBtn:hover,
@@ -56,11 +61,16 @@
   margin-left: 200px;
 }
 
-.mallContainer {
+.mallContainer,
+.mallContainer2 {
   position: relative;
   margin-top: 50px;
   margin-bottom: 50px;
   width: 100%;
+}
+
+.mallContainer2 {
+  margin-top: 70px;
 }
 
 .shopContainer,
@@ -173,6 +183,16 @@
   font-size: 18px;
 }
 
+.shopCategories,
+.shopCategories2 {
+  position: absolute;
+  margin-top: -35px;
+}
+
+.shopCategories2 {
+  margin-top: -55px;
+}
+
 @media screen and (max-width: 1423px) and (min-width: 1281px) {
   .main,
   .mainShops {
@@ -180,7 +200,7 @@
   }
 
   .addBtn {
-    width: 340px;
+    width: auto;
   }
 }
 
@@ -189,18 +209,12 @@
   .mainShops {
     width: 68%;
   }
-  .addBtn {
-    width: 340px;
-  }
 }
 
 @media screen and (max-width: 1708px) and (min-width: 1601px) {
   .main,
   .mainShops {
     width: 63.5%;
-  }
-  .addBtn {
-    width: 336px;
   }
 }
 
@@ -209,26 +223,12 @@
   .mainShops {
     width: 56.5%;
   }
-
-  .addBtn {
-    width: 336px;
-  }
 }
 
 @media only screen and (min-width: 1921px) {
   .main,
   .mainShops {
     width: 42.5%;
-  }
-
-  .addBtn {
-    width: 340px;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .addBtn {
-    width: 235px;
   }
 }
 
@@ -237,10 +237,6 @@
     grid-template-columns: auto auto;
     row-gap: 20px;
     margin: 20px 0;
-  }
-
-  .addBtn {
-    width: 170px;
   }
 
   .icon {
@@ -285,5 +281,14 @@
 
   .icon {
     margin-left: 14%;
+  }
+
+  .shopCategories {
+    position: absolute;
+    margin-top: 0px;
+  }
+
+  .shopCategories2 {
+    margin-top: 0px;
   }
 }

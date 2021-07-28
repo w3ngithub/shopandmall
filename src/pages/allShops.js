@@ -126,15 +126,17 @@ const AllShops = () => {
       ></div>
 
       <div className={classes.mainShops}>
-        <ShopCategories
-          {...{
-            isShopPage: true,
-            shopCategory,
-            showShopCategories,
-            setShowShopCategories,
-            setShowCategoryMobile,
-          }}
-        />
+        <div className={isShopCategorySelected ? classes.shopCategories : classes.shopCategories2}>
+          <ShopCategories
+            {...{
+              isShopPage: true,
+              shopCategory,
+              showShopCategories,
+              setShowShopCategories,
+              setShowCategoryMobile,
+            }}
+          />
+        </div>
 
         <div
           onClick={() => setShowShopCategories(false)}

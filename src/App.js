@@ -58,82 +58,91 @@ function App() {
         }}
       >
         {location.pathname !== "/login" && <Nav />}
+        <div className="body">
+          <Switch>
+            {/* ------------------User------------------ */}
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/malls" component={AllMalls} />
+            <Route exact path="/shops" component={AllShops} />
+            <Route exact path="/malls/:id" component={SingleMall} />
+            <Route exact path="/:id/shops/:type" component={SingleClassTry} />
+            <Route
+              exact
+              path="/mall/:id/shops/:type"
+              component={SingleClassTry}
+            />
+            <Route
+              exact
+              path="/shops/category/:category"
+              component={AllShops}
+            />
+            <Route exact path="/Home/category/:category" component={HomePage} />
+            <Route
+              exact
+              path="/Home/category/:category/:subCategory"
+              component={HomePage}
+            />
+            <Route
+              exact
+              path="/shops/category/:category/:subCategory"
+              component={AllShops}
+            />
+            <Route
+              exact
+              path="/malls/category/:category"
+              component={AllMalls}
+            />
+            <Route
+              exact
+              path="/malls/category/:category/:subCategory"
+              component={AllMalls}
+            />
+            {/*------------------ Both ------------------ */}
+            <Route exact path="/about-us" component={AboutUs} />
+            <Route exact path="/contact-us" component={ContactUs} />
 
-        <Switch>
-          {/* ------------------User------------------ */}
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/malls" component={AllMalls} />
-          <Route exact path="/shops" component={AllShops} />
-          <Route exact path="/malls/:id" component={SingleMall} />
-          <Route exact path="/:id/shops/:type" component={SingleClassTry} />
-          <Route
-            exact
-            path="/mall/:id/shops/:type"
-            component={SingleClassTry}
-          />
-          <Route exact path="/shops/category/:category" component={AllShops} />
-          <Route exact path="/Home/category/:category" component={HomePage} />
-          <Route
-            exact
-            path="/Home/category/:category/:subCategory"
-            component={HomePage}
-          />
-          <Route
-            exact
-            path="/shops/category/:category/:subCategory"
-            component={AllShops}
-          />
-          <Route exact path="/malls/category/:category" component={AllMalls} />
-          <Route
-            exact
-            path="/malls/category/:category/:subCategory"
-            component={AllMalls}
-          />
-          {/*------------------ Both ------------------ */}
-          <Route exact path="/about-us" component={AboutUs} />
-          <Route exact path="/contact-us" component={ContactUs} />
-
-          {/* ------------------Admin------------------ */}
-          <ProtectedRoute
-            exact
-            path="/admin/addshopcategories"
-            component={AddShopCategory}
-            page="/login"
-          />
-          <Route
-            exact
-            path="/login"
-            render={() => <Login isAuth={localStorage.getItem("isAuth")} />}
-          />
-          <ProtectedRoute
-            path="/admin/dashboard"
-            component={HomePage}
-            page="/login"
-            exact
-          />
-          <ProtectedRoute
-            path="/admin/newMall"
-            component={MallForm}
-            page="/"
-            exact
-          />
-          <ProtectedRoute exact path="/admin/shops" component={AllShops} />
-          <ProtectedRoute exact path="/admin/malls" component={AllMalls} />
-          <ProtectedRoute exact path="/admin/editMall" component={EditMall} />
-          <ProtectedRoute
-            exact
-            path="/admin/malls/:id"
-            component={SingleMall}
-          />
-          <ProtectedRoute
-            exact
-            path="/admin/:id/shops/:type"
-            component={SingleClassTry}
-          />
-          {/* ----------No Url------------------ */}
-          <Route exact path="/pageNotFound" component={PageNotFound} />
-          <Redirect to="/pageNotFound" />
-        </Switch>
+            {/* ------------------Admin------------------ */}
+            <ProtectedRoute
+              exact
+              path="/admin/addshopcategories"
+              component={AddShopCategory}
+              page="/login"
+            />
+            <Route
+              exact
+              path="/login"
+              render={() => <Login isAuth={localStorage.getItem("isAuth")} />}
+            />
+            <ProtectedRoute
+              path="/admin/dashboard"
+              component={HomePage}
+              page="/login"
+              exact
+            />
+            <ProtectedRoute
+              path="/admin/newMall"
+              component={MallForm}
+              page="/"
+              exact
+            />
+            <ProtectedRoute exact path="/admin/shops" component={AllShops} />
+            <ProtectedRoute exact path="/admin/malls" component={AllMalls} />
+            <ProtectedRoute exact path="/admin/editMall" component={EditMall} />
+            <ProtectedRoute
+              exact
+              path="/admin/malls/:id"
+              component={SingleMall}
+            />
+            <ProtectedRoute
+              exact
+              path="/admin/:id/shops/:type"
+              component={SingleClassTry}
+            />
+            {/* ----------No Url------------------ */}
+            <Route exact path="/pageNotFound" component={PageNotFound} />
+            <Redirect to="/pageNotFound" />
+          </Switch>
+        </div>
         {location.pathname !== "/login" && sideImageWithFooter === false && (
           <Footer />
         )}

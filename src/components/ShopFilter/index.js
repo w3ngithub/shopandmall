@@ -47,6 +47,7 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
           ? shopCategory?.map((shopCat) => (
               <div key={shopCat.id}>
                 <p
+                  className={classes.categoryP}
                   onClick={() => {
                     subCategoryId(shopCat.id, shopCat);
                     history.push("/home/category/" + shopCat.category);
@@ -64,7 +65,7 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
             ))
           : singleShopCategory.map((s) => (
               <div key={s.id}>
-                <p>
+                <p className={classes.categoryP}>
                   {s.category}
                   <span className={classes.number}>
                     ({s.rowContent.rowData.length})
