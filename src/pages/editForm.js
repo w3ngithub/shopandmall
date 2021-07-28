@@ -176,6 +176,7 @@ const MallForm = () => {
           );
         }
         let tempVideos = [];
+
         if (videoThumbnail !== {}) {
           for (const index in videoThumbnail) {
             tempVideos = [
@@ -288,19 +289,6 @@ const MallForm = () => {
           }
 
           if (isNewVideo) {
-            // shops = [
-            //   ...shops,
-            //   {
-            //     ...shop,
-            //     shopVideo: {
-            //       id:
-            //         shopVideoState[indexOfVideo].uniqueId +
-            //         shopVideoState[indexOfVideo].video.name,
-            //       url: shopVideoUrl[indexOfVideo],
-            //       videoName: shopVideoState[indexOfVideo].video.name,
-            //     },
-            //   },
-            // ];
             shop = {
               ...shop,
               shopVideo: {

@@ -3,7 +3,7 @@ import { fireStore } from "../firebase/config";
 import React, { useState, useEffect } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 
-const LoginForm = ({ setIsAuth }) => {
+const LoginForm = () => {
   const history = useHistory();
 
   const initialData = {
@@ -30,7 +30,6 @@ const LoginForm = ({ setIsAuth }) => {
 
   useEffect(() => {
     fetchData();
-    // () => {}
   }, []);
 
   //On Form Submit
@@ -39,7 +38,7 @@ const LoginForm = ({ setIsAuth }) => {
     userData.forEach((data) => {
       if (username === data.Username && password === data.Password) {
         localStorage.setItem("isAuth", "true");
-        setIsAuth(localStorage.getItem("isAuth"));
+
         localStorage.setItem("username", username);
         history.push("/admin/dashboard");
       } else {
@@ -90,12 +89,13 @@ const LoginForm = ({ setIsAuth }) => {
 
 const Login = (props) => {
   const { isAuth } = props;
+  console.log(isAuth);
   return (
     <>
       {isAuth === "true" ? (
         <Redirect to={{ pathname: "/admin/dashboard" }} />
       ) : (
-        <LoginForm {...props} />
+        <LoginForm />
       )}
     </>
   );

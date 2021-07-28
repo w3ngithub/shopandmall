@@ -34,7 +34,7 @@ function App() {
   const location = useLocation();
 
   //State
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
+
   const [allDataState, allDataDispatch] = useReducer(allDataReducer, allData);
   const [sideImageWithFooter, setSideImageWithFooter] = useState(false);
 
@@ -45,15 +45,6 @@ function App() {
   const hideSideImage = () => {
     setSideImageWithFooter(false);
   };
-
-  //Local Storage Thing
-  useEffect(() => {
-    if (localStorage.getItem("isAuth") === null) {
-      localStorage.setItem("isAuth", "false");
-    } else {
-      localStorage.getItem("isAuth");
-    }
-  }, []);
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -111,15 +102,16 @@ function App() {
             <Route exact path="/contact-us" component={ContactUs} />
 
             {/* ------------------Admin------------------ */}
-            <Route
+            <ProtectedRoute
               exact
               path="/admin/addshopcategories"
               component={AddShopCategory}
+              page="/login"
             />
             <Route
               exact
               path="/login"
-              render={() => <Login isAuth={isAuth} setIsAuth={setIsAuth} />}
+              render={() => <Login isAuth={localStorage.getItem("isAuth")} />}
             />
             <ProtectedRoute
               path="/admin/dashboard"
@@ -146,44 +138,6 @@ function App() {
               path="/admin/:id/shops/:type"
               component={SingleClassTry}
             />
-
-            {/* ------------------Admin------------------ */}
-            <Route
-              exact
-              path="/admin/addshopcategories"
-              component={AddShopCategory}
-            />
-            <Route
-              exact
-              path="/login"
-              render={() => <Login isAuth={isAuth} setIsAuth={setIsAuth} />}
-            />
-            <ProtectedRoute
-              path="/admin/dashboard"
-              component={HomePage}
-              page="/login"
-              exact
-            />
-            <ProtectedRoute
-              path="/admin/newMall"
-              component={MallForm}
-              page="/"
-              exact
-            />
-            <ProtectedRoute exact path="/admin/shops" component={AllShops} />
-            <ProtectedRoute exact path="/admin/malls" component={AllMalls} />
-            <ProtectedRoute exact path="/admin/editMall" component={EditMall} />
-            <ProtectedRoute
-              exact
-              path="/admin/malls/:id"
-              component={SingleMall}
-            />
-            <ProtectedRoute
-              exact
-              path="/admin/:id/shops/:type"
-              component={SingleClassTry}
-            />
-
             {/* ----------No Url------------------ */}
             <Route exact path="/pageNotFound" component={PageNotFound} />
             <Redirect to="/pageNotFound" />

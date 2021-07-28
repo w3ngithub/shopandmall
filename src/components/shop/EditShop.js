@@ -33,7 +33,12 @@ const ShopForm = ({
       ...prevState,
       ...dataShop.shopImages.map((image) => image),
     ]);
-    if (dataShop.hasOwnProperty("shopVideo")) {
+    if (dataShop?.shopVideo?.hasOwnProperty("url")) {
+      setRemovedVideoThumbnail((prev) => [
+        ...prev,
+        dataShop.shopVideo.thumbnail.id,
+      ]);
+
       setRemovedVideo((prevState) => [...prevState, dataShop.shopVideo]);
     }
   };
