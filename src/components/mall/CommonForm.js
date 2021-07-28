@@ -46,6 +46,13 @@ const CommonForm = ({
     reset,
     getValues,
   } = useForm();
+  const mallName = register("mallName", { required: true });
+  const address = register("mallAddress", { required: true });
+  const levels = register("levels", { required: true });
+  const phoneNumber = register("phoneNumber", {
+    required: true,
+    validate: (value) => value.length === 10,
+  });
 
   //Change Handler
   const changeHandler = (e) => {
@@ -143,11 +150,13 @@ const CommonForm = ({
             <div>
               <input
                 type="text"
-                {...register("mallName", { required: true })}
+                onChange={(e) => {
+                  changeHandler(e);
+                  mallName.onChange(e);
+                }}
                 placeholder="Name of Mall"
                 name="mallName"
                 value={edit ? editData?.mallName : state?.mallName}
-                onChange={changeHandler}
                 className={classes.input}
               />
               {errors.mallName && (
@@ -157,10 +166,12 @@ const CommonForm = ({
             <div>
               <input
                 type="text"
-                {...register("mallAddress", { required: true })}
                 placeholder="Address"
                 name="mallAddress"
-                onChange={changeHandler}
+                onChange={(e) => {
+                  changeHandler(e);
+                  address.onChange(e);
+                }}
                 value={edit ? editData?.mallAddress : state?.mallAddress}
                 className={classes.input}
               />
@@ -171,11 +182,13 @@ const CommonForm = ({
             <div>
               <input
                 type="number"
-                {...register("levels", { required: true })}
                 placeholder="Level"
                 name="levels"
                 value={edit ? editData?.levels : state?.levels}
-                onChange={changeHandler}
+                onChange={(e) => {
+                  changeHandler(e);
+                  levels.onChange(e);
+                }}
                 className={classes.input}
               />
               {errors.levels && (
@@ -202,14 +215,13 @@ const CommonForm = ({
           <div>
             <input
               type="number"
-              {...register("phoneNumber", {
-                required: true,
-                validate: (value) => value.length === 10,
-              })}
               placeholder="Phone Number"
               name="phoneNumber"
               value={edit ? editData?.phoneNumber : state?.phoneNumber}
-              onChange={changeHandler}
+              onChange={(e) => {
+                changeHandler(e);
+                phoneNumber.onChange(e);
+              }}
               className={classes.input}
             />
             {errors?.phoneNumber?.type === "required" && (

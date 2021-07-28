@@ -25,7 +25,6 @@ import {
   EditMall,
   ContactUs,
   SingleMall,
-  SingleShop,
   PageNotFound,
 } from "./pages";
 
