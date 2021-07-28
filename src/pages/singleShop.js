@@ -232,15 +232,6 @@ const SingleShop = () => {
                         ,<span> +977 - {mall.phoneNumber}</span>
                       </p>
                     </div>
-                    {location.pathname.split("/")[1] === "admin" && (
-                      <button
-                        className={classes.editBtn}
-                        onClick={openEditModal}
-                      >
-                        <FaEdit className={classes.editIcon} />
-                        <span className={classes.text}>Edit</span>
-                      </button>
-                    )}
                   </div>
 
                   <div className={classes.description}>

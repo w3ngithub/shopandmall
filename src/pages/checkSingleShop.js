@@ -4,18 +4,18 @@ import { fireStore } from "../firebase/config";
 
 import { BiImage, BiVideo } from "react-icons/bi";
 import classes from "../styles/single.module.css";
-import { FaRegWindowClose } from "react-icons/fa";
+import { FaRegWindowClose, FaEdit } from "react-icons/fa";
 import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
 import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 import modalclasses from "../components/single/modal.module.css";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-
+import { ToastContainer, toast } from "react-toastify";
 import { withRouter } from "react-router";
 import Image from "../assets/images/defaultImage.png";
 import SideImage from "../components/SideImage";
 import { FaPlay } from "react-icons/fa";
-
+import EditModal from "../components/single/Modal";
 import { MyContext } from "../Context";
 
 class SingleClassTry extends React.Component {
@@ -33,10 +33,12 @@ class SingleClassTry extends React.Component {
       image: null,
       ind: null,
       sideImage: false,
-      selectedShop: null,
+      selectedShop: {},
+      showEditModal: false,
     };
 
     this.setSideImageFalse = this.setSideImageFalse.bind(this);
+    this.openEditModal = this.openEditModal.bind(this);
   }
 
   componentDidMount() {
@@ -244,6 +246,14 @@ class SingleClassTry extends React.Component {
     this.props.handleImageGalleryActive(false);
   };
 
+  openEditModal() {
+    const shop = this.state.mall.shops.find(
+      (shop) => shop.shopName === this.props.location.pathname.split("/")[4]
+    );
+    this.setState({ showEditModal: true });
+    this.setState({ selectedShop: shop });
+  }
+
   render() {
     const {
       useBrowserFullscreen,
@@ -268,8 +278,6 @@ class SingleClassTry extends React.Component {
     const { sideImageWithFooter, showSideImage, hideSideImage } = this.context;
 
     this.state.modal === false && (document.body.style.overflow = "auto");
-
-    console.log("bar", this.state.mall);
 
     return (
       // Image Gallery Carousel
@@ -354,6 +362,16 @@ class SingleClassTry extends React.Component {
             hideSideImage={hideSideImage}
           />
         </div>
+        {this.state.showEditModal && (
+          <EditModal
+            setShowModal={() => this.setState({ showEditModal: false })}
+            mall={this.state.mall}
+            dataToEdit={this.state.selectedShop}
+            edit={true}
+            setShowEditModal={() => this.setState({ showEditModal: false })}
+            toast={toast}
+          />
+        )}
 
         {this.state.loading ? (
           <div className={classes.mainContainerShop}>
@@ -465,17 +483,30 @@ class SingleClassTry extends React.Component {
 
                     <div
                       style={{ borderBottom: "2px solid rgb(244,244,244)" }}
-                      className={classes.details}
+                      className={classes.shopDetails}
                     >
-                      <h1>{shop.shopName}</h1>
-                      <p>
-                        <b>{this.state.mall?.mallName}</b>
-                      </p>
-                      <p>
-                        {this.state.mall.timings[0].openTime} -{" "}
-                        {this.state.mall.timings[0].closeTime},
-                        <span> +977 - {this.state.mall.phoneNumber}</span>
-                      </p>
+                      <div>
+                        <h1>{shop.shopName}</h1>
+                        <p>
+                          <b>{this.state.mall?.mallName}</b>
+                        </p>
+                        <p>
+                          {this.state.mall.timings[0].openTime} -{" "}
+                          {this.state.mall.timings[0].closeTime},
+                          <span> +977 - {this.state.mall.phoneNumber}</span>
+                        </p>
+                      </div>
+
+                      {this.props.location.pathname.split("/")[1] ===
+                        "admin" && (
+                        <button
+                          className={classes.editBtn}
+                          onClick={this.openEditModal}
+                        >
+                          <FaEdit className={classes.editIcon} />
+                          <span className={classes.text}>Edit</span>
+                        </button>
+                      )}
                     </div>
 
                     <div className={classes.description}>
@@ -525,6 +556,7 @@ class SingleClassTry extends React.Component {
               ))
           )
         )}
+        <ToastContainer />
       </section>
     );
   }
