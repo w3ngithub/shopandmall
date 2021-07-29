@@ -134,10 +134,14 @@ const CommonForm = ({
             shopPhoneNumber: shop.shopPhoneNumber,
           })),
         ],
+        mallName: editData.mallName,
+        mallAddress: editData.mallAddress,
+        levels: editData.levels,
+        phoneNumber: editData.phoneNumber,
       });
     }
   }, []);
-
+  console.log(getValues());
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>

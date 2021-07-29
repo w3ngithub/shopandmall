@@ -25,6 +25,7 @@ const AddShopCategory = () => {
     message: "",
   });
   const { docs } = useFirestore("Shop Categories");
+  const allMalls = useFirestore("Shopping Mall");
 
   const handleAddShopCategorySubmit = (e) => {
     e.preventDefault();
@@ -65,8 +66,34 @@ const AddShopCategory = () => {
   const handleDelete = (data) => {
     const response = window.confirm("Are You Sure?");
     if (response) {
+      const allShops = [...allMalls.docs.map((mall) => mall.shops)].flat();
+      const isCategoryUsedInShop = allShops.some(
+        (shop) => shop.category === data.category
+      );
+
+      if (isCategoryUsedInShop) {
+        alert("Category cannot be deleted because it is used");
+        return;
+      }
+
       deleteShopCategory(data);
     }
+  };
+
+  const removeSubCategory = (subCategory) => {
+    const allShops = [...allMalls.docs.map((mall) => mall.shops)].flat();
+    const isSubCategoryUsedInShop = allShops.some(
+      (shop) => shop.subCategory === subCategory
+    );
+
+    if (isSubCategoryUsedInShop) {
+      alert("SubCategory cannot be removed because it is used in shop");
+      return;
+    }
+
+    setSubCategories(
+      subCategories.filter((category) => category.subCategory !== subCategory)
+    );
   };
 
   useEffect(() => {
@@ -141,6 +168,7 @@ const AddShopCategory = () => {
               ? handleAddShopCategorySubmit
               : handleEditShopCategorySubmit
           }
+          removeSubCategory={removeSubCategory}
         />
       )}
     </div>
