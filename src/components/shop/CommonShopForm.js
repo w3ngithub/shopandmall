@@ -205,93 +205,109 @@ const CommonShopForm = ({
       </div>
       <div className={classes.innerDiv}>
         <div className={classes.inputdiv}>
-          <Controller
-            control={control}
-            name={`shops[${index}].shopName`}
-            defaultValue={edit && getValues(`shops[${index}].shopName`)}
-            render={({
-              field: { onChange },
-              fieldState: { error, invalid },
-            }) => (
-              <>
-                <input
-                  type="text"
-                  placeholder="Name of Shop"
-                  name="shopName"
-                  value={edit ? dataShop?.shopName : s.shopName}
-                  onChange={(e) => {
-                    onChangeHandler(e);
-                    onChange(e);
-                  }}
-                  className={classes.input}
-                />
-                {error && <p className={classes.error}>{error.message}</p>}
-              </>
-            )}
-            rules={{ required: { value: true, message: "* Name is Required" } }}
-          />
-          <Controller
-            control={control}
-            name={`shops[${index}].shopLevel`}
-            defaultValue={edit && getValues(`shops[${index}].shopLevel`)}
-            render={({
-              field: { onChange },
-              fieldState: { error, invalid },
-            }) => (
-              <>
-                <input
-                  type="number"
-                  placeholder="level"
-                  name="shopLevel"
-                  value={edit ? dataShop?.shopLevel : s.shopLevel}
-                  onChange={(e) => {
-                    onChangeHandler(e);
-                    onChange(e);
-                  }}
-                  className={classes.input}
-                />
-                {error && <p className={classes.error}>{error.message}</p>}
-                {error?.type === "validate" && (
-                  <p className={classes.error}>
-                    * level must be equal to or less than mall level (
-                    {mallLevel})
-                  </p>
-                )}
-              </>
-            )}
-            rules={{
-              required: { value: true, message: "* Level is Required" },
-              validate: (value) => value <= mallLevel,
-            }}
-          />
-          <Controller
-            control={control}
-            name={`shops[${index}].shopPhoneNumber`}
-            defaultValue={edit && getValues(`shops[${index}].shopPhoneNumber`)}
-            render={({
-              field: { onChange },
-              fieldState: { error, invalid },
-            }) => (
-              <>
-                <input
-                  type="number"
-                  placeholder="Phone Number"
-                  name="shopPhoneNumber"
-                  value={edit ? dataShop?.shopPhoneNumber : s?.shopPhoneNumber}
-                  onChange={(e) => {
-                    onChangeHandler(e);
-                    onChange(e);
-                  }}
-                  className={classes.input}
-                />
-                {error && <p className={classes.error}>{error.message}</p>}
-              </>
-            )}
-            rules={{
-              required: { value: true, message: "* Number is Required" },
-            }}
-          />
+          <div>
+            <Controller
+              control={control}
+              name={`shops[${index}].shopName`}
+              defaultValue={edit && getValues(`shops[${index}].shopName`)}
+              render={({
+                field: { onChange },
+                fieldState: { error, invalid },
+              }) => (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Name of Shop"
+                    name="shopName"
+                    value={edit ? dataShop?.shopName : s.shopName}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.input}
+                  />
+                  <br />
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </>
+              )}
+              rules={{
+                required: { value: true, message: "* Name is Required" },
+              }}
+            />
+          </div>
+          <div>
+            <Controller
+              control={control}
+              name={`shops[${index}].shopLevel`}
+              defaultValue={edit && getValues(`shops[${index}].shopLevel`)}
+              render={({
+                field: { onChange },
+                fieldState: { error, invalid },
+              }) => (
+                <>
+                  <input
+                    type="number"
+                    placeholder="level"
+                    name="shopLevel"
+                    value={edit ? dataShop?.shopLevel : s.shopLevel}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.input}
+                  />
+                  <br />
+                  {error && <p className={classes.error}>{error.message}</p>}
+                  {error?.type === "validate" && (
+                    <p className={classes.error}>
+                      * level must be equal to or less than mall level (
+                      {mallLevel})
+                    </p>
+                  )}
+                </>
+              )}
+              rules={{
+                required: { value: true, message: "* Level is Required" },
+                validate: (value) => value <= mallLevel,
+              }}
+            />
+          </div>
+          <div>
+            <Controller
+              control={control}
+              name={`shops[${index}].shopPhoneNumber`}
+              defaultValue={
+                edit && getValues(`shops[${index}].shopPhoneNumber`)
+              }
+              render={({
+                field: { onChange },
+                fieldState: { error, invalid },
+              }) => (
+                <>
+                  <input
+                    type="number"
+                    placeholder="Phone Number"
+                    name="shopPhoneNumber"
+                    value={
+                      edit ? dataShop?.shopPhoneNumber : s?.shopPhoneNumber
+                    }
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.input}
+                  />
+                  <br />
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </>
+              )}
+              rules={{
+                required: { value: true, message: "* Number is Required" },
+              }}
+            />
+          </div>
         </div>
+
         <div className={classes.inputcategory}>
           <select
             name="category"

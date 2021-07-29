@@ -60,11 +60,12 @@ const Modal = ({
       autoClose: 2000,
       onOpen: () => {
         if (edit) {
-          setShowEditModal(false);
+          setShowEditModal();
+          history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
         } else {
-          setShowModal(false);
+          setShowModal();
+          history.push(`/admin/malls/${mall.mallName}`);
         }
-        history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
       },
     });
 
@@ -466,7 +467,7 @@ const Modal = ({
       <div
         className={classes.modalBackground}
         onClick={() => {
-          setShowModal(false);
+          setShowModal();
         }}
       ></div>
       <div className={classes.modal}>

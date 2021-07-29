@@ -70,7 +70,7 @@ const LoginForm = () => {
             className={classes.input}
           />
           <input
-            type="text"
+            type="password"
             placeholder="Password"
             name="password"
             value={password}

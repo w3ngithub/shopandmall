@@ -4,59 +4,44 @@ import React, { useEffect, useState } from "react";
 import classes from "../styles/single.module.css";
 import modalclasses from "../components/single/modal.module.css";
 import EditModal from "../components/single/Modal";
-
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-
 import { FaRegWindowClose, FaEdit } from "react-icons/fa";
 import { BiImage, BiVideo } from "react-icons/bi";
-
 import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
 import SkeletonShopCard from "../skeletons/SkeletonShopCard";
-
 // import ReactPlayer from "react-player";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Image from "../assets/images/defaultImage.png";
 import { ToastContainer, toast } from "react-toastify";
-
 const SingleShop = () => {
   const [mall, setMall] = useState(null);
   const { id, type } = useParams();
   const docId = id.replace("_", " ");
-
   const [modal, setModal] = useState(false);
   const [image, setImage] = useState(null);
   const [selectedShop, setSelectedShop] = useState({});
   const [showEditModal, setShowEditModal] = useState(false);
   const history = useHistory();
-
   const [galleryImage, setGalleryImage] = useState([]);
   const [ind, setInd] = useState(null);
   const [loading, setLoading] = useState(true);
-
   // console.log(mall);
-
   const [showVideo, setShowVideo] = useState({});
-
   function toggleShowVideo(url) {
     showVideo[url] = !Boolean(showVideo[url]);
-
     setShowVideo({ showVideo });
-
     // if (showVideo[url]) {
     //   if (showPlayButton) {
     //     this.setState({ showGalleryPlayButton: false });
     //   }
-
     //   if (showFullscreenButton) {
     //     this.setState({ showGalleryFullscreenButton: false });
     //   }
     // }
   }
-
   console.log(showVideo.embedUrl);
-
   const renderVideo = (embedUrl, original) => {
     return (
       <div>
@@ -84,13 +69,11 @@ const SingleShop = () => {
     );
   };
   const location = useLocation();
-
   const openEditModal = () => {
     const shop = mall.shops.find((shop) => shop.shopName === type);
     setShowEditModal(true);
     setSelectedShop(shop);
   };
-
   useEffect(() => {
     const fetchData = async () => {
       await fireStore
@@ -136,10 +119,8 @@ const SingleShop = () => {
           );
         });
     };
-
     fetchData();
   }, [docId]);
-
   return (
     <div>
       {modal && <Modal {...{ setModal, image, setImage, galleryImage, ind }} />}
@@ -159,7 +140,6 @@ const SingleShop = () => {
           <div className={classes.topImage}>
             <SkeletonBlock />
           </div>
-
           <div className={classes.mainSkeleton}>
             <div
               // style={{ borderBottom: "2px solid #C1C1C1" }}
@@ -168,18 +148,13 @@ const SingleShop = () => {
               <h1>
                 <SkeletonText />
               </h1>
-
               <SkeletonText />
-
               <SkeletonText />
             </div>
-
             <div className={classes.descriptionSkeleton}>
               <h3>Description</h3>
-
               <SkeletonText />
             </div>
-
             <div className={classes.container}>
               {[1, 2, 3, 5, 6].map((n) => (
                 <SkeletonShopCard key={n} />
@@ -195,7 +170,6 @@ const SingleShop = () => {
                 <div className={classes.topImage}>
                   <img src={shop?.shopImages[0].url} alt="" />
                 </div>
-
                 <div className={classes.mainShop}>
                   <div className={classes.box}>
                     <div className={classes.photosBox}>
@@ -217,7 +191,6 @@ const SingleShop = () => {
                       </div>
                     </div>
                   </div>
-
                   <div
                     style={{ borderBottom: "2px solid rgb(244,244,244)" }}
                     className={classes.shopDetails}
@@ -242,12 +215,10 @@ const SingleShop = () => {
                       </button>
                     )}
                   </div>
-
                   <div className={classes.description}>
                     <h3>Description</h3>
                     <p>{shop.shopDescription}</p>
                   </div>
-
                   <div className={classes.container}>
                     {shop.shopVideo ? (
                       <div className={classes.wrapper}>
@@ -263,7 +234,6 @@ const SingleShop = () => {
                         /> */}
                       </div>
                     ) : null}
-
                     {shop.shopImages &&
                       shop.shopImages.map((s, i) => {
                         return (
@@ -290,7 +260,6 @@ const SingleShop = () => {
     </div>
   );
 };
-
 const Modal = ({ setModal, setImage, galleryImage, ind }) => {
   // Image Gallery
   function renderLeftNav(onClick, disabled) {
@@ -304,7 +273,6 @@ const Modal = ({ setModal, setImage, galleryImage, ind }) => {
       </button>
     );
   }
-
   function renderRightNav(onClick, disabled) {
     return (
       <button
@@ -342,5 +310,4 @@ const Modal = ({ setModal, setImage, galleryImage, ind }) => {
     </div>
   );
 };
-
 export default SingleShop;
