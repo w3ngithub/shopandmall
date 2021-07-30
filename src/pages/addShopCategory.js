@@ -64,7 +64,7 @@ const AddShopCategory = () => {
   };
 
   const handleDelete = (data) => {
-    const response = window.confirm("Are You Sure?");
+    const response = window.confirm("Are you sure?");
     if (response) {
       const allShops = [...allMalls.docs.map((mall) => mall.shops)].flat();
       const isCategoryUsedInShop = allShops.some(
@@ -72,7 +72,7 @@ const AddShopCategory = () => {
       );
 
       if (isCategoryUsedInShop) {
-        alert("Category cannot be deleted because it is used");
+        alert("Category cannot be deleted because it is being used");
         return;
       }
 
