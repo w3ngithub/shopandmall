@@ -141,7 +141,7 @@ const CommonForm = ({
       });
     }
   }, []);
-  console.log(getValues());
+
   return (
     <div className={classes.mainContainer}>
       <div className={classes.formContainer}>

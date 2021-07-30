@@ -309,44 +309,85 @@ const CommonShopForm = ({
         </div>
 
         <div className={classes.inputcategory}>
-          <select
-            name="category"
-            className={classes.input}
-            onChange={(e) => {
-              onChangeHandler(e);
-              setSubCategoryLists([
-                ...docs.find((category) => category.category === e.target.value)
-                  .rowContent.rowData,
-              ]);
-            }}
-            value={edit ? dataShop.category : s.category}
-          >
-            <option hidden>Categories</option>
-            {docs.map(({ id, category }) => (
-              <option key={id} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          <select
-            name="subCategory"
-            className={classes.input}
-            onChange={onChangeHandler}
-            value={edit ? dataShop.subCategory : s.subCategory}
-          >
-            <option hidden>SubCategories</option>
-            {edit
-              ? subCategoryLists.map(({ id, subCategory }) => (
-                  <option key={id} value={subCategory}>
-                    {subCategory}
-                  </option>
-                ))
-              : subCategoryLists.map(({ id, subCategory }) => (
-                  <option key={id} value={subCategory}>
-                    {subCategory}
-                  </option>
-                ))}
-          </select>
+          <div>
+            <Controller
+              control={control}
+              name={`shops[${index}].category`}
+              defaultValue={edit && getValues(`shops[${index}].category`)}
+              render={({
+                field: { onChange },
+                fieldState: { error, invalid },
+              }) => (
+                <>
+                  <select
+                    name="category"
+                    className={classes.input}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                      setSubCategoryLists([
+                        ...docs.find(
+                          (category) => category.category === e.target.value
+                        ).rowContent.rowData,
+                      ]);
+                    }}
+                    value={edit ? dataShop.category : s.category}
+                  >
+                    <option hidden>Categories</option>
+                    {docs.map(({ id, category }) => (
+                      <option key={id} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </>
+              )}
+              rules={{
+                required: { value: true, message: "* Category is required" },
+              }}
+            />
+          </div>
+          <div>
+            <Controller
+              control={control}
+              name={`shops[${index}].subCategory`}
+              defaultValue={edit && getValues(`shops[${index}].subCategory`)}
+              render={({
+                field: { onChange },
+                fieldState: { error, invalid },
+              }) => (
+                <>
+                  <select
+                    name="subCategory"
+                    className={classes.input}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    value={edit ? dataShop.subCategory : s.subCategory}
+                  >
+                    <option hidden>SubCategories</option>
+                    {edit
+                      ? subCategoryLists.map(({ id, subCategory }) => (
+                          <option key={id} value={subCategory}>
+                            {subCategory}
+                          </option>
+                        ))
+                      : subCategoryLists.map(({ id, subCategory }) => (
+                          <option key={id} value={subCategory}>
+                            {subCategory}
+                          </option>
+                        ))}
+                  </select>
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </>
+              )}
+              rules={{
+                required: { value: true, message: "* Subcategory is required" },
+              }}
+            />
+          </div>
         </div>
 
         <AllTimings
@@ -360,13 +401,29 @@ const CommonShopForm = ({
           mallTime={listOfMallTimes}
           edit={edit}
         />
-        <textarea
-          type="text"
-          placeholder="Description"
-          name="shopDescription"
-          value={edit ? dataShop?.shopDescription : s?.shopDescription}
-          onChange={onChangeHandler}
-          className={classes.textarea}
+        <Controller
+          control={control}
+          name={`shops[${index}].shopDescription`}
+          defaultValue={edit && getValues(`shops[${index}].shopDescription`)}
+          render={({ field: { onChange }, fieldState: { error, invalid } }) => (
+            <>
+              <textarea
+                type="text"
+                placeholder="Description"
+                name="shopDescription"
+                value={edit ? dataShop?.shopDescription : s?.shopDescription}
+                onChange={(e) => {
+                  onChangeHandler(e);
+                  onChange(e);
+                }}
+                className={classes.textarea}
+              />
+              {error && <p className={classes.error}>{error.message}</p>}
+            </>
+          )}
+          rules={{
+            required: { value: true, message: "* Description is required" },
+          }}
         />
 
         {shopImageError && <p>{shopImageError}</p>}
