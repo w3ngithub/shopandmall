@@ -18,7 +18,6 @@ const CommonShopForm = ({
   closeShopForm,
   dataShop,
   editDispatch,
-  index2,
   addedShopImagesDispatch,
   addedShopImages,
   removeImage,
@@ -362,6 +361,8 @@ const CommonShopForm = ({
         />
         <textarea
           type="text"
+          rows="4"
+          cols="50"
           placeholder="Description"
           name="shopDescription"
           value={edit ? dataShop?.shopDescription : s?.shopDescription}
@@ -376,28 +377,31 @@ const CommonShopForm = ({
             <div className={classes.imgButton}>Add Image</div>
           </span>
         </label>
-        {!edit && (
+        {!edit ? (
           <p className={classes.para}>**First chosen Image will be Thumnail</p>
-        )}
-        <div className={classes.selectedImages}>
-          {edit &&
-            dataShop?.shopImages?.map((img, i) => (
-              <p key={i} className={classes.image}>
-                <button
-                  className={classes.button}
-                  type="button"
-                  onClick={() => removeImage(img, index)}
-                >
-                  <IoIosClose />
-                </button>
-                {img.ImageName}
-              </p>
-            ))}
+        ) : null}
+        <div>
+          {edit && (
+            <div className={classes.imageEditWrapper}>
+              {dataShop?.shopImages?.map((img, i) => (
+                <p key={i} className={classes.imageEdit}>
+                  <button
+                    className={classes.button}
+                    type="button"
+                    onClick={() => removeImage(img, index)}
+                  >
+                    <IoIosClose />
+                  </button>
+                  {img.ImageName}
+                </p>
+              ))}{" "}
+            </div>
+          )}
           {edit &&
             addedShopImages?.map((img, ind) =>
               img.id === index
                 ? img?.images?.map((img, i) => (
-                    <p key={i} className={classes.image}>
+                    <p key={i} className={classes.imageEdit}>
                       <button
                         className={classes.button}
                         type="button"
@@ -444,42 +448,45 @@ const CommonShopForm = ({
             <div className={classes.imgButton}>Add Video</div>
           </span>
         </label>
-        {!edit && (
+        {!edit ? (
           <p className={classes.para}>
             **the size of the video must be less than 100mb
           </p>
-        )}
-        {!edit &&
-          shopVideoState.map((video, i) =>
-            video.id === index ? (
-              <p key={i} className={classes.image}>
-                <button
-                  className={classes.button}
-                  type="button"
-                  onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
-                >
-                  <IoIosClose />
-                </button>
-                {video?.video?.name}
-              </p>
-            ) : null
-          )}
+        ) : null}
+        {!edit
+          ? shopVideoState.map((video, i) =>
+              video.id === index ? (
+                <p key={i} className={classes.image}>
+                  <button
+                    className={classes.button}
+                    type="button"
+                    onClick={() => shopVideoDispatch({ type: "REMOVE", index })}
+                  >
+                    <IoIosClose />
+                  </button>
+                  {video?.video?.name}
+                </p>
+              ) : null
+            )
+          : null}
         {edit && dataShop?.shopVideo?.hasOwnProperty("url") && (
-          <p className={classes.image}>
-            <button
-              className={classes.button}
-              type="button"
-              onClick={() => removeVideo(dataShop.shopVideo, index)}
-            >
-              <IoIosClose />
-            </button>
-            {dataShop.shopVideo.videoName}
-          </p>
+          <div className={classes.imageEditWrapper}>
+            <p className={classes.imageEdit}>
+              <button
+                className={classes.button}
+                type="button"
+                onClick={() => removeVideo(dataShop.shopVideo, index)}
+              >
+                <IoIosClose />
+              </button>
+              {dataShop.shopVideo.videoName}
+            </p>
+          </div>
         )}
         {edit &&
           shopVideoState?.map((video) =>
             video.id === index ? (
-              <p className={classes.image} key={video.uniqueId}>
+              <p className={classes.imageEdit} key={video.uniqueId}>
                 <button
                   className={classes.button}
                   type="button"
@@ -507,15 +514,15 @@ const CommonShopForm = ({
             </span>
           </label>
         )}
-        {currentVideo?.hasOwnProperty("thumbnail") && (
-          <p className={classes.image}>
+        {currentVideo?.hasOwnProperty("thumbnail") ? (
+          <p className={classes.imageThumbnail}>
             {currentVideo.thumbnail.thumbnail.name}
           </p>
-        )}
+        ) : null}
         {edit &&
           (dataShop?.shopVideo?.hasOwnProperty("thumbnail") ||
             videoThumbnail?.hasOwnProperty(index)) && (
-            <p className={classes.image}>
+            <p className={classes.imageThumbnail}>
               {videoThumbnail[index]?.thumbnail?.name ??
                 dataShop.shopVideo.thumbnail.name}
             </p>

@@ -1,33 +1,40 @@
 .mainContainer {
-  max-width: 100%;
-  min-height: 89vh;
+  max-width: 100vw;
   height: auto;
-  margin-top: -10px;
   background-color: #eee;
-  margin-top: 65px;
+  margin-top: 68px;
 }
 
 .formContainer {
-  width: 100vw;
-  height: inherit;
-  background-color: #eee;
-  display: flex;
-  justify-content: center;
+  padding: 50px 0;
 }
 
 .form {
+  width: 85%;
+  margin: 0 auto;
   border-radius: 10px;
   background-color: white;
-  margin-top: 100px;
   display: flex;
   padding: 30px;
   flex-direction: column;
-  margin-bottom: 40px;
 }
 
 .innerDiv {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+}
+
+.innerDivImage {
+  display: flex;
+}
+
+.imageName {
+  margin-top: 5px;
+  margin-left: -10px;
+}
+
+.imageBtn {
+  display: none;
 }
 
 .input {
@@ -35,7 +42,7 @@
   border: 1px solid rgb(146, 146, 146);
   outline: none;
   padding: 10px 15px;
-  width: 300px;
+  width: 330px;
   margin-right: 20px;
   border-radius: 5px;
 }
@@ -63,10 +70,22 @@
   color: #efb6b2;
 }
 
-.label > .upload {
+.label > .upload,
+.imageBtn input {
   height: 0;
   width: 0;
   opacity: 0;
+}
+
+.imageBtn {
+  margin-top: 5px;
+}
+
+.imageBtn span {
+  background-color: rgb(53, 103, 179);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 5px;
 }
 
 .label .imageIcon {
@@ -82,9 +101,10 @@
 
 .name {
   margin-top: 20px;
-  color: rgb(236, 78, 78);
+  color: #5b5b5b;
   text-align: left;
-  border-bottom: 1px solid rgba(236, 78, 78, 0.5);
+  border-bottom: 2px solid rgba(91, 91, 91, 0.3);
+  padding-bottom: 5px;
 }
 
 .line {
@@ -125,7 +145,7 @@
   padding: 10px 15px;
   width: 15%;
   margin: auto;
-  background-color: rgb(236, 78, 78);
+  background-color: #153074;
   color: white;
   font-weight: 600;
   font-size: 15px;
@@ -138,7 +158,7 @@
 }
 
 .submitBtn:hover {
-  background-color: rgb(199, 59, 59);
+  background-color: #2a4a9c;
 }
 
 .loaderPosition {
@@ -198,4 +218,130 @@
   color: red;
   margin-bottom: 10px;
   font-size: 13px;
+}
+
+@media screen and (max-width: 1423px) and (min-width: 1281px) {
+  .form {
+    width: 78%;
+  }
+}
+
+@media screen and (max-width: 1601px) and (min-width: 1424px) {
+  .form {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1708px) and (min-width: 1601px) {
+  .form {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 1921px) and (min-width: 1708px) {
+  .form {
+    width: 58%;
+  }
+}
+
+@media only screen and (min-width: 1921px) {
+  .mainContainer {
+    min-height: 67vh;
+  }
+
+  .form {
+    width: 42%;
+  }
+}
+
+/* Ipad pro */
+@media only screen and (max-width: 1024px) {
+  .mainContainer {
+    min-height: 71vh;
+  }
+
+  .input {
+    width: 230px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .mainContainer {
+    min-height: 799px;
+    margin-top: 55px;
+  }
+
+  .input {
+    width: 160px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .formWrapper {
+    margin: 50px 0 50px 0;
+    padding: 20px 15px;
+  }
+
+  .formTitle img {
+    width: 100px;
+  }
+
+  .formTitle p {
+    font-size: 24px;
+  }
+
+  .firstRow {
+    margin-bottom: 20px;
+  }
+
+  .formButton {
+    margin-top: -50px;
+  }
+
+  .innerDiv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .innerDivImage {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .imageName {
+    margin-top: 5px;
+    margin-left: 0px;
+    color: rgb(53, 103, 179);
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .submitBtn,
+  .submitBtnOnLoad {
+    width: 120px;
+    border-radius: 5px;
+  }
+
+  .addShop {
+    margin: 20px 0;
+    font-size: 13px;
+    width: 110px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .name {
+    margin-top: 0px;
+  }
+
+  .label {
+    display: none;
+  }
+
+  .imageBtn {
+    display: block;
+  }
 }
