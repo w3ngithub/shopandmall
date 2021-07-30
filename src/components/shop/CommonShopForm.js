@@ -324,6 +324,7 @@ const CommonShopForm = ({
                     className={classes.input}
                     onChange={(e) => {
                       onChangeHandler(e);
+                      onChange(e);
                       setSubCategoryLists([
                         ...docs.find(
                           (category) => category.category === e.target.value
@@ -360,7 +361,10 @@ const CommonShopForm = ({
                   <select
                     name="subCategory"
                     className={classes.input}
-                    onChange={onChangeHandler}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
                     value={edit ? dataShop.subCategory : s.subCategory}
                   >
                     <option hidden>SubCategories</option>
@@ -408,7 +412,10 @@ const CommonShopForm = ({
                 placeholder="Description"
                 name="shopDescription"
                 value={edit ? dataShop?.shopDescription : s?.shopDescription}
-                onChange={onChangeHandler}
+                onChange={(e) => {
+                  onChangeHandler(e);
+                  onChange(e);
+                }}
                 className={classes.textarea}
               />
               {error && <p className={classes.error}>{error.message}</p>}

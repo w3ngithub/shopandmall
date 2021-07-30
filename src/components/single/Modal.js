@@ -638,7 +638,10 @@ const Modal = ({
                 <div style={{ flex: "0.4" }}>
                   <select
                     name="subCategory"
-                    onChange={onChangeHandler}
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
                     className={classes.inputcategory}
                     value={shop.subCategory}
                   >
