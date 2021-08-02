@@ -130,6 +130,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  width: max-content;
 }
 .label:hover {
   color: rgb(13, 43, 100);
