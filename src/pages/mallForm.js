@@ -63,8 +63,19 @@ const MallForm = () => {
         state,
         mallImage
       );
-      const arrayOfOpenTime = state.timings[0].openTime.split(":");
-      const arrayOfCloseTime = state.timings[0].closeTime.split(":");
+
+      if (isMallTimeError) {
+        alert("Please fill up the mall time");
+        return;
+      }
+
+      if (isMallImageError) {
+        alert("please upload mall image!");
+        return;
+      }
+
+      const arrayOfOpenTime = state.timings[0]?.openTime?.split(":");
+      const arrayOfCloseTime = state.timings[0]?.closeTime?.split(":");
       const mallTimings = {
         openTime:
           parseInt(arrayOfOpenTime[0], 10) * 60 * 60 +
@@ -76,15 +87,6 @@ const MallForm = () => {
 
       if (mallTimings.closeTime - mallTimings.openTime < 5400) {
         alert("mall close time should be at least 1hr 30min after open time");
-        return;
-      }
-
-      if (isMallTimeError) {
-        dispatch({ type: "SET_MALLTIME_ERROR", payload: { isMallTimeError } });
-      }
-
-      if (isMallImageError) {
-        alert("please upload mall image!");
         return;
       }
 

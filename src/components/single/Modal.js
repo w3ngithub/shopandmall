@@ -560,55 +560,109 @@ const Modal = ({
             rules={{
               required: {
                 value: true,
-                message: "* Number is Required",
+                message: "* Number is required",
+              },
+            }}
+          />
+          <Controller
+            control={control}
+            name="shopDescription"
+            render={({ field: { onChange }, fieldState: { error } }) => (
+              <div className={classes.formGroup}>
+                <textarea
+                  rows="4"
+                  cols="50"
+                  type="text"
+                  placeholder="Description"
+                  name="shopDescription"
+                  value={shop.shopDescription}
+                  onChange={(e) => {
+                    onChangeHandler(e);
+                    onChange(e);
+                  }}
+                  className={classes.textarea}
+                />
+                {error && <p className={classes.error}>{error.message}</p>}
+              </div>
+            )}
+            rules={{
+              required: {
+                value: true,
+                message: "* Description is required",
               },
             }}
           />
 
-          <textarea
-            rows="4"
-            cols="50"
-            type="text"
-            placeholder="Description"
-            name="shopDescription"
-            value={shop.shopDescription}
-            onChange={onChangeHandler}
-            className={classes.textarea}
-          />
           <div className={classes.inputdiv}>
-            <select
+            <Controller
+              control={control}
               name="category"
-              className={classes.inputcategory}
-              onChange={(e) => {
-                onChangeHandler(e);
-                setSubCategoryLists([
-                  ...docs.find(
-                    (category) => category.category === e.target.value
-                  ).rowContent.rowData,
-                ]);
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <div style={{ flex: "0.4" }}>
+                  <select
+                    name="category"
+                    className={classes.inputcategory}
+                    onChange={(e) => {
+                      onChange(e);
+                      onChangeHandler(e);
+                      setSubCategoryLists([
+                        ...docs.find(
+                          (category) => category.category === e.target.value
+                        ).rowContent.rowData,
+                      ]);
+                    }}
+                    value={shop.category}
+                  >
+                    <option hidden>Categories</option>
+                    {docs.map(({ id, category }) => (
+                      <option key={id} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </div>
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "* Category is required",
+                },
               }}
-              value={shop.category}
-            >
-              <option hidden>Categories</option>
-              {docs.map(({ id, category }) => (
-                <option key={id} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-            <select
+            />
+            <Controller
+              control={control}
               name="subCategory"
-              onChange={onChangeHandler}
-              className={classes.inputcategory}
-              value={shop.subCategory}
-            >
-              <option hidden>SubCategories</option>
-              {subCategoryLists.map(({ id, subCategory }) => (
-                <option key={id} value={subCategory}>
-                  {subCategory}
-                </option>
-              ))}
-            </select>
+              render={({ field: { onChange }, fieldState: { error } }) => (
+                <div style={{ flex: "0.4" }}>
+                  <select
+                    name="subCategory"
+                    onChange={(e) => {
+                      onChangeHandler(e);
+                      onChange(e);
+                    }}
+                    className={classes.inputcategory}
+                    value={shop.subCategory}
+                  >
+                    <option hidden>SubCategories</option>
+                    {subCategoryLists.map(({ id, subCategory }) => (
+                      <option key={id} value={subCategory}>
+                        {subCategory}
+                      </option>
+                    ))}
+                  </select>
+
+                  {error && <p className={classes.error}>{error.message}</p>}
+                </div>
+              )}
+              rules={{
+                required: {
+                  value: true,
+                  message: "* Subcategory is required",
+                },
+              }}
+            />
           </div>
 
           <AllTimings
