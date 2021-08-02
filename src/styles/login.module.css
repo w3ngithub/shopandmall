@@ -46,15 +46,15 @@
 .submit {
   padding: 10px;
   border: none;
-  background-color: rgb(236, 78, 78);
   border-radius: 10px;
   margin-top: 10px;
   color: white;
   font-weight: 500;
   outline: none;
+  cursor: pointer;
 }
 
 .submit:hover {
-  background-color: rgb(199, 59, 59);
-  box-shadow: 3px 3px 2px rgb(236, 78, 78, 0.4);
+  /* background-color: rgb(199, 59, 59); */
+  box-shadow: 3px 3px 5px rgba(73, 73, 207, 0.2);
 }

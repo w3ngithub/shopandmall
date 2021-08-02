@@ -14,14 +14,14 @@
 }
 
 .inputdiv {
-  width: 80%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .inputcategory {
-  width: 445px;
+  width: 59.4%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,7 +32,7 @@
   outline: none;
   margin-bottom: 10px;
   padding: 10px 15px;
-  width: 200px;
+  width: 286px;
   border-radius: 5px;
 }
 
@@ -96,23 +96,30 @@
   margin-top: 20px;
 }
 
-.image {
+.image,
+.imageThumbnail,
+.imageEdit {
   display: flex;
   /* justify-content: space-between; */
   background-color: rgba(156, 156, 156, 0.8);
   border-radius: 60px;
-  margin-bottom: 10px;
+  margin-top: 10px;
   padding: 10px;
   max-width: 320px;
   overflow: hidden;
 }
 
+.imageEdit {
+  margin-top: 10px;
+}
+
 .para {
   position: relative;
   text-align: left;
-  color: red;
+  color: rgb(53, 148, 192);
   font-size: 10px;
   font-weight: bold;
+  margin-top: -5px;
 }
 
 .button {
@@ -126,7 +133,7 @@
 
 .shopContainer {
   background-color: rgba(236, 78, 78, 0.1);
-  max-width: 900px;
+  max-width: 100%;
   padding: 20px;
   margin: 10px 0;
   border-radius: 15px;
@@ -139,12 +146,12 @@
   border: none;
   padding: 5px 15px;
   width: 100%;
-  background-color: rgb(236, 78, 78);
+  background-color: rgb(34, 76, 139);
   color: white;
 }
 
 .imgButton:hover {
-  background-color: rgb(199, 59, 59);
+  background-color: rgb(53, 103, 179);
 }
 
 .close {
@@ -162,4 +169,128 @@
   color: red;
   margin-bottom: 10px;
   font-size: 13px;
+}
+
+/* Ipad pro */
+@media only screen and (max-width: 1024px) {
+  .input {
+    width: 220px;
+  }
+
+  .image,
+  .imageThumbnail,
+  .imageEdit {
+    display: flex;
+    border-radius: 60px;
+    margin-bottom: 10px;
+    padding: 5px;
+    max-width: 320px;
+    max-height: 28px;
+    overflow: hidden;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .mainContainer {
+    min-height: 799px;
+  }
+
+  .input {
+    width: 155px;
+  }
+
+  .imgButton {
+    margin: 0px 0 0px 25px;
+    padding: 5px 15px;
+  }
+
+  .para {
+    position: relative;
+    margin-top: -17px;
+  }
+
+  .imageEditWrapper {
+    margin-top: -18px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .mainContainer {
+    min-height: 500px;
+  }
+
+  .close {
+    right: -5px;
+    top: -5px;
+    font-size: 25px;
+    background-color: rgb(224, 224, 224);
+    border-radius: 50%;
+  }
+
+  .inputdiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    /* background-color: black; */
+  }
+
+  .inputdiv div {
+    width: 100%;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .inputcategory {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .imgButton {
+    font-size: 13px;
+    text-align: center;
+    border: none;
+    padding: 0px 15px;
+    width: 100%;
+    background-color: rgb(34, 76, 139);
+    color: white;
+  }
+
+  .para {
+    position: relative;
+    margin-top: -30px;
+  }
+
+  .selectedImages {
+    margin-top: 0px;
+    /* padding: 0; */
+    /* font-size: 15px; */
+  }
+
+  .image,
+  .imageThumbnail,
+  .imageEdit {
+    display: flex;
+    border-radius: 60px;
+    margin-bottom: 10px;
+    padding: 5px;
+    max-width: 320px;
+    max-height: 28px;
+    overflow: hidden;
+  }
+
+  .imageThumbnail {
+    padding-left: 10px;
+    margin-top: -20px;
+  }
+
+  .imageEditWrapper {
+    margin-top: -28px;
+  }
 }

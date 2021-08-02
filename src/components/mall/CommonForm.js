@@ -200,7 +200,7 @@ const CommonForm = ({
               )}
             </div>
 
-            <label className={classes.label}>
+            {/* <label className={classes.label}>
               <input
                 className={classes.upload}
                 type="file"
@@ -211,29 +211,62 @@ const CommonForm = ({
               </span>
               <span className={classes.text}>(Add Image)</span>
             </label>
-            {mallImageError && <p>{mallImageError}</p>}
+            {mallImageError && <p>{mallImageError}</p>} */}
           </div>
-          <div>
+          {/* <div>
             {mallImage ? mallImage?.name : editData?.mallImage?.imageName}
-          </div>
-          <div>
-            <input
-              type="number"
-              placeholder="Phone Number"
-              name="phoneNumber"
-              value={edit ? editData?.phoneNumber : state?.phoneNumber}
-              onChange={(e) => {
-                changeHandler(e);
-                phoneNumber.onChange(e);
-              }}
-              className={classes.input}
-            />
-            {errors?.phoneNumber?.type === "required" && (
-              <p className={classes.error}>* Number is required</p>
-            )}
-            {errors?.phoneNumber?.type === "validate" && (
-              <p className={classes.error}>* Number must be 10 digits</p>
-            )}
+          </div> */}
+          <div className={classes.innerDiv}>
+            <div>
+              <input
+                type="number"
+                placeholder="Phone Number"
+                name="phoneNumber"
+                value={edit ? editData?.phoneNumber : state?.phoneNumber}
+                onChange={(e) => {
+                  changeHandler(e);
+                  phoneNumber.onChange(e);
+                }}
+                className={classes.input}
+              />
+              {errors?.phoneNumber?.type === "required" && (
+                <p className={classes.error}>* Number is required</p>
+              )}
+              {errors?.phoneNumber?.type === "validate" && (
+                <p className={classes.error}>* Number must be 10 digits</p>
+              )}
+            </div>
+
+            <div className={classes.innerDivImage}>
+              <label className={classes.label}>
+                <input
+                  className={classes.upload}
+                  type="file"
+                  onChange={imageHandler}
+                />
+                <span>
+                  <IoIosImage className={classes.imageIcon} />
+                </span>
+                <span className={classes.text}>(Add Image)</span>
+              </label>
+
+              <div className={classes.imageBtn}>
+                <label>
+                  <input
+                    className={classes.upload}
+                    type="file"
+                    onChange={imageHandler}
+                  />
+                  <span> Add Image +</span>
+                </label>
+              </div>
+
+              {mallImageError && <p>{mallImageError}</p>}
+
+              <div className={classes.imageName}>
+                {mallImage ? mallImage?.name : editData?.mallImage?.imageName}
+              </div>
+            </div>
           </div>
 
           <AllTimings

@@ -65,6 +65,10 @@ body {
 }
 
 @media screen and (max-width: 1601px) and (min-width: 1424px) {
+  .body {
+    min-height: 612px;
+  }
+
   .original img {
     height: 88.7vh;
   }
@@ -75,6 +79,10 @@ body {
 }
 
 @media screen and (max-width: 1708px) and (min-width: 1601px) {
+  .body {
+    min-height: 612px;
+  }
+
   .original img {
     height: 89.7vh;
   }
@@ -86,7 +94,7 @@ body {
 
 @media screen and (max-width: 1921px) and (min-width: 1708px) {
   .body {
-    min-height: 540px;
+    min-height: 612px;
   }
 
   .original img {
@@ -100,7 +108,7 @@ body {
 
 @media screen and (min-width: 1921px) {
   .body {
-    min-height: 828px;
+    min-height: 829px;
   }
 
   .original img {
@@ -122,7 +130,8 @@ body {
   }
 
   .originalVideo img {
-    height: 37vh;
+    height: 100%;
+    width: 80%;
   }
 }
 
@@ -142,22 +151,18 @@ body {
   }
 
   .original img {
-    height: 47vh;
+    height: 100%;
+    padding: 45px;
   }
 
   .originalVideo img {
-    height: 29vh;
+    height: 100%;
+    width: 80%;
   }
 
   .image-gallery-index {
     background: rgba(0, 0, 0, 1) !important;
-    left: 11px !important;
+    right: 91% !important;
     display: flex;
-  }
-}
-
-@media only screen and (max-width: 376px) {
-  .original img {
-    height: 34vh;
   }
 }

@@ -15,6 +15,7 @@ import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Image from "../assets/images/defaultImage.png";
 import { ToastContainer, toast } from "react-toastify";
+
 const SingleShop = () => {
   const [mall, setMall] = useState(null);
   const { id, type } = useParams();

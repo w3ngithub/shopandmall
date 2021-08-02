@@ -22,32 +22,62 @@ const DefaultTimings = ({
         <div className="timeinput">
           <label>Open Time:</label>
           <br />
-          <TimePicker
-            value={timing?.openTime}
-            onChange={setOpenTime}
-            clearIcon={null}
-            clockIcon="Clock"
-            renderNumbers={true}
-            minuteHandWidth={4}
-            minuteHandLength={60}
-            hourHandLength={40}
-            minTime={minTime}
-          />
+          <div className="desktopTime">
+            <TimePicker
+              value={timing?.openTime}
+              onChange={setOpenTime}
+              clearIcon={null}
+              clockIcon="Clock"
+              renderNumbers={true}
+              minuteHandWidth={4}
+              minuteHandLength={60}
+              hourHandLength={40}
+              minTime={minTime}
+            />
+          </div>
+          <div className="mobileTime">
+            <TimePicker
+              value={timing?.openTime}
+              onChange={setOpenTime}
+              clearIcon={null}
+              clockIcon={false}
+              renderNumbers={true}
+              minuteHandWidth={4}
+              minuteHandLength={60}
+              hourHandLength={40}
+              minTime={minTime}
+            />
+          </div>
         </div>
         <div className="timeinput">
           <label>Close Time:</label>
           <br />
-          <TimePicker
-            value={timing?.closeTime}
-            onChange={setCloseTime}
-            clearIcon={null}
-            clockIcon="Clock"
-            renderNumbers={true}
-            minuteHandWidth={4}
-            minuteHandLength={60}
-            hourHandLength={40}
-            maxTime={maxTime}
-          />
+          <div className="desktopTime">
+            <TimePicker
+              value={timing?.closeTime}
+              onChange={setCloseTime}
+              clearIcon={null}
+              clockIcon="Clock"
+              renderNumbers={true}
+              minuteHandWidth={4}
+              minuteHandLength={60}
+              hourHandLength={40}
+              maxTime={maxTime}
+            />
+          </div>
+          <div className="mobileTime">
+            <TimePicker
+              value={timing?.closeTime}
+              onChange={setCloseTime}
+              clearIcon={null}
+              clockIcon={false}
+              renderNumbers={true}
+              minuteHandWidth={4}
+              minuteHandLength={60}
+              hourHandLength={40}
+              maxTime={maxTime}
+            />
+          </div>
         </div>
       </div>
       {showRemove && timing.label !== "Everyday" && (

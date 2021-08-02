@@ -80,7 +80,10 @@ const LoginForm = () => {
           {errors && (
             <p style={{ color: "red", textAlign: "center" }}>{errors}</p>
           )}
-          <input type="submit" value="Login" className={classes.submit} />
+          {/* <input type="submit" value="Login" className={classes.submit} /> */}
+          <button type="submit" className={classes.submit}>
+            Login
+          </button>
         </form>
       </div>
     </div>

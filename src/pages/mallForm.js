@@ -117,7 +117,10 @@ const MallForm = () => {
           return;
         }
 
-        if (shopVideoState[index].thumbnail === undefined) {
+        if (
+          shopVideoState.length > 0 &&
+          shopVideoState[index].thumbnail === undefined
+        ) {
           isVideoThumbnailError = true;
           alert(`please upload video thumbnail of shop no. ${index + 1}`);
           return;

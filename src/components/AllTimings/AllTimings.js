@@ -40,10 +40,7 @@ const AllTimings = ({
 
   return (
     <div className="timingsform">
-      <div
-        className="input__radio"
-        style={(isModal && { width: "50%" }) || (isShop && { width: "30%" })}
-      >
+      <div className="input__radio">
         <div>
           <input
             type="radio"

@@ -24,3 +24,33 @@
   color: red;
   font-size: 13px;
 }
+
+@media only screen and (max-width: 1024px) {
+  .input__radio {
+    width: 30%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .timingsform {
+    padding: 0px 0;
+  }
+
+  .input__radio {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .timingsform {
+    padding: 0px 0;
+  }
+
+  .input__radio {
+    width: 100%;
+  }
+
+  .input__radio div {
+    margin-bottom: 3px;
+  }
+}

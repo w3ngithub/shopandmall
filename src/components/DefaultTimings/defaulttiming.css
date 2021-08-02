@@ -19,6 +19,12 @@
 
 .timeinput {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeinput label {
+  margin-bottom: -10px;
 }
 
 .remove {
@@ -27,4 +33,60 @@
   cursor: pointer;
   font-weight: 600;
   margin: 20px 25px;
+}
+
+.mobileTime {
+  display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+  .timings {
+    width: 45%;
+  }
+
+  .timings__buttondiv {
+    width: 290px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .timings {
+    width: 61%;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .timings {
+    width: 100%;
+    /* background-color: red; */
+  }
+
+  .timings__buttondiv {
+    /* flex-direction: column; */
+    align-items: flex-start;
+    width: 100%;
+    gap: 25px;
+  }
+
+  .timings__buttondiv div {
+    margin: 0px 0 5px 0;
+  }
+
+  .timeinput {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeinput label {
+    margin-bottom: -12px;
+  }
+
+  .desktopTime {
+    display: none;
+  }
+
+  .mobileTime {
+    display: block;
+  }
 }
