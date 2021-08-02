@@ -80,7 +80,7 @@ const AddShopCategory = () => {
     }
   };
 
-  const removeSubCategory = (subCategory) => {
+  const removeSubCategory = (id, subCategory) => {
     const allShops = [...allMalls.docs.map((mall) => mall.shops)].flat();
     const isSubCategoryUsedInShop = allShops.some(
       (shop) => shop.subCategory === subCategory
@@ -91,9 +91,7 @@ const AddShopCategory = () => {
       return;
     }
 
-    setSubCategories(
-      subCategories.filter((category) => category.subCategory !== subCategory)
-    );
+    setSubCategories(subCategories.filter((category) => category.id !== id));
   };
 
   useEffect(() => {
