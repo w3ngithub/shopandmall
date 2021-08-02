@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import AddShopCategory from "./pages/addShopCategory";
 import allDataReducer from "./reducers/allDataReducer";
 import { Switch, Route, Redirect } from "react-router-dom";
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useReducer } from "react";
 import { MyContext } from "./Context";
 
 import "slick-carousel/slick/slick.css";
