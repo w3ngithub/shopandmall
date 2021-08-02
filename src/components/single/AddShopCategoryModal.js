@@ -27,24 +27,27 @@ const ShopCategoryModal = ({
         <div className={classes.line}></div>
 
         <form onSubmit={onSubmit} className={classes.form}>
-          <input
-            type="text"
-            className={style.input}
-            placeholder="Category Name"
-            value={category.category}
-            onChange={(e) =>
-              setCategory({
-                ...category,
-                category: e.target.value,
-              })
-            }
-          />
-          {categoryError.invalid && (
-            <p className={classes.categoryError}>*{categoryError.message}</p>
-          )}
+          <div className={style.form__category}>
+            <input
+              type="text"
+              className={style.input}
+              placeholder="Category Name"
+              value={category.category}
+              onChange={(e) =>
+                setCategory({
+                  ...category,
+                  category: e.target.value,
+                })
+              }
+            />
+            {categoryError.invalid && (
+              <p className={classes.categoryError}>*{categoryError.message}</p>
+            )}
+          </div>
+
           {subCategories.length > 0 &&
             subCategories.map(({ id, subCategory }) => (
-              <div key={id}>
+              <div key={id} style={{ marginBottom: "10px" }}>
                 <div className={classes.form__subcategory}>
                   <input
                     type="text"
@@ -65,14 +68,14 @@ const ShopCategoryModal = ({
                     }
                   />
 
-                  <span onClick={() => removeSubCategory(subCategory)}>
+                  <span onClick={() => removeSubCategory(id, subCategory)}>
                     <IoClose className={style.closeIcon} />
                   </span>
-                  <div className={classes.subCategoryError}>
-                    {subCategoryError.id === id && (
-                      <p>*{subCategoryError.message}</p>
-                    )}
-                  </div>
+                </div>
+                <div className={classes.subCategoryError}>
+                  {subCategoryError.id === id && (
+                    <p>*{subCategoryError.message}</p>
+                  )}
                 </div>
               </div>
             ))}

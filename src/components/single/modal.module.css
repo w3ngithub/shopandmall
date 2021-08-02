@@ -53,8 +53,6 @@
   display: flex;
   flex-direction: column;
   margin: 25px 30px;
-  text-align: center;
-  /* margin-bottom: 25px; */
 }
 .form > select {
   width: 200px;
@@ -243,10 +241,8 @@
 .categoryError,
 .subCategoryError {
   font-size: 10px;
-  position: absolute;
-  top: 34%;
+  text-align: left;
   color: red;
-  padding-left: 10px;
 }
 .subCategoryError {
   top: 75%;
