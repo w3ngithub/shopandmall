@@ -50,27 +50,23 @@ $table-row-height: 45px;
   }
   .table-inner-row {
     background-color: #e5e7eb;
-    padding: 20px;
+    //padding: 20px;
     z-index: 1;
 
     &.fade-in {
-      animation-timing-function: linear;
-
-      animation-duration: 1s;
-      -webkit-animation-duration: 1s;
-
-      animation-name: fade-in;
-      -webkit-animation-name: fade-in;
+      animation: fade-in 1s linear, padding-in 0.1s linear;
+      -webkit-animation: fade-in 1s linear, padding-in 0.2s linear;
+      padding: 20px;
     }
     &.fade-out {
-      animation-timing-function: linear;
-
-      animation-duration: 0.1s;
-      -webkit-animation-duration: 0.1s;
-
-      animation-name: fade-out;
-      -webkit-animation-name: fade-out;
-      animation-fill-mode: forwards;
+      animation: fade-in 0.1s linear forwards, padding-out 0.3s linear;
+      -webkit-animation: fade-in 0.1s linear forwards, padding-out 0.3s linear;
+      padding: 0;
+    }
+    .table {
+      max-height: 0;
+      overflow: auto;
+      transition: all 0.3s ease;
     }
   }
   .table {
@@ -85,12 +81,17 @@ $table-row-height: 45px;
       -o-transform: rotate(90deg);
       transform: rotate(90deg);
     }
+    .table-inner-row {
+      .table {
+        max-height: 300px;
+      }
+    }
   }
   .row-content {
     max-height: $table-row-height;
     transition: 0.3s all ease-out;
     &.is-row-expanded {
-      max-height: Calc(100% - 90px);
+      max-height: 100%;
       transition: 0.3s all ease-in;
     }
   }
@@ -108,5 +109,23 @@ $table-row-height: 45px;
     -ms-transform: rotate(0deg);
     -o-transform: rotate(0deg);
     transform: rotate(0deg);
+  }
+}
+
+@keyframes padding-in {
+  from {
+    padding: 0;
+  }
+  to {
+    padding: 20px;
+  }
+}
+
+@keyframes padding-out {
+  from {
+    padding: 20px;
+  }
+  to {
+    padding: 0;
   }
 }
