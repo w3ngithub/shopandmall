@@ -222,18 +222,7 @@ const SingleShop = () => {
                   </div>
                   <div className={classes.container}>
                     {shop.shopVideo ? (
-                      <div className={classes.wrapper}>
-                        {/* <ReactPlayer
-                          controls
-                          url={shop.shopVideo.url}
-                          width="100%"
-                          height="200px"
-                          onClick={() => {
-                            setModal(true);
-                            setInd(0);
-                          }}
-                        /> */}
-                      </div>
+                      <div className={classes.wrapper}></div>
                     ) : null}
                     {shop.shopImages &&
                       shop.shopImages.map((s, i) => {

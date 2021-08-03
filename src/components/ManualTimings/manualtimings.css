@@ -9,11 +9,13 @@
 .timings__manualdiv {
   display: flex;
   align-items: center;
+  /* background-color: black; */
 }
 
 .dayinputfield > select {
   width: 150px;
   padding: 3px 0;
+  margin-top: 10px;
 }
 
 @media only screen and (max-width: 414px) {
@@ -22,9 +24,13 @@
     align-items: flex-start;
   }
 
+  .dayinputfield {
+    width: 100%;
+  }
+
   .dayinputfield > select {
-    width: 135px;
-    padding: 3px 0;
-    margin-top: 5px;
+    width: 100%;
+    padding: 7px 0;
+    margin-top: 8px;
   }
 }

@@ -1,17 +1,18 @@
 .modalContainer {
-  position: relative;
+  position: absolute;
   height: auto;
-  width: 100vw;
+  width: 100%;
 }
 .modalBackground {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: inherit;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1001;
 }
+
 .modal {
   position: absolute;
   background-color: #f9fafb;
@@ -23,6 +24,7 @@
   z-index: 1002;
   border-radius: 3px;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -57,7 +59,7 @@
   /* margin-bottom: 25px; */
 }
 .form > select {
-  width: 200px;
+  width: 100%;
   margin-bottom: 10px;
   border: 1px solid rgb(146, 146, 146);
   padding: 5px;
@@ -65,15 +67,23 @@
 }
 .formGroup {
   margin-bottom: 15px;
+  width: 100%;
 }
 .inputdiv {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
 }
+
+.inputdiv div {
+  width: 100%;
+}
+
 .textarea {
   margin-bottom: 15px;
 }
+
 .input,
 .textarea {
   border: 1px solid rgba(146, 146, 146, 0.5);
@@ -122,11 +132,9 @@
   background-color: grey;
 }
 .label {
-  /* width: 124px; */
   height: 30px;
-  margin: -10px 0 10px 0;
+  margin: 0px 0 5px 0;
   color: #2e6fba;
-  font-size: 15px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -160,11 +168,12 @@
 }
 .image {
   display: flex;
-  /* justify-content: space-between; */
+  width: auto;
+  height: 30px;
   background-color: rgba(156, 156, 156, 0.8);
   border-radius: 60px;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 5px 10px;
   overflow: hidden;
 }
 .button {
@@ -255,6 +264,20 @@
   text-align: left;
 }
 
+@media only screen and (max-width: 1024px) {
+  .modal {
+    top: 200px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .modal {
+    top: 100px;
+    height: 640px;
+    overflow-y: auto;
+  }
+}
+
 @media only screen and (max-width: 414px) {
   .ImageContainer {
     display: none;
@@ -262,5 +285,27 @@
 
   .mobImageContainer {
     display: block;
+  }
+
+  .modal {
+    width: 90%;
+    height: 620px;
+    top: 10px;
+    overflow-y: auto;
+  }
+
+  .inputdiv {
+    display: block;
+    width: 100%;
+    gap: 20px;
+  }
+
+  .textarea {
+    margin-bottom: 0px;
+  }
+
+  .inputcategory {
+    padding: 8px 10px;
+    margin-bottom: 15px;
   }
 }

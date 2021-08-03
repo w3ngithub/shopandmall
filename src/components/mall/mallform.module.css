@@ -78,14 +78,15 @@
 }
 
 .imageBtn {
-  margin-top: 5px;
+  margin: 10px 0;
 }
 
 .imageBtn span {
   background-color: rgb(53, 103, 179);
   color: white;
-  padding: 5px 8px;
+  padding: 5px 10px;
   border-radius: 5px;
+  font-size: 15px;
 }
 
 .label .imageIcon {
