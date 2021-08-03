@@ -13,11 +13,14 @@ import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 import { HiChevronDoubleRight } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 
+import { Link } from "react-router-dom";
+
 // import Pagination from "../components/mall/Pagination";
 
 const AllMalls = () => {
   const [showShopCategories, setShowShopCategories] = useState(false);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
+  const [showSearchExtended, setShowSearchExtended] = useState(false);
 
   let { docs, loading } = useFirestore("Shopping Mall");
   const [malls, setMalls] = useState([]);
@@ -107,7 +110,10 @@ const AllMalls = () => {
       </div>
       <div
         className={classes.search}
-        onClick={() => setShowShopCategories(false)}
+        onClick={() => {
+          setShowShopCategories(false);
+          setShowSearchExtended(true);
+        }}
       >
         <BiSearchAlt2 className={classes.icon} />
         <input
@@ -118,8 +124,33 @@ const AllMalls = () => {
         />
       </div>
 
+      {showSearchExtended && (
+        <div className={classes.searchExtended}>
+          <div className={classes.searchExtendedContainer}>
+            <p>Quick Links</p>
+            <div className={classes.searchExtendedMallNames}>
+              {malls?.map((mall) => (
+                <Link
+                  key={mall.mallName}
+                  to={
+                    location.pathname.split("/")[1] === "admin"
+                      ? `/admin/malls/${mall?.mallName.replace(" ", "_")}`
+                      : `/malls/${mall?.mallName.replace(" ", "_")}`
+                  }
+                >
+                  {mall.mallName}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div
-        onClick={() => setShowShopCategories(false)}
+        onClick={() => {
+          setShowShopCategories(false);
+          setShowSearchExtended(false);
+        }}
         style={{
           position: "absolute",
           height: "100vh",
@@ -157,6 +188,7 @@ const AllMalls = () => {
               ? classes.shopCategories
               : classes.shopCategories2
           }
+          onClick={() => setShowSearchExtended(false)}
         >
           <ShopCategories
             {...{
@@ -185,7 +217,10 @@ const AllMalls = () => {
               ? classes.mallContainer
               : classes.mallContainer2
           }
-          onClick={() => setShowShopCategories(false)}
+          onClick={() => {
+            setShowShopCategories(false);
+            setShowSearchExtended(false);
+          }}
         >
           <div className={classes.categoryLists}>{categoriesPath}</div>
           <div className={classes.header}>

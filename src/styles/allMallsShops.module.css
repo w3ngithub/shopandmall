@@ -56,6 +56,43 @@
   font-size: 15px;
 }
 
+.searchExtended {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  background: rgb(245, 245, 245);
+  z-index: 10;
+  padding: 20px 0;
+}
+
+.searchExtendedContainer {
+  width: 68%;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 150px;
+}
+
+.searchExtendedContainer p {
+  font-weight: bold;
+}
+
+.searchExtendedMallNames {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 150px;
+  grid-row-gap: 10px;
+}
+
+.searchExtendedMallNames a {
+  color: #827d7d;
+  transition: all 0.2s;
+}
+
+.searchExtendedMallNames a:hover {
+  color: #3d3939;
+}
+
 .icon {
   color: #827d7d;
   font-size: 20px;
@@ -203,12 +240,22 @@
   .addBtn {
     width: auto;
   }
+
+  .searchExtendedContainer {
+    width: 71%;
+    gap: 100px;
+  }
 }
 
 @media screen and (max-width: 1601px) and (min-width: 1424px) {
   .main,
   .mainShops {
     width: 68%;
+  }
+
+  .searchExtendedContainer {
+    width: 74%;
+    gap: 100px;
   }
 }
 
@@ -217,6 +264,11 @@
   .mainShops {
     width: 63.5%;
   }
+
+  .searchExtendedContainer {
+    width: 76%;
+    gap: 100px;
+  }
 }
 
 @media screen and (max-width: 1921px) and (min-width: 1708px) {
@@ -224,12 +276,34 @@
   .mainShops {
     width: 56.5%;
   }
+
+  .searchExtendedContainer {
+    width: 78.5%;
+    gap: 100px;
+  }
 }
 
 @media only screen and (min-width: 1921px) {
   .main,
   .mainShops {
     width: 42.5%;
+  }
+
+  .searchExtendedContainer {
+    width: 83.8%;
+    gap: 100px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .searchExtendedContainer {
+    width: 60%;
+    gap: 100px;
+  }
+
+  .searchExtendedMallNames {
+    grid-column-gap: 100px;
+    grid-row-gap: 10px;
   }
 }
 
@@ -246,6 +320,17 @@
 
   .search {
     margin: 55px 0 0 0;
+  }
+
+  .searchExtendedContainer {
+    width: 60%;
+    gap: 50px;
+    font-size: 15px;
+  }
+
+  .searchExtendedMallNames {
+    grid-column-gap: 50px;
+    grid-row-gap: 10px;
   }
 }
 
@@ -278,6 +363,18 @@
   .searchBar {
     width: 66%;
     font-size: 15px;
+  }
+
+  .searchExtendedContainer {
+    width: 70%;
+    gap: 0px;
+    justify-content: space-between;
+    font-size: 15px;
+  }
+
+  .searchExtendedMallNames {
+    display: flex;
+    flex-direction: column;
   }
 
   .icon {
