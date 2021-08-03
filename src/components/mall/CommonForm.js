@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { IoIosAddCircleOutline, IoIosImage } from "react-icons/io";
 import AllTimings from "../AllTimings/AllTimings";
 import { useForm } from "react-hook-form";
-import { Slide } from "react-toastify";
 
 const CommonForm = ({
   edit,
@@ -144,6 +143,7 @@ const CommonForm = ({
 
   return (
     <div className={classes.mainContainer}>
+      <h2 className={classes.mallTitle}>Mall Form</h2>
       <div className={classes.formContainer}>
         <form
           className={classes.form}

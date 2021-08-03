@@ -20,8 +20,6 @@ const Dashboard = () => {
   const [malls, setMalls] = useState([]);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
 
-  console.log(malls);
-
   const location = useLocation();
   let { docs, loading } = useFirestore("Shopping Mall");
 

@@ -19,7 +19,6 @@ const NavBar = ({ check }) => {
   const [checked, setChecked] = useState(false);
 
   const [_, setUserValidate] = useState(false);
-  console.log(location.pathname);
 
   return (
     <div className={classes.navbar}>

@@ -92,7 +92,7 @@ const LoginForm = () => {
 
 const Login = (props) => {
   const { isAuth } = props;
-  console.log(isAuth);
+  // console.log(isAuth);
   return (
     <>
       {isAuth === "true" ? (

@@ -28,7 +28,6 @@ const SingleShop = () => {
   const [galleryImage, setGalleryImage] = useState([]);
   const [ind, setInd] = useState(null);
   const [loading, setLoading] = useState(true);
-  // console.log(mall);
   const [showVideo, setShowVideo] = useState({});
   function toggleShowVideo(url) {
     showVideo[url] = !Boolean(showVideo[url]);
@@ -42,7 +41,7 @@ const SingleShop = () => {
     //   }
     // }
   }
-  console.log(showVideo.embedUrl);
+
   const renderVideo = (embedUrl, original) => {
     return (
       <div>

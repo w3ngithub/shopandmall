@@ -10,6 +10,7 @@ import MobileShopCategory from "../components/MobileShopCategory";
 import { useLocation, useHistory } from "react-router-dom";
 import { HiChevronDoubleRight } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const AllShops = () => {
   let { docs, loading } = useFirestore("Shopping Mall");
@@ -17,6 +18,7 @@ const AllShops = () => {
   const [search, setSearch] = useState("");
   const [showShopCategories, setShowShopCategories] = useState(false);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
+  const [showSearchExtended, setShowSearchExtended] = useState(false);
 
   const location = useLocation();
   const [malls, setMalls] = useState([]);
@@ -103,7 +105,10 @@ const AllShops = () => {
 
       <div
         className={classes.search}
-        onClick={() => setShowShopCategories(false)}
+        onClick={() => {
+          setShowShopCategories(false);
+          setShowSearchExtended(true);
+        }}
       >
         <BiSearchAlt2 className={classes.icon} />
         <input
@@ -114,8 +119,39 @@ const AllShops = () => {
         />
       </div>
 
+      {showSearchExtended && (
+        <div className={classes.searchExtended}>
+          <div className={classes.searchExtendedContainer}>
+            <p>Quick Links</p>
+            <div className={classes.searchExtendedMallNames}>
+              {malls?.map((mall) =>
+                mall.shops.map((shop) => (
+                  <Link
+                    key={shop.shopName}
+                    to={
+                      location.pathname.split("/")[1] === "admin"
+                        ? `/admin/${mall?.mallName.replace(" ", "_")}/shops/${
+                            shop.shopName
+                          }`
+                        : `/${mall?.mallName.replace(" ", "_")}/shops/${
+                            shop.shopName
+                          }`
+                    }
+                  >
+                    {shop.shopName}
+                  </Link>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div
-        onClick={() => setShowShopCategories(false)}
+        onClick={() => {
+          setShowShopCategories(false);
+          setShowSearchExtended(false);
+        }}
         style={{
           position: "absolute",
           height: "100vh",
@@ -126,7 +162,14 @@ const AllShops = () => {
       ></div>
 
       <div className={classes.mainShops}>
-        <div className={isShopCategorySelected ? classes.shopCategories : classes.shopCategories2}>
+        <div
+          className={
+            isShopCategorySelected
+              ? classes.shopCategories
+              : classes.shopCategories2
+          }
+          onClick={() => setShowSearchExtended(false)}
+        >
           <ShopCategories
             {...{
               isShopPage: true,
@@ -155,7 +198,10 @@ const AllShops = () => {
               ? classes.shopContainer
               : classes.shopContainer2
           }
-          onClick={() => setShowShopCategories(false)}
+          onClick={() => {
+            setShowShopCategories(false);
+            setShowSearchExtended(false);
+          }}
         >
           <div className={classes.categoryLists}>{categoriesPath}</div>
 
