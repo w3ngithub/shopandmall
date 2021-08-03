@@ -52,20 +52,26 @@
 @media only screen and (max-width: 768px) {
   .timings {
     width: 61%;
+    /* background-color: red; */
+  }
+
+  .remove {
+    position: absolute;
+    right: 0px;
   }
 }
 
 @media only screen and (max-width: 414px) {
   .timings {
     width: 100%;
-    /* background-color: red; */
+    position: relative;
   }
 
   .timings__buttondiv {
-    /* flex-direction: column; */
     align-items: flex-start;
     width: 100%;
-    gap: 25px;
+    /* gap: 47px; */
+    margin: 10px 0 0 0px;
   }
 
   .timings__buttondiv div {
@@ -88,5 +94,45 @@
 
   .mobileTime {
     display: block;
+  }
+
+  .remove {
+    position: absolute;
+    margin: 20px 0px;
+    top: -78px;
+    right: 0px;
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 321px) {
+  .timings__buttondiv {
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: flex-start; */
+    width: 20%;
+  }
+
+  .timeinput {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timings__buttondiv {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    gap: 0px;
+    margin-left: 25px;
+  }
+
+  .remove {
+    position: absolute;
+    margin: 20px 25px;
+    top: -78px;
+    right: -20px;
+    font-size: 20px;
   }
 }

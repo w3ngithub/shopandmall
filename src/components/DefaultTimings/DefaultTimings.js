@@ -16,7 +16,7 @@ const DefaultTimings = ({
   return (
     <div
       className="timings"
-      style={(isModal && { width: "80%" }) || (isShop && { width: "60%" })}
+      // style={(isModal && { width: "80%" }) || (isShop && { width: "60%" })}
     >
       <div className="timings__buttondiv">
         <div className="timeinput">

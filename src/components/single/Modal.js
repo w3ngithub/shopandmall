@@ -475,6 +475,10 @@ const Modal = ({
           <h3 className={classes.title}>
             {edit ? "Update Shop" : "Add New Shop"}
           </h3>
+          <IoIosClose
+            className={classes.closeIcon}
+            onClick={() => setShowModal(false)}
+          />
         </div>
         <div className={classes.line}></div>
 
@@ -598,7 +602,7 @@ const Modal = ({
               control={control}
               name="category"
               render={({ field: { onChange }, fieldState: { error } }) => (
-                <div style={{ flex: "0.4" }}>
+                <div>
                   <select
                     name="category"
                     className={classes.inputcategory}
@@ -635,7 +639,7 @@ const Modal = ({
               control={control}
               name="subCategory"
               render={({ field: { onChange }, fieldState: { error } }) => (
-                <div style={{ flex: "0.4" }}>
+                <div>
                   <select
                     name="subCategory"
                     onChange={(e) => {
@@ -737,6 +741,7 @@ const Modal = ({
               className={classes.upload}
               type="file"
               onChange={shopVideoHandleer}
+              accept="video/*"
             />
             <IoIosAddCircle className={classes.addIcon} />
           </label>
