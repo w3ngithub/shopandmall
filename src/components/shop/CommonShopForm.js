@@ -180,7 +180,7 @@ const CommonShopForm = ({
   let currentVideo = shopVideoState?.find((video) => video.id === index);
 
   useEffect(() => {
-    if (edit && docs.length > 0) {
+    if (edit && docs.length > 0 && dataShop.hasOwnProperty("category")) {
       setSubCategoryLists([
         ...docs.find((category) => category.category === dataShop.category)
           .rowContent.rowData,
@@ -556,6 +556,7 @@ const CommonShopForm = ({
         {isLoading && shopVideoState.length > 0 && (
           <Loader loadingPercentage={videoUploadPercentage} />
         )}
+        <Loader loadingPercentage={videoUploadPercentage} />
         {(currentVideo?.hasOwnProperty("video") ||
           dataShop?.hasOwnProperty("shopVideo")) && (
           <label className={classes.label}>
