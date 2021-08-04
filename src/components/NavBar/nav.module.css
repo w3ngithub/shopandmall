@@ -137,6 +137,9 @@ li a:hover,
   font-size: 14px;
   font-weight: normal;
   margin-bottom: 20px;
+  width: max-content;
+  max-width: 200px;
+  overflow: hidden;
 }
 
 .col ul li::after {
@@ -150,7 +153,6 @@ li a:hover,
 }
 
 .col ul li:hover::after {
-  content: "";
   width: 100%;
 }
 

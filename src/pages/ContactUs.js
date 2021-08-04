@@ -10,7 +10,6 @@ const AboutUs = () => {
   const customId = "custom-id-yes";
 
   const notify = () => toast.success("Successful!", { toastId: customId });
-  // console.log(inputData);
 
   const {
     register,

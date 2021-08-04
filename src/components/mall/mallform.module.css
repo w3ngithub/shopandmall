@@ -1,12 +1,18 @@
 .mainContainer {
   max-width: 100vw;
   height: auto;
-  background-color: #eee;
   margin-top: 68px;
 }
 
+.mallTitle {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+
 .formContainer {
-  padding: 50px 0;
+  padding: 30px 0;
 }
 
 .form {
@@ -14,6 +20,7 @@
   margin: 0 auto;
   border-radius: 10px;
   background-color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   display: flex;
   padding: 30px;
   flex-direction: column;
@@ -21,7 +28,6 @@
 
 .innerDiv {
   display: flex;
-  /* justify-content: space-around; */
 }
 
 .innerDivImage {
@@ -278,9 +284,29 @@
 }
 
 @media only screen and (max-width: 414px) {
+  .mainContainer {
+    min-height: 653px;
+  }
+
   .formWrapper {
     margin: 50px 0 50px 0;
     padding: 20px 15px;
+  }
+
+  .form {
+    width: 100%;
+    box-shadow: 0 0 0;
+    margin-top: -10px;
+  }
+
+  .mallTitle {
+    padding-top: 15px;
+    font-size: 25px;
+    letter-spacing: 1px;
+  }
+
+  .formContainer {
+    padding: 0px 0;
   }
 
   .formTitle img {
@@ -314,6 +340,7 @@
     margin-top: 5px;
     margin-left: 0px;
     color: rgb(53, 103, 179);
+    font-size: 12px;
   }
 
   .input {
