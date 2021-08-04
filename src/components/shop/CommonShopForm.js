@@ -556,7 +556,7 @@ const CommonShopForm = ({
         {isLoading && shopVideoState.length > 0 && (
           <Loader loadingPercentage={videoUploadPercentage} />
         )}
-        <Loader loadingPercentage={videoUploadPercentage} />
+
         {(currentVideo?.hasOwnProperty("video") ||
           dataShop?.hasOwnProperty("shopVideo")) && (
           <label className={classes.label}>

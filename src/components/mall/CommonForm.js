@@ -142,7 +142,7 @@ const CommonForm = ({
         phoneNumber: editData.phoneNumber,
       });
     }
-  }, [editData.shops.length]);
+  }, [editData?.shops?.length]);
 
   return (
     <div className={classes.mainContainer}>
