@@ -10,7 +10,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { useHistory, useLocation } from "react-router-dom";
 import DefaultImage from "../../assets/images/defaultImage.png";
 
-const NavBar = ({ check }) => {
+const NavBar = ({ check,setShowSearchExtended }) => {
   let { docs } = useFirestore("Shop Categories");
 
   const history = useHistory();
@@ -21,7 +21,7 @@ const NavBar = ({ check }) => {
   const [_, setUserValidate] = useState(false);
 
   return (
-    <div className={classes.navbar}>
+    <div className={classes.navbar} onClick={() => setShowSearchExtended(false)}>
       <div className={classes.container}>
         <div className={classes.logo}>
           <Link
@@ -62,39 +62,51 @@ const NavBar = ({ check }) => {
                 </Link>
                 <FaAngleDown className={classes.icon} />
 
-                <ul className={classes.shopsDropdown}>
+                <ul
+                  className={
+                    location.pathname.split("/")[1] === "admin"
+                      ? classes.shopsDropdown
+                      : classes.shopsDropdownUser
+                  }
+                >
                   <div className={classes.dropDownWrapper}>
-                    {docs.map((doc) => (
-                      <div className={classes.col} key={doc.category}>
-                        <li className={classes.row}>
-                          <h3
-                            onClick={() =>
-                              history.push(`/shops/category/${doc.category}`)
-                            }
-                          >
-                            {doc.category}
-                          </h3>
-                          <FaAngleDown className={classes.headerIcon} />
+                    {docs.length !== 0 ? (
+                      docs.map((doc) => (
+                        <div className={classes.col} key={doc.category}>
+                          <li className={classes.row}>
+                            <h3
+                              onClick={() =>
+                                history.push(`/shops/category/${doc.category}`)
+                              }
+                            >
+                              {doc.category}
+                            </h3>
+                            <FaAngleDown className={classes.headerIcon} />
 
-                          <ul className={checked ? classes.drop : classes.hide}>
-                            {doc.rowContent.rowData.map((row) => {
-                              return (
-                                <li
-                                  key={row.id}
-                                  onClick={() =>
-                                    history.push(
-                                      `/shops/category/${doc.category}/${row.subCategory}`
-                                    )
-                                  }
-                                >
-                                  {row.subCategory}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </li>
-                      </div>
-                    ))}
+                            <ul
+                              className={checked ? classes.drop : classes.hide}
+                            >
+                              {doc.rowContent.rowData.map((row) => {
+                                return (
+                                  <li
+                                    key={row.id}
+                                    onClick={() =>
+                                      history.push(
+                                        `/shops/category/${doc.category}/${row.subCategory}`
+                                      )
+                                    }
+                                  >
+                                    {row.subCategory}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </li>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No Shops Found</p>
+                    )}
                   </div>
                 </ul>
               </li>

@@ -91,7 +91,7 @@
   height: 40px;
   border-radius: 5px;
   background-color: #f3f3f3;
-  font-size: 18px;
+  font-size: 15px;
 }
 .inputcategory {
   border: 1px solid rgba(146, 146, 146, 0.5);
@@ -167,13 +167,15 @@
 }
 .image {
   display: flex;
+  align-items: center;
   width: auto;
-  height: 30px;
+  height: 32px;
   background-color: rgba(156, 156, 156, 0.8);
   border-radius: 60px;
   margin-bottom: 10px;
   padding: 5px 10px;
   overflow: hidden;
+  font-size: 15px;
 }
 .button {
   background: none;
@@ -304,5 +306,14 @@
   .inputcategory {
     padding: 8px 10px;
     margin-bottom: 15px;
+  }
+
+  .image {
+    align-items: flex-start;
+    height: 26px;
+  }
+
+  .smallClose{
+    margin-top: 3px;
   }
 }
