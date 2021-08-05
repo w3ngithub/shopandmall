@@ -52,7 +52,7 @@
   background-color: #efefef;
   border: none;
   border-radius: 5px;
-  color: #153074;
+  color: #827D7D;
   font-size: 15px;
 }
 
@@ -60,9 +60,10 @@
   position: absolute;
   width: 100%;
   height: auto;
-  background: rgb(245, 245, 245);
+  background: #fbfafa;
   z-index: 10;
   padding: 20px 0;
+  box-shadow: 0px 5px 10px -5px rgba(0,0,0,.2)
 }
 
 .searchExtendedContainer {
@@ -75,13 +76,15 @@
 
 .searchExtendedContainer p {
   font-weight: bold;
+  color: #827D7D
 }
 
 .searchExtendedMallNames {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 150px;
-  grid-row-gap: 10px;
+  grid-row-gap: 12px;
+  font-size: 14px;
 }
 
 .searchExtendedMallNames a {

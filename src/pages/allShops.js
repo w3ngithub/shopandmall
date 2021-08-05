@@ -22,6 +22,7 @@ const AllShops = () => {
 
   const location = useLocation();
   const [malls, setMalls] = useState([]);
+  const [shops, setShops] = useState([]);
   const history = useHistory();
 
   const isShopCategorySelected = location.pathname
@@ -46,6 +47,15 @@ const AllShops = () => {
   useEffect(() => {
     setMalls(filteredMalls);
   }, [filteredMalls]);
+
+  useEffect(() => {
+    const shopCollection = malls
+      .map((mall) =>
+        mall.shops.map((shop) => ({ ...shop, mallName: mall.mallName }))
+      )
+      .flat();
+    setShops(shopCollection);
+  }, [malls]);
 
   //show category list according to selected path
   let categoriesPath = null;
@@ -124,7 +134,7 @@ const AllShops = () => {
           <div className={classes.searchExtendedContainer}>
             <p>Quick Links</p>
             <div className={classes.searchExtendedMallNames}>
-              {malls?.map((mall) =>
+              {/* {malls?.map((mall) =>
                 mall.shops.map((shop) => (
                   <Link
                     key={shop.shopName}
@@ -141,7 +151,23 @@ const AllShops = () => {
                     {shop.shopName}
                   </Link>
                 ))
-              )}
+              )} */}
+              {shops.slice(0, 4).map((shop) => (
+                <Link
+                  key={shop.shopName}
+                  to={
+                    location.pathname.split("/")[1] === "admin"
+                      ? `/admin/${shop?.mallName.replace(" ", "_")}/shops/${
+                          shop.shopName
+                        }`
+                      : `/${shop?.mallName.replace(" ", "_")}/shops/${
+                          shop.shopName
+                        }`
+                  }
+                >
+                  {shop.shopName}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

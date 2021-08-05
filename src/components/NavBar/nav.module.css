@@ -68,7 +68,8 @@ li a:hover,
   transition: 0.5s;
 }
 
-.shopsDropdown {
+.shopsDropdown,
+.shopsDropdownUser {
   visibility: hidden;
   position: absolute;
   top: 65px;
@@ -79,8 +80,11 @@ li a:hover,
   cursor: auto;
   max-height: 0;
   opacity: 0;
-  max-height: 0;
   transition: all 0.5s ease-in;
+}
+
+.shopsDropdownUser {
+  left: -200%;
 }
 
 .row h3:hover {
@@ -88,7 +92,8 @@ li a:hover,
   transform: scale(1.1);
 }
 
-.shopsDropdown::after {
+.shopsDropdown::after,
+.shopsDropdownUser::after {
   content: "";
   position: absolute;
   width: 0;
@@ -101,7 +106,12 @@ li a:hover,
   transform: translateX(-50%);
 }
 
-.menuList ul li:nth-of-type(2):hover .shopsDropdown {
+.shopsDropdownUser::after {
+  left: 62%;
+}
+
+.menuList ul li:nth-of-type(2):hover .shopsDropdown,
+.menuList ul li:nth-of-type(2):hover .shopsDropdownUser {
   visibility: visible;
   max-height: 500px;
   opacity: 1;
@@ -138,7 +148,7 @@ li a:hover,
   font-weight: normal;
   margin-bottom: 20px;
   width: max-content;
-  max-width: 200px;
+  max-width: 150px;
   overflow: hidden;
 }
 
@@ -323,12 +333,14 @@ li a:hover,
   .toHide a {
     display: none;
   }
-  .shopsDropdown {
+  .shopsDropdown,
+  .shopsDropdownUser {
     top: 55px;
     padding: 20px 35px;
   }
 
-  .menuList ul li:nth-of-type(2):hover .shopsDropdown {
+  .menuList ul li:nth-of-type(2):hover .shopsDropdown,
+  .menuList ul li:nth-of-type(2):hover .shopsDropdownUser {
     visibility: visible;
     max-height: auto;
     opacity: 1;

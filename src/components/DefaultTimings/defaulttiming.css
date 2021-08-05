@@ -1,6 +1,8 @@
 .timings {
   display: flex;
   align-items: flex-end;
+  /* width: auto; */
+  /* max-width: 73%; */
   width: 43%;
 }
 
@@ -41,7 +43,7 @@
 
 @media only screen and (max-width: 1024px) {
   .timings {
-    width: 45%;
+    width: 59%;
   }
 
   .timings__buttondiv {

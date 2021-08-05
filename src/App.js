@@ -36,6 +36,7 @@ function App() {
 
   const [allDataState, allDataDispatch] = useReducer(allDataReducer, allData);
   const [sideImageWithFooter, setSideImageWithFooter] = useState(false);
+  const [showSearchExtended, setShowSearchExtended] = useState(false);
 
   const showSideImage = () => {
     setSideImageWithFooter(true);
@@ -54,9 +55,13 @@ function App() {
           sideImageWithFooter,
           showSideImage,
           hideSideImage,
+          showSearchExtended,
+          setShowSearchExtended,
         }}
       >
-        {location.pathname !== "/login" && <Nav />}
+        {location.pathname !== "/login" && (
+          <Nav {...{ setShowSearchExtended }} />
+        )}
         <div className="body">
           <Switch>
             {/* ------------------User------------------ */}

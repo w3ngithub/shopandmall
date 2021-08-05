@@ -712,7 +712,7 @@ const Modal = ({
                       });
                     }}
                   >
-                    <IoIosClose />
+                    <IoIosClose className={classes.smallClose} />
                   </button>
                   {image.ImageName}
                 </p>

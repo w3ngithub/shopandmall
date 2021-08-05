@@ -14,10 +14,7 @@ const DefaultTimings = ({
   maxTime,
 }) => {
   return (
-    <div
-      className="timings"
-      // style={(isModal && { width: "80%" }) || (isShop && { width: "60%" })}
-    >
+    <div className="timings" style={(isModal && { width: "100%" }) || null}>
       <div className="timings__buttondiv">
         <div className="timeinput">
           <label>Open Time:</label>

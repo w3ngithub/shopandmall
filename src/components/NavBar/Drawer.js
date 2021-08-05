@@ -10,7 +10,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 
-const Drawer = ({ check, data }) => {
+const Drawer = ({ check, data, setShowSearchExtended }) => {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [openDD, setOpenDD] = useState({});
@@ -37,7 +37,10 @@ const Drawer = ({ check, data }) => {
 
   return (
     <>
-      <div className={classes.mobileNav}>
+      <div
+        className={classes.mobileNav}
+        onClick={() => setShowSearchExtended(false)}
+      >
         <div className={classes.logo}>
           <Link to="/" className={classes.logo}>
             <img src={Logo} alt="" />

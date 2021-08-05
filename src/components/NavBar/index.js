@@ -3,7 +3,7 @@ import Nav from "./Nav";
 import Drawer from "./Drawer";
 import useFirestore from "../../hooks/useFirestore";
 
-const Try = () => {
+const Try = ({ setShowSearchExtended }) => {
   let { docs } = useFirestore("Shop Categories");
 
   const [arr, setArr] = useState([]);
@@ -23,8 +23,12 @@ const Try = () => {
 
   return (
     <div>
-      <Nav check={check} />
-      <Drawer data={arr} check={check} />
+      <Nav check={check} setShowSearchExtended={setShowSearchExtended} />
+      <Drawer
+        data={arr}
+        check={check}
+        setShowSearchExtended={setShowSearchExtended}
+      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Mall from "../components/mall/Mall";
 import { BiSearchAlt2 } from "react-icons/bi";
 import useFirestore from "../hooks/useFirestore";
@@ -14,31 +14,20 @@ import { HiChevronDoubleRight } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
 
 import { Link } from "react-router-dom";
-
-// import Pagination from "../components/mall/Pagination";
+import { MyContext } from "../App";
 
 const AllMalls = () => {
   const [showShopCategories, setShowShopCategories] = useState(false);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
-  const [showSearchExtended, setShowSearchExtended] = useState(false);
 
   let { docs, loading } = useFirestore("Shopping Mall");
   const [malls, setMalls] = useState([]);
 
-  //Pagination
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [mallsPerPage] = useState(3);
-
-  // const indexOfLastMall = currentPage * mallsPerPage;
-  // const indexOfFirstMall = indexOfLastMall - mallsPerPage;
-  // const currentMalls = docs.slice(indexOfFirstMall, indexOfLastMall);
-
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // ------------
-
   const location = useLocation();
   const history = useHistory();
+
+  // Context
+  const { showSearchExtended, setShowSearchExtended } = useContext(MyContext);
 
   let shopCategory = useFirestore("Shop Categories").docs;
   const isShopCategorySelected = location.pathname
@@ -95,6 +84,7 @@ const AllMalls = () => {
       );
   }
 
+
   return (
     <>
       <div
@@ -129,7 +119,7 @@ const AllMalls = () => {
           <div className={classes.searchExtendedContainer}>
             <p>Quick Links</p>
             <div className={classes.searchExtendedMallNames}>
-              {malls?.map((mall) => (
+              {malls?.slice(0, 4).map((mall) => (
                 <Link
                   key={mall.mallName}
                   to={
