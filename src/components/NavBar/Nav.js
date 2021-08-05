@@ -1,16 +1,15 @@
-import React, { useState } from "react";
 import classes from "./nav.module.css";
+import React, { useState } from "react";
 import Logo from "../../image/logo.png";
-import useFirestore from "../../hooks/useFirestore";
-
 import { Link } from "react-router-dom";
 import { FaAngleDown } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
+import useFirestore from "../../hooks/useFirestore";
 import { useHistory, useLocation } from "react-router-dom";
 import DefaultImage from "../../assets/images/defaultImage.png";
 
-const NavBar = ({ check,setShowSearchExtended }) => {
+const NavBar = ({ check, setShowSearchExtended }) => {
   let { docs } = useFirestore("Shop Categories");
 
   const history = useHistory();
@@ -21,7 +20,10 @@ const NavBar = ({ check,setShowSearchExtended }) => {
   const [_, setUserValidate] = useState(false);
 
   return (
-    <div className={classes.navbar} onClick={() => setShowSearchExtended(false)}>
+    <div
+      className={classes.navbar}
+      onClick={() => setShowSearchExtended(false)}
+    >
       <div className={classes.container}>
         <div className={classes.logo}>
           <Link
@@ -105,7 +107,7 @@ const NavBar = ({ check,setShowSearchExtended }) => {
                         </div>
                       ))
                     ) : (
-                      <p>No Shops Found</p>
+                      <p className={classes.empty}>No Shops Found</p>
                     )}
                   </div>
                 </ul>

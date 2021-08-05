@@ -1,11 +1,11 @@
 import Loader from "../Loader/Loader";
 import EditShop from "../shop/EditShop";
 import ShopForm from "../shop/ShopForm";
+import { useForm } from "react-hook-form";
 import classes from "./mallform.module.css";
+import AllTimings from "../AllTimings/AllTimings";
 import React, { useEffect, useState } from "react";
 import { IoIosAddCircleOutline, IoIosImage } from "react-icons/io";
-import AllTimings from "../AllTimings/AllTimings";
-import { useForm } from "react-hook-form";
 
 const CommonForm = ({
   edit,

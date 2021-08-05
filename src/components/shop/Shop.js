@@ -1,16 +1,23 @@
-import React from "react";
-import ShopCardComponent from "../shopCardComponent/ShopCardComponent";
 import Slider from "react-slick";
 import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import SkeletonCard from "../../skeletons/SkeletonCard";
+import ShopCardComponent from "../shopCardComponent/ShopCardComponent";
 
 const Shop = ({ docs, settings, loading }) => {
+  const [shops, setShops] = useState([]);
+
   const location = useLocation();
 
   let empty = docs.map((doc) => doc.shops.length);
 
   let emptyCheck = Math.max.apply(0, empty);
+
+  useEffect(() => {
+    let allShops = docs.map((doc) => doc.shops).flat();
+    setShops(allShops);
+  }, [docs]);
 
   return (
     <div>
@@ -39,11 +46,13 @@ const Shop = ({ docs, settings, loading }) => {
           ) : (
             <Slider {...settings} className={classes.slider}>
               {docs.length !== 0 ? (
-                docs.map((doc) => (
-                  <div key={doc.id}>
-                    <ShopCardComponent doc={doc} />
-                  </div>
-                ))
+                docs.map((doc) =>
+                  doc.shops.length === 0 ? null : (
+                    <div key={doc.id}>
+                      <ShopCardComponent doc={doc} />
+                    </div>
+                  )
+                )
               ) : (
                 <p>No any Records</p>
               )}

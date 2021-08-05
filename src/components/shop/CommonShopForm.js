@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import Loader from "../Loader/Loader";
 import classes from "./shopform.module.css";
 import { IoIosClose } from "react-icons/io";
-import AllTimings from "../AllTimings/AllTimings";
-import useFirestore from "../../hooks/useFirestore";
 import { Controller } from "react-hook-form";
-import Loader from "../Loader/Loader";
+import AllTimings from "../AllTimings/AllTimings";
+import React, { useState, useEffect } from "react";
+import useFirestore from "../../hooks/useFirestore";
 
 const CommonShopForm = ({
   edit,

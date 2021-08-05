@@ -1,12 +1,9 @@
 import React from "react";
-import classes from "./mall.module.css";
-import MallCardComponent from "../mallCardComponent/MallCardComponent";
-
 import Slider from "react-slick";
-
+import classes from "./mall.module.css";
 import { useLocation } from "react-router-dom";
-
 import SkeletonCard from "../../skeletons/SkeletonCard";
+import MallCardComponent from "../mallCardComponent/MallCardComponent";
 
 const Mall = ({ docs, settings, loading }) => {
   const location = useLocation();

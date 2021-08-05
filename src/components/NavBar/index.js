@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import Nav from "./Nav";
 import Drawer from "./Drawer";
+import React, { useState } from "react";
 import useFirestore from "../../hooks/useFirestore";
 
 const Try = ({ setShowSearchExtended }) => {

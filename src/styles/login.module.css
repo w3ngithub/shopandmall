@@ -15,7 +15,7 @@
   width: 400px;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 0px 0px 20px 2px rgb(236, 78, 78, 0.3);
+  box-shadow: 0 0 8px 1px rgb(194 194 194 / 30%);
 }
 
 .header {
@@ -57,4 +57,20 @@
 .submit:hover {
   /* background-color: rgb(199, 59, 59); */
   box-shadow: 3px 3px 5px rgba(73, 73, 207, 0.2);
+}
+
+@media only screen and (max-width: 414px) {
+  .wrapper {
+    width: 300px;
+    box-shadow: none;
+  }
+
+  .header {
+    margin: 30px 0;
+    font-size: 30px;
+  }
+
+  .submit {
+    font-size: 16px;
+  }
 }

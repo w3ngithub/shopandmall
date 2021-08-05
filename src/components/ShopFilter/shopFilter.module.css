@@ -44,6 +44,8 @@
 
 .subCategory {
   margin-left: 20px;
+  max-width: 100px;
+  overflow: hidden;
 }
 
 .current {

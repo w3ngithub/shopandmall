@@ -1,19 +1,16 @@
+import { FaPlus } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import Modal from "../components/single/Modal";
 import { fireStore } from "../firebase/config";
-// import classes from "../styles/singleMall.module.css";
-import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
-
-import { FaPlus } from "react-icons/fa";
 import classes from "../styles/single.module.css";
-import ShopCardComponent from "../components/shopCardComponent/ShopCardComponent";
-
+import React, { useEffect, useState } from "react";
+import SkeletonCard from "../skeletons/SkeletonCard";
 import SkeletonText from "../skeletons/SkeletonText";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
-import SkeletonCard from "../skeletons/SkeletonCard";
+import { useParams, useLocation } from "react-router-dom";
 import { ToastContainer, toast, Slide } from "react-toastify";
+import ShopCardComponent from "../components/shopCardComponent/ShopCardComponent";
 
 const SingleMall = () => {
   const [mall, setMall] = useState([]);

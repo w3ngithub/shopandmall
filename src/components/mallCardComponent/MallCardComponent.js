@@ -1,6 +1,6 @@
 import React from "react";
-import { IoMdCloseCircle } from "react-icons/io";
 import classes from "../styles/Card.module.css";
+import { IoMdCloseCircle } from "react-icons/io";
 import NoImage from "../../image/No_Image_Available.jpg";
 import { useHistory, useLocation } from "react-router-dom";
 import { fireStore, storage } from "../../firebase/config";

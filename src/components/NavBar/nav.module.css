@@ -74,7 +74,7 @@ li a:hover,
   position: absolute;
   top: 65px;
   background-color: #f9f9f9;
-  padding: 25px 50px;
+  padding: 25px 35px;
   left: 50%;
   transform: translateX(-50%);
   cursor: auto;
@@ -84,7 +84,7 @@ li a:hover,
 }
 
 .shopsDropdownUser {
-  left: -200%;
+  left: -140%;
 }
 
 .row h3:hover {
@@ -93,7 +93,7 @@ li a:hover,
 }
 
 .shopsDropdown::after,
-.shopsDropdownUser::after {
+.shopsDropdownUser::after{
   content: "";
   position: absolute;
   width: 0;
@@ -121,9 +121,13 @@ li a:hover,
   display: flex;
 }
 
+.empty {
+  width: 600px;
+}
+
 .col {
   text-align: left;
-  margin-right: 100px;
+  margin-right: 60px;
 }
 
 .col:last-child {
@@ -148,7 +152,7 @@ li a:hover,
   font-weight: normal;
   margin-bottom: 20px;
   width: max-content;
-  max-width: 150px;
+  max-width: 100px;
   overflow: hidden;
 }
 
@@ -348,7 +352,7 @@ li a:hover,
 
   .col {
     text-align: left;
-    margin-right: 50px;
+    margin-right: 20px;
   }
 
   .col:last-child {

@@ -1,12 +1,12 @@
-import CommonForm from "../components/mall/CommonForm";
 import editReducer from "../reducers/editReducer";
-import { useHistory, useLocation } from "react-router-dom";
-import { storage, fireStore } from "../firebase/config";
 import React, { useState, useReducer } from "react";
-import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
-import { checkShopValidation } from "../utils/checkValidation";
-import shopVideoReducer from "../reducers/shopVideoReducer";
+import CommonForm from "../components/mall/CommonForm";
 import { ToastContainer, toast } from "react-toastify";
+import { storage, fireStore } from "../firebase/config";
+import { useHistory, useLocation } from "react-router-dom";
+import shopVideoReducer from "../reducers/shopVideoReducer";
+import { checkShopValidation } from "../utils/checkValidation";
+import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
 
 const MallForm = () => {
   //Removed Images

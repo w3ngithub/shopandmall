@@ -1,22 +1,20 @@
+import { MyContext } from "../Context";
+import { FaPlay } from "react-icons/fa";
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import ImageGallery from "react-image-gallery";
 import { fireStore } from "../firebase/config";
-
+import SideImage from "../components/SideImage";
 import { BiImage, BiVideo } from "react-icons/bi";
 import classes from "../styles/single.module.css";
-import { FaRegWindowClose, FaEdit } from "react-icons/fa";
-import SkeletonText from "../skeletons/SkeletonText";
-import SkeletonBlock from "../skeletons/SkeletonBlock";
-import SkeletonShopCard from "../skeletons/SkeletonShopCard";
-import modalclasses from "../components/single/modal.module.css";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { ToastContainer, toast } from "react-toastify";
-import { withRouter } from "react-router";
-import Image from "../assets/images/defaultImage.png";
-import SideImage from "../components/SideImage";
-import { FaPlay } from "react-icons/fa";
 import EditModal from "../components/single/Modal";
-import { MyContext } from "../Context";
+import SkeletonText from "../skeletons/SkeletonText";
+import { ToastContainer, toast } from "react-toastify";
+import SkeletonBlock from "../skeletons/SkeletonBlock";
+import { FaRegWindowClose, FaEdit } from "react-icons/fa";
+import SkeletonShopCard from "../skeletons/SkeletonShopCard";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import modalclasses from "../components/single/modal.module.css";
 
 class SingleClassTry extends React.Component {
   static contextType = MyContext;

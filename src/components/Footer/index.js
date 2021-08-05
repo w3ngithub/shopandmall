@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import classes from "./footer.module.css";
 import { RiFacebookFill } from "react-icons/ri";
-import { AiOutlineInstagram } from "react-icons/ai";
 import { IoLogoTwitter } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { AiOutlineInstagram } from "react-icons/ai";
 
 const Footer = () => {
   return (
