@@ -29,10 +29,13 @@ const ShopForm = ({
         dataShop,
       },
     });
-    setImagesToRemove((prevState) => [
-      ...prevState,
-      ...dataShop.shopImages.map((image) => image),
-    ]);
+    if (dataShop?.shopImages?.length > 0) {
+      setImagesToRemove((prevState) => [
+        ...prevState,
+        ...dataShop.shopImages.map((image) => image),
+      ]);
+    }
+
     if (dataShop?.shopVideo?.hasOwnProperty("url")) {
       setRemovedVideoThumbnail((prev) => [
         ...prev,

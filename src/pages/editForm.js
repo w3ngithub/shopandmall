@@ -68,6 +68,26 @@ const MallForm = () => {
           alert(`please upload an image of shop no.${index + 1}`);
           return;
         }
+
+        const arrayOfOpenTime = shop.timings[0]?.openTime?.split(":");
+        const arrayOfCloseTime = shop.timings[0]?.closeTime?.split(":");
+
+        const mallTimings = {
+          openTime:
+            parseInt(arrayOfOpenTime[0], 10) * 60 * 60 +
+            parseInt(arrayOfOpenTime[1], 10) * 60,
+          closeTime:
+            parseInt(arrayOfCloseTime[0], 10) * 60 * 60 +
+            parseInt(arrayOfCloseTime[1], 10) * 60,
+        };
+
+        if (mallTimings.closeTime - mallTimings.openTime < 5400) {
+          alert(
+            "shop close time should be at least 1hr 30min after open time. Shop No. " +
+              (index + 1)
+          );
+          return;
+        }
       });
 
       if (!isShopTimeError && !isShopImageError) {
