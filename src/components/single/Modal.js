@@ -74,7 +74,10 @@ const Modal = ({
       let selectedShopImages = e.target.files[i];
 
       if (selectedShopImages && types.includes(selectedShopImages.type)) {
-        setImages((prevState) => [...prevState, selectedShopImages]);
+        setImages((prevState) => [
+          ...prevState,
+          { id: Date.now(), image: selectedShopImages },
+        ]);
       } else {
         setImageErrors("Please select an image file  (jpeg or png)");
       }
@@ -182,11 +185,15 @@ const Modal = ({
       setIsLoading(true);
       setPercentage(30);
       await Promise.all(
-        images.map((image) => storage.ref(image.name).put(image))
+        images.map((image) =>
+          storage.ref(image.id + image.image.name).put(image.image)
+        )
       );
 
       const shopImageUrl = await Promise.all(
-        images.map((image) => storage.ref(image.name).getDownloadURL())
+        images.map((image) =>
+          storage.ref(image.id + image.image.name).getDownloadURL()
+        )
       );
 
       let result = {
@@ -199,8 +206,8 @@ const Modal = ({
         subCategory: shop.subCategory,
         timings: shop.timings,
         shopImages: shopImageUrl.map((items, index) => ({
-          id: Math.random() + images[index].name,
-          ImageName: images[index].name,
+          id: images[index].id + images[index].image.name,
+          ImageName: images[index].image.name,
           url: items,
         })),
       };
@@ -314,9 +321,7 @@ const Modal = ({
     setPercentage(30);
 
     if (removedImages.length > 0) {
-      removedImages.forEach((image) =>
-        storage.ref().child(image.ImageName).delete()
-      );
+      removedImages.forEach((image) => storage.ref().child(image.id).delete());
     }
     if (removedVideo.length > 0) {
       removedVideo.forEach((video) => storage.ref().child(video.id).delete());
@@ -331,7 +336,6 @@ const Modal = ({
     setPercentage(60);
 
     if (typeof video?.thumbnail?.thumbnail === "object") {
-      console.log("new thumbnail");
       let videoThumbnailUrl = [];
       await Promise.all(
         [video].map((video) =>
@@ -399,19 +403,23 @@ const Modal = ({
     setPercentage(80);
     if (images.length > 0) {
       await Promise.all(
-        images.map((image) => storage.ref(image.name).put(image))
+        images.map((image) =>
+          storage.ref(image.id + image.image.name).put(image.image)
+        )
       );
 
       const shopImageUrl = await Promise.all(
-        images.map((image) => storage.ref(image.name).getDownloadURL())
+        images.map((image) =>
+          storage.ref(image.id + image.image.name).getDownloadURL()
+        )
       );
       shopTemp = {
         ...shopTemp,
         shopImages: [
           ...shopTemp.shopImages,
           ...images.map((img, i) => ({
-            id: Math.random() + img.name,
-            ImageName: img.name,
+            id: img.id + img.image.name,
+            ImageName: img.image.name,
             url: shopImageUrl[i],
           })),
         ],
@@ -730,7 +738,7 @@ const Modal = ({
                   >
                     <IoIosClose />
                   </button>
-                  {image.name}
+                  {image.image.name}
                 </p>
               ))}
           </div>

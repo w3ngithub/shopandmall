@@ -276,7 +276,7 @@ class SingleClassTry extends React.Component {
     const { sideImageWithFooter, showSideImage, hideSideImage } = this.context;
 
     this.state.modal === false && (document.body.style.overflow = "auto");
-
+    console.log(this.state?.mall?.shops);
     return (
       // Image Gallery Carousel
       <section className="app">

@@ -120,6 +120,7 @@ const SingleShop = () => {
     };
     fetchData();
   }, [docId]);
+
   return (
     <div>
       {modal && <Modal {...{ setModal, image, setImage, galleryImage, ind }} />}

@@ -469,7 +469,7 @@ const CommonShopForm = ({
                       >
                         <IoIosClose />
                       </button>
-                      {img.name}
+                      {img.image.name}
                     </p>
                   ))
                 : null
@@ -492,7 +492,7 @@ const CommonShopForm = ({
                     >
                       <IoIosClose />
                     </button>
-                    {img?.name}
+                    {img?.image.name}
                   </p>
                 ))
             )}

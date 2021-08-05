@@ -42,7 +42,14 @@ const Drawer = ({ check, data, setShowSearchExtended }) => {
         onClick={() => setShowSearchExtended(false)}
       >
         <div className={classes.logo}>
-          <Link to="/" className={classes.logo}>
+          <Link
+            to={
+              location.pathname.split("/")[1] === "admin"
+                ? "/admin/dashboard"
+                : "/"
+            }
+            className={classes.logo}
+          >
             <img src={Logo} alt="" />
           </Link>
         </div>

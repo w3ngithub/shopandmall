@@ -68,6 +68,26 @@ const MallForm = () => {
           alert(`please upload an image of shop no.${index + 1}`);
           return;
         }
+
+        const arrayOfOpenTime = shop.timings[0]?.openTime?.split(":");
+        const arrayOfCloseTime = shop.timings[0]?.closeTime?.split(":");
+
+        const mallTimings = {
+          openTime:
+            parseInt(arrayOfOpenTime[0], 10) * 60 * 60 +
+            parseInt(arrayOfOpenTime[1], 10) * 60,
+          closeTime:
+            parseInt(arrayOfCloseTime[0], 10) * 60 * 60 +
+            parseInt(arrayOfCloseTime[1], 10) * 60,
+        };
+
+        if (mallTimings.closeTime - mallTimings.openTime < 5400) {
+          alert(
+            "shop close time should be at least 1hr 30min after open time. Shop No. " +
+              (index + 1)
+          );
+          return;
+        }
       });
 
       if (!isShopTimeError && !isShopImageError) {
@@ -101,7 +121,10 @@ const MallForm = () => {
             addedShopImages.map((image) =>
               Promise.all(
                 image.images.map((img) =>
-                  storage.ref().child(img.name).put(img)
+                  storage
+                    .ref()
+                    .child(img.id + img.image.name)
+                    .put(img.image)
                 )
               )
             )
@@ -111,7 +134,7 @@ const MallForm = () => {
             addedShopImages.map((image) =>
               Promise.all(
                 image.images.map((img) =>
-                  storage.ref(img.name).getDownloadURL()
+                  storage.ref(img.id + img.image.name).getDownloadURL()
                 )
               )
             )
@@ -123,7 +146,7 @@ const MallForm = () => {
         // Remove Shop Images from Firebase Storage
         if (imagesToRemove.length > 0) {
           imagesToRemove.forEach((image) =>
-            storage.ref().child(image.ImageName).delete()
+            storage.ref().child(image.id).delete()
           );
         }
 
@@ -244,12 +267,13 @@ const MallForm = () => {
                       ...shopImageUrl[indexOfAddedImages].map(
                         (items, index) => ({
                           id:
-                            Math.random() +
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .id +
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .image.name,
                           ImageName:
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .image.name,
                           url: items,
                         })
                       ),
@@ -282,12 +306,13 @@ const MallForm = () => {
                       ...shopImageUrl[indexOfAddedImages].map(
                         (items, index) => ({
                           id:
-                            Math.random() +
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .id +
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .image.name,
                           ImageName:
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .image.name,
                           url: items,
                         })
                       ),
