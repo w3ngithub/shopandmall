@@ -1,5 +1,5 @@
-import TimePicker from "react-time-picker";
 import "./defaulttiming.css";
+import TimePicker from "react-time-picker";
 import { AiFillCloseCircle } from "react-icons/ai";
 
 const DefaultTimings = ({

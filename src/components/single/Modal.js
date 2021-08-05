@@ -1,14 +1,14 @@
-import classes from "./modal.module.css";
-import React, { useState, useEffect } from "react";
-import { fireStore, storage } from "../../firebase/config";
-import { IoIosAddCircle } from "react-icons/io";
-import { useForm, Controller } from "react-hook-form";
-import useFirestore from "../../hooks/useFirestore";
-import AllTimings from "../AllTimings/AllTimings";
-import { checkShopValidation } from "../../utils/checkValidation";
 import Loader from "../Loader/Loader";
-import { useHistory } from "react-router-dom";
+import classes from "./modal.module.css";
 import { IoIosClose } from "react-icons/io";
+import { useHistory } from "react-router-dom";
+import { IoIosAddCircle } from "react-icons/io";
+import AllTimings from "../AllTimings/AllTimings";
+import React, { useState, useEffect } from "react";
+import useFirestore from "../../hooks/useFirestore";
+import { useForm, Controller } from "react-hook-form";
+import { fireStore, storage } from "../../firebase/config";
+import { checkShopValidation } from "../../utils/checkValidation";
 
 const Modal = ({
   setShowModal,
@@ -602,7 +602,7 @@ const Modal = ({
               control={control}
               name="category"
               render={({ field: { onChange }, fieldState: { error } }) => (
-                <div>
+                <div className={classes.selectInput}>
                   <select
                     name="category"
                     className={classes.inputcategory}
@@ -624,7 +624,6 @@ const Modal = ({
                       </option>
                     ))}
                   </select>
-
                   {error && <p className={classes.error}>{error.message}</p>}
                 </div>
               )}
@@ -639,7 +638,7 @@ const Modal = ({
               control={control}
               name="subCategory"
               render={({ field: { onChange }, fieldState: { error } }) => (
-                <div>
+                <div className={classes.selectInput}>
                   <select
                     name="subCategory"
                     onChange={(e) => {

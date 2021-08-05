@@ -1,6 +1,6 @@
+import "./page.css";
 import React from "react";
 import classes from "./mallform.module.css";
-import "./page.css";
 
 const Pagination = ({ mallsPerPage, docs, paginate }) => {
   const [activePage, setActivePage] = React.useState(1);

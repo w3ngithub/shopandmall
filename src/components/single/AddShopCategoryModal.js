@@ -1,7 +1,7 @@
 import classes from "./modal.module.css";
-import style from "./addShopCategoryModal.module.css";
 import { IoClose } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
+import style from "./addShopCategoryModal.module.css";
 
 const ShopCategoryModal = ({
   categoryError,

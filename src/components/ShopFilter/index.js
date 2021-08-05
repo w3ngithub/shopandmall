@@ -1,8 +1,8 @@
+import classes from "./shopFilter.module.css";
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useLocation, NavLink } from "react-router-dom";
 import SkeletonText from "../../skeletons/SkeletonText";
 import CategoryIcon from "../../assets/images/categoryIcon.svg";
-import classes from "./shopFilter.module.css";
+import { Link, useHistory, useLocation, NavLink } from "react-router-dom";
 
 const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
   const [singleShopCategory, setSingleShopCategory] = useState([]);

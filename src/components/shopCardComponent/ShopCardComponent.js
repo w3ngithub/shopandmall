@@ -1,6 +1,6 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import classes from "../styles/Card.module.css";
+import { useHistory, useLocation } from "react-router-dom";
 
 const Shop = ({ doc, malls, single }) => {
   const history = useHistory();
@@ -12,6 +12,39 @@ const Shop = ({ doc, malls, single }) => {
         location.pathname === "/" ||
         location.pathname === "/admin/dashboard" ||
         location.pathname.split("/").includes("home") ? (
+          // <div
+          //   className={classes.wrapper}
+          //   onClick={() =>
+          //     location.pathname.split("/")[1] === "admin"
+          //       ? history.push(
+          //           "/admin/" + doc.mallName + "/shops/" + doc.shops[0].shopName
+          //         )
+          //       : history.push(doc.mallName + "/shops/" + doc.shops[0].shopName)
+          //   }
+          // >
+          //   <div className={classes.imageContainer}>
+          //     {doc?.shops[0]?.shopImages && (
+          //       <img
+          //         className={classes.image}
+          //         src={doc?.shops[0]?.shopImages[0]?.url}
+          //         alt=""
+          //       />
+          //     )}
+          //   </div>
+          //   <div className={classes.shopDetail}>
+          //     <p className={classes.title}>
+          //       {doc?.shops[0]?.shopName}
+          //       <span className={classes.midLine}> | </span>
+          //       (Inside {doc?.mallName})
+          //     </p>
+          //     <p className={classes.mallTime}>
+          //       {doc?.shops[0]?.timings[0]?.openTime} -
+          //       {doc?.shops[0]?.timings[0]?.closeTime}, +977-
+          //       {doc?.shops[0]?.shopPhoneNumber}
+          //     </p>
+          //   </div>
+          // </div>
+
           <div
             className={classes.wrapper}
             onClick={() =>

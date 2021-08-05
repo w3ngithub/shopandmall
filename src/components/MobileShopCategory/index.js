@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import classes from "./mobileShopCategory.module.css";
 import { Link } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
+import classes from "./mobileShopCategory.module.css";
 
 const MobileShopCategory = ({
   isShopPage,
