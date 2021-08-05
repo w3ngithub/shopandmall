@@ -6,7 +6,7 @@ import React, { useState, useReducer } from "react";
 import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
 import { checkShopValidation } from "../utils/checkValidation";
 import shopVideoReducer from "../reducers/shopVideoReducer";
-import { ToastContainer, toast, Slide } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const MallForm = () => {
   //Removed Images
@@ -51,10 +51,11 @@ const MallForm = () => {
     try {
       let isShopTimeError = false,
         isShopImageError = false;
+
       editData.shops.forEach((shop, index) => {
         const { shopTimeError, shopImageError } = checkShopValidation(
           shop,
-          shop.shopImages.length > 0 ? shop.shopImages : addedShopImages
+          shop?.shopImages?.length > 0 ? shop.shopImages : addedShopImages
         );
 
         if (shopTimeError) {
@@ -213,117 +214,127 @@ const MallForm = () => {
 
         let shops = [];
 
-        editData?.shops?.forEach((s, i) => {
-          const isShopImagesPresent = s.shopImages.length > 0;
-          const isNewShopImagesAdded =
-            addedShopImages.findIndex((image) => image.id === i) >= 0;
-          const indexOfAddedImages = addedShopImages.findIndex(
-            (image) => image.id === i
-          );
-          const indexOfVideo = shopVideoState.findIndex(
-            (video) => video.id === i
-          );
-          const isNewVideo = indexOfVideo >= 0;
+        if (editData?.shops?.length > 0) {
+          editData?.shops?.forEach((s, i) => {
+            const isShopImagesPresent = s?.shopImages?.length > 0;
+            const isNewShopImagesAdded =
+              addedShopImages.findIndex((image) => image.id === i) >= 0;
+            const indexOfAddedImages = addedShopImages.findIndex(
+              (image) => image.id === i
+            );
+            const indexOfVideo = shopVideoState.findIndex(
+              (video) => video.id === i
+            );
+            const isNewVideo = indexOfVideo >= 0;
 
-          let shop =
-            isShopImagesPresent && isNewShopImagesAdded
-              ? {
-                  id: i,
-                  shopName: s.shopName,
-                  shopDescription: s.shopDescription,
-                  shopLevel: s?.shopLevel,
-                  shopPhoneNumber: s?.shopPhoneNumber,
-                  timings: s?.timings,
-                  category: s?.category,
-                  subCategory: s?.subCategory,
+            let shop =
+              isShopImagesPresent && isNewShopImagesAdded
+                ? {
+                    id: i,
+                    shopName: s.shopName,
+                    shopDescription: s.shopDescription,
+                    shopLevel: s?.shopLevel,
+                    shopPhoneNumber: s?.shopPhoneNumber,
+                    timings: s?.timings,
+                    category: s?.category,
+                    subCategory: s?.subCategory,
 
-                  shopImages: [
-                    ...s.shopImages,
-                    ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
-                      id:
-                        Math.random() +
-                        addedShopImages[indexOfAddedImages].images[index].name,
-                      ImageName:
-                        addedShopImages[indexOfAddedImages].images[index].name,
-                      url: items,
-                    })),
-                  ],
-                }
-              : isShopImagesPresent
-              ? {
-                  id: i,
-                  shopName: s.shopName,
-                  shopDescription: s.shopDescription,
-                  shopLevel: s?.shopLevel,
-                  shopPhoneNumber: s?.shopPhoneNumber,
-                  timings: s?.timings,
-                  category: s?.category,
-                  subCategory: s?.subCategory,
-
-                  shopImages: [...s.shopImages],
-                }
-              : {
-                  id: i,
-                  shopName: s.shopName,
-                  shopDescription: s.shopDescription,
-                  shopLevel: s?.shopLevel,
-                  shopPhoneNumber: s?.shopPhoneNumber,
-                  timings: s?.timings,
-                  category: s?.category,
-                  subCategory: s?.subCategory,
-
-                  shopImages: [
-                    ...shopImageUrl[indexOfAddedImages].map((items, index) => ({
-                      id:
-                        Math.random() +
-                        addedShopImages[indexOfAddedImages].images[index].name,
-                      ImageName:
-                        addedShopImages[indexOfAddedImages].images[index].name,
-                      url: items,
-                    })),
-                  ],
-                };
-
-          if (s.shopVideo !== undefined) {
-            shop = { ...shop, shopVideo: s.shopVideo };
-          }
-
-          if (isNewVideo) {
-            shop = {
-              ...shop,
-              shopVideo: {
-                id:
-                  shopVideoState[indexOfVideo].uniqueId +
-                  shopVideoState[indexOfVideo].video.name,
-                url: shopVideoUrl[indexOfVideo],
-                videoName: shopVideoState[indexOfVideo].video.name,
-              },
-            };
-          }
-          shops = [...shops, { ...shop }];
-          if (videoThumbnail.hasOwnProperty(i)) {
-            const ind = tempVideos.findIndex((v) => +v.index === i);
-            shops = [
-              ...shops.map((s, index) =>
-                index === i
-                  ? {
-                      ...shop,
-                      shopVideo: {
-                        ...shop.shopVideo,
-                        thumbnail: {
+                    shopImages: [
+                      ...s.shopImages,
+                      ...shopImageUrl[indexOfAddedImages].map(
+                        (items, index) => ({
                           id:
-                            videoThumbnail[i].id +
-                            videoThumbnail[i].thumbnail.name,
-                          name: videoThumbnail[i].thumbnail.name,
-                          thumbnail: videoThumbnailUrl[ind],
+                            Math.random() +
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .name,
+                          ImageName:
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .name,
+                          url: items,
+                        })
+                      ),
+                    ],
+                  }
+                : isShopImagesPresent
+                ? {
+                    id: i,
+                    shopName: s.shopName,
+                    shopDescription: s.shopDescription,
+                    shopLevel: s?.shopLevel,
+                    shopPhoneNumber: s?.shopPhoneNumber,
+                    timings: s?.timings,
+                    category: s?.category,
+                    subCategory: s?.subCategory,
+
+                    shopImages: [...s.shopImages],
+                  }
+                : {
+                    id: i,
+                    shopName: s.shopName,
+                    shopDescription: s.shopDescription,
+                    shopLevel: s?.shopLevel,
+                    shopPhoneNumber: s?.shopPhoneNumber,
+                    timings: s?.timings,
+                    category: s?.category,
+                    subCategory: s?.subCategory,
+
+                    shopImages: [
+                      ...shopImageUrl[indexOfAddedImages].map(
+                        (items, index) => ({
+                          id:
+                            Math.random() +
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .name,
+                          ImageName:
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .name,
+                          url: items,
+                        })
+                      ),
+                    ],
+                  };
+
+            if (s.shopVideo !== undefined) {
+              shop = { ...shop, shopVideo: s.shopVideo };
+            }
+
+            if (isNewVideo) {
+              shop = {
+                ...shop,
+                shopVideo: {
+                  id:
+                    shopVideoState[indexOfVideo].uniqueId +
+                    shopVideoState[indexOfVideo].video.name,
+                  url: shopVideoUrl[indexOfVideo],
+                  videoName: shopVideoState[indexOfVideo].video.name,
+                },
+              };
+            }
+            shops = [...shops, { ...shop }];
+            if (videoThumbnail.hasOwnProperty(i)) {
+              const ind = tempVideos.findIndex((v) => +v.index === i);
+              shops = [
+                ...shops.map((s, index) =>
+                  index === i
+                    ? {
+                        ...shop,
+                        shopVideo: {
+                          ...shop.shopVideo,
+                          thumbnail: {
+                            id:
+                              videoThumbnail[i].id +
+                              videoThumbnail[i].thumbnail.name,
+                            name: videoThumbnail[i].thumbnail.name,
+                            thumbnail: videoThumbnailUrl[ind],
+                          },
                         },
-                      },
-                    }
-                  : s
-              ),
-            ];
-          }
-        });
+                      }
+                    : s
+                ),
+              ];
+            }
+          });
+        }
 
         //FireStore
         fireStore
@@ -349,12 +360,17 @@ const MallForm = () => {
     }
   };
 
+  const newShopForm = () => {
+    editDispatch({ type: "ADD_SHOP_FORM", payload: { ind: Math.random() } });
+  };
+
   return (
     <CommonForm
       {...{
         edit,
         editDispatch,
         editData,
+        newShopForm,
         loadingPercentage,
         submitHandler,
         setImagesToRemove,

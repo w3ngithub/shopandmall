@@ -131,6 +131,9 @@ const CommonForm = ({
             shopName: shop.shopName,
             shopLevel: shop.shopLevel,
             shopPhoneNumber: shop.shopPhoneNumber,
+            category: shop.category,
+            subCategory: shop.subCategory,
+            shopDescription: shop.shopDescription,
           })),
         ],
         mallName: editData.mallName,
@@ -139,7 +142,7 @@ const CommonForm = ({
         phoneNumber: editData.phoneNumber,
       });
     }
-  }, []);
+  }, [editData?.shops?.length]);
 
   return (
     <div className={classes.mainContainer}>
@@ -340,14 +343,12 @@ const CommonForm = ({
                 </div>
               ))}
 
-          {edit === false && (
-            <div onClick={newShopForm} className={classes.addShop}>
-              <span className={classes.icon}>
-                <IoIosAddCircleOutline />
-              </span>
-              Add Shop
-            </div>
-          )}
+          <div onClick={newShopForm} className={classes.addShop}>
+            <span className={classes.icon}>
+              <IoIosAddCircleOutline />
+            </span>
+            Add Shop
+          </div>
 
           {/* --------------------- */}
 

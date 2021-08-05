@@ -38,8 +38,8 @@ const Shop = ({ doc, malls, single }) => {
                 (Inside {doc?.mallName})
               </p>
               <p className={classes.mallTime}>
-                {doc?.shops[0].timings[0].openTime} -
-                {doc?.shops[0].timings[0].closeTime}, +977-
+                {doc?.shops[0]?.timings[0]?.openTime} -
+                {doc?.shops[0]?.timings[0]?.closeTime}, +977-
                 {doc?.shops[0]?.shopPhoneNumber}
               </p>
             </div>
@@ -77,8 +77,8 @@ const Shop = ({ doc, malls, single }) => {
                       (Inside {doc?.mallName})
                     </p>
                     <p className={classes.mallTime}>
-                      {shop.timings[0].openTime} - {shop.timings[0].closeTime},
-                      +977-
+                      {shop?.timings[0]?.openTime} -{" "}
+                      {shop.timings[0]?.closeTime}, +977-
                       {shop.shopPhoneNumber}
                     </p>
                   </div>
@@ -120,8 +120,8 @@ const Shop = ({ doc, malls, single }) => {
                     (Inside {malls?.mallName})
                   </p>
                   <p className={classes.mallTime}>
-                    {shop.timings[0].openTime} - {shop.timings[0].closeTime},
-                    +977-
+                    {shop?.timings[0]?.openTime} - {shop?.timings[0]?.closeTime}
+                    , +977-
                     {shop.shopPhoneNumber}
                   </p>
                 </div>

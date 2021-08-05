@@ -95,37 +95,34 @@ const MallForm = () => {
         isShopImageError = false,
         isVideoThumbnailError = false;
 
-      if (state.shops.length === 0) {
-        alert("please add at least one shop");
-        return;
+      if (state.shops.length > 0) {
+        state.shops.forEach((shop, index) => {
+          const { shopTimeError, shopImageError } = checkShopValidation(
+            shop,
+            shopImageState[index].images
+          );
+          if (shopTimeError) {
+            isShopTimeError = true;
+            alert(`please fill the time of shop no.${index + 1}`);
+            return;
+          }
+
+          if (shopImageError) {
+            isShopImageError = true;
+            alert(`please upload an image of shop no.${index + 1}`);
+            return;
+          }
+
+          if (
+            shopVideoState.length > 0 &&
+            shopVideoState[index].thumbnail === undefined
+          ) {
+            isVideoThumbnailError = true;
+            alert(`please upload video thumbnail of shop no. ${index + 1}`);
+            return;
+          }
+        });
       }
-
-      state.shops.forEach((shop, index) => {
-        const { shopTimeError, shopImageError } = checkShopValidation(
-          shop,
-          shopImageState[index].images
-        );
-        if (shopTimeError) {
-          isShopTimeError = true;
-          alert(`please fill the time of shop no.${index + 1}`);
-          return;
-        }
-
-        if (shopImageError) {
-          isShopImageError = true;
-          alert(`please upload an image of shop no.${index + 1}`);
-          return;
-        }
-
-        if (
-          shopVideoState.length > 0 &&
-          shopVideoState[index].thumbnail === undefined
-        ) {
-          isVideoThumbnailError = true;
-          alert(`please upload video thumbnail of shop no. ${index + 1}`);
-          return;
-        }
-      });
 
       if (
         !isMallImageError &&

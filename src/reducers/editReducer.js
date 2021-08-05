@@ -59,6 +59,23 @@ const editReducer = (state, action) => {
         ],
       };
 
+    case "ADD_SHOP_FORM":
+      return {
+        ...state,
+        shops: [
+          ...state.shops,
+          {
+            id: action.payload.ind,
+            shopName: "",
+            shopLevel: "",
+            shopPhoneNumber: "",
+            shopDescription: "",
+            timings: [{ id: 1, label: "Everyday" }, { id: 2 }],
+            shopUrl: [],
+          },
+        ],
+      };
+
     case "ADD_TIMINGS_FIELDS":
       return {
         ...state,
@@ -181,20 +198,6 @@ const editReducer = (state, action) => {
         shops: state.shops.map((shop, i) =>
           i === action.payload.index ? { ...shop, shopVideo: null } : shop
         ),
-      };
-
-    case "ADD_SHOP_FORM":
-      return {
-        ...state,
-        shops: [
-          ...state.shops,
-          {
-            id: action.payload.ind,
-            shopName: "",
-            shopDescription: "",
-            shopImages: [],
-          },
-        ],
       };
 
     default:
