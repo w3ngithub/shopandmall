@@ -38,7 +38,7 @@ const MallCardComponent = ({ doc }) => {
                 doc.shops.map((shop) =>
                   shop.shopImages.map((s) =>
                     storageRef
-                      .child(s.ImageName)
+                      .child(s.id)
                       .delete()
                       .then(() => "Images Deleted SuccessFUlly")
                       .catch((err) => "Images Not Deleted")

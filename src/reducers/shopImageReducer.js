@@ -7,7 +7,10 @@ const shopImageReducer = (state, action) => {
         item.id === action.payload.index
           ? {
               ...item,
-              images: [...item.images, action.payload.selectedShopImages],
+              images: [
+                ...item.images,
+                { id: Date.now(), image: action.payload.selectedShopImages },
+              ],
             }
           : item
       );
@@ -18,7 +21,9 @@ const shopImageReducer = (state, action) => {
             ...newArray,
             {
               id: action.payload.index,
-              images: [action.payload.selectedShopImages],
+              images: [
+                { id: Date.now(), image: action.payload.selectedShopImages },
+              ],
             },
           ];
       return finalArray;

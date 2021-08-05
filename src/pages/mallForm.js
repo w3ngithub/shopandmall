@@ -152,7 +152,10 @@ const MallForm = () => {
           shopImageState?.map((item) =>
             Promise.all(
               item?.images?.map((image) =>
-                storage.ref().child(image.name).put(image)
+                storage
+                  .ref()
+                  .child(image.id + image.image.name)
+                  .put(image.image)
               )
             )
           )
@@ -161,7 +164,7 @@ const MallForm = () => {
           shopImageState?.map((item) =>
             Promise.all(
               item?.images?.map((image) =>
-                storage.ref(image.name).getDownloadURL()
+                storage.ref(image.id + image.image.name).getDownloadURL()
               )
             )
           )
@@ -243,8 +246,10 @@ const MallForm = () => {
             category: s?.category,
             subCategory: s?.subCategory,
             shopImages: shopImageUrl[i]?.map((items, index) => ({
-              id: Math.random() + shopImageState[i]?.images[index]?.name,
-              ImageName: shopImageState[i]?.images[index]?.name,
+              id:
+                shopImageState[i]?.images[index]?.id +
+                shopImageState[i]?.images[index]?.image.name,
+              ImageName: shopImageState[i]?.images[index]?.image.name,
               url: items,
             })),
           };

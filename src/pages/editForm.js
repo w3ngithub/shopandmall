@@ -121,7 +121,10 @@ const MallForm = () => {
             addedShopImages.map((image) =>
               Promise.all(
                 image.images.map((img) =>
-                  storage.ref().child(img.name).put(img)
+                  storage
+                    .ref()
+                    .child(img.id + img.image.name)
+                    .put(img.image)
                 )
               )
             )
@@ -131,7 +134,7 @@ const MallForm = () => {
             addedShopImages.map((image) =>
               Promise.all(
                 image.images.map((img) =>
-                  storage.ref(img.name).getDownloadURL()
+                  storage.ref(img.id + img.image.name).getDownloadURL()
                 )
               )
             )
@@ -143,7 +146,7 @@ const MallForm = () => {
         // Remove Shop Images from Firebase Storage
         if (imagesToRemove.length > 0) {
           imagesToRemove.forEach((image) =>
-            storage.ref().child(image.ImageName).delete()
+            storage.ref().child(image.id).delete()
           );
         }
 
@@ -264,12 +267,13 @@ const MallForm = () => {
                       ...shopImageUrl[indexOfAddedImages].map(
                         (items, index) => ({
                           id:
-                            Math.random() +
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .id +
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .image.name,
                           ImageName:
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .image.name,
                           url: items,
                         })
                       ),
@@ -302,12 +306,13 @@ const MallForm = () => {
                       ...shopImageUrl[indexOfAddedImages].map(
                         (items, index) => ({
                           id:
-                            Math.random() +
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .id +
+                            addedShopImages[indexOfAddedImages].images[index]
+                              .image.name,
                           ImageName:
                             addedShopImages[indexOfAddedImages].images[index]
-                              .name,
+                              .image.name,
                           url: items,
                         })
                       ),
