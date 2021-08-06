@@ -11,7 +11,8 @@ const Shop = ({ doc, malls, single }) => {
       {!single ? (
         location.pathname === "/" ||
         location.pathname === "/admin/dashboard" ||
-        location.pathname.split("/").includes("admin") ? (
+        location.pathname.split("/")[1] === "home" ||
+        location.pathname.split("/")[2] === "category" ? (
           <div
             className={classes.wrapper}
             onClick={() =>

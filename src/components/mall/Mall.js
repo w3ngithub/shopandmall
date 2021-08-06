@@ -12,7 +12,8 @@ const Mall = ({ docs, settings, loading }) => {
     <div>
       {location.pathname === "/" ||
       location.pathname === "/admin/dashboard" ||
-      location.pathname.split("/").includes("home") ? (
+      location.pathname.split("/")[1] === "home" ||
+      location.pathname.split("/")[2] === "category" ? (
         <div className={classes.sliderContainer}>
           {loading ? (
             <>
