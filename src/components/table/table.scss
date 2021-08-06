@@ -6,12 +6,12 @@ $table-row-height: 45px;
   display: grid;
   font-family: sans-serif;
   font-size: 13px;
-  background: #fff;
+  width: 100%;
   &__header,
   &__body-row {
     display: grid;
     grid-auto-flow: column dense;
-    grid-template-columns: 50px repeat(2, 1fr);
+    grid-template-columns: 50px 50px 250px;
     padding: 10px;
     height: $table-row-height;
     align-items: center;
@@ -22,6 +22,7 @@ $table-row-height: 45px;
     border-radius: 8px;
     color: $table-header-color;
     font-weight: 600;
+    width: 100%;
   }
   &__body {
     margin-top: 12px;
@@ -127,5 +128,97 @@ $table-row-height: 45px;
   }
   to {
     padding: 0;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .table {
+    width: 100%;
+    overflow: hidden;
+    &__body {
+      margin-top: 12px;
+      color: $table-body-color;
+      // width: 10%;
+      // overflow: hidden;
+    }
+
+    &__body-row {
+      padding: 0px;
+      grid-template-columns: 50px 50px 220px;
+    }
+
+    .table-inner-row {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    &__header {
+      width: 100%;
+    }
+
+    .table {
+      width: 100%;
+    }
+  }
+
+  .table-action {
+    width: 40%;
+  }
+
+  .row-content {
+    width: 85%;
+    &.is-row-expanded {
+      width: 85%;
+    }
+  }
+
+  .table .is-row-expanded .table-inner-row .table {
+    overflow: hidden;
+  }
+}
+
+@media only screen and (max-width: 376px) {
+  .table {
+    width: 100%;
+    overflow: hidden;
+    &__body {
+      margin-top: 12px;
+      color: $table-body-color;
+      // width: 10%;
+      // overflow: hidden;
+    }
+
+    &__body-row {
+      padding: 0px;
+      grid-template-columns: 50px 50px 220px;
+    }
+
+    .table-inner-row {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    &__header {
+      width: 100%;
+    }
+
+    .table {
+      width: 100%;
+    }
+  }
+
+  .table-action {
+    width: 0%;
+  }
+
+  .row-content {
+    width: 78%;
+    &.is-row-expanded {
+      width: 78%;
+    }
+  }
+
+  .table .is-row-expanded .table-inner-row .table {
+    overflow: hidden;
   }
 }

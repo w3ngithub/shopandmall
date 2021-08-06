@@ -240,6 +240,11 @@
   margin-top: -55px;
 }
 
+.noRecords {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
 @media screen and (max-width: 1423px) and (min-width: 1281px) {
   .main,
   .mainShops,
@@ -381,15 +386,17 @@
   }
 
   .searchExtendedContainer {
+    flex-direction: column;
     width: 70%;
-    gap: 0px;
+    gap: 10px;
     justify-content: space-between;
     font-size: 15px;
   }
 
   .searchExtendedMallNames {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .icon {

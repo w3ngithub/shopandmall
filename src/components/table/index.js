@@ -43,7 +43,7 @@ function Table({
   }, [rowData]);
 
   return (
-    <div className="table" style={{ width: width + "%" }}>
+    <div className="table">
       <div
         className="table__header"
         style={{ backgroundColor, color: headerTextColor, gridTemplateColumns }}
@@ -66,7 +66,7 @@ function Table({
               })}
               key={row.id}
             >
-              <div className="table__body-row" style={{ gridTemplateColumns }}>
+              <div className="table__body-row">
                 {row?.subCategories?.length > 0 ? (
                   <div
                     onClick={() => toggleRowExpand(row.id)}
