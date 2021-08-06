@@ -138,7 +138,7 @@ const AddShopCategory = () => {
 
       <Table
         rowData={allCategories}
-        fields={[{ headerText: "Category", field: "category", width: 250 }]}
+        fields={[{ headerText: "Category", field: "category" }]}
         onClick={() => {}}
         width={50}
         hasAction={true}

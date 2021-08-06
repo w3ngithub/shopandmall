@@ -17,9 +17,9 @@ const ShopCategoryModal = ({
   return (
     <>
       <div className={classes.modalBackground} onClick={setShowModal}></div>
-      <div className={classes.modal}>
+      <div className={style.modal}>
         <div className={classes.header}>
-          <h3 className={classes.title}>Add New Category</h3>
+          <h3 className={style.title}>Add New Category</h3>
           <span onClick={setShowModal}>
             <IoClose className={classes.closeIcon} />
           </span>
@@ -80,7 +80,7 @@ const ShopCategoryModal = ({
               </div>
             ))}
           <p
-            className={classes.label}
+            className={style.label}
             onClick={() =>
               setSubCategories([
                 ...subCategories,
@@ -94,7 +94,7 @@ const ShopCategoryModal = ({
             </span>
           </p>
 
-          <button className={classes.submitBtn} type="submit">
+          <button className={style.submitBtn} type="submit">
             Save
           </button>
         </form>

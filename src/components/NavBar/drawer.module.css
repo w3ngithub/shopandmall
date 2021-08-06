@@ -63,7 +63,7 @@
     background-color: #f9f9f9;
     right: -500px;
     transition: 0.5s;
-    z-index: 2;
+    z-index: 101;
   }
 
   .mobileContainer {

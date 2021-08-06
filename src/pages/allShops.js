@@ -222,8 +222,11 @@ const AllShops = () => {
           <div className={classes.header}>
             <h4 className={classes.heading}>Shops</h4>
           </div>
-
-          <Shop docs={malls} loading={loading} />
+          {malls.length !== 0 ? (
+            <Shop docs={malls} loading={loading} />
+          ) : (
+            <p className={classes.noRecords}>No Shops Found</p>
+          )}
         </div>
       </div>
     </>

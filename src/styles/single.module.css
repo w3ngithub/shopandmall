@@ -85,8 +85,16 @@
   cursor: pointer;
 }
 
+.photosBox:hover {
+  color: #395fbf;
+}
+
 .videosBox {
   cursor: pointer;
+}
+
+.videosBox:hover {
+  color: #395fbf;
 }
 
 .photosBox > div,
@@ -132,7 +140,7 @@
   margin-bottom: 10px;
   padding-bottom: 10px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -251,6 +259,8 @@
   width: auto;
   color: white;
   cursor: pointer;
+  font-size: 16px;
+  gap: 8px;
 }
 
 .imageGalleryIconLeft,
