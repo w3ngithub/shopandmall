@@ -79,7 +79,7 @@ const Dashboard = () => {
     adaptiveHeight: true,
     useTransform: true,
   };
-  console.log(malls);
+
   return (
     <div>
       <div

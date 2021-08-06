@@ -11,7 +11,7 @@ const Shop = ({ doc, malls, single }) => {
       {!single ? (
         location.pathname === "/" ||
         location.pathname === "/admin/dashboard" ||
-        location.pathname.split("/").includes("home") ? (
+        location.pathname.split("/").includes("admin") ? (
           <div
             className={classes.wrapper}
             onClick={() =>
@@ -19,7 +19,9 @@ const Shop = ({ doc, malls, single }) => {
                 ? history.push(
                     "/admin/" + doc.mallName + "/shops/" + doc.shops[0].shopName
                   )
-                : history.push(doc.mallName + "/shops/" + doc.shops[0].shopName)
+                : history.push(
+                    "/mall/" + doc.mallName + "/shops/" + doc.shops[0].shopName
+                  )
             }
           >
             <div className={classes.imageContainer}>

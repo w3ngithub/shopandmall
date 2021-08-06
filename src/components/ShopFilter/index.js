@@ -16,7 +16,7 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
   };
 
   useEffect(() => {
-    if (location.pathname === "/") {
+    if (location.pathname === "/" || location.pathname === "/admin/dashboard") {
       setSingleShopCategory([]);
     }
   }, [location.pathname]);
@@ -32,7 +32,11 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
         className={classes.categoryDesktop}
         onClick={() => {
           setSingleShopCategory([]);
-          history.push("/");
+          history.push(
+            location.pathname.split("/")[1] === "admin"
+              ? "/admin/dashboard"
+              : "/"
+          );
         }}
       >
         <img src={CategoryIcon} alt="" />
@@ -50,7 +54,11 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
                   className={classes.categoryP}
                   onClick={() => {
                     subCategoryId(shopCat.id, shopCat);
-                    history.push("/home/category/" + shopCat.category);
+                    history.push(
+                      location.pathname.split("/")[1] === "admin"
+                        ? "/admin/category/" + shopCat.category
+                        : "/home/category/" + shopCat.category
+                    );
                   }}
                 >
                   {shopCat.category}
@@ -79,7 +87,11 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
                   {s.rowContent.rowData.map((subCat) => (
                     <div key={subCat.id}>
                       <Link
-                        to={`/home/category/${s.category}/${subCat.subCategory}`}
+                        to={
+                          location.pathname.split("/")[1] === "admin"
+                            ? `/admin/category/${s.category}/${subCat.subCategory}`
+                            : `/home/category/${s.category}/${subCat.subCategory}`
+                        }
                         onClick={() => currentPage(subCat.id)}
                         className={
                           current.active === subCat.id

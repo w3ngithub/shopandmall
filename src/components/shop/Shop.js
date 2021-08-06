@@ -16,7 +16,7 @@ const Shop = ({ docs, settings, loading }) => {
     <div>
       {location.pathname === "/" ||
       location.pathname === "/admin/dashboard" ||
-      location.pathname.split("/").includes("home") ? (
+      location.pathname.split("/").includes("admin") ? (
         <div>
           {loading ? (
             <>
