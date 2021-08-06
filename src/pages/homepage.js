@@ -1,19 +1,18 @@
 import Shop from "../components/shop/Shop";
 import Mall from "../components/mall/Mall";
 import { BiSearchAlt2 } from "react-icons/bi";
-import React, { useState, useEffect } from "react";
-import classes from "../styles/dashboard.module.css";
 import useFirestore from "../hooks/useFirestore";
 import ShopFilter from "../components/ShopFilter";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import classes from "../styles/dashboard.module.css";
 import HomepageImage from "../assets/images/homepage.png";
 import AddNewMallButton from "../components/AddNewMallButton";
-import { Link, useLocation } from "react-router-dom";
-
 import MobileShopCategory from "../components/MobileShopCategory";
 
 //Slick
-import NextArrow from "../components/Arrows/NextArrow";
 import PrevArrow from "../components/Arrows/PrevArrow";
+import NextArrow from "../components/Arrows/NextArrow";
 import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 
 const Dashboard = () => {

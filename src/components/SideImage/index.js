@@ -1,10 +1,10 @@
+import { FaPlay } from "react-icons/fa";
 import React, { useState } from "react";
 import classes from "./sideImage.module.css";
 import ImageGallery from "react-image-gallery";
 import { FaRegWindowClose } from "react-icons/fa";
 import modalclasses from "../single/modal.module.css";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { FaPlay } from "react-icons/fa";
 
 const SideImage = ({
   mall,

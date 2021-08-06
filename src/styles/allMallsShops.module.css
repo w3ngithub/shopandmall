@@ -1,8 +1,14 @@
 .main,
-.mainShops {
+.mainShops,
+.mainShopsNotSelected {
   width: 75%;
   margin: 0px auto;
   position: relative;
+  margin-top: -30px;
+}
+
+.mainShopsNotSelected {
+  margin-top: 0px;
 }
 
 .addBtn,
@@ -52,7 +58,7 @@
   background-color: #efefef;
   border: none;
   border-radius: 5px;
-  color: #827D7D;
+  color: #827d7d;
   font-size: 15px;
 }
 
@@ -63,7 +69,7 @@
   background: #fbfafa;
   z-index: 10;
   padding: 20px 0;
-  box-shadow: 0px 5px 10px -5px rgba(0,0,0,.2)
+  box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
 .searchExtendedContainer {
@@ -76,7 +82,7 @@
 
 .searchExtendedContainer p {
   font-weight: bold;
-  color: #827D7D
+  color: #827d7d;
 }
 
 .searchExtendedMallNames {
@@ -236,7 +242,8 @@
 
 @media screen and (max-width: 1423px) and (min-width: 1281px) {
   .main,
-  .mainShops {
+  .mainShops,
+  .mainShopsNotSelected {
     width: 77%;
   }
 
@@ -252,7 +259,8 @@
 
 @media screen and (max-width: 1601px) and (min-width: 1424px) {
   .main,
-  .mainShops {
+  .mainShops,
+  .mainShopsNotSelected {
     width: 68%;
   }
 
@@ -264,7 +272,8 @@
 
 @media screen and (max-width: 1708px) and (min-width: 1601px) {
   .main,
-  .mainShops {
+  .mainShops,
+  .mainShopsNotSelected {
     width: 63.5%;
   }
 
@@ -276,7 +285,8 @@
 
 @media screen and (max-width: 1921px) and (min-width: 1708px) {
   .main,
-  .mainShops {
+  .mainShops,
+  .mainShopsNotSelected {
     width: 56.5%;
   }
 
@@ -288,7 +298,8 @@
 
 @media only screen and (min-width: 1921px) {
   .main,
-  .mainShops {
+  .mainShops,
+  .mainShopsNotSelected {
     width: 42.5%;
   }
 
@@ -339,7 +350,8 @@
 
 @media only screen and (max-width: 414px) {
   .main,
-  .mainShops {
+  .mainShops,
+  .mainShopsNotSelected {
     width: 85%;
     display: flex;
     flex-direction: column;

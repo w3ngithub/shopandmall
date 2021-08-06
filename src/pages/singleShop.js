@@ -1,20 +1,19 @@
-import { useHistory, useLocation, useParams } from "react-router-dom";
 import { fireStore } from "../firebase/config";
-import React, { useEffect, useState } from "react";
-import classes from "../styles/single.module.css";
-import modalclasses from "../components/single/modal.module.css";
-import EditModal from "../components/single/Modal";
 import ImageGallery from "react-image-gallery";
-import "react-image-gallery/styles/css/image-gallery.css";
-import { FaRegWindowClose, FaEdit } from "react-icons/fa";
+import classes from "../styles/single.module.css";
 import { BiImage, BiVideo } from "react-icons/bi";
+import EditModal from "../components/single/Modal";
+import React, { useEffect, useState } from "react";
 import SkeletonText from "../skeletons/SkeletonText";
-import SkeletonBlock from "../skeletons/SkeletonBlock";
-import SkeletonShopCard from "../skeletons/SkeletonShopCard";
-// import ReactPlayer from "react-player";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Image from "../assets/images/defaultImage.png";
+import SkeletonBlock from "../skeletons/SkeletonBlock";
 import { ToastContainer, toast } from "react-toastify";
+import { FaRegWindowClose, FaEdit } from "react-icons/fa";
+import "react-image-gallery/styles/css/image-gallery.css";
+import SkeletonShopCard from "../skeletons/SkeletonShopCard";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import modalclasses from "../components/single/modal.module.css";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 
 const SingleShop = () => {
   const [mall, setMall] = useState(null);

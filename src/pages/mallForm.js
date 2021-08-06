@@ -1,16 +1,16 @@
 import { MyContext } from "../App";
+import reducer from "../reducers/reducer";
 import { useHistory } from "react-router-dom";
 import CommonForm from "../components/mall/CommonForm";
-import reducer from "../reducers/reducer";
 import { storage, fireStore } from "../firebase/config";
 import shopImageReducer from "../reducers/shopImageReducer";
 import shopVideoReducer from "../reducers/shopVideoReducer";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import React, { useState, useReducer, useContext } from "react";
 import {
   checkMallValidation,
   checkShopValidation,
 } from "../utils/checkValidation";
-import { ToastContainer, toast, Slide } from "react-toastify";
 
 const MallForm = () => {
   const { allDataDispatch } = useContext(MyContext);

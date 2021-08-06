@@ -1,6 +1,6 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import classes from "../styles/Card.module.css";
+import { useHistory, useLocation } from "react-router-dom";
 
 const Shop = ({ doc, malls, single }) => {
   const history = useHistory();

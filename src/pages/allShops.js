@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react";
+import { MyContext } from "../App";
+import { Link } from "react-router-dom";
 import Shop from "../components/shop/Shop";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { IoCloseSharp } from "react-icons/io5";
 import useFirestore from "../hooks/useFirestore";
-import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
+import { HiChevronDoubleRight } from "react-icons/hi";
 import classes from "../styles/allMallsShops.module.css";
 import ShopCategories from "../components/ShopCategories";
-
-import MobileShopCategory from "../components/MobileShopCategory";
 import { useLocation, useHistory } from "react-router-dom";
-import { HiChevronDoubleRight } from "react-icons/hi";
-import { IoCloseSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import MobileShopCategory from "../components/MobileShopCategory";
+import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 
 const AllShops = () => {
   let { docs, loading } = useFirestore("Shopping Mall");
   let shopCategory = useFirestore("Shop Categories").docs;
-  const [search, setSearch] = useState("");
   const [showShopCategories, setShowShopCategories] = useState(false);
   const [showCategoryMobile, setShowCategoryMobile] = useState(false);
-  const [showSearchExtended, setShowSearchExtended] = useState(false);
 
   const location = useLocation();
   const [malls, setMalls] = useState([]);
   const [shops, setShops] = useState([]);
   const history = useHistory();
+
+  const { showSearchExtended, setShowSearchExtended } = useContext(MyContext);
 
   const isShopCategorySelected = location.pathname
     .split("/")
@@ -134,24 +134,6 @@ const AllShops = () => {
           <div className={classes.searchExtendedContainer}>
             <p>Quick Links</p>
             <div className={classes.searchExtendedMallNames}>
-              {/* {malls?.map((mall) =>
-                mall.shops.map((shop) => (
-                  <Link
-                    key={shop.shopName}
-                    to={
-                      location.pathname.split("/")[1] === "admin"
-                        ? `/admin/${mall?.mallName.replace(" ", "_")}/shops/${
-                            shop.shopName
-                          }`
-                        : `/${mall?.mallName.replace(" ", "_")}/shops/${
-                            shop.shopName
-                          }`
-                    }
-                  >
-                    {shop.shopName}
-                  </Link>
-                ))
-              )} */}
               {shops.slice(0, 4).map((shop) => (
                 <Link
                   key={shop.shopName}
@@ -187,7 +169,13 @@ const AllShops = () => {
         }}
       ></div>
 
-      <div className={classes.mainShops}>
+      <div
+        className={
+          isShopCategorySelected
+            ? classes.mainShopsNotSelected
+            : classes.mainShops
+        }
+      >
         <div
           className={
             isShopCategorySelected

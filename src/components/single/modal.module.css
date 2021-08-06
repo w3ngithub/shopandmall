@@ -11,6 +11,7 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1001;
+  width: 100vw;
 }
 
 .modal {
@@ -76,10 +77,6 @@
 
 .inputdiv div {
   width: 100%;
-}
-
-.textarea {
-  margin-bottom: 15px;
 }
 
 .input,
@@ -258,6 +255,7 @@
 .subCategoryError {
   top: 75%;
 }
+
 .error {
   color: red;
   text-align: left;
@@ -305,6 +303,10 @@
 
   .inputcategory {
     padding: 8px 10px;
+    /* margin-bottom: 15px; */
+  }
+
+  .selectInput {
     margin-bottom: 15px;
   }
 
@@ -313,7 +315,11 @@
     height: 26px;
   }
 
-  .smallClose{
+  .smallClose {
     margin-top: 3px;
+  }
+
+  .error {
+    /* margin-bottom: 20px; */
   }
 }

@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
+import { MyContext } from "../App";
+import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Mall from "../components/mall/Mall";
 import { BiSearchAlt2 } from "react-icons/bi";
-import useFirestore from "../hooks/useFirestore";
-import classes from "../styles/allMallsShops.module.css";
-import { useHistory, useLocation } from "react-router-dom";
-
-import ShopCategories from "../components/ShopCategories";
-
-import MobileShopCategory from "../components/MobileShopCategory";
-import { FaPlus } from "react-icons/fa";
-import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
-import { HiChevronDoubleRight } from "react-icons/hi";
 import { IoCloseSharp } from "react-icons/io5";
-
-import { Link } from "react-router-dom";
-import { MyContext } from "../App";
+import useFirestore from "../hooks/useFirestore";
+import { HiChevronDoubleRight } from "react-icons/hi";
+import classes from "../styles/allMallsShops.module.css";
+import ShopCategories from "../components/ShopCategories";
+import { useHistory, useLocation } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import MobileShopCategory from "../components/MobileShopCategory";
+import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
 
 const AllMalls = () => {
   const [showShopCategories, setShowShopCategories] = useState(false);
@@ -84,7 +81,6 @@ const AllMalls = () => {
       );
   }
 
-
   return (
     <>
       <div
@@ -150,7 +146,11 @@ const AllMalls = () => {
         }}
       ></div>
 
-      <div className={classes.main}>
+      <div
+        className={
+          isShopCategorySelected ? classes.mainShopsNotSelected : classes.main
+        }
+      >
         <div>
           {location.pathname === "/admin/malls" && (
             <button
@@ -218,11 +218,6 @@ const AllMalls = () => {
           </div>
           <Mall docs={malls} loading={loading} />
         </div>
-        {/* <Pagination
-            mallsPerPage={mallsPerPage}
-            docs={docs.length}
-            paginate={paginate}
-          /> */}
       </div>
     </>
   );

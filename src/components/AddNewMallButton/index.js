@@ -1,6 +1,6 @@
 import React from "react";
-import classes from "./addNewMallButton.module.css";
 import { useHistory } from "react-router-dom";
+import classes from "./addNewMallButton.module.css";
 
 const AddNewMallButton = () => {
   const history = useHistory();
