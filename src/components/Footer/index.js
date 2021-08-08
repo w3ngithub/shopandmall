@@ -14,7 +14,7 @@ const Footer = () => {
         <IoLogoTwitter className={classes.mediaIcon} />
       </div>
       <p>4600 Pipalbot, Kalimati, Opposite of Nabil Bank</p>
-      <p className={classes.phone}>+977 0000000000</p>
+      <p className={classes.phone}>+977 9842355138</p>
       <div className={classes.line}></div>
       <div className={classes.title}>
         <h3>
@@ -26,7 +26,7 @@ const Footer = () => {
       </div>
 
       <p className={classes.copyright}>
-        ©2018-2021 Brookfield Properties Retail Inc. All rights reserved.
+        ©2018-2021 Shops and Malls. All rights reserved.
       </p>
     </div>
   );

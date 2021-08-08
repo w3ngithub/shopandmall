@@ -62,55 +62,58 @@ const NavBar = ({ check, setShowSearchExtended }) => {
                 >
                   Shops
                 </Link>
-                <FaAngleDown className={classes.icon} />
+                {docs.length !== 0 && (
+                  <>
+                    <FaAngleDown className={classes.icon} />
+                    <ul
+                      className={
+                        location.pathname.split("/")[1] === "admin"
+                          ? classes.shopsDropdown
+                          : classes.shopsDropdownUser
+                      }
+                    >
+                      <div className={classes.dropDownWrapper}>
+                        {docs.map((doc) => (
+                          <div className={classes.col} key={doc.category}>
+                            <li className={classes.row}>
+                              <h3
+                                onClick={() =>
+                                  history.push(
+                                    `/shops/category/${doc.category}`
+                                  )
+                                }
+                              >
+                                {doc.category}
+                              </h3>
+                              <FaAngleDown className={classes.headerIcon} />
 
-                <ul
-                  className={
-                    location.pathname.split("/")[1] === "admin"
-                      ? classes.shopsDropdown
-                      : classes.shopsDropdownUser
-                  }
-                >
-                  <div className={classes.dropDownWrapper}>
-                    {docs.length !== 0 ? (
-                      docs.map((doc) => (
-                        <div className={classes.col} key={doc.category}>
-                          <li className={classes.row}>
-                            <h3
-                              onClick={() =>
-                                history.push(`/shops/category/${doc.category}`)
-                              }
-                            >
-                              {doc.category}
-                            </h3>
-                            <FaAngleDown className={classes.headerIcon} />
-
-                            <ul
-                              className={checked ? classes.drop : classes.hide}
-                            >
-                              {doc.rowContent.rowData.map((row) => {
-                                return (
-                                  <li
-                                    key={row.id}
-                                    onClick={() =>
-                                      history.push(
-                                        `/shops/category/${doc.category}/${row.subCategory}`
-                                      )
-                                    }
-                                  >
-                                    {row.subCategory}
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          </li>
-                        </div>
-                      ))
-                    ) : (
-                      <p className={classes.empty}>No Shops Found</p>
-                    )}
-                  </div>
-                </ul>
+                              <ul
+                                className={
+                                  checked ? classes.drop : classes.hide
+                                }
+                              >
+                                {doc.rowContent.rowData.map((row) => {
+                                  return (
+                                    <li
+                                      key={row.id}
+                                      onClick={() =>
+                                        history.push(
+                                          `/shops/category/${doc.category}/${row.subCategory}`
+                                        )
+                                      }
+                                    >
+                                      {row.subCategory}
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </li>
+                          </div>
+                        ))}
+                      </div>
+                    </ul>
+                  </>
+                )}
               </li>
               {check === "true" && location.pathname.split("/")[1] === "admin" && (
                 <li>

@@ -15,6 +15,7 @@ const AboutUs = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   return (
@@ -85,6 +86,7 @@ const AboutUs = () => {
             onClick={handleSubmit((data) => {
               setInputData(data);
               notify();
+              reset();
             })}
           >
             Submit

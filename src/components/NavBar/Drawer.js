@@ -87,10 +87,17 @@ const Drawer = ({ check, data, setShowSearchExtended }) => {
             </li>
             <li
               className={classes.sideWise}
-              onClick={() => setDropdown((prevState) => !prevState)}
+              onClick={() => {
+                history.push(
+                  location.pathname.split("/")[1] === "admin"
+                    ? "/admin/shops"
+                    : "/shops"
+                );
+                setDropdown((prevState) => !prevState);
+              }}
             >
               Shops
-              <FaAngleDown className={classes.icon} />
+              {data.length > 0 && <FaAngleDown className={classes.icon} />}
             </li>
             {dropdown && (
               <ul>
@@ -121,16 +128,17 @@ const Drawer = ({ check, data, setShowSearchExtended }) => {
                 ))}
               </ul>
             )}
-            {check === "true" && (
+            {check === "true" && location.pathname.split("/")[1] === "admin" && (
               <li>
-                <Link
-                  to="/admin/addshopcategories"
-                  onClick={() => setShowMobileNav(false)}
-                >
-                  Shop Category
-                </Link>
+                <Link to="/admin/addshopcategories">Shop Category</Link>
               </li>
             )}
+            <li className={classes.toHide}>
+              <Link to="/about-us">About Us</Link>
+            </li>
+            <li className={classes.toHide}>
+              <Link to="/contact-us">Contact Us</Link>
+            </li>
           </ul>
         </div>
         {check === "true" && (
