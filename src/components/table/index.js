@@ -57,6 +57,9 @@ function Table({
         ))}
       </div>
       <div className="table__body">
+        {data.length === 0 && (
+          <span style={{ "font-size": "15px" }}>No records found</span>
+        )}
         {data.map((row, i) => {
           return (
             <div
