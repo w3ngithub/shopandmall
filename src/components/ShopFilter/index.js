@@ -126,7 +126,7 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
                   history.push("/home/category/" + shopCat.category)
                 }
               >
-                {shopCat.category}
+                <span className={classes.title}>{shopCat.category}</span>
                 <span className={classes.number}>
                   ({shopCat.rowContent.rowData.length})
                 </span>

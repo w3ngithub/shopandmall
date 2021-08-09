@@ -5,6 +5,7 @@
 .shopFilter {
   position: relative;
   color: #374151;
+  margin-bottom: 80px;
 }
 
 .shopFilter h3 {
@@ -32,6 +33,14 @@
 
 .categoryP:hover {
   color: rgb(87, 154, 218);
+}
+
+.title {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  white-space: nowrap;
 }
 
 .mobileShopFilter {
@@ -92,7 +101,10 @@
     border-radius: 50%;
     color: white;
     padding: 2px;
-    top: -50%;
+    top: -58%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transform: translateY(50%);
   }
 
