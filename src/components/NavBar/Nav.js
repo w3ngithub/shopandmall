@@ -2,7 +2,7 @@ import classes from "./nav.module.css";
 import React, { useState } from "react";
 import Logo from "../../image/logo.png";
 import { Link } from "react-router-dom";
-import { FaAngleDown } from "react-icons/fa";
+import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
 import useFirestore from "../../hooks/useFirestore";
@@ -18,6 +18,24 @@ const NavBar = ({ check, setShowSearchExtended }) => {
   const [checked, setChecked] = useState(false);
 
   const [_, setUserValidate] = useState(false);
+
+  const [hoverSubCategory, setHoverSubCategory] = useState({});
+
+  console.log(hoverSubCategory);
+
+  const openSubCategory = (id) => {
+    setHoverSubCategory({
+      ...!hoverSubCategory,
+      [id]: true,
+    });
+  };
+
+  const closeSubCategory = (id) => {
+    setHoverSubCategory({
+      ...hoverSubCategory,
+      [id]: false,
+    });
+  };
 
   return (
     <div
@@ -65,48 +83,59 @@ const NavBar = ({ check, setShowSearchExtended }) => {
                 {docs.length !== 0 && (
                   <>
                     <FaAngleDown className={classes.icon} />
-                    <ul
-                      className={
-                        location.pathname.split("/")[1] === "admin"
-                          ? classes.shopsDropdown
-                          : classes.shopsDropdownUser
-                      }
-                    >
+                    <ul className={classes.shopsDropdown}>
                       <div className={classes.dropDownWrapper}>
                         {docs.map((doc) => (
-                          <div className={classes.col} key={doc.category}>
+                          <div
+                            className={classes.col}
+                            key={doc.category}
+                            onMouseEnter={() => openSubCategory(doc.id)}
+                            onMouseLeave={() => closeSubCategory(doc.id)}
+                          >
                             <li className={classes.row}>
-                              <h3
-                                onClick={() =>
-                                  history.push(
-                                    `/shops/category/${doc.category}`
-                                  )
-                                }
-                              >
-                                {doc.category}
-                              </h3>
-                              <FaAngleDown className={classes.headerIcon} />
+                              <div className={classes.hTitle}>
+                                <p
+                                  onClick={() =>
+                                    history.push(
+                                      `/shops/category/${doc.category}`
+                                    )
+                                  }
+                                >
+                                  <span> {doc.category}</span>
+                                </p>
+                                {doc?.rowContent?.rowData.length !== 0 && (
+                                  <FaAngleRight className={classes.iconRight} />
+                                )}
+                              </div>
 
-                              <ul
-                                className={
-                                  checked ? classes.drop : classes.hide
-                                }
-                              >
-                                {doc.rowContent.rowData.map((row) => {
-                                  return (
-                                    <li
-                                      key={row.id}
-                                      onClick={() =>
-                                        history.push(
-                                          `/shops/category/${doc.category}/${row.subCategory}`
-                                        )
-                                      }
-                                    >
-                                      {row.subCategory}
-                                    </li>
-                                  );
-                                })}
-                              </ul>
+                              {hoverSubCategory[doc.id] ? (
+                                <div
+                                  className={
+                                    doc.rowContent.rowData.length !== 0
+                                      ? classes.drop
+                                      : classes.hide
+                                  }
+                                  onMouseEnter={() => openSubCategory(doc.id)}
+                                  onMouseLeave={() => closeSubCategory(doc.id)}
+                                >
+                                  {doc.rowContent.rowData.map((row) => {
+                                    return (
+                                      <p
+                                        key={row.id}
+                                        onClick={() =>
+                                          history.push(
+                                            `/shops/category/${doc.category}/${row.subCategory}`
+                                          )
+                                        }
+                                      >
+                                        {row.subCategory}
+                                      </p>
+                                    );
+                                  })}
+                                </div>
+                              ) : (
+                                <div className={classes.hide}></div>
+                              )}
                             </li>
                           </div>
                         ))}
