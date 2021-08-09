@@ -124,6 +124,16 @@ function App() {
               exact
             />
             <ProtectedRoute
+              exact
+              path="/admin/category/:category"
+              component={HomePage}
+            />
+            <ProtectedRoute
+              exact
+              path="/admin/category/:category/:subCategory"
+              component={HomePage}
+            />
+            <ProtectedRoute
               path="/admin/newMall"
               component={MallForm}
               page="/"
