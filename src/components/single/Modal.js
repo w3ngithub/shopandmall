@@ -556,7 +556,7 @@ const Modal = ({
             render={({ field: { onChange }, fieldState: { error } }) => (
               <div className={classes.formGroup}>
                 <input
-                  type="number"
+                  type="text"
                   placeholder="Phone number"
                   name="shopPhoneNumber"
                   value={shop.shopPhoneNumber}

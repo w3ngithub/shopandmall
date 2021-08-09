@@ -50,7 +50,7 @@ const CommonForm = ({
   const levels = register("levels", { required: true });
   const phoneNumber = register("phoneNumber", {
     required: true,
-    validate: (value) => value.length === 10,
+    //validate: (value) => value.length === 10,
   });
 
   //Change Handler
@@ -222,7 +222,7 @@ const CommonForm = ({
           <div className={classes.innerDiv}>
             <div>
               <input
-                type="number"
+                type="text"
                 placeholder="Phone Number"
                 name="phoneNumber"
                 value={edit ? editData?.phoneNumber : state?.phoneNumber}
@@ -235,9 +235,9 @@ const CommonForm = ({
               {errors?.phoneNumber?.type === "required" && (
                 <p className={classes.error}>* Number is required</p>
               )}
-              {errors?.phoneNumber?.type === "validate" && (
+              {/* {errors?.phoneNumber?.type === "validate" && (
                 <p className={classes.error}>* Number must be 10 digits</p>
-              )}
+              )} */}
             </div>
 
             <div className={classes.innerDivImage}>

@@ -284,7 +284,7 @@ const CommonShopForm = ({
               }) => (
                 <>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="Phone Number"
                     name="shopPhoneNumber"
                     value={

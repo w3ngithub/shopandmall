@@ -94,7 +94,10 @@ const MallCardComponent = ({ doc }) => {
         </div>
       )}
       <div className={classes.mallDetail}>
-        <p className={classes.title}>
+        <p
+          className={classes.title}
+          title={`${doc.mallName}|  ${doc.mallAddress}`}
+        >
           {doc.mallName}
           <span className={classes.midLine}> | </span>
           {doc.mallAddress}

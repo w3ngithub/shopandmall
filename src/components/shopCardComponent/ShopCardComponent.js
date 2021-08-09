@@ -35,7 +35,10 @@ const Shop = ({ doc, malls, single }) => {
               )}
             </div>
             <div className={classes.shopDetail}>
-              <p className={classes.title}>
+              <p
+                className={classes.title}
+                title={`${doc?.shops[0]?.shopName} | ${doc?.mallName}`}
+              >
                 {doc?.shops[0]?.shopName}
                 <span className={classes.midLine}> | </span>
                 (Inside {doc?.mallName})
