@@ -3,7 +3,7 @@
   "name": "Shop and Malls",
   "icons": [
     {
-      "src": "assets/logo.png",
+      "src": "assets/logo.svg",
       "sizes": "1024x1024",
       "type": "image/png"
     },

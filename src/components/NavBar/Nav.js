@@ -1,6 +1,7 @@
 import classes from "./nav.module.css";
 import React, { useState } from "react";
-import Logo from "../../image/logo.png";
+import Logo from "../../image/logo.svg";
+import LogoText from "../../image/logoText.svg";
 import { Link } from "react-router-dom";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
@@ -52,8 +53,12 @@ const NavBar = ({ check, setShowSearchExtended }) => {
             }
             className={classes.logo2}
           >
-            <img src={Logo} alt="" />
-            <p>Shops and Malls</p>
+            <img src={Logo} alt="" style={{ width: "40px" }} />
+            <img
+              src={LogoText}
+              alt=""
+              style={{ width: "100px", "margin-left": "10px" }}
+            />
           </Link>
         </div>
         <div className={classes.menuItems}>

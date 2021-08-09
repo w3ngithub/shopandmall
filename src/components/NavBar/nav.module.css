@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
 .logo a {
@@ -83,7 +84,7 @@ li a:hover,
   transform: translateX(-50%);
   cursor: auto;
   max-height: 0;
-  width: 350px;
+  width: 268px;
   height: auto;
   opacity: 0;
   transition: all 0.5s ease-in;
@@ -92,19 +93,20 @@ li a:hover,
 .drop {
   background-color: #f9f9f9;
   position: absolute;
-  right: 35px;
-  margin-top: -44px;
-  width: 250px;
+  left: 233px;
+  margin-top: -43px;
+  width: 210px;
   max-width: 250px;
   overflow: hidden;
-  border: 0.5px solid #c8c8c8;
+  /* border: 0.5px solid #c8c8c8;
+  border-left: 0; */
   padding: 20px 0px;
   text-align: left;
 }
 
 .drop p {
   font-weight: normal;
-  padding: 5px 25px;
+  padding: 10px 25px;
 }
 
 .drop p:hover {
@@ -172,6 +174,11 @@ li a:hover,
 
 .hTitle:hover {
   color: #425fa9;
+}
+.hTitle span {
+  text-align: left;
+  width: 100%;
+  display: block;
 }
 
 .col ul li {
@@ -328,6 +335,7 @@ li a:hover,
 .show {
   display: none;
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import Logo from "../../image/logo.png";
+import Logo from "../../image/logo.svg";
+import LogoText from "../../image/logoText.svg";
 import classes from "./drawer.module.css";
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
@@ -48,9 +49,14 @@ const Drawer = ({ check, data, setShowSearchExtended }) => {
                 ? "/admin/dashboard"
                 : "/"
             }
-            className={classes.logo}
+            className={classes.logo + " flex"}
           >
             <img src={Logo} alt="" />
+            <img
+              src={LogoText}
+              alt=""
+              style={{ width: "100px", "margin-left": "10px" }}
+            />
           </Link>
         </div>
         {check === "false" && (
