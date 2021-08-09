@@ -151,9 +151,9 @@ li a:hover,
   padding: 0px 35px;
 }
 
-.col:last-child {
+/* .col:last-child {
   margin-right: 40px;
-}
+} */
 
 .col p {
   font-size: 15px;
@@ -386,9 +386,9 @@ li a:hover,
     margin-right: 20px;
   }
 
-  .col:last-child {
+  /* .col:last-child {
     margin-right: 30px;
-  }
+  } */
 
   .col ul li {
     display: block;
