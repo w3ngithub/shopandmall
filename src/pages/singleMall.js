@@ -154,10 +154,12 @@ const SingleMall = () => {
               <SkeletonCard key={n} />
             ))}
           </div>
-        ) : (
+        ) : mall?.shops?.length > 0 ? (
           <div style={{ marginLeft: "-10px" }}>
             <ShopCardComponent malls={mall} single={true} />
           </div>
+        ) : (
+          <p className="mt-md">No shops added</p>
         )}
       </div>
       <ToastContainer />

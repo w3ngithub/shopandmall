@@ -10,7 +10,7 @@ const Shop = ({ docs, settings, loading }) => {
 
   const location = useLocation();
 
-  let empty = docs.map((doc) => doc.shops.length);
+  let empty = docs.map((doc) => doc.shops);
 
   let emptyCheck = Math.max.apply(0, empty);
 
@@ -46,7 +46,7 @@ const Shop = ({ docs, settings, loading }) => {
             </>
           ) : (
             <Slider {...settings} className={classes.slider}>
-              {docs.length !== 0 ? (
+              {docs.length !== 0 && emptyCheck !== 0 ? (
                 docs.map((doc) =>
                   doc.shops.length === 0 ? null : (
                     <div key={doc.id}>
@@ -55,7 +55,7 @@ const Shop = ({ docs, settings, loading }) => {
                   )
                 )
               ) : (
-                <p>No any Records</p>
+                <p className={classes.noRecords}>No shops added</p>
               )}
             </Slider>
           )}
@@ -71,7 +71,7 @@ const Shop = ({ docs, settings, loading }) => {
           ) : emptyCheck !== 0 ? (
             <ShopCardComponent malls={docs} />
           ) : (
-            <p className={classes.noRecords}>No any records</p>
+            <p className={classes.noRecords}>No shops added</p>
           )}
         </div>
       )}

@@ -1,9 +1,10 @@
 import React from "react";
 import classes from "../styles/Card.module.css";
 import { IoMdCloseCircle } from "react-icons/io";
-import NoImage from "../../image/No_Image_Available.jpg";
+import NoImage from "../../image/Barline-Loading-Images-1.gif";
 import { useHistory, useLocation } from "react-router-dom";
 import { fireStore, storage } from "../../firebase/config";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const MallCardComponent = ({ doc }) => {
   const history = useHistory();
@@ -81,10 +82,19 @@ const MallCardComponent = ({ doc }) => {
             </div>
           )}
           <div>
-            <img
+            {/* <img
               className={classes.image}
               src={doc.mallImage.imageUrl}
               alt="images"
+            /> */}
+            <LazyLoadImage
+              alt="images"
+              height={180}
+              src={doc.mallImage.imageUrl}
+              width="100%"
+              placeholderSrc={NoImage}
+              className={classes.image}
+              //effect="blur"
             />
           </div>
         </div>

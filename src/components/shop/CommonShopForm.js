@@ -383,7 +383,10 @@ const CommonShopForm = ({
                 </>
               )}
               rules={{
-                required: { value: true, message: "* Subcategory is required" },
+                required: {
+                  value: subCategoryLists.length > 0 ? true : false,
+                  message: "* Subcategory is required",
+                },
               }}
             />
           </div>

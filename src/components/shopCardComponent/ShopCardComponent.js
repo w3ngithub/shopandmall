@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 const Shop = ({ doc, malls, single }) => {
   const history = useHistory();
   const location = useLocation();
-
+  let shops = window.innerWidth <= 424 ? doc?.shops?.slice(0, 3) : doc?.shops?.slice(0, 9);
   return (
     <div>
       {!single ? (
@@ -18,18 +18,18 @@ const Shop = ({ doc, malls, single }) => {
             onClick={() =>
               location.pathname.split("/")[1] === "admin"
                 ? history.push(
-                    "/admin/" + doc.mallName + "/shops/" + doc.shops[0].shopName
+                    "/admin/" + doc.mallName + "/shops/" + shops[0].shopName
                   )
                 : history.push(
-                    "/mall/" + doc.mallName + "/shops/" + doc.shops[0].shopName
+                    "/mall/" + doc.mallName + "/shops/" + shops[0].shopName
                   )
             }
           >
             <div className={classes.imageContainer}>
-              {doc?.shops[0]?.shopImages && (
+              {shops[0]?.shopImages && (
                 <img
                   className={classes.image}
-                  src={doc?.shops[0]?.shopImages[0]?.url}
+                  src={shops[0]?.shopImages[0]?.url}
                   alt=""
                 />
               )}
@@ -37,23 +37,23 @@ const Shop = ({ doc, malls, single }) => {
             <div className={classes.shopDetail}>
               <p
                 className={classes.title}
-                title={`${doc?.shops[0]?.shopName} | ${doc?.mallName}`}
+                title={`${shops[0]?.shopName} | ${doc?.mallName}`}
               >
-                {doc?.shops[0]?.shopName}
+                {shops[0]?.shopName}
                 <span className={classes.midLine}> | </span>
                 (Inside {doc?.mallName})
               </p>
               <p className={classes.mallTime}>
-                {doc?.shops[0]?.timings[0]?.openTime} -
-                {doc?.shops[0]?.timings[0]?.closeTime}, +977-
-                {doc?.shops[0]?.shopPhoneNumber}
+                {shops[0]?.timings[0]?.openTime} -
+                {shops[0]?.timings[0]?.closeTime}, +977-
+                {shops[0]?.shopPhoneNumber}
               </p>
             </div>
           </div>
         ) : (
           <div className={classes.container}>
             {malls?.map((doc) =>
-              doc.shops.map((shop, ind) => (
+              shops.map((shop, ind) => (
                 <div
                   key={ind}
                   className={classes.wrapper2}
@@ -68,7 +68,7 @@ const Shop = ({ doc, malls, single }) => {
                   }
                 >
                   <div className={classes.imageContainer}>
-                    {doc?.shops[0]?.shopImages && (
+                    {shops[0]?.shopImages && (
                       <img
                         className={classes.image}
                         src={shop?.shopImages[0]?.url}

@@ -4,9 +4,11 @@ import classes from "./mall.module.css";
 import { useLocation } from "react-router-dom";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 import MallCardComponent from "../mallCardComponent/MallCardComponent";
+import LazyLoad from "react-lazy-load";
 
 const Mall = ({ docs, settings, loading }) => {
   const location = useLocation();
+  let malls = window.innerWidth <= 424 ? docs.slice(0, 3) : docs.slice(0, 9);
 
   return (
     <div>
@@ -35,8 +37,8 @@ const Mall = ({ docs, settings, loading }) => {
             </>
           ) : (
             <Slider {...settings} className={classes.slider}>
-              {docs.length !== 0 ? (
-                docs?.map((doc, ind) => (
+              {malls.length !== 0 ? (
+                malls?.map((doc, ind) => (
                   <div key={ind}>
                     <MallCardComponent key={doc.id} doc={doc} />
                   </div>
@@ -51,7 +53,7 @@ const Mall = ({ docs, settings, loading }) => {
         <div className={classes.container}>
           {loading ? (
             [1, 2, 3, 4, 5, 6].map((n) => <SkeletonCard key={n} />)
-          ) : docs.length !== 0 ? (
+          ) : malls.length !== 0 ? (
             docs?.map((doc) => <MallCardComponent key={doc.id} doc={doc} />)
           ) : (
             <p className={classes.noRecords}>No any Malls Yet.</p>
