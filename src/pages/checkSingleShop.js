@@ -15,6 +15,8 @@ import { FaRegWindowClose, FaEdit } from "react-icons/fa";
 import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import modalclasses from "../components/single/modal.module.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import NoImage from "../image/Barline-Loading-Images-1.gif";
 
 class SingleClassTry extends React.Component {
   static contextType = MyContext;
@@ -534,7 +536,22 @@ class SingleClassTry extends React.Component {
                         shop.shopImages.map((s, i) => {
                           return (
                             <div key={i} className={classes.wrapper}>
-                              <img
+                                <LazyLoadImage
+                              onClick={() => {
+                                this.setState({ modal: true });
+                                shop.shopVideo
+                                  ? this.setState({ ind: i + 1 })
+                                  : this.setState({ ind: i });
+                              }}
+                              className={classes.image}
+                              src={s.url}
+                              alt="shopImage"
+                              height={200}
+                              width="100%"
+                              placeholderSrc={NoImage}
+                              effect="blur"
+                            />
+                              {/* <img
                                 onClick={() => {
                                   this.setState({ modal: true });
                                   shop.shopVideo
@@ -544,7 +561,7 @@ class SingleClassTry extends React.Component {
                                 className={classes.image}
                                 src={s.url}
                                 alt="shopImage"
-                              />
+                              /> */}
                             </div>
                           );
                         })}

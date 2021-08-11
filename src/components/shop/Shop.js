@@ -19,6 +19,26 @@ const Shop = ({ docs, settings, loading }) => {
     setShops(allShops);
   }, [docs]);
 
+  let sortedShops = [];
+  const getShops = (index) => {
+    let totalShops = 0;
+    docs?.map((mall, i) => {
+      totalShops += mall.shops.length;
+      if (mall.shops.length > 0 && mall.shops[index]) {
+        mall.shops[index].mall = mall;
+        sortedShops.push(mall.shops[index]);
+      }
+      if (
+        i === docs.length - 1 &&
+        sortedShops.length < totalShops &&
+        sortedShops.length <= 9
+      ) {
+        getShops(index + 1);
+      }
+    });
+  };
+  getShops(0);
+  console.log(sortedShops);
   return (
     <div>
       {location.pathname === "/" ||
@@ -46,14 +66,12 @@ const Shop = ({ docs, settings, loading }) => {
             </>
           ) : (
             <Slider {...settings} className={classes.slider}>
-              {docs.length !== 0 && emptyCheck !== 0 ? (
-                docs.map((doc) =>
-                  doc.shops.length === 0 ? null : (
-                    <div key={doc.id}>
-                      <ShopCardComponent doc={doc} />
-                    </div>
-                  )
-                )
+              {sortedShops.length !== 0 && emptyCheck !== 0 ? (
+                sortedShops?.map((doc, i) => (
+                  <div key={doc.id}>
+                    <ShopCardComponent doc={doc} malls={docs} />
+                  </div>
+                ))
               ) : (
                 <p className={classes.noRecords}>No shops added</p>
               )}

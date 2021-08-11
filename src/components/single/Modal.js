@@ -669,7 +669,7 @@ const Modal = ({
               )}
               rules={{
                 required: {
-                  value: true,
+                  value: false,
                   message: "* Subcategory is required",
                 },
               }}

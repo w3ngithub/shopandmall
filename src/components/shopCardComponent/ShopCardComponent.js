@@ -1,11 +1,13 @@
 import React from "react";
 import classes from "../styles/Card.module.css";
 import { useHistory, useLocation } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import NoImage from "../../image/Barline-Loading-Images-1.gif";
 
 const Shop = ({ doc, malls, single }) => {
   const history = useHistory();
   const location = useLocation();
-  let shops = window.innerWidth <= 424 ? doc?.shops?.slice(0, 3) : doc?.shops?.slice(0, 9);
+
   return (
     <div>
       {!single ? (
@@ -18,42 +20,48 @@ const Shop = ({ doc, malls, single }) => {
             onClick={() =>
               location.pathname.split("/")[1] === "admin"
                 ? history.push(
-                    "/admin/" + doc.mallName + "/shops/" + shops[0].shopName
+                    "/admin/" + doc.mallName + "/shops/" + doc.shops[0].shopName
                   )
                 : history.push(
-                    "/mall/" + doc.mallName + "/shops/" + shops[0].shopName
+                    "/mall/" + doc.mallName + "/shops/" + doc.shops[0].shopName
                   )
             }
           >
             <div className={classes.imageContainer}>
-              {shops[0]?.shopImages && (
-                <img
+              {doc?.shopImages && (
+                // <img
+                //   className={classes.image}
+                //   src={doc?.shops[0]?.shopImages[0]?.url}
+                //   alt=""
+                // />
+                <LazyLoadImage
+                  alt="images"
+                  height={180}
+                  src={doc?.shopImages[0]?.url}
+                  width="100%"
+                  placeholderSrc={NoImage}
                   className={classes.image}
-                  src={shops[0]?.shopImages[0]?.url}
-                  alt=""
+                  effect="blur"
                 />
               )}
             </div>
             <div className={classes.shopDetail}>
-              <p
-                className={classes.title}
-                title={`${shops[0]?.shopName} | ${doc?.mallName}`}
-              >
-                {shops[0]?.shopName}
+              <p className={classes.title}>
+                {doc?.shopName}
                 <span className={classes.midLine}> | </span>
-                (Inside {doc?.mallName})
+                (Inside {doc?.mall?.mallName})
               </p>
               <p className={classes.mallTime}>
-                {shops[0]?.timings[0]?.openTime} -
-                {shops[0]?.timings[0]?.closeTime}, +977-
-                {shops[0]?.shopPhoneNumber}
+                {doc?.timings[0]?.openTime} -
+                {doc?.timings[0]?.closeTime}, +977-
+                {doc?.shopPhoneNumber}
               </p>
             </div>
           </div>
         ) : (
           <div className={classes.container}>
             {malls?.map((doc) =>
-              shops.map((shop, ind) => (
+              doc.shops.map((shop, ind) => (
                 <div
                   key={ind}
                   className={classes.wrapper2}
@@ -68,11 +76,20 @@ const Shop = ({ doc, malls, single }) => {
                   }
                 >
                   <div className={classes.imageContainer}>
-                    {shops[0]?.shopImages && (
-                      <img
-                        className={classes.image}
+                    {doc?.shops[0]?.shopImages && (
+                      // <img
+                      //   className={classes.image}
+                      //   src={shop?.shopImages[0]?.url}
+                      //   alt=""
+                      // />
+                      <LazyLoadImage
+                        alt="images"
+                        height={180}
                         src={shop?.shopImages[0]?.url}
-                        alt=""
+                        width="100%"
+                        placeholderSrc={NoImage}
+                        className={classes.image}
+                        effect="blur"
                       />
                     )}
                   </div>
@@ -112,10 +129,19 @@ const Shop = ({ doc, malls, single }) => {
               >
                 <div className={classes.imageContainer}>
                   {malls?.shops[0]?.shopImages && (
-                    <img
-                      className={classes.image}
+                    // <img
+                    //   className={classes.image}
+                    //   src={shop?.shopImages[0]?.url}
+                    //   alt=""
+                    // />
+                    <LazyLoadImage
+                      alt="images"
+                      height={180}
                       src={shop?.shopImages[0]?.url}
-                      alt=""
+                      width="100%"
+                      placeholderSrc={NoImage}
+                      className={classes.image}
+                      effect="blur"
                     />
                   )}
                 </div>

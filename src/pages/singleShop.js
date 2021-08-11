@@ -14,6 +14,8 @@ import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import modalclasses from "../components/single/modal.module.css";
 import { useHistory, useLocation, useParams } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import NoImage from "../image/Barline-Loading-Images-1.gif";
 
 const SingleShop = () => {
   const [mall, setMall] = useState(null);
@@ -227,7 +229,7 @@ const SingleShop = () => {
                       shop.shopImages.map((s, i) => {
                         return (
                           <div key={i} className={classes.wrapper}>
-                            <img
+                            {/* <img
                               onClick={() => {
                                 setModal(true);
                                 shop.shopVideo ? setInd(i + 1) : setInd(i);
@@ -235,6 +237,19 @@ const SingleShop = () => {
                               className={classes.image}
                               src={s.url}
                               alt="shopImage"
+                            /> */}
+                            <LazyLoadImage
+                              onClick={() => {
+                                setModal(true);
+                                shop.shopVideo ? setInd(i + 1) : setInd(i);
+                              }}
+                              height={180}
+                              src={s.url}
+                              alt="shopImage"
+                              width="100%"
+                              placeholderSrc={NoImage}
+                              className={classes.image}
+                              effect="blur"
                             />
                           </div>
                         );
