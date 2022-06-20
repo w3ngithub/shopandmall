@@ -1,5 +1,8 @@
 const editReducer = (state, action) => {
   switch (action.type) {
+    case "ADD_EDIT_MALL":
+      return action.payload
+
     case "EDIT_THUMBNAIL":
       return {
         ...state,

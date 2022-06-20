@@ -12,6 +12,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import ShopCardComponent from "../components/shopCardComponent/ShopCardComponent";
 
+
 const SingleMall = () => {
   const [mall, setMall] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,17 +26,19 @@ const SingleMall = () => {
   const docId = id.replace("_", " ");
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fireStore
+    const unsubscribe =  
+       fireStore
         .collection("Shopping Mall")
         .doc(docId)
         .onSnapshot((doc) => {
           setMall(doc.data());
           setLoading(false);
         });
-    };
 
-    fetchData();
+    return ()=>{
+      unsubscribe()
+    }
+
   }, [docId]);
 
   return (
@@ -72,8 +75,8 @@ const SingleMall = () => {
                   className={classes.editBtn}
                   onClick={() => {
                     history.push({
-                      pathname: "/admin/editMall",
-                      dataToSend: mall,
+                      pathname: `/admin/editMall/${mall.mallName}`
+                      //dataToSend: mall,
                     });
                   }}
                 >
@@ -92,10 +95,13 @@ const SingleMall = () => {
                 <button
                   className={classes.editBtn}
                   onClick={() => {
-                    history.push({
-                      pathname: "/admin/editMall",
-                      dataToSend: mall,
-                    });
+                    // history.push({
+                    //   pathname: `/admin/editMall/${mall.mallName}`,
+                    //   dataToSend: mall,
+                    // });
+                    console.log(mall.mallName)
+                    history.push(`/admin/editMall/${mall?.mallName}`)
+
                   }}
                 >
                   <FaEdit className={classes.editIcon} />
@@ -116,7 +122,7 @@ const SingleMall = () => {
               <SkeletonText />
             </div>
           ) : (
-            <h1>{mall.mallName}</h1>
+            <h1>{mall?.mallName}</h1>
           )}
           {loading ? (
             <div style={{ marginTop: "3px" }}>
@@ -139,7 +145,7 @@ const SingleMall = () => {
                   {time.openTime} - {time.closeTime},
                 </span>
               ))}
-              <span>{!loading && +977 - mall.phoneNumber}</span>
+              <span>{!loading && `+977 - ${mall.phoneNumber}`}</span>
             </p>
           )}
         </div>

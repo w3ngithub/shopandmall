@@ -8,6 +8,7 @@ const Shop = ({ doc, malls, single }) => {
   const history = useHistory();
   const location = useLocation();
 
+  console.log(doc)
   return (
     <div>
       {!single ? (
@@ -17,14 +18,15 @@ const Shop = ({ doc, malls, single }) => {
         location.pathname.split("/")[2] === "category" ? (
           <div
             className={classes.wrapper}
-            onClick={() =>
+            onClick={() =>{
               location.pathname.split("/")[1] === "admin"
                 ? history.push(
-                    "/admin/" + doc.mallName + "/shops/" + doc.shops[0].shopName
+                    "/admin/" + doc.mall.mallName + "/shops/" + doc.shopName
                   )
                 : history.push(
-                    "/mall/" + doc.mallName + "/shops/" + doc.shops[0].shopName
+                    "/mall/" + doc.mall.mallName + "/shops/" + doc.shopName
                   )
+                }
             }
           >
             <div className={classes.imageContainer}>

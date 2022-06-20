@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "../styles/Card.module.css";
 import { IoMdCloseCircle } from "react-icons/io";
 import NoImage from "../../image/Barline-Loading-Images-1.gif";
 import { useHistory, useLocation } from "react-router-dom";
 import { fireStore, storage } from "../../firebase/config";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import DeleteModal from "../Modal/DeleteModal";
 
 const MallCardComponent = ({ doc }) => {
   const history = useHistory();
   const location = useLocation();
+  const [modal,setModal] = useState(false)
+
+  const hanldeModal = ()=>{
+    setModal(prev=>!prev)
+  }
 
   return (
     <div
@@ -26,61 +32,18 @@ const MallCardComponent = ({ doc }) => {
     >
       {doc.mallImage ? (
         <div className={classes.imageContainer}>
-          {location.pathname === "/admin/dashboard" && (
+          {(location.pathname ==="/admin/malls"||location.pathname ==="/admin/dashboard")  && (
             <div
               className={classes.closeIcon}
               onClick={(e) => {
                 e.stopPropagation();
-
-                let storageRef = storage.ref();
-                let mallImageDel = storageRef.child(doc.mallImage.imageName);
-
-                //Shop Images
-                doc.shops.map((shop) =>
-                  shop.shopImages.map((s) =>
-                    storageRef
-                      .child(s.id)
-                      .delete()
-                      .then(() => "Images Deleted SuccessFUlly")
-                      .catch((err) => "Images Not Deleted")
-                  )
-                );
-
-                //Deleting Images
-                mallImageDel
-                  .delete()
-                  .then(() => "Images Deleted SuccessFUlly")
-                  .catch((err) => "Images Not Deleted");
-
-                //shop video
-                doc.shops.forEach((shop) => {
-                  if (shop.shopVideo) {
-                    storageRef
-                      .child(shop.shopVideo.id)
-                      .delete()
-                      .then(() => console.log("deleted video"));
-                  }
-                });
-                //video thumbnail
-                doc.shops.forEach((shop) => {
-                  if (shop.shopVideo) {
-                    storageRef
-                      .child(shop.shopVideo.thumbnail.id)
-                      .delete()
-                      .then(() => console.log("deleted Thumbnail"));
-                  }
-                });
-                fireStore
-                  .collection("Shopping Mall")
-                  .doc(doc.mallName)
-                  .delete()
-                  .then(() => console.log("DELETED Successfully"))
-                  .catch((error) => console.log("Error deleting mall"));
+                hanldeModal()
               }}
             >
               <IoMdCloseCircle />
             </div>
           )}
+          {modal && <DeleteModal datas={{hanldeModal,doc}}/>}
           <div>
             {/* <img
               className={classes.image}

@@ -548,7 +548,7 @@ const CommonShopForm = ({
                 <button
                   className={classes.button}
                   type="button"
-                  onClick={() => removeVideo(dataShop.shopVideo, index)}
+                  onClick={() => removeVideo(video,index) }
                 >
                   <IoIosClose />
                 </button>
@@ -592,3 +592,4 @@ const CommonShopForm = ({
 };
 
 export default CommonShopForm;
+
