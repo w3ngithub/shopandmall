@@ -1,9 +1,9 @@
 import editReducer from "../reducers/editReducer";
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import CommonForm from "../components/mall/CommonForm";
 import { ToastContainer, toast } from "react-toastify";
 import { storage, fireStore } from "../firebase/config";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import shopVideoReducer from "../reducers/shopVideoReducer";
 import { checkShopValidation } from "../utils/checkValidation";
 import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
@@ -13,6 +13,7 @@ const MallForm = () => {
   const [imagesToRemove, setImagesToRemove] = useState([]);
   //removed Video
   const [removedVideo, setRemovedVideo] = useState([]);
+  const [initialEditData,setInitial] = useState({})
 
   const edit = true;
 
@@ -21,7 +22,8 @@ const MallForm = () => {
   const [loadingPercentage, setLoadingPercentage] = useState(0);
 
   //States
-  const [editData, editDispatch] = useReducer(editReducer, location.dataToSend);
+  const [Loading,setLoading] = useState(true)
+  const [editData, editDispatch] = useReducer(editReducer,initialEditData);
   const [mallImage, setMallImage] = useState(null);
   const [shopVideoState, shopVideoDispatch] = useReducer(shopVideoReducer, []);
   const [removedVideoThumbnail, setRemovedVideoThumbnail] = useState([]);
@@ -35,6 +37,29 @@ const MallForm = () => {
     addedShopImagesReducer,
     shopImageValues
   );
+
+  //id from the params 
+  const {mallId} = useParams()
+
+  //getting the edit form data 
+    useEffect(()=>{
+    function getData(){
+      setLoading(true)
+      fireStore.collection("Shopping Mall")
+      .doc(mallId)
+      .get()
+      .then((doc)=>{
+        console.log(doc.data())
+        editDispatch({type:"ADD_EDIT_MALL",payload:doc.data()})
+        setLoading(false)
+      })
+      .catch((error)=>console.log(error))
+    }
+    getData()
+
+    },[mallId])
+
+    console.log(Loading)
 
   //Loading
   const [isLoading, setIsLoading] = useState(false);
@@ -100,7 +125,7 @@ const MallForm = () => {
           //delete old image
           setLoadingPercentage(30);
           storageRef
-            .child(location.dataToSend.mallImage.imageName)
+            .child(editData.mallImage.imageName)
             .delete()
             .then("DELETED")
             .catch((err) => console.log(err));
@@ -110,7 +135,7 @@ const MallForm = () => {
           await imageRef.put(mallImage);
           mallImageUrl = await imageRef.getDownloadURL();
         } else {
-          mallImageUrl = location.dataToSend.mallImage.imageUrl;
+          mallImageUrl = editData.mallImage.imageUrl;
         }
         setLoadingPercentage(50);
 
@@ -162,7 +187,7 @@ const MallForm = () => {
           );
         }
 
-        let setMallImage = location.dataToSend.mallImage;
+        let setMallImage = editData.mallImage;
         if (mallImage) {
           setMallImage = {
             id: Math.random() + mallImage.name,
@@ -364,7 +389,7 @@ const MallForm = () => {
         //FireStore
         fireStore
           .collection("Shopping Mall")
-          .doc(location.dataToSend.mallName)
+          .doc(editData.mallName)
           .delete()
           .then(() => console.log("DELETED"))
           .catch((err) => console.log(err));
@@ -388,6 +413,11 @@ const MallForm = () => {
   const newShopForm = () => {
     editDispatch({ type: "ADD_SHOP_FORM", payload: { ind: Math.random() } });
   };
+
+
+if(Loading){
+  return <h1>Loading.....</h1>
+}
 
   return (
     <CommonForm

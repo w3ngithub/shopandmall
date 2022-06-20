@@ -49,6 +49,7 @@ const ShopForm = ({
   //Remove Image
 
   const removeImage = (img, index) => {
+  
     setImagesToRemove((prevState) => [...prevState, img]);
     editDispatch({
       type: "REMOVE_IMAGE",
@@ -60,6 +61,7 @@ const ShopForm = ({
   };
 
   const removeVideo = (video, index) => {
+    console.log()
     setRemovedVideo((prevState) => [...prevState, video]);
     setRemovedVideoThumbnail((prev) => [
       ...prev,

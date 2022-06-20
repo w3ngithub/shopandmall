@@ -141,7 +141,7 @@ function App() {
             />
             <ProtectedRoute exact path="/admin/shops" component={AllShops} />
             <ProtectedRoute exact path="/admin/malls" component={AllMalls} />
-            <ProtectedRoute exact path="/admin/editMall" component={EditMall} />
+            <ProtectedRoute exact path="/admin/editMall/:mallId" component={EditMall} />
             <ProtectedRoute
               exact
               path="/admin/malls/:id"
