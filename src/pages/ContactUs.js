@@ -6,6 +6,8 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 
 const AboutUs = () => {
   const [inputData, setInputData] = useState(null);
+  console.log("input")
+  console.log(inputData)
 
   const customId = "custom-id-yes";
 
