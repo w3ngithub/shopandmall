@@ -21,10 +21,10 @@ const Shop = ({ doc, malls, single }) => {
             onClick={() =>{
               location.pathname.split("/")[1] === "admin"
                 ? history.push(
-                    "/admin/" + doc.mall.mallName + "/shops/" + doc.shopName
+                    "/admin/mall/" + doc.mall.mallName + "/shops/" + doc.shops[0].shopName
                   )
                 : history.push(
-                    "/mall/" + doc.mall.mallName + "/shops/" + doc.shopName
+                    "/mall/" + doc.mall.mallName + "/shops/" + doc.shops[0].shopName
                   )
                 }
             }

@@ -12,6 +12,54 @@ const MallCardComponent = ({ doc }) => {
   const location = useLocation();
   const [modal,setModal] = useState(false)
 
+  const handleDelete = () =>{
+    let storageRef = storage.ref();
+    let mallImageDel = storageRef.child(doc.mallImage.imageName);
+
+    //Shop Images
+    doc.shops.map((shop) =>
+    shop.shopImages.map((s) =>
+        storageRef
+        .child(s.id)
+        .delete()
+        .then(() => "Images Deleted SuccessFUlly")
+        .catch((err) => "Images Not Deleted")
+    )
+    );
+
+    //Deleting Images
+    mallImageDel
+    .delete()
+    .then(() => "Images Deleted SuccessFUlly")
+    .catch((err) => "Images Not Deleted");
+
+    //shop video
+    doc.shops.forEach((shop) => {
+    if (shop.shopVideo) {
+        storageRef
+        .child(shop.shopVideo.id)
+        .delete()
+        .then(() => console.log("deleted video"));
+    }
+    });
+    //video thumbnail
+    doc.shops.forEach((shop) => {
+    if (shop.shopVideo) {
+        storageRef
+        .child(shop.shopVideo.thumbnail.id)
+        .delete()
+        .then(() => console.log("deleted Thumbnail"));
+    }
+    });
+    fireStore
+    .collection("Shopping Mall")
+    .doc(doc.mallName)
+    .delete()
+    .then(() => console.log("DELETED Successfully"))
+    .catch((error) => console.log("Error deleting mall"));
+
+  }
+
   const hanldeModal = ()=>{
     setModal(prev=>!prev)
   }
@@ -43,7 +91,7 @@ const MallCardComponent = ({ doc }) => {
               <IoMdCloseCircle />
             </div>
           )}
-          {modal && <DeleteModal datas={{hanldeModal,doc}}/>}
+          {modal && <DeleteModal datas={{hanldeModal,handleDelete}}/>}
           <div>
             {/* <img
               className={classes.image}

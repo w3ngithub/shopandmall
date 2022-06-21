@@ -72,7 +72,7 @@ function App() {
             <Route exact path="/:id/shops/:type" component={SingleClassTry} />
             <Route
               exact
-              path="/mall/:id/shops/:type"
+              path="admin/mall/:id/shops/:type"
               component={SingleClassTry}
             />
             <Route
