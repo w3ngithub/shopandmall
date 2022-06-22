@@ -31,7 +31,7 @@ const Modal = ({
   const [percentage, setPercentage] = useState(0);
   const [videoPercentage, setVideoPercentage] = useState(0);
   const [removedVideoThumbnail, setRemovedVideoThumbnail] = useState(null);
-  const { control, handleSubmit } = useForm();
+  const { control,reset, handleSubmit } = useForm();
 
   const [shop, setShop] = useState({
     shopName: "",
@@ -74,10 +74,14 @@ const Modal = ({
       let selectedShopImages = e.target.files[i];
 
       if (selectedShopImages && types.includes(selectedShopImages.type)) {
-        setImages((prevState) => [
-          ...prevState,
-          { id: Date.now(), image: selectedShopImages },
-        ]);
+        if(images?.length>1){
+          setImages((prevState) => [
+            ...prevState,
+            { id: Date.now(), image: selectedShopImages},
+          ]);
+        }else{
+          setImages([{ id: Date.now(), image: selectedShopImages}])
+        }
       } else {
         setImageErrors("Please select an image file  (jpeg or png)");
       }
@@ -309,7 +313,20 @@ const Modal = ({
   };
 
   const handleEditSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+
+    if(shop.shopImages.length===0){
+      const { shopTimeError, shopImageError } = checkShopValidation(shop,images);
+      if (shopTimeError) {
+        alert(`please fill the opening and closing time of shop`);
+        return;
+      }
+
+      if (shopImageError) {
+        alert("please upload an image of shop");
+        return;
+      }
+    }
 
     if (video.hasOwnProperty("video") && !video.hasOwnProperty("thumbnail")) {
       alert("Please upload thumbnail for video");
@@ -401,7 +418,7 @@ const Modal = ({
     }
 
     setPercentage(80);
-    if (images.length > 0) {
+    if (images?.length > 0) {
       await Promise.all(
         images.map((image) =>
           storage.ref(image.id + image.image.name).put(image.image)
@@ -441,11 +458,28 @@ const Modal = ({
     setPercentage(100);
   };
 
+  useEffect(()=>{
+    
+  },[shop])
+
   useEffect(() => {
     setIsLoading(false);
 
     if (edit) {
+      reset({
+          shopName: dataToEdit.shopName,
+          shopDescription: dataToEdit.shopDescription,
+          shopLevel: dataToEdit.shopLevel,
+          shopPhoneNumber: dataToEdit.shopPhoneNumber,
+          category: dataToEdit.category,
+          subCategory: dataToEdit.subCategory,
+          timings: dataToEdit.timings,
+          shopImages: dataToEdit.shopImages
+        })
+      // reset({...dataToEdit})
       setShop(dataToEdit);
+      setImages()
+      // setImages(dataToEdit.shopImages)
       setVideo(dataToEdit.shopVideo || {});
     }
 
@@ -491,7 +525,11 @@ const Modal = ({
         <div className={classes.line}></div>
 
         <form
-          onSubmit={edit ? handleEditSubmit : handleSubmit(onSubmitHandler)}
+          onSubmit={
+            edit
+              ? handleSubmit(handleEditSubmit)
+              : handleSubmit(onSubmitHandler)
+          }
           className={classes.form}
         >
           <div className={classes.inputdiv}>
@@ -514,8 +552,8 @@ const Modal = ({
                   {error && <p className={classes.error}>{error.message}</p>}
                 </div>
               )}
-              rules={{
-                required: { value: true, message: "* Name is Required" },
+              rules={{ 
+                required: {value:true, message: "* Name is Required" } 
               }}
             />
             <Controller
@@ -543,10 +581,12 @@ const Modal = ({
                   )}
                 </div>
               )}
-              rules={{
-                required: { value: true, message: "* Level is Required" },
+              rules={
+                {
+                required: { min:4, value: true, message: "* Level is Required" },
                 validate: (value) => value <= mall.levels,
-              }}
+              }
+            }
             />
           </div>
 
