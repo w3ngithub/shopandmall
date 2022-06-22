@@ -48,9 +48,12 @@ class SingleClassTry extends React.Component {
 
     const fetchData = async () => {
       await fireStore
-        .collection("Shopping Mall")
-        .doc(docId)
-        .onSnapshot((doc) => {
+      .collection("Shopping Mall")
+      .doc(docId)
+      .onSnapshot((doc) => {        
+        this.setState({
+          galleryImage:[]
+        })
           this.setState({ mall: doc.data() });
           this.setState({ loading: false });
           doc?.data()?.shops?.map((shop) =>
@@ -98,9 +101,9 @@ class SingleClassTry extends React.Component {
           );
         });
     };
-
     fetchData();
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (
       this.state.slideInterval !== prevState.slideInterval ||
@@ -279,6 +282,7 @@ class SingleClassTry extends React.Component {
 
     this.state.modal === false && (document.body.style.overflow = "auto");
     console.log(this.state?.mall?.shops);
+    
     return (
       // Image Gallery Carousel
       <section className="app">
