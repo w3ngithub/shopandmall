@@ -8,7 +8,6 @@ const Shop = ({ doc, malls, single }) => {
   const history = useHistory();
   const location = useLocation();
 
-  console.log(doc)
   return (
     <div>
       {!single ? (
@@ -21,10 +20,10 @@ const Shop = ({ doc, malls, single }) => {
             onClick={() =>{
               location.pathname.split("/")[1] === "admin"
                 ? history.push(
-                    "/admin/mall/" + doc.mall.mallName + "/shops/" + doc.shops[0].shopName
+                    "/admin/" + doc.mall.mallName + "/shops/" + doc.shopName
                   )
                 : history.push(
-                    "/mall/" + doc.mall.mallName + "/shops/" + doc.shops[0].shopName
+                    "/mall/" + doc.mall.mallName + "/shops/" + doc.shopName
                   )
                 }
             }
