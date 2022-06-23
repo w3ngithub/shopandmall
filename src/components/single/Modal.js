@@ -476,10 +476,7 @@ const Modal = ({
           timings: dataToEdit.timings,
           shopImages: dataToEdit.shopImages
         })
-      // reset({...dataToEdit})
       setShop(dataToEdit);
-      setImages()
-      // setImages(dataToEdit.shopImages)
       setVideo(dataToEdit.shopVideo || {});
     }
 
