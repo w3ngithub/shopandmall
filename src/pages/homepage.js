@@ -9,6 +9,7 @@ import classes from "../styles/dashboard.module.css";
 import HomepageImage from "../assets/images/homepage.png";
 import AddNewMallButton from "../components/AddNewMallButton";
 import MobileShopCategory from "../components/MobileShopCategory";
+import { ToastContainer } from "react-toastify";
 
 //Slick
 import PrevArrow from "../components/Arrows/PrevArrow";
@@ -156,6 +157,7 @@ const Dashboard = () => {
           )}
         </div>
       </main>
+      <ToastContainer />
     </div>
   );
 };

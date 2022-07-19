@@ -31,7 +31,7 @@ const Modal = ({
   const [percentage, setPercentage] = useState(0);
   const [videoPercentage, setVideoPercentage] = useState(0);
   const [removedVideoThumbnail, setRemovedVideoThumbnail] = useState(null);
-  const { control,reset, handleSubmit } = useForm();
+  const { control, reset, handleSubmit } = useForm();
 
   const [shop, setShop] = useState({
     shopName: "",
@@ -74,13 +74,13 @@ const Modal = ({
       let selectedShopImages = e.target.files[i];
 
       if (selectedShopImages && types.includes(selectedShopImages.type)) {
-        if(images?.length>1){
+        if (images?.length > 1) {
           setImages((prevState) => [
             ...prevState,
-            { id: Date.now(), image: selectedShopImages},
+            { id: Date.now(), image: selectedShopImages },
           ]);
-        }else{
-          setImages([{ id: Date.now(), image: selectedShopImages}])
+        } else {
+          setImages([{ id: Date.now(), image: selectedShopImages }]);
         }
       } else {
         setImageErrors("Please select an image file  (jpeg or png)");
@@ -89,14 +89,18 @@ const Modal = ({
   };
 
   const shopVideoHandleer = (e) => {
-    const selectedShopVideo = e.target.files[0];
+    const selectedShopVideo = e.target.files[0] || video.video;
 
     if (selectedShopVideo?.size / 1000000 > 100) {
       alert("the size of the video must be less than 100mb");
       return;
     }
 
-    if (edit && video.hasOwnProperty("videoName")) {
+    if (
+      edit &&
+      video.hasOwnProperty("videoName") &&
+      e.target.files.length >= 1
+    ) {
       setRemovedVideo(video);
       setRemovedVideoThumbnail(video.thumbnail.id);
     }
@@ -164,7 +168,35 @@ const Modal = ({
     });
   };
 
+  const calculateTimeGap = () => {
+    shop.timings.forEach((item) => {
+      const arrayOfOpenTime = item?.openTime?.split(":");
+      const arrayOfCloseTime = item?.closeTime?.split(":");
+      const shopTimings = {
+        openTime:
+          parseInt(arrayOfOpenTime[0], 10) * 60 * 60 +
+          parseInt(arrayOfOpenTime[1], 10) * 60,
+        closeTime:
+          parseInt(arrayOfCloseTime[0], 10) * 60 * 60 +
+          parseInt(arrayOfCloseTime[1], 10) * 60,
+      };
+
+      if (shopTimings.closeTime - shopTimings.openTime < 0) {
+        alert("The mall cannot open after 11:00 pm");
+        throw new Error("The mall cannot open after 11:00 pm");
+      }
+
+      if (Math.abs(shopTimings.closeTime - shopTimings.openTime) < 5400) {
+        alert(
+          `mall close time should be at least 1hr 30min after open time for ${item.label}`
+        );
+        throw new Error("Shop timing gap must be corrected");
+      }
+    });
+  };
   const onSubmitHandler = async (e) => {
+    calculateTimeGap();
+
     try {
       //shop validation
       const { shopTimeError, shopImageError } = checkShopValidation(
@@ -186,6 +218,12 @@ const Modal = ({
         return;
       }
 
+      if (video.hasOwnProperty("thumbnail")) {
+        if (!video.thumbnail.hasOwnProperty("id")) {
+          alert("Please upload thumbnail for video");
+          return;
+        }
+      }
       setIsLoading(true);
       setPercentage(30);
       await Promise.all(
@@ -201,7 +239,7 @@ const Modal = ({
       );
 
       let result = {
-        id: Math.random(),
+        id: Date.now(),
         shopName: shop.shopName,
         shopDescription: shop.shopDescription,
         shopLevel: shop.shopLevel,
@@ -313,10 +351,11 @@ const Modal = ({
   };
 
   const handleEditSubmit = async (e) => {
-    // e.preventDefault();
-
-    if(shop.shopImages.length===0){
-      const { shopTimeError, shopImageError } = checkShopValidation(shop,images);
+    if (shop.shopImages.length === 0) {
+      const { shopTimeError, shopImageError } = checkShopValidation(
+        shop,
+        images
+      );
       if (shopTimeError) {
         alert(`please fill the opening and closing time of shop`);
         return;
@@ -333,6 +372,15 @@ const Modal = ({
       return;
     }
 
+    if (video.hasOwnProperty("thumbnail")) {
+      if (!video.thumbnail.hasOwnProperty("id")) {
+        alert("Please upload thumbnail for video");
+        return;
+      }
+    }
+
+    calculateTimeGap();
+
     setIsLoading(true);
 
     setPercentage(30);
@@ -340,13 +388,18 @@ const Modal = ({
     if (removedImages.length > 0) {
       removedImages.forEach((image) => storage.ref().child(image.id).delete());
     }
-    if (removedVideo.length > 0) {
-      removedVideo.forEach((video) => storage.ref().child(video.id).delete());
+    if (removedVideo.hasOwnProperty("id")) {
+      storage.ref().child(removedVideo.id).delete();
+    }
+    if (removedVideo.hasOwnProperty("thumnail")) {
+      if (removedVideo.thumbnail.hasOwnProperty("id")) {
+        storage.ref().child(removedVideo.thumbnail.id).delete();
+      }
     }
 
-    if (removedVideoThumbnail !== null) {
-      storage.ref().child(removedVideoThumbnail).delete();
-    }
+    // if (removedVideoThumbnail !== ) {
+    //   storage.ref().child(removedVideoThumbnail).delete();
+    // }
 
     let shopVideoUrl = [],
       shopTemp = { ...shop };
@@ -387,7 +440,7 @@ const Modal = ({
           [video].map(({ id, video, uniqueId }) => {
             const uploadTask = storage
               .ref()
-              .child(uniqueId + video.name)
+              .child(id + video.name)
               .put(video);
             uploadTask.on("state_changed", (snapshot) => {
               var progress = Math.floor(
@@ -401,7 +454,7 @@ const Modal = ({
 
         shopVideoUrl = await Promise.all(
           [video].map(({ id, video, uniqueId }) =>
-            storage.ref(uniqueId + video.name).getDownloadURL()
+            storage.ref(id + video.name).getDownloadURL()
           )
         );
 
@@ -443,6 +496,9 @@ const Modal = ({
       };
     }
 
+    if (removedVideo.hasOwnProperty("id") && !video.hasOwnProperty("id"))
+      delete shopTemp.shopVideo;
+
     fireStore
       .collection("Shopping Mall")
       .doc(mall.mallName)
@@ -458,24 +514,22 @@ const Modal = ({
     setPercentage(100);
   };
 
-  useEffect(()=>{
-    
-  },[shop])
+  useEffect(() => {}, [shop]);
 
   useEffect(() => {
     setIsLoading(false);
 
     if (edit) {
       reset({
-          shopName: dataToEdit.shopName,
-          shopDescription: dataToEdit.shopDescription,
-          shopLevel: dataToEdit.shopLevel,
-          shopPhoneNumber: dataToEdit.shopPhoneNumber,
-          category: dataToEdit.category,
-          subCategory: dataToEdit.subCategory,
-          timings: dataToEdit.timings,
-          shopImages: dataToEdit.shopImages
-        })
+        shopName: dataToEdit.shopName,
+        shopDescription: dataToEdit.shopDescription,
+        shopLevel: dataToEdit.shopLevel,
+        shopPhoneNumber: dataToEdit.shopPhoneNumber,
+        category: dataToEdit.category,
+        subCategory: dataToEdit.subCategory,
+        timings: dataToEdit.timings,
+        shopImages: dataToEdit.shopImages,
+      });
       setShop(dataToEdit);
       setVideo(dataToEdit.shopVideo || {});
     }
@@ -549,8 +603,8 @@ const Modal = ({
                   {error && <p className={classes.error}>{error.message}</p>}
                 </div>
               )}
-              rules={{ 
-                required: {value:true, message: "* Name is Required" } 
+              rules={{
+                required: { value: true, message: "* Name is Required" },
               }}
             />
             <Controller
@@ -573,17 +627,21 @@ const Modal = ({
                   {error?.type === "validate" && (
                     <p className={classes.error}>
                       * level must be equal to or less than mall level (
-                      {mall.levels})
+                      {mall.levels})(greater than 0)
                     </p>
                   )}
                 </div>
               )}
-              rules={
-                {
-                required: { min:4, value: true, message: "* Level is Required" },
-                validate: (value) => value <= mall.levels,
-              }
-            }
+              rules={{
+                required: {
+                  min: 2,
+                  value: true,
+                  message: "* Level is Required",
+                },
+                validate: (value) => {
+                  return value <= parseInt(mall.levels) && value >= 0;
+                },
+              }}
             />
           </div>
 
@@ -604,12 +662,18 @@ const Modal = ({
                   className={classes.input}
                 />
                 {error && <p className={classes.error}>{error.message}</p>}
+                {error?.type === "validate" && (
+                  <p className={classes.error}>* must be number of length 10</p>
+                )}
               </div>
             )}
             rules={{
               required: {
                 value: true,
-                message: "* Number is required",
+                message: "* Number is required and should have digits only.",
+              },
+              validate: (value) => {
+                return !isNaN(value) && value.length === 10;
               },
             }}
           />
@@ -723,6 +787,7 @@ const Modal = ({
             isShop={true}
             isModal={true}
             mallTime={listOfMallTimes}
+            edit={edit}
           />
 
           {imageErrors && <p>{imageErrors}</p>}
@@ -791,10 +856,31 @@ const Modal = ({
           </label>
           <div className={classes.selectedImages}>
             {video?.hasOwnProperty("video") && (
-              <p className={classes.image}>{video.video.name}</p>
+              <p className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => setVideo({})}
+                >
+                  <IoIosClose />
+                </button>
+                {video.video.name}
+              </p>
             )}
             {edit && video?.hasOwnProperty("videoName") && (
-              <p className={classes.image}>{shop.shopVideo.videoName}</p>
+              <p className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => {
+                    setVideo({});
+                    setRemovedVideo(video);
+                  }}
+                >
+                  <IoIosClose />
+                </button>
+                {shop?.shopVideo.videoName}
+              </p>
             )}
           </div>
           {isLoading && video?.hasOwnProperty("video") && (
@@ -803,10 +889,11 @@ const Modal = ({
           {(video.hasOwnProperty("video") ||
             video.hasOwnProperty("thumbnail")) && (
             <label className={classes.label}>
-              Add Video Thumbnail
+              Add Video Thumbnail (You cannot add a video without thumbnail)
               <input
                 className={classes.upload}
                 type="file"
+                accept="image/*"
                 onChange={videoThumbnailHandler}
               />
               <IoIosAddCircle className={classes.addIcon} />
@@ -814,10 +901,41 @@ const Modal = ({
           )}
           <div className={classes.selectedImages}>
             {!edit && video?.thumbnail?.hasOwnProperty("thumbnail") && (
-              <p className={classes.image}>{video.thumbnail.name}</p>
+              <p className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => {
+                    setVideo({
+                      ...video,
+                      thumbnail: {},
+                    });
+                    setRemovedVideoThumbnail(video.thumbnail);
+                  }}
+                  // onClick={() => delete video.thumbnail}
+                >
+                  <IoIosClose />
+                </button>
+                {video.thumbnail.name}
+              </p>
             )}
             {edit && video?.thumbnail?.hasOwnProperty("thumbnail") && (
-              <p className={classes.image}>{video.thumbnail.name}</p>
+              <p className={classes.image}>
+                <button
+                  className={classes.button}
+                  type="button"
+                  onClick={() => {
+                    setVideo({
+                      ...video,
+                      thumbnail: {},
+                    });
+                    setRemovedVideoThumbnail(video.thumbnail);
+                  }}
+                >
+                  <IoIosClose />
+                </button>
+                {video.thumbnail.name}
+              </p>
             )}
           </div>
           {isLoading && <Loader loadingPercentage={percentage} />}

@@ -1,0 +1,13 @@
+1)When a new mall is in the process of being added, and then 
+we add a shop without any subcategory, then the submit fails
+
+2)The modal to add shop requires validation in 'level' property with respect to its mall's level.
+3) Same goes with the time gap of 1 30 mins.
+
+
+4) in editForm replace mallTiming with shopTiming.
+5) in the mall edit form, the uncaught error about 1hr 30mins gap is detected, but the form is submitted any way 
+
+Features to add
+i) Delete icon for shop with functionality
+ii) implement validation for the above found points

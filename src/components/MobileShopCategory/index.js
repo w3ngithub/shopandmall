@@ -12,7 +12,6 @@ const MobileShopCategory = ({
   const [openDD, setOpenDD] = useState({});
 
   const childNodeId = (id) => {
-    console.log("clicked");
     setOpenDD({
       ...openDD,
       [id]: !openDD[id],

@@ -3,6 +3,7 @@ import CommonShopForm from "./CommonShopForm";
 
 const ShopForm = ({
   edit,
+  editData,
   dataShop,
   editDispatch,
   index,
@@ -49,7 +50,6 @@ const ShopForm = ({
   //Remove Image
 
   const removeImage = (img, index) => {
-  
     setImagesToRemove((prevState) => [...prevState, img]);
     editDispatch({
       type: "REMOVE_IMAGE",
@@ -61,7 +61,6 @@ const ShopForm = ({
   };
 
   const removeVideo = (video, index) => {
-    console.log()
     setRemovedVideo((prevState) => [...prevState, video]);
     setRemovedVideoThumbnail((prev) => [
       ...prev,
@@ -79,6 +78,7 @@ const ShopForm = ({
     <CommonShopForm
       {...{
         edit,
+        editData,
         dataShop,
         editDispatch,
         index,

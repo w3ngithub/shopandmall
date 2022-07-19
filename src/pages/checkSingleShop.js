@@ -1,9 +1,9 @@
 import { MyContext } from "../Context";
 import { FaPlay } from "react-icons/fa";
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router";
 import ImageGallery from "react-image-gallery";
-import { fireStore } from "../firebase/config";
+import { fireStore, storage } from "../firebase/config";
 import SideImage from "../components/SideImage";
 import { BiImage, BiVideo } from "react-icons/bi";
 import classes from "../styles/single.module.css";
@@ -12,9 +12,12 @@ import SkeletonText from "../skeletons/SkeletonText";
 import { ToastContainer, toast } from "react-toastify";
 import SkeletonBlock from "../skeletons/SkeletonBlock";
 import { FaRegWindowClose, FaEdit } from "react-icons/fa";
+import { IoMdCloseCircle } from "react-icons/io";
+import DeleteModal from "../components/Modal/DeleteModal";
 import SkeletonShopCard from "../skeletons/SkeletonShopCard";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import modalclasses from "../components/single/modal.module.css";
+import styles from "../components/styles/Card.module.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import NoImage from "../image/Barline-Loading-Images-1.gif";
 
@@ -30,10 +33,12 @@ class SingleClassTry extends React.Component {
       mall: null,
       galleryImage: [],
       modal: false,
+      deleteModal: false,
       image: null,
       ind: null,
       sideImage: false,
       selectedShop: {},
+      dataToDelete: {},
       showEditModal: false,
     };
 
@@ -48,12 +53,12 @@ class SingleClassTry extends React.Component {
 
     const fetchData = async () => {
       await fireStore
-      .collection("Shopping Mall")
-      .doc(docId)
-      .onSnapshot((doc) => {        
-        this.setState({
-          galleryImage:[]
-        })
+        .collection("Shopping Mall")
+        .doc(docId)
+        .onSnapshot((doc) => {
+          this.setState({
+            galleryImage: [],
+          });
           this.setState({ mall: doc.data() });
           this.setState({ loading: false });
           doc?.data()?.shops?.map((shop) =>
@@ -264,13 +269,9 @@ class SingleClassTry extends React.Component {
       showBullets,
       showFullscreenButton,
       showPlayButton,
-      showThumbnails,
-      showIndex,
+      showThumbnails = false,
       showNav,
       thumbnailPosition,
-      slideDuration,
-      slideInterval,
-      slideOnThumbnailOver,
       useTranslate3D,
       infinite,
       isRTL,
@@ -278,14 +279,90 @@ class SingleClassTry extends React.Component {
 
     let type = this.props.match.params.type;
 
+    const id = this.props.match.params.id;
+    const docId = id.replace("_", " ");
+
     const { sideImageWithFooter, showSideImage, hideSideImage } = this.context;
+    const pathname = window.location.pathname;
 
     this.state.modal === false && (document.body.style.overflow = "auto");
-    console.log(this.state?.mall?.shops);
-    
+    const successNotification = () =>
+      toast.success("Succesfully Deleted!", {
+        position: "bottom-right",
+        autoClose: 2000,
+        // onClose: () => history.goBack(),
+      });
+
+    const handleDelete = () => {
+      let storageRef = storage.ref();
+
+      // deleting thumbnail
+      if (this.state.dataToDelete.hasOwnProperty("thumbnail")) {
+        storageRef
+          .child(this.state.dataToDelete.thumbnail.id)
+          .delete()
+          .then(() => console.log("thumbnail deleted"))
+          .catch((error) => console.log("error in deleting thumbnail"));
+      }
+
+      //deleting particular image or video
+      storageRef
+        .child(this.state.dataToDelete.id)
+        .delete()
+        .then(() => console.log("Image deleted succesfully"))
+        .catch((error) => console.log("Images not deleted"));
+
+      //deleting from fireStore
+      if (!this.state.dataToDelete.hasOwnProperty("thumbnail")) {
+        fireStore
+          .collection("Shopping Mall")
+          .doc(docId)
+          .update({
+            shops: this.state.mall.shops.map((shop) => ({
+              ...shop,
+              shopImages: shop.shopImages.filter(
+                (image) => image.id !== this.state.dataToDelete.id
+              ),
+            })),
+          })
+          .then(() => {
+            successNotification();
+          });
+      }
+      if (this.state.dataToDelete.hasOwnProperty("thumbnail")) {
+        fireStore
+          .collection("Shopping Mall")
+          .doc(docId)
+          .update({
+            shops: this.state.mall.shops.map((shop) => ({
+              ...shop,
+              shopVideo: null,
+            })),
+          })
+          .then(() => {
+            successNotification();
+          });
+      }
+      handleModal();
+    };
+
+    const handleModal = (content) => {
+      this.setState((prev) => ({
+        deleteModal: !prev.deleteModal,
+        dataToDelete: content,
+      }));
+    };
     return (
       // Image Gallery Carousel
       <section className="app">
+        {this.state.deleteModal && (
+          <DeleteModal
+            datas={{
+              handleModal,
+              handleDelete,
+            }}
+          />
+        )}
         {this.state.modal === true && (
           <div className={modalclasses.galleryModalBackground}>
             <div
@@ -349,7 +426,6 @@ class SingleClassTry extends React.Component {
                 renderLeftNav={this.renderLeftNav}
                 renderRightNav={this.renderRightNav}
                 showIndex={true}
-                showThumbnails={false}
               />
             </div>
           </div>
@@ -428,7 +504,7 @@ class SingleClassTry extends React.Component {
                   }
                 >
                   <div className={classes.topImage}>
-                    <img src={shop?.shopImages[0].url} alt="" />
+                    <img src={shop?.shopImages[0]?.url ?? ""} alt="" />
                   </div>
                   <div
                     className={classes.mobTopImage}
@@ -437,7 +513,7 @@ class SingleClassTry extends React.Component {
                       showSideImage();
                     }}
                   >
-                    <img src={shop?.shopImages[0].url} alt="" />
+                    <img src={shop?.shopImages[0]?.url ?? ""} alt="" />
                     <div className={classes.imageNumber}>
                       1/{shop.shopImages.length + 1}
                     </div>
@@ -503,13 +579,25 @@ class SingleClassTry extends React.Component {
 
                       {this.props.location.pathname.split("/")[1] ===
                         "admin" && (
-                        <button
-                          className={classes.editBtn}
-                          onClick={this.openEditModal}
-                        >
-                          <FaEdit className={classes.editIcon} />
-                          <span className={classes.text}>Edit</span>
-                        </button>
+                        <div>
+                          <ul
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              // rowGap: "1rem",
+                            }}
+                          >
+                            <li style={{ marginRight: "1rem" }}>
+                              <button
+                                className={classes.editBtn}
+                                onClick={this.openEditModal}
+                              >
+                                <FaEdit className={classes.editIcon} />
+                                <span className={classes.text}>Edit</span>
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
                       )}
                     </div>
 
@@ -517,56 +605,78 @@ class SingleClassTry extends React.Component {
                       <h3>Description</h3>
                       <p>{shop.shopDescription}</p>
                     </div>
-
-                    <div className={classes.container}>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "auto auto auto",
+                        rowGap: "20px",
+                        margin: "20px 0",
+                      }}
+                    >
                       {shop.shopVideo ? (
                         <div
-                          className={classes.wrapper}
+                          className={styles.wrapper}
                           onClick={() => {
                             this.setState({ modal: true, ind: 0 });
                           }}
                         >
-                          <video
-                            src={shop.shopVideo.url}
-                            controls={false}
-                            width="100%"
-                            height="200px"
-                          ></video>
-                          <FaPlay className={classes.videoIcon} />
+                          <div className={styles.imageContainer}>
+                            {pathname.split("/").includes("admin") && (
+                              <IoMdCloseCircle
+                                className={styles.closeIcon}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  // handleDelete(shop.shopVideo, shop);
+                                  handleModal(shop.shopVideo);
+                                }}
+                              />
+                            )}
+                            <video
+                              src={shop.shopVideo.url}
+                              controls={false}
+                              width="100%"
+                              height="200px"
+                            ></video>
+                            <FaPlay className={classes.videoIcon} />
+                          </div>
                         </div>
                       ) : null}
 
                       {shop.shopImages &&
                         shop.shopImages.map((s, i) => {
                           return (
-                            <div key={i} className={classes.wrapper}>
-                                <LazyLoadImage
-                              onClick={() => {
-                                this.setState({ modal: true });
-                                shop.shopVideo
-                                  ? this.setState({ ind: i + 1 })
-                                  : this.setState({ ind: i });
-                              }}
-                              className={classes.image}
-                              src={s.url}
-                              alt="shopImage"
-                              height={200}
-                              width="100%"
-                              placeholderSrc={NoImage}
-                              effect="blur"
-                            />
-                              {/* <img
-                                onClick={() => {
-                                  this.setState({ modal: true });
-                                  shop.shopVideo
-                                    ? this.setState({ ind: i + 1 })
-                                    : this.setState({ ind: i });
-                                }}
-                                className={classes.image}
-                                src={s.url}
-                                alt="shopImage"
-                              /> */}
-                            </div>
+                            <>
+                              <div key={i} className={styles.wrapper}>
+                                <div className={styles.imageContainer}>
+                                  {pathname.split("/").includes("admin") && (
+                                    <IoMdCloseCircle
+                                      className={styles.closeIcon}
+                                      onClick={(event) => {
+                                        event.stopPropagation();
+                                        // handleDelete(s);
+                                        // handleModal(shop.shopImages[i]);
+                                        handleModal(s);
+                                      }}
+                                    />
+                                  )}
+                                  <LazyLoadImage
+                                    onClick={() => {
+                                      this.setState({ modal: true });
+                                      shop.shopVideo
+                                        ? this.setState({ ind: i + 1 })
+                                        : this.setState({ ind: i });
+                                    }}
+                                    className={classes.image}
+                                    src={s.url}
+                                    alt="shopImage"
+                                    height={200}
+                                    width="100%"
+                                    placeholderSrc={NoImage}
+                                    effect="blur"
+                                  />
+                                </div>
+                              </div>
+                            </>
                           );
                         })}
                     </div>

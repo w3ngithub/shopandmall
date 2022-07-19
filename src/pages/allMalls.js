@@ -12,6 +12,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
 import MobileShopCategory from "../components/MobileShopCategory";
 import { useFilterMallAndShops } from "../hooks/useFilterMallAndShops";
+import { ToastContainer } from "react-toastify";
 
 const AllMalls = () => {
   const [showShopCategories, setShowShopCategories] = useState(false);
@@ -22,6 +23,8 @@ const AllMalls = () => {
 
   const location = useLocation();
   const history = useHistory();
+
+  const isAdmin = location.pathname.split("/").includes("admin");
 
   // Context
   const { showSearchExtended, setShowSearchExtended } = useContext(MyContext);
@@ -46,11 +49,15 @@ const AllMalls = () => {
 
   //show category list according to selected path
   let categoriesPath = null;
-  const category = location.pathname.split("/")[3];
-  const subCategory = location.pathname.split("/")[4];
+  const category = isAdmin
+    ? location.pathname.split("/")[4]
+    : location.pathname.split("/")[3];
+  const subCategory = isAdmin
+    ? location.pathname.split("/")[4]
+    : location.pathname.split("/")[4];
 
   if (isShopCategorySelected) {
-    categoriesPath =
+    categoriesPath = !isAdmin ? (
       location.pathname.split("/").length === 4 ? (
         <>
           <p>{category}</p>
@@ -78,7 +85,35 @@ const AllMalls = () => {
             <IoCloseSharp className={classes.closeIcon} />
           </p>
         </>
-      );
+      )
+    ) : location.pathname.split("/").length === 5 ? (
+      <>
+        <p>{category}</p>
+        <p
+          className={classes.deleteicon}
+          onClick={() => history.push("/admin/malls")}
+        >
+          <IoCloseSharp className={classes.closeIcon} />
+        </p>
+      </>
+    ) : (
+      <>
+        <p
+          className={classes.mainParagraph}
+          onClick={() => history.push("/admin/malls/category/" + category)}
+        >
+          {category}
+        </p>
+        <HiChevronDoubleRight className={classes.righticon} />
+        <p>{subCategory}</p>
+        <p
+          className={classes.deleteicon}
+          onClick={() => history.push("/admin/malls/category/" + category)}
+        >
+          <IoCloseSharp className={classes.closeIcon} />
+        </p>
+      </>
+    );
   }
 
   return (
@@ -219,6 +254,7 @@ const AllMalls = () => {
           <Mall docs={malls} loading={loading} />
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

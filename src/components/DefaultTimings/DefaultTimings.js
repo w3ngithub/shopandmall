@@ -4,6 +4,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 
 const DefaultTimings = ({
   timing,
+  timings,
   setOpenTime,
   setCloseTime,
   isModal = false,
@@ -12,6 +13,7 @@ const DefaultTimings = ({
   showRemove = true,
   minTime,
   maxTime,
+  mallTime,
 }) => {
   return (
     <div className="timings" style={(isModal && { width: "100%" }) || null}>
@@ -30,6 +32,7 @@ const DefaultTimings = ({
               minuteHandLength={60}
               hourHandLength={40}
               minTime={minTime}
+              // maxTime={maxTime}
             />
           </div>
           <div className="mobileTime">
@@ -43,6 +46,7 @@ const DefaultTimings = ({
               minuteHandLength={60}
               hourHandLength={40}
               minTime={minTime}
+              // maxTime={maxTime}
             />
           </div>
         </div>
@@ -59,6 +63,7 @@ const DefaultTimings = ({
               minuteHandWidth={4}
               minuteHandLength={60}
               hourHandLength={40}
+              minTime={minTime}
               maxTime={maxTime}
             />
           </div>
@@ -72,6 +77,7 @@ const DefaultTimings = ({
               minuteHandWidth={4}
               minuteHandLength={60}
               hourHandLength={40}
+              minTime={minTime}
               maxTime={maxTime}
             />
           </div>

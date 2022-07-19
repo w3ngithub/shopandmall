@@ -25,10 +25,16 @@ const AllShops = () => {
 
   const { showSearchExtended, setShowSearchExtended } = useContext(MyContext);
 
+  const isAdmin = location.pathname.split("/").includes("admin");
+
   const isShopCategorySelected = location.pathname
     .split("/")
     .includes("category");
-  const { filteredMalls } = useFilterMallAndShops(docs, isShopCategorySelected);
+  const { filteredMalls } = useFilterMallAndShops(
+    docs,
+    isAdmin,
+    isShopCategorySelected
+  );
 
   const filter = (e) => {
     let filteredMalls2 = [];
@@ -59,11 +65,15 @@ const AllShops = () => {
 
   //show category list according to selected path
   let categoriesPath = null;
-  const category = location.pathname.split("/")[3];
-  const subCategory = location.pathname.split("/")[4];
+  const category = isAdmin
+    ? location.pathname.split("/")[4]
+    : location.pathname.split("/")[3];
+  const subCategory = isAdmin
+    ? location.pathname.split("/")[5]
+    : location.pathname.split("/")[4];
 
   if (isShopCategorySelected) {
-    categoriesPath =
+    categoriesPath = !isAdmin ? (
       location.pathname.split("/").length === 4 ? (
         <>
           <p>{category}</p>
@@ -91,7 +101,35 @@ const AllShops = () => {
             <IoCloseSharp className={classes.closeIcon} />
           </p>
         </>
-      );
+      )
+    ) : location.pathname.split("/").length === 5 ? (
+      <>
+        <p>{category}</p>
+        <p
+          className={classes.deleteicon}
+          onClick={() => history.push("/admin/shops")}
+        >
+          <IoCloseSharp className={classes.closeIcon} />
+        </p>
+      </>
+    ) : (
+      <>
+        <p
+          className={classes.mainParagraph}
+          onClick={() => history.push("/admin/shops/category/" + category)}
+        >
+          {category}
+        </p>
+        <HiChevronDoubleRight className={classes.righticon} />
+        <p>{subCategory}</p>
+        <p
+          className={classes.deleteicon}
+          onClick={() => history.push("/admin/shops/category/" + category)}
+        >
+          <IoCloseSharp className={classes.closeIcon} />
+        </p>
+      </>
+    );
   }
 
   return (
@@ -223,7 +261,7 @@ const AllShops = () => {
             <h4 className={classes.heading}>Shops</h4>
           </div>
           {malls.length !== 0 ? (
-            <Shop docs={malls} loading={loading} />
+            <Shop docs={malls} loading={loading} shops={shops} />
           ) : (
             <p className={classes.noRecords}>No Shops Found</p>
           )}

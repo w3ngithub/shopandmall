@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from "./shopCategories.module.css";
 import { FaAngleDown, FaAngleUp, FaAngleRight } from "react-icons/fa";
 import CategoryIcon from "../../assets/images/categoryIcon.svg";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const ShopCategories = ({
   isShopPage = false,
@@ -13,6 +13,9 @@ const ShopCategories = ({
 }) => {
   const [hoverSubCategory, setHoverSubCategory] = useState({});
   const history = useHistory();
+
+  const location = useLocation();
+  const isAdmin = location.pathname.split("/").includes("admin");
 
   const openSubCategory = (id) => {
     setHoverSubCategory({
@@ -56,7 +59,11 @@ const ShopCategories = ({
                   onClick={() =>
                     history.push(
                       isShopPage
-                        ? "/shops/category/" + shopCat.category
+                        ? isAdmin
+                          ? "/admin/shops/category/" + shopCat.category
+                          : "/shops/category/" + shopCat.category
+                        : isAdmin
+                        ? "/admin/malls/category/" + shopCat.category
                         : "/malls/category/" + shopCat.category
                     )
                   }
@@ -83,7 +90,11 @@ const ShopCategories = ({
                         onClick={() =>
                           history.push(
                             isShopPage
-                              ? `/shops/category/${shopCat.category}/${row.subCategory}`
+                              ? isAdmin
+                                ? `/admin/shops/category/${shopCat.category}/${row.subCategory}`
+                                : `/shops/category/${shopCat.category}/${row.subCategory}`
+                              : isAdmin
+                              ? `/admin/malls/category/${shopCat.category}/${row.subCategory}`
                               : `/malls/category/${shopCat.category}/${row.subCategory}`
                           )
                         }

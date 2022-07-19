@@ -5,8 +5,8 @@ import React, { useState, useEffect } from "react";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 import ShopCardComponent from "../shopCardComponent/ShopCardComponent";
 
-const Shop = ({ docs, settings, loading }) => {
-  const [shops, setShops] = useState([]);
+const Shop = ({ docs, settings, loading, shops }) => {
+  const [shops1, setShops1] = useState([]);
 
   const location = useLocation();
 
@@ -14,10 +14,9 @@ const Shop = ({ docs, settings, loading }) => {
 
   let emptyCheck = Math.max.apply(0, empty);
 
-  useEffect(() => {
-    let allShops = docs.map((doc) => doc.shops).flat();
-    setShops(allShops);
-  }, [docs]);
+  // useEffect(() => {
+  //   setShops1(shops);
+  // }, [shops]);
 
   let sortedShops = [];
   const getShops = (index) => {
@@ -38,7 +37,6 @@ const Shop = ({ docs, settings, loading }) => {
     });
   };
   getShops(0);
-  console.log(sortedShops);
   return (
     <div>
       {location.pathname === "/" ||
@@ -79,7 +77,14 @@ const Shop = ({ docs, settings, loading }) => {
           )}
         </div>
       ) : (
-        <div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "auto auto auto",
+            rowGap: "20px",
+            margin: "20px 0",
+          }}
+        >
           {loading ? (
             <div className={classes.container}>
               {[1, 2, 3, 4, 5, 6].map((n) => (
@@ -87,7 +92,11 @@ const Shop = ({ docs, settings, loading }) => {
               ))}
             </div>
           ) : emptyCheck !== 0 ? (
-            <ShopCardComponent malls={docs} />
+            shops?.map((doc, i) => (
+              <div key={doc.shopName}>
+                <ShopCardComponent doc={doc} malls={docs} />
+              </div>
+            ))
           ) : (
             <p className={classes.noRecords}>No shops added</p>
           )}

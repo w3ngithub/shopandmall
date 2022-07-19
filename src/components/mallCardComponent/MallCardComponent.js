@@ -6,63 +6,72 @@ import { useHistory, useLocation } from "react-router-dom";
 import { fireStore, storage } from "../../firebase/config";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import DeleteModal from "../Modal/DeleteModal";
+import { toast } from "react-toastify";
 
 const MallCardComponent = ({ doc }) => {
   const history = useHistory();
   const location = useLocation();
-  const [modal,setModal] = useState(false)
+  const [modal, setModal] = useState(false);
 
-  const handleDelete = () =>{
+  const successNotification = () =>
+    toast.success("Mall Deleted Succesfully!", {
+      position: "bottom-right",
+      autoClose: 2000,
+      // onClose: () => history.goBack(),
+    });
+
+  const handleDelete = () => {
     let storageRef = storage.ref();
     let mallImageDel = storageRef.child(doc.mallImage.imageName);
 
     //Shop Images
     doc.shops.map((shop) =>
-    shop.shopImages.map((s) =>
+      shop.shopImages.map((s) =>
         storageRef
-        .child(s.id)
-        .delete()
-        .then(() => "Images Deleted SuccessFUlly")
-        .catch((err) => "Images Not Deleted")
-    )
+          .child(s.id)
+          .delete()
+          .then(() => "Images Deleted SuccessFUlly")
+          .catch((err) => "Images Not Deleted")
+      )
     );
 
     //Deleting Images
     mallImageDel
-    .delete()
-    .then(() => "Images Deleted SuccessFUlly")
-    .catch((err) => "Images Not Deleted");
+      .delete()
+      .then(() => "Images Deleted SuccessFUlly")
+      .catch((err) => "Images Not Deleted");
 
     //shop video
     doc.shops.forEach((shop) => {
-    if (shop.shopVideo) {
+      if (shop.shopVideo) {
         storageRef
-        .child(shop.shopVideo.id)
-        .delete()
-        .then(() => console.log("deleted video"));
-    }
+          .child(shop.shopVideo.id)
+          .delete()
+          .then(() => console.log("deleted video"));
+      }
     });
     //video thumbnail
     doc.shops.forEach((shop) => {
-    if (shop.shopVideo) {
+      if (shop.shopVideo) {
         storageRef
-        .child(shop.shopVideo.thumbnail.id)
-        .delete()
-        .then(() => console.log("deleted Thumbnail"));
-    }
+          .child(shop.shopVideo.thumbnail.id)
+          .delete()
+          .then(() => console.log("deleted Thumbnail"));
+      }
     });
     fireStore
-    .collection("Shopping Mall")
-    .doc(doc.mallName)
-    .delete()
-    .then(() => console.log("DELETED Successfully"))
-    .catch((error) => console.log("Error deleting mall"));
+      .collection("Shopping Mall")
+      .doc(doc.mallName)
+      .delete()
+      .then(() => {
+        successNotification();
+      })
+      .catch((error) => console.log("Error deleting mall"));
+  };
 
-  }
-
-  const hanldeModal = ()=>{
-    setModal(prev=>!prev)
-  }
+  const handleModal = () => {
+    setModal((prev) => !prev);
+  };
 
   return (
     <div
@@ -80,18 +89,19 @@ const MallCardComponent = ({ doc }) => {
     >
       {doc.mallImage ? (
         <div className={classes.imageContainer}>
-          {(location.pathname ==="/admin/malls"||location.pathname ==="/admin/dashboard")  && (
+          {(location.pathname === "/admin/malls" ||
+            location.pathname === "/admin/dashboard") && (
             <div
               className={classes.closeIcon}
               onClick={(e) => {
                 e.stopPropagation();
-                hanldeModal()
+                handleModal();
               }}
             >
               <IoMdCloseCircle />
             </div>
           )}
-          {modal && <DeleteModal datas={{hanldeModal,handleDelete}}/>}
+          {modal && <DeleteModal datas={{ handleModal, handleDelete }} />}
           <div>
             {/* <img
               className={classes.image}

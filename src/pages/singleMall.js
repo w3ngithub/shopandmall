@@ -12,7 +12,6 @@ import { useParams, useLocation } from "react-router-dom";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import ShopCardComponent from "../components/shopCardComponent/ShopCardComponent";
 
-
 const SingleMall = () => {
   const [mall, setMall] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,24 +25,21 @@ const SingleMall = () => {
   const docId = id.replace("_", " ");
 
   useEffect(() => {
-    const unsubscribe =  
-       fireStore
-        .collection("Shopping Mall")
-        .doc(docId)
-        .onSnapshot((doc) => {
-          setMall(doc.data());
-          setLoading(false);
-        });
+    const unsubscribe = fireStore
+      .collection("Shopping Mall")
+      .doc(docId)
+      .onSnapshot((doc) => {
+        setMall(doc.data());
+        setLoading(false);
+      });
 
-    return ()=>{
-      unsubscribe()
-    }
-
+    return () => {
+      unsubscribe();
+    };
   }, [docId]);
 
   return (
     <div className={classes.mainContainerMall}>
-      {/* Modal */}
       {showModal === true && (
         <Modal {...{ setShowModal, docId, mall, toast }} />
       )}
@@ -75,8 +71,7 @@ const SingleMall = () => {
                   className={classes.editBtn}
                   onClick={() => {
                     history.push({
-                      pathname: `/admin/editMall/${mall.mallName}`
-                      //dataToSend: mall,
+                      pathname: `/admin/editMall/${mall.mallName}`,
                     });
                   }}
                 >
@@ -99,9 +94,7 @@ const SingleMall = () => {
                     //   pathname: `/admin/editMall/${mall.mallName}`,
                     //   dataToSend: mall,
                     // });
-                    console.log(mall.mallName)
-                    history.push(`/admin/editMall/${mall?.mallName}`)
-
+                    history.push(`/admin/editMall/${mall?.mallName}`);
                   }}
                 >
                   <FaEdit className={classes.editIcon} />
@@ -161,8 +154,30 @@ const SingleMall = () => {
             ))}
           </div>
         ) : mall?.shops?.length > 0 ? (
-          <div style={{ marginLeft: "-10px" }}>
-            <ShopCardComponent malls={mall} single={true} />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto",
+              rowGap: "20px",
+              margin: "20px 0",
+            }}
+          >
+            {mall.shops.map((doc, i) => (
+              <div key={doc.id}>
+                <ShopCardComponent
+                  // malls={mall}
+                  // single={true}
+                  doc={{
+                    ...doc,
+                    mall: {
+                      ...mall,
+                      id: mall.mallName,
+                    },
+                  }}
+                />
+              </div>
+            ))}
+            {/* <ShopCardComponent malls={mall} single={true} /> */}
           </div>
         ) : (
           <p className="mt-md">No shops added</p>

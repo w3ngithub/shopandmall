@@ -9,6 +9,7 @@ import useFirestore from "../../hooks/useFirestore";
 const CommonShopForm = ({
   edit,
   s,
+  editData,
   dispatch,
   index,
   shopImageState,
@@ -163,10 +164,11 @@ const CommonShopForm = ({
       });
     }
   };
-
   let listOfMallTimes = [mallTime[0]];
 
-  s?.timings?.forEach((time, index) => {
+  const timingArr = edit ? dataShop : s;
+
+  timingArr?.timings?.forEach((time, index) => {
     if (index > 0) {
       let isDayPresentInMallTime = mallTime.findIndex(
         (t) => t.label === time.label
@@ -260,14 +262,14 @@ const CommonShopForm = ({
                   {error?.type === "validate" && (
                     <p className={classes.error}>
                       * level must be equal to or less than mall level (
-                      {mallLevel})
+                      {mallLevel})(greater than 0.)
                     </p>
                   )}
                 </>
               )}
               rules={{
                 required: { value: true, message: "* Level is Required" },
-                validate: (value) => value <= mallLevel,
+                validate: (value) => value <= parseInt(mallLevel) && value >= 0,
               }}
             />
           </div>
@@ -298,10 +300,18 @@ const CommonShopForm = ({
                   />
                   <br />
                   {error && <p className={classes.error}>{error.message}</p>}
+                  {error?.type === "validate" && (
+                    <p className={classes.error}>
+                      * must be number of length 10
+                    </p>
+                  )}
                 </>
               )}
               rules={{
                 required: { value: true, message: "* Number is Required" },
+                validate: (value) => {
+                  return !isNaN(value) && value.length === 10;
+                },
               }}
             />
           </div>
@@ -382,17 +392,18 @@ const CommonShopForm = ({
                   {error && <p className={classes.error}>{error.message}</p>}
                 </>
               )}
-              rules={{
-                required: {
-                  value: subCategoryLists.length > 0 ? true : false,
-                  message: "* Subcategory is required",
-                },
-              }}
+              // rules={{
+              //   required: {
+              //     value: subCategoryLists.length > 0 ? true : false,
+              //     message: "* Subcategory is required",
+              //   },
+              // }}
             />
           </div>
         </div>
 
         <AllTimings
+          edit={edit}
           state={edit ? dataShop : s}
           index={index}
           onManualTimeChange={onManualTimeChange}
@@ -401,7 +412,6 @@ const CommonShopForm = ({
           onRemoveTimingsField={onRemoveTimingsField}
           isShop={true}
           mallTime={listOfMallTimes}
-          edit={edit}
         />
         <Controller
           control={control}
@@ -548,7 +558,7 @@ const CommonShopForm = ({
                 <button
                   className={classes.button}
                   type="button"
-                  onClick={() => removeVideo(video,index) }
+                  onClick={() => removeVideo(video, index)}
                 >
                   <IoIosClose />
                 </button>
@@ -592,4 +602,3 @@ const CommonShopForm = ({
 };
 
 export default CommonShopForm;
-
