@@ -44,13 +44,20 @@ const CommonForm = ({
     handleSubmit,
     reset,
     getValues,
+    setValue,
   } = useForm();
-  const mallName = register("mallName", { required: true });
-  const address = register("mallAddress", { required: true });
-  const levels = register("levels", { required: true });
+  const mallName = register("mallName", {
+    required: true,
+  });
+  const address = register("mallAddress", {
+    required: true,
+  });
+  const levels = register("levels", {
+    required: true,
+  });
   const phoneNumber = register("phoneNumber", {
     required: true,
-    //validate: (value) => value.length === 10,
+    validate: (value) => !isNaN(value) && value.length === 10,
   });
 
   //Change Handler
@@ -159,6 +166,7 @@ const CommonForm = ({
                 type="text"
                 onChange={(e) => {
                   changeHandler(e);
+                  setValue("mallName", e.target.value);
                   mallName.onChange(e);
                 }}
                 placeholder="Name of Mall"
@@ -166,8 +174,8 @@ const CommonForm = ({
                 value={edit ? editData?.mallName : state?.mallName}
                 className={classes.input}
               />
-              {errors.mallName && (
-                <p className={classes.error}>* Name is required</p>
+              {errors?.mallName?.type === "required" && (
+                <p className={classes.error}>* Mall name is required</p>
               )}
             </div>
             <div>
@@ -177,12 +185,13 @@ const CommonForm = ({
                 name="mallAddress"
                 onChange={(e) => {
                   changeHandler(e);
+                  setValue("mallAddress", e.target.value);
                   address.onChange(e);
                 }}
                 value={edit ? editData?.mallAddress : state?.mallAddress}
                 className={classes.input}
               />
-              {errors.mallAddress && (
+              {errors?.mallAddress?.type === "required" && (
                 <p className={classes.error}>* Address is required</p>
               )}
             </div>
@@ -194,11 +203,12 @@ const CommonForm = ({
                 value={edit ? editData?.levels : state?.levels}
                 onChange={(e) => {
                   changeHandler(e);
+                  setValue("levels", e.target.value);
                   levels.onChange(e);
                 }}
                 className={classes.input}
               />
-              {errors.levels && (
+              {errors?.levels?.type === "required" && (
                 <p className={classes.error}>* Levels is required</p>
               )}
             </div>
@@ -228,6 +238,7 @@ const CommonForm = ({
                 value={edit ? editData?.phoneNumber : state?.phoneNumber}
                 onChange={(e) => {
                   changeHandler(e);
+                  setValue("phoneNumber", e.target.value);
                   phoneNumber.onChange(e);
                 }}
                 className={classes.input}
@@ -235,9 +246,9 @@ const CommonForm = ({
               {errors?.phoneNumber?.type === "required" && (
                 <p className={classes.error}>* Number is required</p>
               )}
-              {/* {errors?.phoneNumber?.type === "validate" && (
+              {errors?.phoneNumber?.type === "validate" && (
                 <p className={classes.error}>* Number must be 10 digits</p>
-              )} */}
+              )}
             </div>
 
             <div className={classes.innerDivImage}>
@@ -273,6 +284,7 @@ const CommonForm = ({
           </div>
 
           <AllTimings
+            edit={edit}
             state={edit ? editData : state}
             onManualTimeChange={onManualTimeChange}
             onDefaultTimeChange={onDefaultTimeChange}

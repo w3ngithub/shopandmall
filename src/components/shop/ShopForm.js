@@ -3,6 +3,7 @@ import CommomShopForm from "./CommonShopForm";
 
 const ShopForm = ({
   edit,
+  editData,
   s,
   dispatch,
   index,
@@ -31,6 +32,7 @@ const ShopForm = ({
     <CommomShopForm
       {...{
         edit,
+        editData,
         s,
         dispatch,
         index,

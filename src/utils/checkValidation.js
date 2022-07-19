@@ -17,7 +17,6 @@ export const checkMallValidation = (state, image) => {
 
 export const checkShopValidation = (state, image) => {
   let shopTimeError = false;
-
   //check for empty time
   shopTimeError = !state.timings.every(
     (time) =>

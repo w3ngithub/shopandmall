@@ -37,13 +37,17 @@ const ManualTimings = ({
       </div>
       <DefaultTimings
         timing={time}
+        timings={timings}
         setOpenTime={setOpenTime}
         setCloseTime={setCloseTime}
         isShop={isShop}
         isModal={isModal}
         onRemoveTimingsField={onRemoveTimingsField}
-        minTime={mallTime?.openTime}
-        maxTime={mallTime?.closeTime}
+        minTime={mallTime?.openTime ?? "6:00"}
+        maxTime={mallTime?.closeTime ?? "23:00"}
+        mallTime={mallTime}
+        // minTime={typeof mallTime !== "undefined" ? mallTime : "06:00"}
+        // maxTime={typeof mallTime !== "undefined" ? mallTime : "23:00"}
       />
     </div>
   );

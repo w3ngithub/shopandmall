@@ -50,7 +50,7 @@ const MallForm = () => {
   const [videoUploadPercentage, setVideoUploadPercentage] = useState({});
 
   const successNotification = () =>
-    toast.success("Successfull Saved!", {
+    toast.success("Succesfully Saved!", {
       position: "bottom-right",
       autoClose: 2000,
       onClose: () => history.goBack(),
@@ -85,11 +85,14 @@ const MallForm = () => {
           parseInt(arrayOfCloseTime[1], 10) * 60,
       };
 
-      if (mallTimings.closeTime - mallTimings.openTime < 5400) {
+      if (mallTimings.closeTime - mallTimings.openTime < 0) {
+        throw new Error("The mall cannot open after 11:00 pm");
+      }
+
+      if (Math.abs(mallTimings.closeTime - mallTimings.openTime) < 5400) {
         alert("mall close time should be at least 1hr 30min after open time");
         return;
       }
-
       //shop validation
       let isShopTimeError = false,
         isShopImageError = false,
@@ -218,7 +221,7 @@ const MallForm = () => {
         }
 
         let mall = {
-          mallId: Math.random() * 9999,
+          mallId: Date.now(),
           mallName: state?.mallName,
           mallAddress: state?.mallAddress,
           levels: state?.levels,
@@ -237,14 +240,14 @@ const MallForm = () => {
           );
           const isVideoPresent = indexOfVideo >= 0;
           const shop = {
-            id: i,
+            id: Date.now(),
             shopName: s?.shopName,
             shopDescription: s?.shopDescription,
             shopLevel: s?.shopLevel,
             shopPhoneNumber: s?.shopPhoneNumber,
             timings: s?.timings,
             category: s?.category,
-            subCategory: s?.subCategory,
+            subCategory: s?.subCategory ?? "",
             shopImages: shopImageUrl[i]?.map((items, index) => ({
               id:
                 shopImageState[i]?.images[index]?.id +

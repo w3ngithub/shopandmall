@@ -16,13 +16,9 @@ const NavBar = ({ check, setShowSearchExtended }) => {
   const history = useHistory();
   const location = useLocation();
 
-  const [checked, setChecked] = useState(false);
-
   const [_, setUserValidate] = useState(false);
 
   const [hoverSubCategory, setHoverSubCategory] = useState({});
-
-  console.log(hoverSubCategory);
 
   const openSubCategory = (id) => {
     setHoverSubCategory({

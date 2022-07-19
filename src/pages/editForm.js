@@ -13,7 +13,7 @@ const MallForm = () => {
   const [imagesToRemove, setImagesToRemove] = useState([]);
   //removed Video
   const [removedVideo, setRemovedVideo] = useState([]);
-  const [initialEditData,setInitial] = useState({})
+  const [initialEditData, setInitial] = useState({});
 
   const edit = true;
 
@@ -22,8 +22,8 @@ const MallForm = () => {
   const [loadingPercentage, setLoadingPercentage] = useState(0);
 
   //States
-  const [Loading,setLoading] = useState(true)
-  const [editData, editDispatch] = useReducer(editReducer,initialEditData);
+  const [Loading, setLoading] = useState(true);
+  const [editData, editDispatch] = useReducer(editReducer, initialEditData);
   const [mallImage, setMallImage] = useState(null);
   const [shopVideoState, shopVideoDispatch] = useReducer(shopVideoReducer, []);
   const [removedVideoThumbnail, setRemovedVideoThumbnail] = useState([]);
@@ -32,41 +32,38 @@ const MallForm = () => {
   //Added Images
   const shopImageValues = [];
 
-  // console.log(location.dataToSend.shops, shopImageValues);
   const [addedShopImages, addedShopImagesDispatch] = useReducer(
     addedShopImagesReducer,
     shopImageValues
   );
 
-  //id from the params 
-  const {mallId} = useParams()
+  //id from the params
+  const { mallId } = useParams();
 
-  //getting the edit form data 
-    useEffect(()=>{
-    function getData(){
-      setLoading(true)
-      fireStore.collection("Shopping Mall")
-      .doc(mallId)
-      .get()
-      .then((doc)=>{
-        console.log(doc.data())
-        editDispatch({type:"ADD_EDIT_MALL",payload:doc.data()})
-        setLoading(false)
-      })
-      .catch((error)=>console.log(error))
+  //getting the edit form data
+  useEffect(() => {
+    function getData() {
+      setLoading(true);
+      fireStore
+        .collection("Shopping Mall")
+        .doc(mallId)
+        .get()
+        .then((doc) => {
+          console.log("Doc info", doc.data());
+          editDispatch({ type: "ADD_EDIT_MALL", payload: doc.data() });
+          setLoading(false);
+        })
+        .catch((error) => console.log(error));
     }
-    getData()
-
-    },[mallId])
-
-    console.log(Loading)
+    getData();
+  }, [mallId]);
 
   //Loading
   const [isLoading, setIsLoading] = useState(false);
   const [videoUploadPercentage, setVideoUploadPercentage] = useState({});
 
   const successNotification = () =>
-    toast.success("Successfull Updated!", {
+    toast.success("Successfully Updated!", {
       position: "bottom-right",
       autoClose: 2000,
       onClose: () => history.push(`/admin/malls/${editData.mallName}`),
@@ -106,12 +103,19 @@ const MallForm = () => {
             parseInt(arrayOfCloseTime[1], 10) * 60,
         };
 
-        if (mallTimings.closeTime - mallTimings.openTime < 5400) {
+        if (mallTimings.closeTime - mallTimings.openTime < 0) {
+          alert("The mall cannot open after 11:00 pm");
+          throw new Error("The mall cannot open after 11:00 pm");
+        }
+
+        if (Math.abs(mallTimings.closeTime - mallTimings.openTime) < 5400) {
           alert(
             "shop close time should be at least 1hr 30min after open time. Shop No. " +
               (index + 1)
           );
-          return;
+          throw new Error(
+            "Gap of opening and closing time should be atleast 1hr 30 mins"
+          );
         }
       });
 
@@ -203,7 +207,7 @@ const MallForm = () => {
             shopVideoState.map(({ id, video, uniqueId }) => {
               const uploadTask = storage
                 .ref()
-                .child(uniqueId + video.name)
+                .child(video.id + video.name)
                 .put(video);
               uploadTask.on("state_changed", (snapshot) => {
                 var progress = Math.floor(
@@ -285,7 +289,7 @@ const MallForm = () => {
                     shopPhoneNumber: s?.shopPhoneNumber,
                     timings: s?.timings,
                     category: s?.category,
-                    subCategory: s?.subCategory,
+                    subCategory: s?.subCategory ?? "",
 
                     shopImages: [
                       ...s.shopImages,
@@ -414,10 +418,9 @@ const MallForm = () => {
     editDispatch({ type: "ADD_SHOP_FORM", payload: { ind: Math.random() } });
   };
 
-
-if(Loading){
-  return <h1>Loading.....</h1>
-}
+  if (Loading) {
+    return <h1>Loading.....</h1>;
+  }
 
   return (
     <CommonForm

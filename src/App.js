@@ -112,6 +112,30 @@ function App() {
               component={AddShopCategory}
               page="/login"
             />
+            <ProtectedRoute
+              exact
+              path="/admin/shops/category/:category"
+              component={AllShops}
+              page="/login"
+            />
+            <ProtectedRoute
+              exact
+              path="/admin/malls/category/:category"
+              component={AllMalls}
+              page="/login"
+            />
+            <ProtectedRoute
+              exact
+              path="/admin/malls/category/:category/:subcategory"
+              component={AllMalls}
+              page="/login"
+            />
+            <ProtectedRoute
+              exact
+              path="/admin/shops/category/:category/:subcategory"
+              component={AllShops}
+              page="/login"
+            />
             <Route
               exact
               path="/login"
@@ -141,7 +165,11 @@ function App() {
             />
             <ProtectedRoute exact path="/admin/shops" component={AllShops} />
             <ProtectedRoute exact path="/admin/malls" component={AllMalls} />
-            <ProtectedRoute exact path="/admin/editMall/:mallId" component={EditMall} />
+            <ProtectedRoute
+              exact
+              path="/admin/editMall/:mallId"
+              component={EditMall}
+            />
             <ProtectedRoute
               exact
               path="/admin/malls/:id"
@@ -152,6 +180,7 @@ function App() {
               path="/admin/:id/shops/:type"
               component={SingleClassTry}
             />
+
             {/* ----------No Url------------------ */}
             <Route exact path="/pageNotFound" component={PageNotFound} />
             <Redirect to="/pageNotFound" />

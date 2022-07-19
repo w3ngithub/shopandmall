@@ -16,6 +16,9 @@ const AllTimings = ({
   isModal = false,
 }) => {
   const [showManualTimings, setShowManualTimings] = useState(false);
+  const [checkEveryday, setCheckEveryDay] = useState(true);
+  const [checkManualTiming, setCheckManualTiming] = useState(false);
+
   const [days, setDays] = useState([
     { label: "", id: 8 },
     { label: "Sunday", id: 7 },
@@ -28,18 +31,45 @@ const AllTimings = ({
   ]);
 
   useEffect(() => {
-    setShowManualTimings(
-      state.timings.every((time) => time.hasOwnProperty("openTime")) &&
-        state.timings.length > 1
-    );
-  }, []);
+    if (edit) {
+      if (
+        state.timings.length > 1 &&
+        state.timings[1].hasOwnProperty("label")
+      ) {
+        setCheckEveryDay(false);
+        setCheckManualTiming(true);
+        setShowManualTimings(true);
+      } else if (state.timings.length === 1 && showManualTimings) {
+        setCheckEveryDay(false);
+        setCheckManualTiming(true);
+        setShowManualTimings(true);
+      } else if (state.timings.length === 1 && !showManualTimings) {
+        setCheckEveryDay(true);
+        setCheckManualTiming(false);
+        setShowManualTimings(false);
+      }
+    }
+  }, [state.timings]);
 
-  let isEveryDayChecked =
-    state.timings.length === 1 ||
-    state.timings.every((time) => !time.hasOwnProperty("openTime"));
+  const showSpecificTimings = (event) => {
+    setShowManualTimings(true);
+    setCheckEveryDay(false);
+    setCheckManualTiming(true);
+  };
+
+  const showDefaultTimings = (event) => {
+    setShowManualTimings(false);
+    setCheckEveryDay(true);
+    setCheckManualTiming(false);
+  };
 
   return (
     <div className="timingsform">
+      {`Please note that the ${
+        !isShop
+          ? "mall cannot open before 6am and should be closed before 11pm."
+          : "shop timing has to be under the range of mall timings."
+      } `}
       <div className="input__radio">
         <div>
           <input
@@ -47,8 +77,8 @@ const AllTimings = ({
             id="every day"
             value="every day"
             name={isShop ? `shopTimings${index}` : "mallTimings"}
-            onChange={() => setShowManualTimings(false)}
-            defaultChecked={isEveryDayChecked}
+            onChange={showDefaultTimings}
+            checked={checkEveryday}
           />
           <label htmlFor="every day">Every Day</label>
         </div>
@@ -58,8 +88,8 @@ const AllTimings = ({
             id="manual"
             value="manual timing"
             name={isShop ? `shopTimings${index}` : "mallTimings"}
-            onChange={() => setShowManualTimings(true)}
-            defaultChecked={!isEveryDayChecked}
+            onChange={showSpecificTimings}
+            checked={checkManualTiming}
           />
           <label htmlFor="manual ">Manual Timing</label>
         </div>
@@ -87,8 +117,8 @@ const AllTimings = ({
               mallTime={
                 mallTime?.length > 1
                   ? mallTime[index]
-                  : typeof mallTime !== "undefined"
-                  ? mallTime[0]
+                    ? mallTime[index]
+                    : mallTime[0]
                   : null
               }
             />
@@ -102,8 +132,12 @@ const AllTimings = ({
           isShop={isShop}
           isModal={isModal}
           showRemove={showManualTimings}
-          minTime={typeof mallTime !== "undefined" && mallTime[0].openTime}
-          maxTime={typeof mallTime !== "undefined" && mallTime[0].closeTime}
+          minTime={
+            typeof mallTime !== "undefined" ? mallTime[0].openTime : "06:00"
+          }
+          maxTime={
+            typeof mallTime !== "undefined" ? mallTime[0].closeTime : "23:00"
+          }
         />
       )}
       {showManualTimings && (

@@ -24,7 +24,6 @@ function Table({
     fields
       .map((e, i) => e?.width + (i === fields.length - 1 && "px"))
       .join("px ");
-  //console.log(gridTemplateColumns);
   const [data, setData] = useState(rowData);
   const toggleRowExpand = (rowId) => {
     let newData = data.map((x) => {

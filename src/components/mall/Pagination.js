@@ -10,7 +10,6 @@ const Pagination = ({ mallsPerPage, docs, paginate }) => {
   for (let i = 1; i <= Math.ceil(docs / mallsPerPage); i++) {
     pageNumbers.push(i);
   }
-  console.log("pageNumbers", pageNumbers);
 
   return (
     <nav className={classes.paginationContainer}>
