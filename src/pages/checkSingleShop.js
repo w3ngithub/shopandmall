@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { MyContext } from "../Context";
 import { FaPlay } from "react-icons/fa";
 import React, { Component, Fragment } from "react";
@@ -573,7 +574,7 @@ class SingleClassTry extends React.Component {
                         <p>
                           {this.state.mall.timings[0].openTime} -{" "}
                           {this.state.mall.timings[0].closeTime},
-                          <span> +977 - {this.state.mall.phoneNumber}</span>
+                          <span> +977-{this.state.mall.phoneNumber}</span>
                         </p>
                       </div>
 

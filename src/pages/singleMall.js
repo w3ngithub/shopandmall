@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FaPlus } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
@@ -138,7 +139,7 @@ const SingleMall = () => {
                   {time.openTime} - {time.closeTime},
                 </span>
               ))}
-              <span>{!loading && `+977 - ${mall.phoneNumber}`}</span>
+              <span>{!loading && ` +977-${mall.phoneNumber}`}</span>
             </p>
           )}
         </div>

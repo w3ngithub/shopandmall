@@ -25,7 +25,7 @@ const AboutUs = () => {
           <h3>Our mission is to build software that makes shopping easier</h3>
         </div>
 
-        <img src={Image} alt="image" />
+        <img src={Image} alt="img" />
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import editReducer from "../reducers/editReducer";
 import React, { useState, useReducer, useEffect } from "react";
 import CommonForm from "../components/mall/CommonForm";
@@ -256,6 +257,7 @@ const MallForm = () => {
         }
 
         let mall = {
+          mallId: editData?.mallId,
           mallName: editData?.mallName,
           mallAddress: editData?.mallAddress,
           levels: editData?.levels,
@@ -391,9 +393,12 @@ const MallForm = () => {
         }
 
         //FireStore
+        // console.log("editData: ", editData);
+        // console.log("mall: ", mall);
         fireStore
           .collection("Shopping Mall")
-          .doc(editData.mallName)
+          // .doc(editData.mallName) //Mall name gets updated so it doesn't delete
+          .doc(mallId)
           .delete()
           .then(() => console.log("DELETED"))
           .catch((err) => console.log(err));

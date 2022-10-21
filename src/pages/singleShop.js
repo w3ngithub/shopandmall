@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { fireStore } from "../firebase/config";
 import ImageGallery from "react-image-gallery";
 import classes from "../styles/single.module.css";
@@ -53,6 +54,7 @@ const SingleShop = () => {
               // onClick={toggleShowVideo(embedUrl)}
             ></a>
             <iframe
+              title="Shop Video"
               width="560"
               height="315"
               src={embedUrl}
@@ -63,7 +65,7 @@ const SingleShop = () => {
         ) : (
           <a>
             <div className="play-button"></div>
-            <img className="image-gallery-image" src={original} />
+            <img className="image-gallery-image" src={original} alt="img" />
           </a>
         )}
       </div>
@@ -204,7 +206,7 @@ const SingleShop = () => {
                       </p>
                       <p>
                         {mall.timings[0].openTime} - {mall.timings[0].closeTime}
-                        ,<span> +977 - {mall.phoneNumber}</span>
+                        ,<span> +977-{mall.phoneNumber}</span>
                       </p>
                     </div>
                     {location.pathname.split("/")[1] === "admin" && (
