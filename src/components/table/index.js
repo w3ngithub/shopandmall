@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState, useMemo } from "react";
 import "./table.scss";
 import { BiEdit } from "react-icons/bi";
@@ -57,7 +58,7 @@ function Table({
       </div>
       <div className="table__body">
         {data.length === 0 && (
-          <span style={{ "font-size": "15px" }}>No records found</span>
+          <span style={{ fontSize: "15px" }}>No records found</span>
         )}
         {data.map((row, i) => {
           return (

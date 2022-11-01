@@ -55,7 +55,7 @@ const Drawer = ({ check, data, setShowSearchExtended }) => {
             <img
               src={LogoText}
               alt=""
-              style={{ width: "100px", "margin-left": "10px" }}
+              style={{ width: "100px", marginLeft: "10px" }}
             />
           </Link>
         </div>
