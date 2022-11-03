@@ -33,7 +33,11 @@ const AllMalls = () => {
   const isShopCategorySelected = location.pathname
     .split("/")
     .includes("category");
-  const { filteredMalls } = useFilterMallAndShops(docs, isShopCategorySelected);
+  const { filteredMalls } = useFilterMallAndShops(
+    docs,
+    isAdmin,
+    isShopCategorySelected
+  );
 
   const filter = (e) => {
     setMalls(
@@ -53,7 +57,7 @@ const AllMalls = () => {
     ? location.pathname.split("/")[4]
     : location.pathname.split("/")[3];
   const subCategory = isAdmin
-    ? location.pathname.split("/")[4]
+    ? location.pathname.split("/")[5]
     : location.pathname.split("/")[4];
 
   if (isShopCategorySelected) {

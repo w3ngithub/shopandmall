@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from "react";
 import classes from "../styles/Card.module.css";
 import { useHistory, useLocation, useParams } from "react-router-dom";
@@ -86,9 +87,10 @@ const Shop = ({ doc, malls, single }) => {
   const handleModal = () => {
     setModal((prev) => !prev);
   };
+  const itemName = doc.shopName;
   return (
     <div>
-      {modal && <DeleteModal datas={{ handleModal, handleDelete }} />}
+      {modal && <DeleteModal datas={{ handleModal, handleDelete, itemName }} />}
       {location.pathname === "/" ||
       location.pathname === "/admin/dashboard" ||
       location.pathname.split("/")[1] === "home" ||
@@ -139,7 +141,7 @@ const Shop = ({ doc, malls, single }) => {
               (Inside {doc?.mall?.mallName})
             </p>
             <p className={classes.mallTime}>
-              {doc?.timings[0]?.openTime} -{doc?.timings[0]?.closeTime}, +977-
+              {doc?.timings[0]?.openTime} - {doc?.timings[0]?.closeTime}, +977-
               {doc?.shopPhoneNumber}
             </p>
           </div>
@@ -187,7 +189,7 @@ const Shop = ({ doc, malls, single }) => {
               (Inside {doc?.mall?.mallName})
             </p>
             <p className={classes.mallTime}>
-              {doc?.timings[0]?.openTime} -{doc?.timings[0]?.closeTime}, +977-
+              {doc?.timings[0]?.openTime} - {doc?.timings[0]?.closeTime}, +977-
               {doc?.shopPhoneNumber}
             </p>
           </div>

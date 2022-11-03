@@ -66,13 +66,13 @@ const MallCardComponent = ({ doc }) => {
       .then(() => {
         successNotification();
       })
-      .catch((error) => console.log("Error deleting mall"));
+      .catch(() => console.log("Error deleting mall"));
   };
 
   const handleModal = () => {
     setModal((prev) => !prev);
   };
-
+  const itemName = doc.mallName;
   return (
     <div
       className={
@@ -101,7 +101,9 @@ const MallCardComponent = ({ doc }) => {
               <IoMdCloseCircle />
             </div>
           )}
-          {modal && <DeleteModal datas={{ handleModal, handleDelete }} />}
+          {modal && (
+            <DeleteModal datas={{ handleModal, handleDelete, itemName }} />
+          )}
           <div>
             {/* <img
               className={classes.image}

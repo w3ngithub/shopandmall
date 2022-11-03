@@ -26,7 +26,7 @@ const Footer = () => {
       </div>
 
       <p className={classes.copyright}>
-        ©2018-2021 Shops and Malls. All rights reserved.
+        ©2018-2022 Shops and Malls. All rights reserved.
       </p>
     </div>
   );

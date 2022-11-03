@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { MyContext } from "../App";
 import reducer from "../reducers/reducer";
 import { useHistory } from "react-router-dom";
@@ -90,7 +91,7 @@ const MallForm = () => {
       }
 
       if (Math.abs(mallTimings.closeTime - mallTimings.openTime) < 5400) {
-        alert("mall close time should be at least 1hr 30min after open time");
+        alert("Mall's close time should be at least 1hr 30min after open time");
         return;
       }
       //shop validation
@@ -228,7 +229,8 @@ const MallForm = () => {
           phoneNumber: state?.phoneNumber,
           timings: state?.timings,
           mallImage: {
-            id: Math.random() + mallImage?.name,
+            // id: Math.random(Date.now()) + mallImage?.name,
+            id: Date.now() + mallImage?.name,
             imageName: mallImage?.name,
             imageUrl: mallImageUrl,
           },

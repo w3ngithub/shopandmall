@@ -572,9 +572,9 @@ class SingleClassTry extends React.Component {
                           <b>{this.state.mall?.mallName}</b>
                         </p>
                         <p>
-                          {this.state.mall.timings[0].openTime} -{" "}
-                          {this.state.mall.timings[0].closeTime},
-                          <span> +977-{this.state.mall.phoneNumber}</span>
+                          {shop.timings[0].openTime} -{" "}
+                          {shop.timings[0].closeTime},
+                          <span> +977-{shop.shopPhoneNumber}</span>
                         </p>
                       </div>
 

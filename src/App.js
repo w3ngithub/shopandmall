@@ -27,6 +27,7 @@ import {
   SingleMall,
   PageNotFound,
 } from "./pages";
+import CreateUser from "./pages/CreateUser";
 
 function App() {
   const allData = [];
@@ -80,6 +81,7 @@ function App() {
               path="/shops/category/:category"
               component={AllShops}
             />
+
             <Route exact path="/Home/category/:category" component={HomePage} />
             <Route
               exact
@@ -101,11 +103,16 @@ function App() {
               path="/malls/category/:category/:subCategory"
               component={AllMalls}
             />
-            {/*------------------ Both ------------------ */}
             <Route exact path="/about-us" component={AboutUs} />
             <Route exact path="/contact-us" component={ContactUs} />
 
             {/* ------------------Admin------------------ */}
+            <ProtectedRoute exact path="/admin/about-us" component={AboutUs} />
+            <ProtectedRoute
+              exact
+              path="/admin/contact-us"
+              component={ContactUs}
+            />
             <ProtectedRoute
               exact
               path="/admin/addshopcategories"
@@ -149,12 +156,14 @@ function App() {
             />
             <ProtectedRoute
               exact
-              path="/admin/category/:category"
+              // path="/admin/category/:category"
+              path="/admin/home/category/:category"
               component={HomePage}
             />
             <ProtectedRoute
               exact
-              path="/admin/category/:category/:subCategory"
+              // path="/admin/category/:category/:subCategory"
+              path="/admin/home/category/:category/:subCategory"
               component={HomePage}
             />
             <ProtectedRoute
@@ -179,6 +188,11 @@ function App() {
               exact
               path="/admin/:id/shops/:type"
               component={SingleClassTry}
+            />
+            <ProtectedRoute
+              exact
+              path="/admin/createuser"
+              component={CreateUser}
             />
 
             {/* ----------No Url------------------ */}

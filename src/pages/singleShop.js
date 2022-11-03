@@ -205,8 +205,8 @@ const SingleShop = () => {
                         <b>{mall.mallName}</b>
                       </p>
                       <p>
-                        {mall.timings[0].openTime} - {mall.timings[0].closeTime}
-                        ,<span> +977-{mall.phoneNumber}</span>
+                        {shop.timings[0].openTime} - {shop.timings[0].closeTime}
+                        ,<span> +977-{shop.phoneNumber}</span>
                       </p>
                     </div>
                     {location.pathname.split("/")[1] === "admin" && (

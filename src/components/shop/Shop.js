@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Slider from "react-slick";
 import classes from "./shop.module.css";
 import { useLocation } from "react-router-dom";
@@ -42,7 +43,9 @@ const Shop = ({ docs, settings, loading, shops }) => {
       {location.pathname === "/" ||
       location.pathname === "/admin/dashboard" ||
       location.pathname.split("/")[1] === "home" ||
-      location.pathname.split("/")[2] === "category" ? (
+      location.pathname.split("/")[2] === "home" ||
+      location.pathname.split("/")[2] === "category" ||
+      location.pathname.split("/")[3] === "category" ? (
         <div>
           {loading ? (
             <>

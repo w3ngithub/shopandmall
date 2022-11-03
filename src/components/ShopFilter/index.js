@@ -1,3 +1,4 @@
+/* eslint-disable */
 import classes from "./shopFilter.module.css";
 import React, { useState, useEffect } from "react";
 import SkeletonText from "../../skeletons/SkeletonText";
@@ -56,7 +57,8 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
                     subCategoryId(shopCat.id, shopCat);
                     history.push(
                       location.pathname.split("/")[1] === "admin"
-                        ? "/admin/category/" + shopCat.category
+                        ? // ? "/admin/category/" + shopCat.category
+                          "/admin/home/category/" + shopCat.category
                         : "/home/category/" + shopCat.category
                     );
                   }}
@@ -89,7 +91,8 @@ const ShopFilter = ({ setShowCategoryMobile, loading, shopCategory }) => {
                       <Link
                         to={
                           location.pathname.split("/")[1] === "admin"
-                            ? `/admin/category/${s.category}/${subCat.subCategory}`
+                            ? // ? `/admin/category/${s.category}/${subCat.subCategory}`
+                              `/admin/home/category/${s.category}/${subCat.subCategory}`
                             : `/home/category/${s.category}/${subCat.subCategory}`
                         }
                         onClick={() => currentPage(subCat.id)}
