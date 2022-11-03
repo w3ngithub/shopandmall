@@ -50,7 +50,7 @@ const MallForm = () => {
         .doc(mallId)
         .get()
         .then((doc) => {
-          console.log("Doc info", doc.data());
+          // console.log("Doc info", doc.data());
           editDispatch({ type: "ADD_EDIT_MALL", payload: doc.data() });
           setLoading(false);
         })
@@ -69,7 +69,6 @@ const MallForm = () => {
       autoClose: 2000,
       onClose: () => history.push(`/admin/malls/${editData.mallName}`),
     });
-
   const submitHandler = async (e) => {
     try {
       let isShopTimeError = false,
@@ -111,7 +110,7 @@ const MallForm = () => {
 
         if (Math.abs(mallTimings.closeTime - mallTimings.openTime) < 5400) {
           alert(
-            "shop close time should be at least 1hr 30min after open time. Shop No. " +
+            "Shop's close time should be at least 1hr 30min after open time. Shop No. " +
               (index + 1)
           );
           throw new Error(
@@ -195,7 +194,7 @@ const MallForm = () => {
         let setMallImage = editData.mallImage;
         if (mallImage) {
           setMallImage = {
-            id: Math.random() + mallImage.name,
+            id: Date.now() + mallImage.name,
             imageName: mallImage.name,
             imageUrl: mallImageUrl,
           };

@@ -5,24 +5,17 @@ import firebase from "firebase/app";
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
-  // apiKey: process.env.REACT_APP_API_KEY,
+  apiKey: process.env.REACT_APP_API_KEY,
 
-  // authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
 
-  // projectId: process.env.REACT_APP_PROJECT_ID,
+  projectId: process.env.REACT_APP_PROJECT_ID,
 
-  // storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
 
-  // messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 
-  // appId: process.env.REACT_APP_APP_ID
-  apiKey: "AIzaSyBquN4NJLvmQO-WWE_g9ekVlEGilHzFQv8",
-  authDomain: "shop-n-mall.firebaseapp.com",
-  projectId: "shop-n-mall",
-  storageBucket: "shop-n-mall.appspot.com",
-  messagingSenderId: "166326660026",
-  appId: "1:166326660026:web:cc04d0c856f2e822fa0b83",
-  measurementId: "G-PN3HBQ7SBD",
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 // var firebaseConfig = {

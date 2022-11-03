@@ -1,11 +1,17 @@
+/* eslint-disable */
 import classes from "./nav.module.css";
 import React, { useState } from "react";
 import Logo from "../../image/logo.svg";
 import LogoText from "../../image/logoText.svg";
 import { Link } from "react-router-dom";
-import { FaAngleDown, FaAngleRight } from "react-icons/fa";
+import {
+  FaAngleDown,
+  FaAngleRight,
+  FaRegUserCircle,
+  // FaUserPlus,
+} from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
-import { FaRegUserCircle } from "react-icons/fa";
+import { RiUserAddLine } from "react-icons/ri";
 import useFirestore from "../../hooks/useFirestore";
 import { useHistory, useLocation } from "react-router-dom";
 import DefaultImage from "../../assets/images/defaultImage.png";
@@ -151,10 +157,26 @@ const NavBar = ({ check, setShowSearchExtended }) => {
                 </li>
               )}
               <li className={classes.toHide}>
-                <Link to="/about-us">About Us</Link>
+                <Link
+                  to={
+                    location.pathname.split("/")[1] === "admin"
+                      ? "/admin/about-us"
+                      : "/about-us"
+                  }
+                >
+                  About Us
+                </Link>
               </li>
               <li className={classes.toHide}>
-                <Link to="/contact-us">Contact Us</Link>
+                <Link
+                  to={
+                    location.pathname.split("/")[1] === "admin"
+                      ? "/admin/contact-us"
+                      : "/contact-us"
+                  }
+                >
+                  Contact Us
+                </Link>
               </li>
             </ul>
           </div>
@@ -171,12 +193,20 @@ const NavBar = ({ check, setShowSearchExtended }) => {
                   <ul>
                     <li>
                       {location.pathname.split("/")[1] === "admin" ? (
-                        <Link to="/">
-                          <div className={classes.list}>
-                            <FaRegUserCircle className={classes.icons} />
-                            Switch to user
-                          </div>
-                        </Link>
+                        <>
+                          <Link to="/">
+                            <div className={classes.list}>
+                              <FaRegUserCircle className={classes.icons} />
+                              Switch to user
+                            </div>
+                          </Link>
+                          <Link to="/admin/createuser">
+                            <div className={classes.list}>
+                              <RiUserAddLine className={classes.icons} />
+                              Add new user
+                            </div>
+                          </Link>
+                        </>
                       ) : (
                         <Link to="/admin/dashboard">
                           <div className={classes.list}>

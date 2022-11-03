@@ -22,11 +22,16 @@ const Dashboard = () => {
 
   const location = useLocation();
   let { docs, loading } = useFirestore("Shopping Mall");
+  const isAdmin = location.pathname.split("/").includes("admin");
 
   const isShopCategorySelected = location.pathname
     .split("/")
     .includes("category");
-  const { filteredMalls } = useFilterMallAndShops(docs, isShopCategorySelected);
+  const { filteredMalls } = useFilterMallAndShops(
+    docs,
+    isAdmin,
+    isShopCategorySelected
+  );
 
   let shopCategory = useFirestore("Shop Categories").docs;
 

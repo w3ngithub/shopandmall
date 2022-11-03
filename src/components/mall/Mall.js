@@ -4,7 +4,7 @@ import classes from "./mall.module.css";
 import { useLocation } from "react-router-dom";
 import SkeletonCard from "../../skeletons/SkeletonCard";
 import MallCardComponent from "../mallCardComponent/MallCardComponent";
-import LazyLoad from "react-lazy-load";
+// import LazyLoad from "react-lazy-load";
 
 const Mall = ({ docs, settings, loading }) => {
   const location = useLocation();

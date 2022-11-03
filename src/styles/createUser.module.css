@@ -1,0 +1,375 @@
+.mainContainer {
+  max-width: 100vw;
+  height: auto;
+  margin-top: 68px;
+}
+
+.mallTitle {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+
+.formContainer {
+  padding: 30px 0;
+}
+
+.form {
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 30px;
+  flex-direction: column;
+}
+
+.innerDiv {
+  display: flex;
+}
+
+.innerDivImage {
+  display: flex;
+}
+
+.imageName {
+  margin-top: 5px;
+  margin-left: -10px;
+}
+
+.imageBtn {
+  display: none;
+}
+
+.input {
+  margin-bottom: 10px;
+  border: 1px solid rgb(146, 146, 146);
+  outline: none;
+  padding: 10px 15px;
+  width: 330px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.input:focus {
+  border: 1px solid rgb(94, 96, 236);
+  box-shadow: 0px 0px 3px rgb(86, 158, 192, 1);
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100px;
+  height: 0px;
+  line-height: 30px;
+  font-weight: bold;
+  font-size: 34px;
+  color: rgb(37, 156, 73);
+  cursor: pointer;
+  margin-left: -25px;
+}
+
+.label:hover {
+  color: #efb6b2;
+}
+
+.label > .upload,
+.imageBtn input {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+.imageBtn {
+  margin: 10px 0;
+}
+
+.imageBtn span {
+  background-color: rgb(53, 103, 179);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.label .imageIcon {
+  margin-left: 35px;
+  font-size: 28px;
+}
+
+.text {
+  font-size: 10px;
+  margin-top: -10px;
+  margin-left: 20px;
+}
+
+.name {
+  margin-top: 20px;
+  color: #5b5b5b;
+  text-align: left;
+  border-bottom: 2px solid rgba(91, 91, 91, 0.3);
+  padding-bottom: 5px;
+}
+
+.line {
+  height: 1px;
+  width: inherit;
+  background-color: rgba(0, 0, 0, 0.4);
+  margin: 15px 0;
+}
+
+.addShop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  margin: 20px 0 30px 0;
+  background-color: rgb(53, 103, 179);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  width: 130px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.addShop:hover {
+  background-color: rgb(34, 76, 139);
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+.submitBtn,
+.submitBtnOnLoad {
+  border: none;
+  padding: 10px 15px;
+  width: 15%;
+  margin: auto;
+  background-color: #153074;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.submitBtnOnLoad {
+  background-color: grey;
+}
+
+.submitBtn:hover {
+  background-color: #2a4a9c;
+}
+
+.loaderPosition {
+  position: absolute;
+  height: 100%;
+  /* background-color: rgb(102, 56, 56); */
+  width: 100%;
+  z-index: 100;
+  /* top: 50%; */
+  left: 0;
+}
+
+/* Pagination */
+.paginationContainer {
+  width: inherit;
+  display: flex;
+  justify-content: center;
+}
+
+.numbers {
+  display: flex;
+}
+
+.numbers li {
+  list-style-type: none;
+  margin-left: 20px;
+  border-left: 1px solid rgb(236, 78, 78);
+  border-right: 1px solid rgb(236, 78, 78);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.numbers li:hover {
+  color: rgb(236, 78, 78);
+}
+
+.timings__buttondiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  margin: 20px 0;
+}
+
+.timings__manualdiv {
+  display: flex;
+  align-items: center;
+}
+
+.timings__button {
+  background: #c4c4c4;
+  border: none;
+  padding: 5px 10px;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+@media screen and (max-width: 1423px) and (min-width: 1281px) {
+  .form {
+    width: 78%;
+  }
+}
+
+@media screen and (max-width: 1601px) and (min-width: 1424px) {
+  .form {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1708px) and (min-width: 1601px) {
+  .form {
+    width: 65%;
+  }
+}
+
+@media screen and (max-width: 1921px) and (min-width: 1708px) {
+  .form {
+    width: 58%;
+  }
+}
+
+@media only screen and (min-width: 1921px) {
+  .mainContainer {
+    min-height: 67vh;
+  }
+
+  .form {
+    width: 42%;
+  }
+}
+
+/* Ipad pro */
+@media only screen and (max-width: 1024px) {
+  .mainContainer {
+    min-height: 71vh;
+  }
+
+  .input {
+    width: 230px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .mainContainer {
+    min-height: 799px;
+    margin-top: 55px;
+  }
+
+  .input {
+    width: 160px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .mainContainer {
+    min-height: 653px;
+  }
+
+  .formWrapper {
+    margin: 50px 0 50px 0;
+    padding: 20px 15px;
+  }
+
+  .form {
+    width: 100%;
+    box-shadow: 0 0 0;
+    margin-top: -10px;
+  }
+
+  .mallTitle {
+    padding-top: 15px;
+    font-size: 25px;
+    letter-spacing: 1px;
+  }
+
+  .formContainer {
+    padding: 0px 0;
+  }
+
+  .formTitle img {
+    width: 100px;
+  }
+
+  .formTitle p {
+    font-size: 24px;
+  }
+
+  .firstRow {
+    margin-bottom: 20px;
+  }
+
+  .formButton {
+    margin-top: -50px;
+  }
+
+  .innerDiv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .innerDivImage {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .imageName {
+    margin-top: 5px;
+    margin-left: 0px;
+    color: rgb(53, 103, 179);
+    font-size: 12px;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .submitBtn,
+  .submitBtnOnLoad {
+    width: 120px;
+    border-radius: 5px;
+  }
+
+  .addShop {
+    margin: 20px 0;
+    font-size: 13px;
+    width: 110px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .name {
+    margin-top: 0px;
+  }
+
+  .label {
+    display: none;
+  }
+
+  .imageBtn {
+    display: block;
+  }
+}

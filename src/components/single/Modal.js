@@ -188,7 +188,7 @@ const Modal = ({
 
       if (Math.abs(shopTimings.closeTime - shopTimings.openTime) < 5400) {
         alert(
-          `mall close time should be at least 1hr 30min after open time for ${item.label}`
+          `Shop's close time should be at least 1hr 30min after open time for ${item.label}`
         );
         throw new Error("Shop timing gap must be corrected");
       }
@@ -204,12 +204,12 @@ const Modal = ({
         images
       );
       if (shopTimeError) {
-        alert(`please fill the opening and closing time of shop`);
+        alert(`Please fill the opening and closing time of shop`);
         return;
       }
 
       if (shopImageError) {
-        alert("please upload an image of shop");
+        alert("Please upload an image of shop");
         return;
       }
 

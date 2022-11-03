@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Loader from "../Loader/Loader";
 import EditShop from "../shop/EditShop";
 import ShopForm from "../shop/ShopForm";
