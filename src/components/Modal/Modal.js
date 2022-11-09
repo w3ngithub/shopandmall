@@ -17,8 +17,8 @@ const Modal = ({ handleModal, handleDelete, content, itemName }) => {
         }}
       >
         <IoMdCloseCircle className={styles.cross} onClick={handleModal} />
-        <h1>Do you really want to Delete this item?</h1>
-        <h3 style={{ color: "red" }}>(Selected Item Name: {itemName})</h3>
+        <h1>Do you really want to delete this item?</h1>
+        <br />
         <button
           onClick={() => {
             handleDelete(content);

@@ -71,7 +71,7 @@ const MallForm = () => {
       }
 
       if (isMallImageError) {
-        alert("please upload mall image!");
+        alert("Please upload mall image!");
         return;
       }
 
@@ -87,7 +87,7 @@ const MallForm = () => {
       };
 
       if (mallTimings.closeTime - mallTimings.openTime < 0) {
-        throw new Error("The mall cannot open after 11:00 pm");
+        throw new Error("Please enter a valid time from 6:00 am to 11:00 pm");
       }
 
       if (Math.abs(mallTimings.closeTime - mallTimings.openTime) < 5400) {
@@ -107,13 +107,13 @@ const MallForm = () => {
           );
           if (shopTimeError) {
             isShopTimeError = true;
-            alert(`please fill the time of shop no.${index + 1}`);
+            alert(`Please fill the time of shop no.${index + 1}`);
             return;
           }
 
           if (shopImageError) {
             isShopImageError = true;
-            alert(`please upload an image of shop no.${index + 1}`);
+            alert(`Please upload an image of shop no.${index + 1}`);
             return;
           }
 
@@ -122,7 +122,7 @@ const MallForm = () => {
             shopVideoState[index].thumbnail === undefined
           ) {
             isVideoThumbnailError = true;
-            alert(`please upload video thumbnail of shop no. ${index + 1}`);
+            alert(`Please upload video thumbnail of shop no. ${index + 1}`);
             return;
           }
         });

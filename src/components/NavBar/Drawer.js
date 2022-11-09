@@ -11,8 +11,9 @@ import { IoCloseSharp } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaRegUserCircle } from "react-icons/fa";
+import { RiUserAddLine } from "react-icons/ri";
 
-const Drawer = ({ check, data, setShowSearchExtended }) => {
+const Drawer = ({ check, data, setShowSearchExtended, username }) => {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [openDD, setOpenDD] = useState({});
@@ -154,15 +155,26 @@ const Drawer = ({ check, data, setShowSearchExtended }) => {
               <ul>
                 <li>
                   {location.pathname.split("/")[1] === "admin" ? (
-                    <Link to="/">
-                      <div
-                        className={classes.list}
-                        onClick={() => setShowMobileNav(false)}
-                      >
-                        <FaRegUserCircle className={classes.icons} />
-                        Switch to user
-                      </div>
-                    </Link>
+                    <>
+                      <Link to="/">
+                        <div
+                          className={classes.list}
+                          onClick={() => setShowMobileNav(false)}
+                        >
+                          <FaRegUserCircle className={classes.icons} />
+                          Switch to user
+                        </div>
+                      </Link>
+                      <Link to="/admin/createuser">
+                        <div
+                          className={classes.list}
+                          onClick={() => setShowMobileNav(false)}
+                        >
+                          <RiUserAddLine className={classes.icons} />
+                          Manage users
+                        </div>
+                      </Link>
+                    </>
                   ) : (
                     <Link to="/admin/dashboard">
                       <div
@@ -176,6 +188,33 @@ const Drawer = ({ check, data, setShowSearchExtended }) => {
                   )}
                 </li>
                 <li onClick={() => setShowMobileNav(false)}>
+                  <div
+                    className={classes.list}
+                    onClick={() => {
+                      localStorage.setItem("isAuth", "false");
+                      history.push("/");
+                      setUserValidate((prevState) => !prevState);
+                      setShowMobileNav(false);
+                    }}
+                  >
+                    <AiOutlineLogout className={classes.icons} />
+                    Logout
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
+        {check === "user" && (
+          <div className={classes.mobileUser}>
+            <div className={classes.controller}>
+              <ul>
+                <li>
+                  <div className={classes.list} style={{ cursor: "pointer" }}>
+                    {username}
+                  </div>
+                </li>
+                <li>
                   <div
                     className={classes.list}
                     onClick={() => {
