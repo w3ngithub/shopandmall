@@ -158,6 +158,7 @@ const AddShopCategory = () => {
           setSubCategories={setSubCategories}
           category={category}
           setCategory={setCategory}
+          showEditModal={showEditModal}
           setShowModal={() =>
             showAddModal ? setShowAddModal(false) : setShowEditModal(false)
           }

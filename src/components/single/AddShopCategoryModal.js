@@ -13,13 +13,18 @@ const ShopCategoryModal = ({
   onSubmit,
   setShowModal,
   removeSubCategory,
+  showEditModal,
 }) => {
   return (
     <>
       <div className={classes.modalBackground} onClick={setShowModal}></div>
       <div className={style.modal}>
         <div className={classes.header}>
-          <h3 className={style.title}>Add New Category</h3>
+          {showEditModal ? (
+            <h3 className={style.title}>Edit Category</h3>
+          ) : (
+            <h3 className={style.title}>Add New Category</h3>
+          )}
           <span onClick={setShowModal}>
             <IoClose className={classes.closeIcon} />
           </span>
@@ -94,9 +99,15 @@ const ShopCategoryModal = ({
             </span>
           </p>
 
-          <button className={style.submitBtn} type="submit">
-            Save
-          </button>
+          {showEditModal ? (
+            <button className={style.submitBtn} type="submit">
+              Update
+            </button>
+          ) : (
+            <button className={style.submitBtn} type="submit">
+              Add
+            </button>
+          )}
         </form>
       </div>
     </>

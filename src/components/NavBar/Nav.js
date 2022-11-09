@@ -15,8 +15,9 @@ import { RiUserAddLine } from "react-icons/ri";
 import useFirestore from "../../hooks/useFirestore";
 import { useHistory, useLocation } from "react-router-dom";
 import DefaultImage from "../../assets/images/defaultImage.png";
+import UserImage from "../../assets/images/userImage.png";
 
-const NavBar = ({ check, setShowSearchExtended }) => {
+const NavBar = ({ username, check, setShowSearchExtended }) => {
   let { docs } = useFirestore("Shop Categories");
 
   const history = useHistory();
@@ -181,11 +182,11 @@ const NavBar = ({ check, setShowSearchExtended }) => {
             </ul>
           </div>
 
-          {check === "true" ? (
+          {check === "true" && (
             <>
               <div className={classes.user}>
                 <div className={classes.userImage}>
-                  <img src={DefaultImage} alt="" />
+                  <img src={DefaultImage} alt="img" />
                 </div>
                 <FaAngleDown className={classes.icon} />
 
@@ -203,7 +204,7 @@ const NavBar = ({ check, setShowSearchExtended }) => {
                           <Link to="/admin/createuser">
                             <div className={classes.list}>
                               <RiUserAddLine className={classes.icons} />
-                              Add new user
+                              Manage users
                             </div>
                           </Link>
                         </>
@@ -233,7 +234,44 @@ const NavBar = ({ check, setShowSearchExtended }) => {
                 </div>
               </div>
             </>
-          ) : (
+          )}
+          {check === "user" && (
+            <>
+              <div className={classes.user}>
+                <div className={classes.userImage}>
+                  <img src={UserImage} alt="img" />
+                </div>
+                <FaAngleDown className={classes.icon} />
+
+                <div className={classes.userDropDown}>
+                  <ul>
+                    <li>
+                      <div
+                        className={classes.list}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {username}
+                      </div>
+                    </li>
+                    <li>
+                      <div
+                        className={classes.list}
+                        onClick={() => {
+                          localStorage.setItem("isAuth", "false");
+                          history.push("/");
+                          setUserValidate((prevState) => !prevState);
+                        }}
+                      >
+                        <AiOutlineLogout className={classes.icons} />
+                        Logout
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </>
+          )}
+          {check === "false" && (
             <Link className={classes.button} to="/login">
               Sign In
             </Link>

@@ -151,7 +151,37 @@ const CommonForm = ({
       });
     }
   }, [editData?.shops?.length]);
-
+  const submitClickHandler = () => {
+    try {
+      if (edit) {
+        const initialTime = parseInt(
+          editData.timings[0]?.openTime?.split(":")[0],
+          10
+        );
+        const finalTime = parseInt(
+          editData.timings[0]?.closeTime?.split(":")[0],
+          10
+        );
+        if (initialTime === 0 || finalTime === 0) {
+          alert("Error! Timings should be between 6AM and 11PM");
+        }
+        return;
+      }
+      const initialTime = parseInt(
+        state.timings[0]?.openTime?.split(":")[0],
+        10
+      );
+      const finalTime = parseInt(
+        state.timings[0]?.closeTime?.split(":")[0],
+        10
+      );
+      if (initialTime === 0 || finalTime === 0) {
+        alert("Error! Timings should be between 6AM and 11PM");
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   return (
     <div className={classes.mainContainer}>
       <h2 className={classes.mallTitle}>Mall Form</h2>
@@ -370,6 +400,7 @@ const CommonForm = ({
           <input
             className={isLoading ? classes.submitBtnOnLoad : classes.submitBtn}
             type="submit"
+            onClick={submitClickHandler}
             value={
               isLoading
                 ? edit

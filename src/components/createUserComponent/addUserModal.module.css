@@ -1,0 +1,120 @@
+.form__category {
+  margin-bottom: 20px;
+}
+
+.input {
+  border: 1px solid rgba(146, 146, 146, 0.5);
+  outline: none;
+  padding: 8px 10px;
+  width: 292px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 5px;
+  background-color: #f3f3f3;
+  font-size: 14px;
+}
+
+.input:focus {
+  border: 1px solid rgb(94, 96, 236);
+  box-shadow: 0px 0px 3px rgb(86, 158, 192, 1);
+}
+
+.input::placeholder {
+  color: #585757;
+  font-size: 14px;
+}
+
+.closeIcon {
+  position: absolute;
+  cursor: pointer;
+  color: #c83535;
+  font-size: 24px;
+  top: 15%;
+}
+
+.closeIcon:hover {
+  color: #e65e5e;
+  transform: scale(1.1);
+}
+
+.modal {
+  position: absolute;
+  background-color: #f9fafb;
+  width: 600px;
+  height: auto;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1002;
+  border-radius: 3px;
+}
+
+.title {
+  height: 34px;
+  width: 196px;
+  margin: 13px 0px 2px 0px;
+  font-size: 18px;
+}
+
+.label {
+  height: 30px;
+  margin: 0px 0 5px 0;
+  color: #2e6fba;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  font-size: 14px;
+}
+
+.label:hover {
+  color: rgb(13, 43, 100);
+}
+
+.submitBtn {
+  border: none;
+  padding: 10px 12px;
+  width: 100px;
+  /* height: 40px; */
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 1024px) {
+  .modal {
+    position: absolute;
+    background-color: #f9fafb;
+    width: 600px;
+    height: auto;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1002;
+    border-radius: 3px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .modal {
+    position: absolute;
+    background-color: #f9fafb;
+    width: 600px;
+    height: auto;
+    top: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1002;
+    border-radius: 3px;
+  }
+}
+
+@media only screen and (max-width: 414px) {
+  .modal {
+    width: 90%;
+    height: auto;
+    top: 150px;
+    overflow-y: hidden;
+  }
+}

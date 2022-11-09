@@ -31,16 +31,28 @@ const LoginForm = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
   //On Form Submit
   const submitHandler = (e) => {
     e.preventDefault();
     userData.forEach((data) => {
-      if (username === data.Username && password === data.Password) {
+      if (
+        username === data.Username &&
+        password === data.Password &&
+        data.Role === "Admin"
+      ) {
         localStorage.setItem("isAuth", "true");
 
         localStorage.setItem("username", username);
         history.push("/admin/dashboard");
+      } else if (
+        username === data.Username &&
+        password === data.Password &&
+        data.Role === "User"
+      ) {
+        localStorage.setItem("isAuth", "user");
+
+        localStorage.setItem("username", username);
+        history.push("/");
       } else {
         setInputData({
           ...inputData,

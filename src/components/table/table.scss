@@ -11,7 +11,7 @@ $table-row-height: 45px;
   &__body-row {
     display: grid;
     grid-auto-flow: column dense;
-    grid-template-columns: 50px 50px 250px;
+    grid-template-columns: 50px 50px 200px 220px;
     padding: 10px;
     height: $table-row-height;
     align-items: center;

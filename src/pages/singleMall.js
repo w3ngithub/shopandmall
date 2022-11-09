@@ -124,7 +124,7 @@ const SingleMall = () => {
             </div>
           ) : (
             <p>
-              <b>{mall.mallAddress}</b>
+              <b>{mall?.mallAddress}</b>
             </p>
           )}
 

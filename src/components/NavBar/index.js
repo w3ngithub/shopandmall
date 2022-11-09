@@ -9,6 +9,7 @@ const Try = ({ setShowSearchExtended }) => {
   const [arr, setArr] = useState([]);
 
   let check = localStorage.getItem("isAuth");
+  let username = localStorage.getItem("username");
 
   React.useEffect(() => {
     const mainData = docs.map(({ id, category, rowContent }) => {
@@ -23,11 +24,16 @@ const Try = ({ setShowSearchExtended }) => {
 
   return (
     <div>
-      <Nav check={check} setShowSearchExtended={setShowSearchExtended} />
+      <Nav
+        check={check}
+        setShowSearchExtended={setShowSearchExtended}
+        username={username}
+      />
       <Drawer
         data={arr}
         check={check}
         setShowSearchExtended={setShowSearchExtended}
+        username={username}
       />
     </div>
   );

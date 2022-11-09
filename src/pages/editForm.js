@@ -6,7 +6,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { storage, fireStore } from "../firebase/config";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import shopVideoReducer from "../reducers/shopVideoReducer";
-import { checkShopValidation } from "../utils/checkValidation";
+import {
+  checkMallValidation,
+  checkShopValidation,
+} from "../utils/checkValidation";
 import addedShopImagesReducer from "../reducers/addedShopImagesReducer";
 
 const MallForm = () => {
@@ -71,6 +74,43 @@ const MallForm = () => {
     });
   const submitHandler = async (e) => {
     try {
+      // mall validation
+      const { isMallTimeError, isMallImageError } = checkMallValidation(
+        editData,
+        editData.mallImage
+      );
+
+      if (isMallTimeError) {
+        alert("Please fill up the mall time");
+        return;
+      }
+
+      if (isMallImageError) {
+        alert("Please upload mall image!");
+        return;
+      }
+
+      const arrayOfOpenTime = editData.timings[0]?.openTime?.split(":");
+      const arrayOfCloseTime = editData.timings[0]?.closeTime?.split(":");
+      const mallTimings = {
+        openTime:
+          parseInt(arrayOfOpenTime[0], 10) * 60 * 60 +
+          parseInt(arrayOfOpenTime[1], 10) * 60,
+        closeTime:
+          parseInt(arrayOfCloseTime[0], 10) * 60 * 60 +
+          parseInt(arrayOfCloseTime[1], 10) * 60,
+      };
+
+      if (mallTimings.closeTime - mallTimings.openTime < 0) {
+        alert("Please enter a valid time from 6:00 am to 11:00 pm");
+        throw new Error("Please enter a valid time from 6:00 am to 11:00 pm");
+      }
+
+      if (Math.abs(mallTimings.closeTime - mallTimings.openTime) < 5400) {
+        alert("Mall's close time should be at least 1hr 30min after open time");
+        return;
+      }
+      //shop validation
       let isShopTimeError = false,
         isShopImageError = false;
 
@@ -82,19 +122,19 @@ const MallForm = () => {
 
         if (shopTimeError) {
           isShopTimeError = true;
-          alert(`please fill the time of shop no.${index + 1}`);
+          alert(`Please fill the time of shop no.${index + 1}`);
           return;
         }
         if (shopImageError) {
           isShopImageError = true;
-          alert(`please upload an image of shop no.${index + 1}`);
+          alert(`Please upload an image of shop no.${index + 1}`);
           return;
         }
 
         const arrayOfOpenTime = shop.timings[0]?.openTime?.split(":");
         const arrayOfCloseTime = shop.timings[0]?.closeTime?.split(":");
 
-        const mallTimings = {
+        const shopTimings = {
           openTime:
             parseInt(arrayOfOpenTime[0], 10) * 60 * 60 +
             parseInt(arrayOfOpenTime[1], 10) * 60,
@@ -103,12 +143,12 @@ const MallForm = () => {
             parseInt(arrayOfCloseTime[1], 10) * 60,
         };
 
-        if (mallTimings.closeTime - mallTimings.openTime < 0) {
-          alert("The mall cannot open after 11:00 pm");
-          throw new Error("The mall cannot open after 11:00 pm");
+        if (shopTimings.closeTime - shopTimings.openTime < 0) {
+          alert("Please enter a valid time from 6:00 am to 11:00 pm");
+          throw new Error("Please enter a valid time from 6:00 am to 11:00 pm");
         }
 
-        if (Math.abs(mallTimings.closeTime - mallTimings.openTime) < 5400) {
+        if (Math.abs(shopTimings.closeTime - shopTimings.openTime) < 5400) {
           alert(
             "Shop's close time should be at least 1hr 30min after open time. Shop No. " +
               (index + 1)

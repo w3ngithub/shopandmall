@@ -48,7 +48,7 @@ function Table({
         className="table__header"
         style={{ backgroundColor, color: headerTextColor, gridTemplateColumns }}
       >
-        {isNestedTable && <span></span>}
+        <span></span>
         <span>SN.</span>
         {fields.map((field, i) => (
           <span style={{ width: field.width + "%" }} key={i}>
@@ -67,7 +67,7 @@ function Table({
                 "flex-column row-content": true,
                 "is-row-expanded ": row.isExpanded,
               })}
-              key={row.id}
+              key={i}
             >
               <div className="table__body-row">
                 {row?.subCategories?.length > 0 ? (
@@ -88,6 +88,7 @@ function Table({
 
                 {hasAction && (
                   <Actions
+                    fields={fields}
                     handleEdit={() => handleEditClick(row)}
                     handleDelete={() => handleDeleteClick(row)}
                   />
@@ -112,18 +113,24 @@ function Table({
   );
 }
 
-const Actions = ({ handleEdit, handleDelete }) => (
-  <div className="table-action flex justify-end">
-    <div className="table-action__grp flex" onClick={handleEdit}>
-      <BiEdit />
-      <span className="table-action-label">Edit</span>
+const Actions = ({ fields, handleEdit, handleDelete }) => {
+  const fieldWidth = fields.length > 1 ? "" : "286%";
+  return (
+    <div
+      className="table-action flex justify-end"
+      style={{ width: fieldWidth }}
+    >
+      <div className="table-action__grp flex" onClick={handleEdit}>
+        <BiEdit />
+        <span className="table-action-label">Edit</span>
+      </div>
+      <div className="table-action__grp flex" onClick={handleDelete}>
+        <RiDeleteBinLine />
+        <span className="table-action-label">Delete</span>
+      </div>
     </div>
-    <div className="table-action__grp flex" onClick={handleDelete}>
-      <RiDeleteBinLine />
-      <span className="table-action-label">Delete</span>
-    </div>
-  </div>
-);
+  );
+};
 
 export default Table;
 
