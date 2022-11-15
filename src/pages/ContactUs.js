@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import FormImage from "../assets/images/form.svg";

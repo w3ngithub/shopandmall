@@ -14,10 +14,11 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { RiUserAddLine } from "react-icons/ri";
 import useFirestore from "../../hooks/useFirestore";
 import { useHistory, useLocation } from "react-router-dom";
-import DefaultImage from "../../assets/images/defaultImage.png";
-import UserImage from "../../assets/images/userImage.png";
+// import DefaultImage from "../../assets/images/defaultImage.png";
+// import UserImage from "../../assets/images/userImage.png";
+import Avatar from "react-avatar";
 
-const NavBar = ({ username, check, setShowSearchExtended }) => {
+const NavBar = ({ username, check, setShowSearchExtended, allUsers }) => {
   let { docs } = useFirestore("Shop Categories");
 
   const history = useHistory();
@@ -40,7 +41,7 @@ const NavBar = ({ username, check, setShowSearchExtended }) => {
       [id]: false,
     });
   };
-
+  const userImg = allUsers?.filter((user) => user.Username === username);
   return (
     <div
       className={classes.navbar}
@@ -183,93 +184,104 @@ const NavBar = ({ username, check, setShowSearchExtended }) => {
           </div>
 
           {check === "true" && (
-            <>
-              <div className={classes.user}>
-                <div className={classes.userImage}>
-                  <img src={DefaultImage} alt="img" />
-                </div>
-                <FaAngleDown className={classes.icon} />
+            <div className={classes.user}>
+              {/* <div className={classes.userImage}>
+                  {userImg?.[0]?.imageURL ? (
+                    <img src={userImg?.[0]?.imageURL} alt="img" />
+                  ) : (
+                    <img src={DefaultImage} alt="img" />
+                  )}
+                </div> */}
+              <Avatar
+                name={username}
+                alt="img"
+                size="40"
+                round={true}
+                color="#FDE3CF"
+                fgColor="#F56A00"
+                src={userImg?.[0]?.imageURL}
+              />
+              <FaAngleDown className={classes.icon} />
 
-                <div className={classes.userDropDown}>
-                  <ul>
-                    <li>
-                      {location.pathname.split("/")[1] === "admin" ? (
-                        <>
-                          <Link to="/">
-                            <div className={classes.list}>
-                              <FaRegUserCircle className={classes.icons} />
-                              Switch to user
-                            </div>
-                          </Link>
-                          <Link to="/admin/createuser">
-                            <div className={classes.list}>
-                              <RiUserAddLine className={classes.icons} />
-                              Manage users
-                            </div>
-                          </Link>
-                        </>
-                      ) : (
-                        <Link to="/admin/dashboard">
+              <div className={classes.userDropDown}>
+                <ul>
+                  <li>
+                    {location.pathname.split("/")[1] === "admin" ? (
+                      <>
+                        <Link to="/">
                           <div className={classes.list}>
                             <FaRegUserCircle className={classes.icons} />
-                            Switch to admin
+                            Switch to user
                           </div>
                         </Link>
-                      )}
-                    </li>
-                    <li>
-                      <div
-                        className={classes.list}
-                        onClick={() => {
-                          localStorage.setItem("isAuth", "false");
-                          history.push("/");
-                          setUserValidate((prevState) => !prevState);
-                        }}
-                      >
-                        <AiOutlineLogout className={classes.icons} />
-                        Logout
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                        <Link to="/admin/createuser">
+                          <div className={classes.list}>
+                            <RiUserAddLine className={classes.icons} />
+                            Manage users
+                          </div>
+                        </Link>
+                      </>
+                    ) : (
+                      <Link to="/admin/dashboard">
+                        <div className={classes.list}>
+                          <FaRegUserCircle className={classes.icons} />
+                          Switch to admin
+                        </div>
+                      </Link>
+                    )}
+                  </li>
+                  <li>
+                    <div
+                      className={classes.list}
+                      onClick={() => {
+                        localStorage.setItem("isAuth", "false");
+                        history.push("/");
+                        setUserValidate((prevState) => !prevState);
+                      }}
+                    >
+                      <AiOutlineLogout className={classes.icons} />
+                      Logout
+                    </div>
+                  </li>
+                </ul>
               </div>
-            </>
+            </div>
           )}
           {check === "user" && (
-            <>
-              <div className={classes.user}>
-                <div className={classes.userImage}>
-                  <img src={UserImage} alt="img" />
-                </div>
-                <FaAngleDown className={classes.icon} />
-
-                <div className={classes.userDropDown}>
-                  <ul>
-                    <li>
-                      <div
-                        className={classes.list}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {username}
-                      </div>
-                    </li>
-                    <li>
-                      <div
-                        className={classes.list}
-                        onClick={() => {
-                          localStorage.setItem("isAuth", "false");
-                          history.push("/");
-                          setUserValidate((prevState) => !prevState);
-                        }}
-                      >
-                        <AiOutlineLogout className={classes.icons} />
-                        Logout
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+            <div className={classes.user}>
+              <Avatar
+                name={username}
+                alt="img"
+                size="40"
+                round={true}
+                color="#FDE3CF"
+                fgColor="#F56A00"
+                src={userImg?.[0]?.imageURL}
+              />
+              <FaAngleDown className={classes.icon} />
+              <div className={classes.userDropDown}>
+                <ul>
+                  <li>
+                    <div className={classes.list} style={{ cursor: "pointer" }}>
+                      {username}
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      className={classes.list}
+                      onClick={() => {
+                        localStorage.setItem("isAuth", "false");
+                        history.push("/");
+                        setUserValidate((prevState) => !prevState);
+                      }}
+                    >
+                      <AiOutlineLogout className={classes.icons} />
+                      Logout
+                    </div>
+                  </li>
+                </ul>
               </div>
-            </>
+            </div>
           )}
           {check === "false" && (
             <Link className={classes.button} to="/login">

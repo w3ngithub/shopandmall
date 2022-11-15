@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState, useEffect } from "react";
 import ManualTimings from "../ManualTimings/ManualTimings";
 import DefaultTimings from "../DefaultTimings/DefaultTimings";

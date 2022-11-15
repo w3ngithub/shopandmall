@@ -64,20 +64,17 @@ const AddShopCategory = () => {
   };
 
   const handleDelete = (data) => {
-    const response = window.confirm("Are you sure?");
-    if (response) {
-      const allShops = [...allMalls.docs.map((mall) => mall.shops)].flat();
-      const isCategoryUsedInShop = allShops.some(
-        (shop) => shop.category === data.category
-      );
+    const allShops = [...allMalls.docs.map((mall) => mall.shops)].flat();
+    const isCategoryUsedInShop = allShops.some(
+      (shop) => shop.category === data.category
+    );
 
-      if (isCategoryUsedInShop) {
-        alert("Category cannot be deleted because it is being used");
-        return;
-      }
-
-      deleteShopCategory(data);
+    if (isCategoryUsedInShop) {
+      alert("Category cannot be deleted because it is being used");
+      return;
     }
+
+    deleteShopCategory(data);
   };
 
   const removeSubCategory = (id, subCategory) => {
@@ -148,7 +145,7 @@ const AddShopCategory = () => {
           setCategory(data);
           setSubCategories(data?.subCategories || []);
         }}
-        handleDeleteClick={handleDelete}
+        handleDelete={handleDelete}
       />
       {(showAddModal || showEditModal) && (
         <ShopCategoryModal

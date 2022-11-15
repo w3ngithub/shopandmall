@@ -6,6 +6,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import DeleteModal from "../Modal/DeleteModal";
 
 function Table({
   backgroundColor,
@@ -17,7 +18,7 @@ function Table({
   tableInnerContent,
   isNestedTable,
   handleEditClick,
-  handleDeleteClick,
+  handleDelete,
   ...props
 }) {
   let gridTemplateColumns =
@@ -26,6 +27,7 @@ function Table({
       .map((e, i) => e?.width + (i === fields.length - 1 && "px"))
       .join("px ");
   const [data, setData] = useState(rowData);
+  let username = localStorage.getItem("username");
   const toggleRowExpand = (rowId) => {
     let newData = data.map((x) => {
       if (x.id === rowId) x.isExpanded = !x.isExpanded;
@@ -33,7 +35,10 @@ function Table({
     });
     setData(newData);
   };
-
+  const [modal, setModal] = useState(false);
+  const handleModal = () => {
+    setModal((prev) => !prev);
+  };
   useEffect(() => {
     let newData = [...rowData].map((x) => {
       x.isExpanded = data.find((d) => d.id === x.id)?.isExpanded ?? false;
@@ -85,13 +90,22 @@ function Table({
                 {fields.map((field, i) => (
                   <span key={`${row.id}${i}`}>{row[field.field]}</span>
                 ))}
-
-                {hasAction && (
-                  <Actions
-                    fields={fields}
-                    handleEdit={() => handleEditClick(row)}
-                    handleDelete={() => handleDeleteClick(row)}
-                  />
+                {row.Role === "SAdmin" || row.Username === username ? (
+                  <span></span>
+                ) : (
+                  <>
+                    {hasAction && (
+                      <Actions
+                        fields={fields}
+                        handleEdit={handleEditClick}
+                        handleDelete={handleDelete}
+                        row={row}
+                        modal={modal}
+                        handleModal={handleModal}
+                        index={i}
+                      />
+                    )}
+                  </>
                 )}
               </div>
               {row.rowContent && (
@@ -112,26 +126,52 @@ function Table({
     </div>
   );
 }
-
-const Actions = ({ fields, handleEdit, handleDelete }) => {
-  const fieldWidth = fields.length > 1 ? "" : "286%";
+const Actions = ({
+  fields,
+  handleEdit,
+  handleDelete,
+  modal,
+  handleModal,
+  row,
+  index,
+}) => {
+  const fieldWidth = fields.length > 1 ? "" : "300%";
+  const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <div
       className="table-action flex justify-end"
       style={{ width: fieldWidth }}
     >
-      <div className="table-action__grp flex" onClick={handleEdit}>
+      <div className="table-action__grp flex" onClick={() => handleEdit(row)}>
         <BiEdit />
         <span className="table-action-label">Edit</span>
       </div>
-      <div className="table-action__grp flex" onClick={handleDelete}>
+      <div
+        className="table-action__grp flex"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleModal();
+          setCurrentIndex(index);
+        }}
+      >
         <RiDeleteBinLine />
         <span className="table-action-label">Delete</span>
+        {modal && currentIndex === index && (
+          <DeleteModal
+            datas={{
+              handleModal,
+              handleDelete: () => {
+                handleDelete(row);
+                handleModal();
+                setCurrentIndex(0);
+              },
+            }}
+          />
+        )}
       </div>
     </div>
   );
 };
-
 export default Table;
 
 Table.propTypes = {
