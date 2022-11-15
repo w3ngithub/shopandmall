@@ -1,6 +1,7 @@
 import classes from "./modal.module.css";
 import { IoClose } from "react-icons/io5";
 import style from "./addUserModal.module.css";
+import { IoIosAddCircle, IoIosClose } from "react-icons/io";
 
 const UserModal = ({
   errors,
@@ -12,6 +13,11 @@ const UserModal = ({
   reset,
   register,
   getValues,
+  userImageError,
+  setUserImageError,
+  userImageHandler,
+  userImage,
+  setUserImage,
 }) => {
   const checkUser = () => {
     const user = getValues("Username");
@@ -30,6 +36,8 @@ const UserModal = ({
         className={classes.modalBackground}
         onClick={() => {
           setShowModal();
+          setUserImage(null);
+          setUserImageError(null);
           reset();
         }}
       ></div>
@@ -43,6 +51,8 @@ const UserModal = ({
           <span
             onClick={() => {
               setShowModal();
+              setUserImage(null);
+              setUserImageError(null);
               reset();
             }}
           >
@@ -52,28 +62,49 @@ const UserModal = ({
         <div className={classes.line}></div>
 
         <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-          <div className={style.form__category}>
-            <input
-              className={style.input}
-              placeholder="User Name"
-              {...register("Username", {
-                required: true,
-                minLength: 4,
-                validate: checkUser,
-              })}
-            />
-            {errors?.Username?.type === "required" && (
-              <p className={classes.error}>* User Name is required</p>
-            )}
-            {errors?.Username?.type === "minLength" && (
-              <p className={classes.error}>
-                * User Name should be more than 4 characters
-              </p>
-            )}
-            {errors?.Username?.type === "validate" && (
-              <p className={classes.error}>* User Name already exists</p>
-            )}
-          </div>
+          {showEditModal ? (
+            <div className={style.form__category}>
+              <input
+                className={style.input}
+                placeholder="User Name"
+                {...register("Username", {
+                  required: true,
+                  minLength: 4,
+                })}
+              />
+              {errors?.Username?.type === "required" && (
+                <p className={classes.error}>* User Name is required</p>
+              )}
+              {errors?.Username?.type === "minLength" && (
+                <p className={classes.error}>
+                  * User Name should be more than 4 characters
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className={style.form__category}>
+              <input
+                className={style.input}
+                placeholder="User Name"
+                {...register("Username", {
+                  required: true,
+                  minLength: 4,
+                  validate: checkUser,
+                })}
+              />
+              {errors?.Username?.type === "required" && (
+                <p className={classes.error}>* User Name is required</p>
+              )}
+              {errors?.Username?.type === "minLength" && (
+                <p className={classes.error}>
+                  * User Name should be more than 4 characters
+                </p>
+              )}
+              {errors?.Username?.type === "validate" && (
+                <p className={classes.error}>* User Name already exists</p>
+              )}
+            </div>
+          )}
           <div className={style.form__category}>
             <input
               className={style.input}
@@ -116,20 +147,36 @@ const UserModal = ({
               <p className={classes.error}>* Role is required</p>
             )}
           </div>
+          <label className={style.label}>
+            Add Image
+            <input
+              type="file"
+              className={style.upload}
+              onChange={userImageHandler}
+            />
+            <IoIosAddCircle className={style.addIcon} />
+          </label>
+          {userImageError && <p className={classes.error}>{userImageError}</p>}
+          {userImage && (
+            <div className={style.selectedImages}>
+              <p className={style.image}>
+                <button
+                  className={style.button}
+                  type="button"
+                  onClick={() => setUserImage(null)}
+                >
+                  <IoIosClose />
+                </button>
+                {userImage.name}
+              </p>
+            </div>
+          )}
           {showEditModal ? (
-            <button
-              className={style.submitBtn}
-              type="submit"
-              onClick={checkUser}
-            >
+            <button className={style.submitBtn} type="submit">
               Update
             </button>
           ) : (
-            <button
-              className={style.submitBtn}
-              type="submit"
-              onClick={checkUser}
-            >
+            <button className={style.submitBtn} type="submit">
               Add
             </button>
           )}

@@ -139,7 +139,7 @@ const SingleMall = () => {
                   {time.openTime} - {time.closeTime},
                 </span>
               ))}
-              <span>{!loading && ` +977-${mall.phoneNumber}`}</span>
+              <span>{!loading && ` +977-${mall?.phoneNumber}`}</span>
             </p>
           )}
         </div>

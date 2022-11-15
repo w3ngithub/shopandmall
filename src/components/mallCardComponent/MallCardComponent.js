@@ -83,8 +83,10 @@ const MallCardComponent = ({ doc }) => {
       key={doc.id}
       onClick={() => {
         location.pathname.split("/")[1] === "admin"
-          ? history.push("/admin/malls/" + doc.id.replace(" ", "_"))
-          : history.push("/malls/" + doc.id.replace(" ", "_"));
+          ? // ? history.push("/admin/malls/" + doc.id.replace(" ", "_"))
+            // : history.push("/malls/" + doc.id.replace(" ", "_"));
+            history.push("/admin/malls/" + doc.id.replace(" ", "_") + "/")
+          : history.push("/malls/" + doc.id.replace(" ", "_") + "/");
       }}
     >
       {doc.mallImage ? (

@@ -38,7 +38,7 @@ const LoginForm = () => {
       if (
         username === data.Username &&
         password === data.Password &&
-        data.Role === "Admin"
+        (data.Role === "Admin" || data.Role === "SAdmin")
       ) {
         localStorage.setItem("isAuth", "true");
 

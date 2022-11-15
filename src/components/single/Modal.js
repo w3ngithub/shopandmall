@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Loader from "../Loader/Loader";
 import classes from "./modal.module.css";
 import { IoIosClose } from "react-icons/io";

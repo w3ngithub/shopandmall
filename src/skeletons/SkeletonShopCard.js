@@ -1,6 +1,6 @@
 import React from "react";
 import Shimmer from "./Shimmer";
-import SkeletonElement from "./SkeletonElement";
+// import SkeletonElement from "./SkeletonElement";
 
 const SkeletonCard = () => {
   return (

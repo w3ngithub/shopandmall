@@ -159,8 +159,10 @@ const AllMalls = () => {
                   key={mall.mallName}
                   to={
                     location.pathname.split("/")[1] === "admin"
-                      ? `/admin/malls/${mall?.mallName.replace(" ", "_")}`
-                      : `/malls/${mall?.mallName.replace(" ", "_")}`
+                      ? // ? `/admin/malls/${mall?.mallName.replace(" ", "_")}`
+                        // : `/malls/${mall?.mallName.replace(" ", "_")}`
+                        `/admin/malls/${mall?.id}/`
+                      : `/malls/${mall?.id}/`
                   }
                 >
                   {mall.mallName}
