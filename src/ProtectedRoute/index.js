@@ -6,7 +6,10 @@ const index = ({ component: Component, page, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (localStorage.getItem("isAuth") === "true") {
+        if (
+          localStorage.getItem("isAuth") === "true" ||
+          localStorage.getItem("isAuth") === "user"
+        ) {
           return <Component />;
         } else {
           return (

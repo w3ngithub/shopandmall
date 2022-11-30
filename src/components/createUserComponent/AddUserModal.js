@@ -19,6 +19,7 @@ const UserModal = ({
   userImage,
   setUserImage,
 }) => {
+  let username = localStorage.getItem("username");
   const checkUser = () => {
     const user = getValues("Username");
     const found = allUsers.find((element) => {
@@ -132,21 +133,24 @@ const UserModal = ({
               </p>
             )}
           </div>
-          <div className={style.form__category}>
-            <select
-              className={style.input}
-              {...register("Role", {
-                required: true,
-              })}
-            >
-              <option value="">-Select Role-</option>
-              <option value="User">User</option>
-              <option value="Admin">Admin</option>
-            </select>
-            {errors?.Role?.type === "required" && (
-              <p className={classes.error}>* Role is required</p>
-            )}
-          </div>
+          {getValues("Username") !== username && (
+            <div className={style.form__category}>
+              <select
+                className={style.input}
+                {...register("Role", {
+                  required: true,
+                })}
+              >
+                <option value="">-Select Role-</option>
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+              </select>
+              {errors?.Role?.type === "required" && (
+                <p className={classes.error}>* Role is required</p>
+              )}
+            </div>
+          )}
+
           <label className={style.label}>
             Add Image
             <input

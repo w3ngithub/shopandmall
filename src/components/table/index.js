@@ -90,22 +90,16 @@ function Table({
                 {fields.map((field, i) => (
                   <span key={`${row.id}${i}`}>{row[field.field]}</span>
                 ))}
-                {row.Role === "SAdmin" || row.Username === username ? (
-                  <span></span>
-                ) : (
-                  <>
-                    {hasAction && (
-                      <Actions
-                        fields={fields}
-                        handleEdit={handleEditClick}
-                        handleDelete={handleDelete}
-                        row={row}
-                        modal={modal}
-                        handleModal={handleModal}
-                        index={i}
-                      />
-                    )}
-                  </>
+                {hasAction && (
+                  <Actions
+                    fields={fields}
+                    handleEdit={handleEditClick}
+                    handleDelete={handleDelete}
+                    row={row}
+                    modal={modal}
+                    handleModal={handleModal}
+                    index={i}
+                  />
                 )}
               </div>
               {row.rowContent && (
@@ -137,39 +131,100 @@ const Actions = ({
 }) => {
   const fieldWidth = fields.length > 1 ? "" : "300%";
   const [currentIndex, setCurrentIndex] = useState(0);
+  let username = localStorage.getItem("username");
+
   return (
-    <div
-      className="table-action flex justify-end"
-      style={{ width: fieldWidth }}
-    >
-      <div className="table-action__grp flex" onClick={() => handleEdit(row)}>
-        <BiEdit />
-        <span className="table-action-label">Edit</span>
-      </div>
-      <div
-        className="table-action__grp flex"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleModal();
-          setCurrentIndex(index);
-        }}
-      >
-        <RiDeleteBinLine />
-        <span className="table-action-label">Delete</span>
-        {modal && currentIndex === index && (
-          <DeleteModal
-            datas={{
-              handleModal,
-              handleDelete: () => {
-                handleDelete(row);
+    <>
+      {username === "sadmin" ? (
+        <div
+          className="table-action flex justify-end"
+          style={{ width: fieldWidth }}
+        >
+          <div
+            className="table-action__grp flex"
+            onClick={() => handleEdit(row)}
+          >
+            <BiEdit />
+            <span className="table-action-label">Edit</span>
+          </div>
+          {row.Username === username ? (
+            <span className="table-action-label">
+              &emsp;&emsp;&emsp;&emsp;&emsp;
+            </span>
+          ) : (
+            <div
+              className="table-action__grp flex"
+              onClick={(e) => {
+                e.stopPropagation();
                 handleModal();
-                setCurrentIndex(0);
-              },
-            }}
-          />
-        )}
-      </div>
-    </div>
+                setCurrentIndex(index);
+              }}
+            >
+              <RiDeleteBinLine />
+              <span className="table-action-label">Delete</span>
+              {modal && currentIndex === index && (
+                <DeleteModal
+                  datas={{
+                    handleModal,
+                    handleDelete: () => {
+                      handleDelete(row);
+                      handleModal();
+                      setCurrentIndex(0);
+                    },
+                  }}
+                />
+              )}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div
+          className="table-action flex justify-end"
+          style={{ width: fieldWidth }}
+        >
+          {row.Username !== "sadmin" && (
+            <>
+              <div
+                className="table-action__grp flex"
+                onClick={() => handleEdit(row)}
+              >
+                <BiEdit />
+                <span className="table-action-label">Edit</span>
+              </div>
+              {row.Username === username ? (
+                <span className="table-action-label">
+                  &emsp;&emsp;&emsp;&emsp;&emsp;
+                </span>
+              ) : (
+                <div
+                  className="table-action__grp flex"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleModal();
+                    setCurrentIndex(index);
+                  }}
+                >
+                  <RiDeleteBinLine />
+                  <span className="table-action-label">Delete</span>
+                  {modal && currentIndex === index && (
+                    <DeleteModal
+                      datas={{
+                        handleModal,
+                        handleDelete: () => {
+                          handleDelete(row);
+                          handleModal();
+                          setCurrentIndex(0);
+                        },
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 export default Table;

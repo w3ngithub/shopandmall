@@ -62,10 +62,10 @@ const Modal = ({
       onOpen: () => {
         if (edit) {
           setShowEditModal();
-          history.push(`/admin/${mall.mallName}/shops/${shop.shopName}`);
+          history.push(`/admin/${docId}/shops/${shop.shopName}`);
         } else {
           setShowModal();
-          history.push(`/admin/malls/${mall.mallName}`);
+          history.push(`/admin/malls/${docId}`);
         }
       },
     });

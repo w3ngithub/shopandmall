@@ -70,7 +70,7 @@ const MallForm = () => {
     toast.success("Successfully Updated!", {
       position: "bottom-right",
       autoClose: 2000,
-      onClose: () => history.push(`/admin/malls/${editData.mallName}`),
+      onClose: () => history.push(`/admin/malls/${mallId}`),
     });
   const submitHandler = async (e) => {
     try {

@@ -52,7 +52,7 @@ const LoginForm = () => {
         localStorage.setItem("isAuth", "user");
 
         localStorage.setItem("username", username);
-        history.push("/");
+        history.push("/admin/dashboard");
       } else {
         setInputData({
           ...inputData,
@@ -106,7 +106,7 @@ const Login = (props) => {
   const { isAuth } = props;
   return (
     <>
-      {isAuth === "true" ? (
+      {isAuth === "true" || isAuth === "user" ? (
         <Redirect to={{ pathname: "/admin/dashboard" }} />
       ) : (
         <LoginForm />

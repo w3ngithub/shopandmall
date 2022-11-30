@@ -650,15 +650,19 @@ class SingleClassTry extends React.Component {
                               <div key={i} className={styles.wrapper}>
                                 <div className={styles.imageContainer}>
                                   {pathname.split("/").includes("admin") && (
-                                    <IoMdCloseCircle
-                                      className={styles.closeIcon}
-                                      onClick={(event) => {
-                                        event.stopPropagation();
-                                        // handleDelete(s);
-                                        // handleModal(shop.shopImages[i]);
-                                        handleModal(s);
-                                      }}
-                                    />
+                                    <>
+                                      {this.state.galleryImage.length > 1 && (
+                                        <IoMdCloseCircle
+                                          className={styles.closeIcon}
+                                          onClick={(event) => {
+                                            event.stopPropagation();
+                                            // handleDelete(s);
+                                            // handleModal(shop.shopImages[i]);
+                                            handleModal(s);
+                                          }}
+                                        />
+                                      )}
+                                    </>
                                   )}
                                   <LazyLoadImage
                                     onClick={() => {

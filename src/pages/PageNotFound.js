@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from '../styles/pageNotFound.module.css'
+import styles from "../styles/pageNotFound.module.css";
 
 const PageNotFound = () => {
   return (
@@ -8,7 +8,11 @@ const PageNotFound = () => {
       <h1>404</h1>
       <h3>PAGE NOT FOUND</h3>
       <p>
-        <Link to="/">Go To Homepage</Link>
+        {localStorage.getItem("isAuth") === "false" ? (
+          <Link to="/">Go To Homepage</Link>
+        ) : (
+          <Link to="/admin/dashboard">Go To Homepage</Link>
+        )}
       </p>
     </div>
   );

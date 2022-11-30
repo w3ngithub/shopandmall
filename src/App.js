@@ -105,14 +105,7 @@ function App() {
             />
             <Route exact path="/about-us" component={AboutUs} />
             <Route exact path="/contact-us" component={ContactUs} />
-
             {/* ------------------Admin------------------ */}
-            <ProtectedRoute exact path="/admin/about-us" component={AboutUs} />
-            <ProtectedRoute
-              exact
-              path="/admin/contact-us"
-              component={ContactUs}
-            />
             <ProtectedRoute
               exact
               path="/admin/addshopcategories"
@@ -189,12 +182,21 @@ function App() {
               path="/admin/:id/shops/:type"
               component={SingleClassTry}
             />
+            {localStorage.getItem("isAuth") === "true" ? (
+              <ProtectedRoute
+                exact
+                path="/admin/createuser"
+                component={CreateUser}
+              />
+            ) : (
+              <Redirect to="/admin/dashboard" />
+            )}
+            <ProtectedRoute exact path="/admin/about-us" component={AboutUs} />
             <ProtectedRoute
               exact
-              path="/admin/createuser"
-              component={CreateUser}
+              path="/admin/contact-us"
+              component={ContactUs}
             />
-
             {/* ----------No Url------------------ */}
             <Route exact path="/pageNotFound" component={PageNotFound} />
             <Redirect to="/pageNotFound" />
