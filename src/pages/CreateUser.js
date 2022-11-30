@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import SkeletonText from "../skeletons/SkeletonText";
 import UserModal from "../components/createUserComponent/AddUserModal";
-import { fireStore, storage } from "../firebase/config";
+import { storage } from "../firebase/config";
 import styles from "../styles/addShopCategories.module.css";
 import Button from "../components/Button/Button";
 import Table from "../components/table";
 import { addUser, deleteUser, editUser } from "../firebase/manageUserAPI";
+import useFirestore from "../hooks/useFirestore";
 
 const CreateUser = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const history = useHistory();
+  // const [loading, setLoading] = useState(true);
+  // const history = useHistory();
   const [userID, setUserID] = useState([]);
   const [userImageError, setUserImageError] = useState(null);
   const {
@@ -26,25 +27,36 @@ const CreateUser = () => {
     setValue,
     reset,
   } = useForm({ defaultValues: { Username: "", Password: "pass1234" } });
-  useEffect(() => {
-    const getUsersFromFirebase = [];
-    const subscriber = fireStore
-      .collection("users")
-      .orderBy("Username")
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          getUsersFromFirebase.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-        setAllUsers(getUsersFromFirebase);
-        setLoading(false);
-      });
+  // useEffect(() => {
+  //   const getUsersFromFirebase = [];
+  //   const subscriber = fireStore
+  //     .collection("users")
+  //     .orderBy("Username")
+  //     .onSnapshot((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //         getUsersFromFirebase.push({
+  //           id: doc.id,
+  //           ...doc.data(),
+  //         });
+  //       });
+  //       setAllUsers(getUsersFromFirebase);
+  //       setLoading(false);
+  //     });
 
-    // return cleanup function
-    return () => subscriber();
-  }, [loading]);
+  //   // return cleanup function
+  //   return () => subscriber();
+  // }, [loading]);
+  const { docs, loading } = useFirestore("users");
+
+  useEffect(() => {
+    const transformedData = [
+      ...docs.map((data) => ({
+        ...data,
+      })),
+    ];
+    setAllUsers(transformedData);
+  }, [docs]);
+
   const handleDelete = (data) => {
     deleteUser(data);
     deleteNotification();
@@ -102,19 +114,19 @@ const CreateUser = () => {
     toast.success("User Added Succesfully!", {
       position: "bottom-right",
       autoClose: 1500,
-      onClose: () => history.go(0),
+      // onClose: () => history.go(0),
     });
   const deleteNotification = () =>
     toast.info("User Deleted Succesfully!", {
       position: "bottom-right",
       autoClose: 1500,
-      onClose: () => history.go(0),
+      // onClose: () => history.go(0),
     });
   const editNotification = () =>
     toast.info("User Edited Succesfully!", {
       position: "bottom-right",
       autoClose: 1500,
-      onClose: () => history.go(0),
+      // onClose: () => history.go(0),
     });
 
   return (

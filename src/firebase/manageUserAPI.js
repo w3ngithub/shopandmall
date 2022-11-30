@@ -26,44 +26,42 @@ export const deleteUser = (data) => {
 };
 
 export const editUser = ({ id, data, userImage }) => {
-  if (
-    userImage
-      ? fireStore
-          .collection("users")
-          .doc(id)
-          .get()
-          .then(async (doc) => {
-            if (userImage.name === doc.data().image) {
-              fireStore.collection("users").doc(id).update({
-                Username: data.Username,
-                Password: data.Password,
-                Role: data.Role,
-                image: doc.data().image,
-                imageURL: doc.data().imageURL,
-              });
-            } else {
-              const storageRef = storage.ref();
-              let userImageUrl = null;
-              const imageRef = storageRef.child(Date.now() + userImage.name);
-              await imageRef.put(userImage);
-              userImageUrl = await imageRef.getDownloadURL();
-              fireStore.collection("users").doc(id).update({
-                Username: data.Username,
-                Password: data.Password,
-                Role: data.Role,
-                image: userImage.name,
-                imageURL: userImageUrl,
-              });
-            }
-          })
-      : fireStore.collection("users").doc(id).update({
-          Username: data.Username,
-          Password: data.Password,
-          Role: data.Role,
-          image: null,
-          imageURL: null,
+  userImage
+    ? fireStore
+        .collection("users")
+        .doc(id)
+        .get()
+        .then(async (doc) => {
+          if (userImage.name === doc.data().image) {
+            fireStore.collection("users").doc(id).update({
+              Username: data.Username,
+              Password: data.Password,
+              Role: data.Role,
+              image: doc.data().image,
+              imageURL: doc.data().imageURL,
+            });
+          } else {
+            const storageRef = storage.ref();
+            let userImageUrl = null;
+            const imageRef = storageRef.child(Date.now() + userImage.name);
+            await imageRef.put(userImage);
+            userImageUrl = await imageRef.getDownloadURL();
+            fireStore.collection("users").doc(id).update({
+              Username: data.Username,
+              Password: data.Password,
+              Role: data.Role,
+              image: userImage.name,
+              imageURL: userImageUrl,
+            });
+          }
         })
-  );
+    : fireStore.collection("users").doc(id).update({
+        Username: data.Username,
+        Password: data.Password,
+        Role: data.Role,
+        image: null,
+        imageURL: null,
+      });
   // const storageRef = storage.ref();
   // let userImageUrl = null;
   // if (userImage !== null) {

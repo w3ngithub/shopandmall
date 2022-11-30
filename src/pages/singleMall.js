@@ -72,7 +72,7 @@ const SingleMall = () => {
                   className={classes.editBtn}
                   onClick={() => {
                     history.push({
-                      pathname: `/admin/editMall/${mall.mallName}`,
+                      pathname: `/admin/editMall/${docId}`,
                     });
                   }}
                 >
@@ -95,7 +95,7 @@ const SingleMall = () => {
                     //   pathname: `/admin/editMall/${mall.mallName}`,
                     //   dataToSend: mall,
                     // });
-                    history.push(`/admin/editMall/${mall?.mallName}`);
+                    history.push(`/admin/editMall/${docId}`);
                   }}
                 >
                   <FaEdit className={classes.editIcon} />
@@ -172,7 +172,7 @@ const SingleMall = () => {
                     ...doc,
                     mall: {
                       ...mall,
-                      id: mall.mallName,
+                      id: docId,
                     },
                   }}
                 />

@@ -158,6 +158,11 @@ const NavBar = ({ username, check, setShowSearchExtended, allUsers }) => {
                   <Link to="/admin/addshopcategories">Shop Category</Link>
                 </li>
               )}
+              {check === "user" && location.pathname.split("/")[1] === "admin" && (
+                <li>
+                  <Link to="/admin/addshopcategories">Shop Category</Link>
+                </li>
+              )}
               <li className={classes.toHide}>
                 <Link
                   to={

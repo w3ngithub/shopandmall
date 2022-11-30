@@ -288,8 +288,7 @@ const MallForm = () => {
         //FireStore
         fireStore
           .collection("Shopping Mall")
-          .doc(state?.mallName)
-          .set({
+          .add({
             ...mall,
             shops,
           })

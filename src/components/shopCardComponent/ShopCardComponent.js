@@ -101,12 +101,8 @@ const Shop = ({ doc, malls, single }) => {
           className={classes.wrapper}
           onClick={() => {
             location.pathname.split("/")[1] === "admin"
-              ? history.push(
-                  "/admin/" + doc.mall.mallName + "/shops/" + doc.shopName
-                )
-              : history.push(
-                  "/mall/" + doc.mall.mallName + "/shops/" + doc.shopName
-                );
+              ? history.push("/admin/" + doc.mall.id + "/shops/" + doc.shopName)
+              : history.push("/mall/" + doc.mall.id + "/shops/" + doc.shopName);
           }}
         >
           {doc?.shopImages && (
@@ -151,12 +147,8 @@ const Shop = ({ doc, malls, single }) => {
           className={classes.wrapper}
           onClick={() => {
             location.pathname.split("/")[1] === "admin"
-              ? history.push(
-                  "/admin/" + doc.mall.mallName + "/shops/" + doc.shopName
-                )
-              : history.push(
-                  "/mall/" + doc.mall.mallName + "/shops/" + doc.shopName
-                );
+              ? history.push("/admin/" + doc.mall.id + "/shops/" + doc.shopName)
+              : history.push("/mall/" + doc.mall.id + "/shops/" + doc.shopName);
           }}
         >
           {doc?.shopImages && (
