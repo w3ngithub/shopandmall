@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-// import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import SkeletonText from "../skeletons/SkeletonText";
 import UserModal from "../components/createUserComponent/AddUserModal";
@@ -15,10 +14,9 @@ const CreateUser = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const history = useHistory();
   const [userID, setUserID] = useState([]);
   const [userImageError, setUserImageError] = useState(null);
+  const [userImage, setUserImage] = useState(null);
   const {
     register,
     formState: { errors },
@@ -27,25 +25,6 @@ const CreateUser = () => {
     setValue,
     reset,
   } = useForm({ defaultValues: { Username: "", Password: "pass1234" } });
-  // useEffect(() => {
-  //   const getUsersFromFirebase = [];
-  //   const subscriber = fireStore
-  //     .collection("users")
-  //     .orderBy("Username")
-  //     .onSnapshot((querySnapshot) => {
-  //       querySnapshot.forEach((doc) => {
-  //         getUsersFromFirebase.push({
-  //           id: doc.id,
-  //           ...doc.data(),
-  //         });
-  //       });
-  //       setAllUsers(getUsersFromFirebase);
-  //       setLoading(false);
-  //     });
-
-  //   // return cleanup function
-  //   return () => subscriber();
-  // }, [loading]);
   const { docs, loading } = useFirestore("users");
 
   useEffect(() => {
@@ -61,7 +40,6 @@ const CreateUser = () => {
     deleteUser(data);
     deleteNotification();
   };
-  const [userImage, setUserImage] = useState("");
   const types = ["image/jpeg", "image/png"];
   const userImageHandler = (e) => {
     setUserImage(null);
@@ -80,7 +58,10 @@ const CreateUser = () => {
     if (userImageError === null) {
       const storageRef = storage.ref();
       let userImageUrl = null;
-      if (userImage !== null) {
+      if (!userImage) {
+        const userData = { ...data };
+        addUser(userData);
+      } else {
         const imageRef = storageRef.child(Date.now() + userImage.name);
         await imageRef.put(userImage);
         userImageUrl = await imageRef.getDownloadURL();
@@ -90,12 +71,10 @@ const CreateUser = () => {
           imageURL: userImageUrl,
         };
         addUser(userData);
-      } else {
-        const userData = { ...data };
-        addUser(userData);
       }
       successNotification();
       setShowAddModal(false);
+      reset();
     }
   };
   const handleEditUserSubmit = (data) => {
@@ -108,25 +87,23 @@ const CreateUser = () => {
       editUser(updatedUser);
       editNotification();
       setShowEditModal(false);
+      reset();
     }
   };
   const successNotification = () =>
     toast.success("User Added Succesfully!", {
       position: "bottom-right",
       autoClose: 1500,
-      // onClose: () => history.go(0),
     });
   const deleteNotification = () =>
     toast.info("User Deleted Succesfully!", {
       position: "bottom-right",
       autoClose: 1500,
-      // onClose: () => history.go(0),
     });
   const editNotification = () =>
     toast.info("User Edited Succesfully!", {
       position: "bottom-right",
       autoClose: 1500,
-      // onClose: () => history.go(0),
     });
 
   return (

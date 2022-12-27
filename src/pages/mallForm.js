@@ -242,7 +242,7 @@ const MallForm = () => {
           );
           const isVideoPresent = indexOfVideo >= 0;
           const shop = {
-            id: Date.now(),
+            id: Math.random(Date.now()),
             shopName: s?.shopName,
             shopDescription: s?.shopDescription,
             shopLevel: s?.shopLevel,

@@ -4,18 +4,11 @@ import React, { useState } from "react";
 import Logo from "../../image/logo.svg";
 import LogoText from "../../image/logoText.svg";
 import { Link } from "react-router-dom";
-import {
-  FaAngleDown,
-  FaAngleRight,
-  FaRegUserCircle,
-  // FaUserPlus,
-} from "react-icons/fa";
+import { FaAngleDown, FaAngleRight, FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { RiUserAddLine } from "react-icons/ri";
 import useFirestore from "../../hooks/useFirestore";
 import { useHistory, useLocation } from "react-router-dom";
-// import DefaultImage from "../../assets/images/defaultImage.png";
-// import UserImage from "../../assets/images/userImage.png";
 import Avatar from "react-avatar";
 
 const NavBar = ({ username, check, setShowSearchExtended, allUsers }) => {
