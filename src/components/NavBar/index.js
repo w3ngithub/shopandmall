@@ -1,9 +1,7 @@
 import Nav from "./Nav";
 import Drawer from "./Drawer";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useFirestore from "../../hooks/useFirestore";
-import { fireStore } from "../../firebase/config";
-
 const Try = ({ setShowSearchExtended }) => {
   let { docs } = useFirestore("Shop Categories");
 
@@ -12,24 +10,17 @@ const Try = ({ setShowSearchExtended }) => {
   let check = localStorage.getItem("isAuth");
   let username = localStorage.getItem("username");
   const [allUsers, setAllUsers] = useState([]);
-  React.useEffect(() => {
-    const getUsersFromFirebase = [];
-    const subscriber = fireStore
-      .collection("users")
-      .orderBy("Username")
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          getUsersFromFirebase.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-        setAllUsers(getUsersFromFirebase);
-      });
-    // return cleanup function
-    return () => subscriber();
-  }, []);
-  React.useEffect(() => {
+  const userDocs = useFirestore("users").docs;
+
+  useEffect(() => {
+    const transformedData = [
+      ...userDocs.map((data) => ({
+        ...data,
+      })),
+    ];
+    setAllUsers(transformedData);
+  }, [userDocs]);
+  useEffect(() => {
     const mainData = docs.map(({ id, category, rowContent }) => {
       return {
         id,

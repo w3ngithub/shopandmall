@@ -182,3 +182,14 @@
 .button:hover {
   color: white;
 }
+.pass {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: -45px;
+}
+.pass:hover {
+  size: 50px;
+  background: rgb(202, 225, 228) !important;
+  border-radius: 80%;
+}

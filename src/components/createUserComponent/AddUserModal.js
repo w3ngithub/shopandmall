@@ -1,7 +1,8 @@
 import classes from "./modal.module.css";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoEye, IoEyeOff } from "react-icons/io5";
 import style from "./addUserModal.module.css";
 import { IoIosAddCircle, IoIosClose } from "react-icons/io";
+import { useState } from "react";
 
 const UserModal = ({
   errors,
@@ -19,6 +20,7 @@ const UserModal = ({
   userImage,
   setUserImage,
 }) => {
+  const [passwordType, setPasswordType] = useState("password");
   let username = localStorage.getItem("username");
   const checkUser = () => {
     const user = getValues("Username");
@@ -30,6 +32,14 @@ const UserModal = ({
     } else {
       return true;
     }
+  };
+  const togglePassword = (e) => {
+    e.preventDefault();
+    if (passwordType === "password") {
+      setPasswordType("text");
+      return;
+    }
+    setPasswordType("password");
   };
   return (
     <>
@@ -118,7 +128,20 @@ const UserModal = ({
                   message: "Password must consist of alphabets and numbers",
                 },
               })}
+              type={passwordType}
             />
+            <button
+              className={style.pass}
+              onClick={togglePassword}
+              style={{ backgroundColor: "transparent" }}
+            >
+              {passwordType === "password" ? (
+                <IoEyeOff></IoEyeOff>
+              ) : (
+                <IoEye></IoEye>
+              )}
+            </button>
+
             {errors?.Password?.type === "required" && (
               <p className={classes.error}>* Password is required</p>
             )}

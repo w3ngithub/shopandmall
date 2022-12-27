@@ -323,7 +323,7 @@ const MallForm = () => {
             let shop =
               isShopImagesPresent && isNewShopImagesAdded
                 ? {
-                    id: i,
+                    id: s.id,
                     shopName: s.shopName,
                     shopDescription: s.shopDescription,
                     shopLevel: s?.shopLevel,
@@ -351,7 +351,7 @@ const MallForm = () => {
                   }
                 : isShopImagesPresent
                 ? {
-                    id: i,
+                    id: s.id,
                     shopName: s.shopName,
                     shopDescription: s.shopDescription,
                     shopLevel: s?.shopLevel,
@@ -363,7 +363,7 @@ const MallForm = () => {
                     shopImages: [...s.shopImages],
                   }
                 : {
-                    id: i,
+                    id: s.id,
                     shopName: s.shopName,
                     shopDescription: s.shopDescription,
                     shopLevel: s?.shopLevel,
@@ -434,6 +434,8 @@ const MallForm = () => {
         //FireStore
         // console.log("editData: ", editData);
         // console.log("mall: ", mall);
+        // console.log("shops: ", shops);
+        // console.log("mallId: ", mallId);
         fireStore
           .collection("Shopping Mall")
           // .doc(editData.mallName) //Mall name gets updated so it doesn't delete
@@ -443,7 +445,7 @@ const MallForm = () => {
           .catch((err) => console.log(err));
         fireStore
           .collection("Shopping Mall")
-          .doc(editData.mallName)
+          .doc(mallId)
           .set({
             ...mall,
             shops: shops,

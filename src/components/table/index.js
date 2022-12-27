@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import "./table.scss";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -27,7 +27,6 @@ function Table({
       .map((e, i) => e?.width + (i === fields.length - 1 && "px"))
       .join("px ");
   const [data, setData] = useState(rowData);
-  let username = localStorage.getItem("username");
   const toggleRowExpand = (rowId) => {
     let newData = data.map((x) => {
       if (x.id === rowId) x.isExpanded = !x.isExpanded;
@@ -88,7 +87,13 @@ function Table({
 
                 <span>{i + 1}</span>
                 {fields.map((field, i) => (
-                  <span key={`${row.id}${i}`}>{row[field.field]}</span>
+                  <>
+                    {field.field === "Password" ? (
+                      <span key={`${row.id}${i}`}>********</span>
+                    ) : (
+                      <span key={`${row.id}${i}`}>{row[field.field]}</span>
+                    )}
+                  </>
                 ))}
                 {hasAction && (
                   <Actions
