@@ -281,7 +281,7 @@ const NavBar = ({ username, check, setShowSearchExtended, allUsers }) => {
               </div>
             </div>
           )}
-          {check === "false" && (
+          {(check === "false" || check === null) && (
             <Link className={classes.button} to="/login">
               Sign In
             </Link>
